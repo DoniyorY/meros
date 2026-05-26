@@ -44,7 +44,7 @@ class m130524_201442_init extends Migration
       $this->insert('{{%user}}', [
          'username' => 'sunnat',
          'fullname' => 'Admin',
-         'email' => 'admin@email.com',
+         'email' => 'sunnat@email.com',
          'phone' => '+998939977437',
          'subscription_status' => 0,
          'status' => 10,
