@@ -8,11 +8,17 @@ use yii\widgets\ActiveForm;
 /** @var common\models\CourseLessons $model */
 /** @var yii\widgets\ActiveForm $form */
 $lesson = CourseLessons::find()->where(['course_id' => $course_id])->orderBy(['id' => SORT_DESC])->one();
-if ($lesson) {
-   $sort = $lesson->sort + 100;
-} else {
-   $sort = 100;
+
+if (Yii::$app->controller->action->id != 'update-lesson-modal') {
+    if ($lesson) {
+        $sort = $lesson->sort + 100;
+    } else {
+        $sort = 100;
+    }
+}else{
+    $sort = $model->sort;
 }
+
 ?>
 
 <div class="course-lessons-form">

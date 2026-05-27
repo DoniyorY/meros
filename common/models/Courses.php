@@ -105,6 +105,6 @@ class Courses extends \yii\db\ActiveRecord
    
    public function getLessons()
    {
-      return $this->hasMany(CourseLessons::class, ['course_id' => 'id']);
+      return $this->hasMany(CourseLessons::class, ['course_id' => 'id'])->orderBy(['sort' => SORT_ASC]);
    }
 }

@@ -65,4 +65,9 @@ class CoursePacks extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function getItems()
+    {
+        return $this->hasMany(CoursePackItems::class, ['course_pack_id' => 'id']);
+    }
+
 }

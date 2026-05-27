@@ -7,6 +7,7 @@ use common\models\search\CoursePacksSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * CoursePacksController implements the CRUD actions for CoursePacks model.
@@ -25,6 +26,7 @@ class CoursePacksController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                        'status' => ['POST'],
                     ],
                 ],
             ]
@@ -70,16 +72,36 @@ class CoursePacksController extends Controller
         $model = new CoursePacks();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at = time();
+                $model->updated_at = time();
+                $model->user_id = \Yii::$app->user->id;
+                $model->status = 1;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
+            \Yii::$app->session->setFlash('warning', 'Error');
+            return $this->redirect(['index']);
         }
+    }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+    public function actionAddItems($pack_id)
+    {
+        $item = new CoursePackItems(['pack_id' => $pack_id]);
+        if ($item->load($this->request->post())) {
+            $item->save();
+            Yii::$app->session->setFlash('success', 'Course is Successfully Created');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionStatus($id, $status)
+    {
+        $model = $this->findModel($id);
+        $model->status = $status;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Status is Successfully changed');
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
     /**
