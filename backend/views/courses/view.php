@@ -99,7 +99,11 @@ $params = Yii::$app->params;
                         [
                             'attribute' => 'mentor_id',
                             'value' => function ($data) {
-                                return $data->mentor->fullname;
+                                if ($data->mentor) {
+                                    return $data->mentor->fullname;
+                                }else{
+                                    return "Not Set!!!";
+                                }
                             }
                         ],
                         'preview_video_link',
