@@ -31,7 +31,6 @@ class CoursesController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
-                        'create' => ['post'],
                         'add-lesson' => ['post'],
                         'delete-video' => ['post'],
                         'update-lesson' => ['post']
