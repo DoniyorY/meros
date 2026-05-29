@@ -38,7 +38,9 @@ $params = Yii::$app->params;
          [
             'attribute' => 'category_id',
             'value' => function ($data) {
-               return $data->category->name_en;
+                if ($data->category) {
+                    return $data->category->name_en;
+                }
             },
             'filter' => ArrayHelper::map(CourseCategory::find()->all(), 'id', 'name_en'),
          ],
