@@ -62,7 +62,9 @@ $params = Yii::$app->params;
                         [
                             'attribute' => 'category_id',
                             'value' => function ($data) {
-                                return $data->category->name_en;
+                                if ($data->category) {
+                                    return $data->category->name_en;
+                                }
                             }
                         ],
                         'slug',
@@ -101,7 +103,7 @@ $params = Yii::$app->params;
                             'value' => function ($data) {
                                 if ($data->mentor) {
                                     return $data->mentor->fullname;
-                                }else{
+                                } else {
                                     return "Not Set!!!";
                                 }
                             }
