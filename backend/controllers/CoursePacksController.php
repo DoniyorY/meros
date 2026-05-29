@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\CoursePacks;
+use common\models\Courses;
 use common\models\search\CoursePacksSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -89,8 +90,29 @@ class CoursePacksController extends Controller
     {
         $item = new CoursePackItems(['pack_id' => $pack_id]);
         if ($item->load($this->request->post())) {
-            $item->save();
-            Yii::$app->session->setFlash('success', 'Course is Successfully Created');
+            if (!$item->course_category_id || !$item->course_id) {
+                Yii::$app->session->setFlash('warning', 'Fill At Least One Course');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            if ($item->course_category_id) {
+                $courses = Courses::findAll(['category_id' => $item->course_category_id]);
+                foreach ($courses as $course) {
+                    $multi_item = new CoursePackItems([
+                        'pack_id' => $pack_id,
+                        'course_id' => $course->id,
+                        'course_category_id' => $item->course_category_id,
+                    ]);
+                    $multi_item->save(false);
+                }
+            } else {
+                $course = Courses::findOne(['id' => $item->course_id]);
+                $item->course_category_id = $course->category_id;
+            }
+            if ($item->save()) {
+                Yii::$app->session->setFlash('success', 'Course is Successfully Created');
+            } else {
+                Yii::$app->session->setFlash('warning', 'Error to Add Course');
+            }
         }
         return $this->redirect(Yii::$app->request->referrer);
     }

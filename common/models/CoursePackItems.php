@@ -30,7 +30,7 @@ class CoursePackItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pack_id', 'course_category_id', 'course_id'], 'required'],
+            //[['pack_id', 'course_category_id', 'course_id'], 'required'],
             [['pack_id', 'course_category_id', 'course_id'], 'integer'],
         ];
     }

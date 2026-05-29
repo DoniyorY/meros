@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="createPackItemModalLabel">New Lesson</h1>
+                                <h1 class="modal-title fs-5" id="createPackItemModalLabel">New Course</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -116,6 +116,36 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <table class="table table-sm table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Course Category</th>
+                            <th>Course</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i = 1;
+                        foreach ($model->items as $item): ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= $item->category->name_en ?></td>
+                                <td><?= $item->course->name_en ?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" data-method="post"
+                                       data-confirm="Are you sure you want to delete this item?"
+                                       href="<?= \yii\helpers\Url::to(['delete-item', 'id' => $item->id]) ?>">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
