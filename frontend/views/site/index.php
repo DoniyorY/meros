@@ -43,200 +43,93 @@ $params = Yii::$app->params;
 </section>
 <!-- end Homepage Slider -->
 <div id="page-content">
-    <section id="featured-courses">
+    <section id="right-sidebar">
         <div class="block">
             <div class="container">
-                <header><h2>Featured Courses</h2></header>
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <article class="featured-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-01.jpg"></a></div>
-                            </figure>
-                            <div class="description">
-                                <a href="course-detail-v1.html"><h3>Character Drawing: Basic and Advanced Principles</h3></a>
-                                <a href="#" class="course-category">Art and Design</a>
-                                <hr>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                                <div class="stick-to-bottom"><a href="course-detail-v1.html" class="btn btn-framed btn-color-grey btn-small">View Details</a></div>
-                            </div>
-                        </article><!-- /.featured-course -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3 col-sm-3">
-                        <article class="featured-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-02.jpg"></a></div>
-                            </figure>
-                            <div class="description">
-                                <a href="course-detail-v1.html"><h3>Architecture Photography: Power of Light and Shadows</h3></a>
-                                <a href="#" class="course-category">Photography</a>
-                                <hr>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                                <div class="stick-to-bottom"><a href="course-detail-v1.html" class="btn btn-framed btn-color-grey btn-small">View Details</a></div>
-                            </div>
-                        </article><!-- /.featured-course -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3 col-sm-3">
-                        <article class="featured-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-03.jpg"></a></div>
-                            </figure>
-                            <div class="description">
-                                <a href="course-detail-v1.html"><h3>How to find long term customers</h3></a>
-                                <a href="#" class="course-category">Marketing</a>
-                                <hr>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                                <div class="stick-to-bottom"><a href="course-detail-v1.html" class="btn btn-framed btn-color-grey btn-small">View Details</a></div>
-                            </div>
-                        </article><!-- /.featured-course -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3 col-sm-3">
-                        <article class="featured-course clearfix">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-04.jpg"></a></div>
-                            </figure>
-                            <div class="description">
-                                <a href="course-detail-v1.html"><h3>Neuroscience for the Beginners: Complete Course</h3></a>
-                                <a href="#" class="course-category">Science</a>
-                                <hr>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                                <div class="stick-to-bottom"><a href="course-detail-v1.html" class="btn btn-framed btn-color-grey btn-small">View Details</a></div>
-                            </div>
-                        </article><!-- /.featured-course -->
-                    </div><!-- /.col-md-3 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
+                <div class="text-center">
+                    <h2>About Meros</h2>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et lacus sit amet libero blandit
+                    ullamcorper. Aliquam iaculis purus interdum, bibendum eros vitae, semper urna. Vivamus placerat ac
+                    ante nec adipiscing. Nam vel luctus libero. Ut scelerisque dui eu nisl aliquam, ornare imperdiet
+                    augue tincidunt. Vivamus blandit sed dolor tristique consequat. Maecenas vel aliquet ligula. Nunc
+                    viverra nisl vel vulputate lobortis. Suspendisse id lobortis diam. Cras ornare, sem non cursus
+                    iaculis, felis leo egestas ante, ac rutrum lorem mauris at leo. Curabitur risus turpis, egestas at
+                    euismod vitae, vulputate et eros. Sed erat orci, facilisis id risus et, dictum sollicitudin eros.
+                    Donec vestibulum tempus molestie. Curabitur purus felis, molestie a quam ut, dignissim cursus massa.
+                </p>
+            </div>
             <div class="background background-color-grey-background"></div>
-        </div><!-- /.block -->
+        </div>
     </section>
-    <!-- /#featured-courses -->
-
-    <section id="latest-courses">
+    <section class="events images" id="events">
         <div class="block">
             <div class="container">
-                <header><h2>Latest Courses</h2></header>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-01.jpg"></a></div>
+                <header><h1>Events</h1></header>
+                <div class="section-content">
+                    <article class="event">
+                        <div class="event-thumbnail">
+                            <figure class="event-image">
+                                <div class="image-wrapper"><img src="<?= "$base/" ?>img/event-img-01.jpg"></div>
                             </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>Neuroscience for the Beginners: Complete Course</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-02.jpg"></a></div>
+                            <figure class="date">
+                                <div class="month">jan</div>
+                                <div class="day">18</div>
                             </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>Architecture Photography: Power of Light and Shadows</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>8 lessons</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-03.jpg"></a></div>
+                        </div>
+                        <aside>
+                            <header>
+                                <a href="#">Conservatory Exhibit: The garden of india a country and culture revealed</a>
+                            </header>
+                            <div class="additional-info"><span class="fa fa-map-marker"></span> Matthaei Botanical
+                                Gardens
+                            </div>
+                            <div class="description">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna
+                                    fringilla
+                                    volutpat elit non, tristique lectus. Nam blandit odio nisl, ac malesuada lacus
+                                    fermentum sit amet.
+                                    Vestibulum vitae aliquet felis, ornare feugiat elit. Nulla varius condimentum elit,
+                                    sed pulvinar leo sollicitudin vel.
+                                </p>
+                            </div>
+                            <a href="#" class="btn btn-framed btn-color-grey btn-small">View Details</a>
+                        </aside>
+                    </article><!-- /.event -->
+                    <article class="event">
+                        <div class="event-thumbnail">
+                            <figure class="event-image">
+                                <div class="image-wrapper"><img src="<?= "$base/" ?>img/event-img-02.jpg"></div>
                             </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>Character Drawing: Basic and Advanced Principles</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>8 lessons</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-04.jpg"></a></div>
+                            <figure class="date">
+                                <div class="month">feb</div>
+                                <div class="day">01</div>
                             </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>Introduction to modo 701</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-01.jpg"></a></div>
-                            </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>Become self marketer</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>8 lessons</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                    <div class="col-md-4">
-                        <div class="latest-course">
-                            <figure class="image">
-                                <div class="image-wrapper"><a href="course-detail-v1.html"><img src="<?="$base/"?>img/course-02.jpg"></a></div>
-                            </figure>
-                            <aside class="description">
-                                <a href="course-detail-v1.html"><h4>History in complex view</h4></a>
-                                <!--<a href="#" class="course-category">Science</a>-->
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla</p>
-                                <div class="course-meta">
-                                    <span class="course-date"><i class="fa fa-calendar-o"></i>01-03-2014</span>
-                                    <span class="course-length"><i class="fa fa-clock-o"></i>8 lessons</span>
-                                </div>
-                            </aside>
-                            <hr>
-                        </div><!-- /.latest-course -->
-                    </div><!-- /.col-md-4 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </div><!-- /.block -->
+                        </div>
+                        <aside>
+                            <header>
+                                <a href="#">February Half-Term Activities: Big Stars and Little Secrets </a>
+                            </header>
+                            <div class="additional-info"><span class="fa fa-map-marker"></span> Pitt Rivers and Natural
+                                History Museums
+                            </div>
+                            <div class="description">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna
+                                    fringilla
+                                    volutpat elit non, tristique lectus. Nam blandit odio nisl, ac malesuada lacus
+                                    fermentum sit amet.
+                                    Vestibulum vitae aliquet felis, ornare feugiat elit. Nulla varius condimentum elit,
+                                    sed pulvinar leo sollicitudin vel.
+                                </p>
+                            </div>
+                            <a href="#" class="btn btn-framed btn-color-grey btn-small">View Details</a>
+                        </aside>
+                    </article><!-- /.event -->
+                </div><!-- /.section-content -->
+            </div>
+        </div>
     </section>
-    <!-- /#latest-courses -->
 
     <!-- Testimonial -->
     <section id="testimonials">
@@ -245,11 +138,14 @@ $params = Yii::$app->params;
                 <div class="author-carousel">
                     <div class="author has-dark-background">
                         <blockquote>
-                            <figure class="author-picture"><img src="<?="$base/"?>img/student-testimonial.jpg" alt=""></figure>
+                            <figure class="author-picture"><img src="<?= "$base/" ?>img/student-testimonial.jpg" alt="">
+                            </figure>
                             <article class="paragraph-wrapper">
                                 <div class="inner">
-                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum semper quam. Fusce in interdum tortor.
-                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.</header>
+                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum
+                                        semper quam. Fusce in interdum tortor.
+                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.
+                                    </header>
                                     <footer>Claire Doe</footer>
                                 </div>
                             </article>
@@ -257,11 +153,14 @@ $params = Yii::$app->params;
                     </div><!-- /.author -->
                     <div class="author has-dark-background">
                         <blockquote>
-                            <figure class="author-picture"><img src="<?="$base/"?>img/student-testimonial.jpg" alt=""></figure>
+                            <figure class="author-picture"><img src="<?= "$base/" ?>img/student-testimonial.jpg" alt="">
+                            </figure>
                             <article class="paragraph-wrapper">
                                 <div class="inner">
-                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum semper quam. Fusce in interdum tortor.
-                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.</header>
+                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum
+                                        semper quam. Fusce in interdum tortor.
+                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.
+                                    </header>
                                     <footer>Claire Doe</footer>
                                 </div>
                             </article>
@@ -301,13 +200,15 @@ $params = Yii::$app->params;
                             <th>2 lessons</th>
                         </tr>
                         <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a></th>
+                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a>
+                            </th>
                             <th class="course-category"><a href="#">Marketing</a></th>
                             <th>06-03-2014</th>
                             <th>1 month</th>
                         </tr>
                         <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a></th>
+                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a>
+                            </th>
                             <th class="course-category"><a href="#">Science</a></th>
                             <th>21-03-2014</th>
                             <th>3 weeks</th>
@@ -325,13 +226,15 @@ $params = Yii::$app->params;
                             <th>2 lessons</th>
                         </tr>
                         <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a></th>
+                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a>
+                            </th>
                             <th class="course-category"><a href="#">Marketing</a></th>
                             <th>06-03-2014</th>
                             <th>1 month</th>
                         </tr>
                         <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a></th>
+                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a>
+                            </th>
                             <th class="course-category"><a href="#">Science</a></th>
                             <th>21-03-2014</th>
                             <th>3 weeks</th>
@@ -361,11 +264,16 @@ $params = Yii::$app->params;
                         </header>
                         <div class="section-content">
                             <div class="logos">
-                                <div class="logo"><a href=""><img src="<?="$base/"?>img/logo-partner-01.png" alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?="$base/"?>img/logo-partner-02.png" alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?="$base/"?>img/logo-partner-03.png" alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?="$base/"?>img/logo-partner-04.png" alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?="$base/"?>img/logo-partner-05.png" alt=""></a></div>
+                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-01.png"
+                                                                  alt=""></a></div>
+                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-02.png"
+                                                                  alt=""></a></div>
+                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-03.png"
+                                                                  alt=""></a></div>
+                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-04.png"
+                                                                  alt=""></a></div>
+                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-05.png"
+                                                                  alt=""></a></div>
                             </div>
                         </div>
                     </section>

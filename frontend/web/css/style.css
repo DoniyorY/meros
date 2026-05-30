@@ -13,7 +13,7 @@ a:hover, a:active, a a:visited {
 }
 
 address {
-    line-height: 20px;
+    line-height: 30px;
 }
 
 abbr {
@@ -63,7 +63,7 @@ body {
     background-color: #fff;
     color: #252525;
     font-family: 'Montserrat', 'Arial', sans-serif;
-    font-size: 12px;
+    font-size: 18px;
     height: 100%;
     overflow-x: hidden;
 }
@@ -120,7 +120,7 @@ html {
 
 p {
     color: #767676;
-    line-height: 20px;
+    line-height: 30px;
     margin-top: 0px;
 }
 
@@ -291,7 +291,7 @@ ul.list-links a:hover {
 }
 
 .author.has-dark-background {
-    background-color: #04363f;
+    background-color: #07717b;
 }
 
 .author.has-dark-background .paragraph-wrapper header {
@@ -2388,11 +2388,11 @@ th.header:before {
 }
 
 .background-color-primary {
-    background-color: #04363f;
+    background-color: #4bc0ca;
 }
 
 .background-color-primary-darken {
-    background-color: #011c38 !important;
+    background-color: #07717b !important;
 }
 
 .background-color-secondary {
@@ -2674,7 +2674,7 @@ th.header:before {
 }
 
 .navigation-wrapper .background {
-    background-color: #04363f; /*#04363f*/
+    background-color: #4bc0ca; /*#04363f*/
     overflow: hidden;
 }
 
@@ -3546,11 +3546,11 @@ label.error:before {
 }
 
 #page-footer #footer-content .background {
-    background-color: #04363f;
+    background-color: #4cbdc6;
 }
 
 #page-footer #footer-bottom {
-    background-color: #012447;
+    background-color: #07707a;
     color: #fff;
     padding: 20px 0;
 }
