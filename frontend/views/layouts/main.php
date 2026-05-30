@@ -12,11 +12,13 @@ use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use common\models\CourseCategory;
 use common\models\Courses;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
 $category = CourseCategory::findAll(['status' => 1]);
+$params = Yii::$app->params;
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -35,13 +37,16 @@ $category = CourseCategory::findAll(['status' => 1]);
         <div class="navigation-wrapper">
             <div class="secondary-navigation-wrapper">
                 <div class="container">
-                    <div class="navigation-contact pull-left">Call Us: <span class="opacity-70">000-123-456-789</span>
+                    <div class="navigation-contact pull-left">Call Us: <span
+                                class="opacity-70"><?= $params['phone'] ?></span>
                     </div>
                     <ul class="secondary-navigation list-unstyled pull-right">
-                        <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
-                        <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
-                        <li><a href="my-account.html#tab-change-password">Change Password</a></li>
-                        <li><a href="index.html">Log Out</a></li>
+                        <?php if (!Yii::$app->user->isGuest): ?>
+                            <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
+                            <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
+                            <li><a href="my-account.html#tab-change-password">Change Password</a></li>
+                            <li><a href="index.html">Log Out</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div><!-- /.secondary-navigation -->
@@ -68,12 +73,30 @@ $category = CourseCategory::findAll(['status' => 1]);
                                     <li>
                                         <a href="#" class=" has-child no-link"><?= $item->{"name_$lang"} ?></a>
                                         <ul class="list-unstyled child-navigation">
-                                            <?php foreach ($courses as $value):?>
-                                            <li><a href="<?=\yii\helpers\Url::to(['course/view','alias'=>$value->slug])?>"><?=$item->{"name_$lang"}?></a></li>
-                                            <?php endforeach;?>
+                                            <?php foreach ($courses as $value): ?>
+                                                <li>
+                                                    <a href="<?= \yii\helpers\Url::to(['course/view', 'alias' => $value->slug]) ?>"><?= $item->{"name_$lang"} ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
                                         </ul>
                                     </li>
                                 <?php endforeach; ?>
+                                <li>
+                                    <a href="#" class="has-child no-link">ABOUT US</a>
+                                    <ul class="list-unstyled child-navigation">
+                                        <li>
+                                            <a href="<?=Url::to(['site/contact']);?>">Contact Us</a>
+                                            <a href="<?=Url::to(['site/about'])?>">About Meros</a>
+                                            <a href="<?=Url::to(['site/team'])?>">Meet the Team</a>
+                                            <a href="<?=Url::to(['site/clients'])?>">Our Clients</a>
+                                            <a href="<?=Url::to(['site/partners'])?>">Our Partners</a>
+                                            <a href="<?=Url::to(['site/policy'])?>">Environmental Policy</a>
+                                            <a href="<?=Url::to(['site/faq-students'])?>">FAQ - Students</a>
+                                            <a href="<?=Url::to(['site/faq-org'])?>">FAQs - Organisations</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
                             </ul>
                         </nav><!-- /.navbar collapse-->
                     </div><!-- /.container -->
@@ -84,46 +107,10 @@ $category = CourseCategory::findAll(['status' => 1]);
             </div>
         </div>
         <!-- end Header -->
-        <!-- Homepage Slider -->
-        <section id="homepage-slider">
-            <div class="flexslider">
-                <ul class="slides">
-                    <li class="slide">
-                        <figure>
-                            <div class="slide-wrapper">
-                                <div class="inner">
-                                    <div class="container">
-                                        <h2>Business Course</h2>
-                                        <h1>Be a marketing guru</h1>
-                                        <div><a href="course-detail-v1.html" class="btn">View Course Details</a></div>
-                                    </div>
-                                </div><!-- /.inner -->
-                            </div><!-- /.wrapper -->
-                        </figure>
-                        <img src="<?= "$base/" ?>img/landing-page-background.jpg">
-                    </li>
-                    <li class="slide">
-                        <figure>
-                            <div class="slide-wrapper">
-                                <div class="inner">
-                                    <div class="container">
-                                        <h2>Art and design</h2>
-                                        <h1>Drawing for Everyone</h1>
-                                        <div><a href="course-detail-v1.html" class="btn">View Course Details</a></div>
-                                    </div>
-                                </div><!-- /.inner -->
-                            </div><!-- /.wrapper -->
-                        </figure>
-                        <img src="<?= "$base/" ?>img/slider-slide-02.jpg">
-                    </li>
-                </ul>
-            </div>
-        </section>
-        <!-- end Homepage Slider -->
-        <div id="page-content">
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </div>
+
+
+        <?= Alert::widget() ?>
+        <?= $content ?>
 
         <!-- Footer -->
         <footer id="page-footer">

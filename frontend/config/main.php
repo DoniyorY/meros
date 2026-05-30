@@ -11,8 +11,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'name'=>'Meros International Institute',
-    'language'=>'en',
+    'name' => 'Meros International Institute',
+    'language' => 'en',
     'components' => [
         'assetManager' => [
             'bundles' => [
@@ -32,7 +32,7 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'baseUrl'=>'',
+            'baseUrl' => '',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -56,11 +56,13 @@ return [
             'errorAction' => 'site/error',
         ],
 
+        // Url Manager
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => ['En'=>'en', 'Ru'=>'ru', 'Uz'=>'uz'], // List all supported languages here
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
 
     ],
