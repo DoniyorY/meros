@@ -4,16 +4,21 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'About Meros';
 $params = Yii::$app->params;
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
+function translate($key)
+{
+    $lang = Yii::$app->language;
+    return Yii::$app->params[$key][$lang];
+}
 ?>
 <!-- Breadcrumb -->
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
-        <li class="active">About Us</li>
+        <li><a href="<?=Yii::$app->homeUrl?>">Home</a></li>
+        <li class="active"><?=htmlspecialchars($this->title)?></li>
     </ol>
 </div>
 <!-- end Breadcrumb -->
@@ -26,32 +31,9 @@ $lang = Yii::$app->language;
             <div class="col-md-8">
                 <div id="page-main">
                     <section id="about">
-                        <header><h1>About Us</h1></header>
-                        <img src="<?="$base/"?>img/about-us-head-img.jpg">
-                        <h2>Mission & Purpose</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla,
-                            volutpat elit non, tristique Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer leo lorem,
-                            vehicula eget ligula et, malesuada pharetra est. Etiam diam metus, luctus eu commodo quis, condimentum
-                            eu mauris. Suspendisse potenti. Curabitur et mauris laoreet lorem pellentesque volutpat. Sed bibendum,
-                            tortor in ornare sodales, sem augue suscipit tortor, auctor placerat nisi justo vel mauris. In convallis
-                            nunc nunc, in tincidunt leo volutpat et. Donec in consequat lorem.
-                        </p>
-                        <h2>Bold History that Fuels the Future</h2>
-                        <p>
-                            Aenean volutpat aliquet diam, id venenatis nisi faucibus sit amet. In hac habitasse platea dictumst.
-                            Integer vel sem est. Nulla pharetra, justo vitae placerat dapibus, dui massa pellentesque magna, a
-                            sagittis magna lorem a massa. Integer convallis augue eu felis euismod, vel iaculis velit pretium.
-                            Nam et diam ut sem aliquet ultrices non eu ante.lectus. Nam blandit odio nisl, ac malesuada lacus
-                            fermentum sit amet. Vestibulum vitae aliquet felis, ornare feugiat elit. Nulla varius condimentum
-                            elit, sed pulvinar leo sollicitudin vel.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla,
-                            volutpat elit non, tristique Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer leo lorem,
-                            vehicula eget ligula et, malesuada pharetra est. Etiam diam metus, luctus eu commodo quis, condimentum
-                            eu mauris. Suspendisse potenti.
-                        </p>
+                        <header><h1><?=Html::encode($this->title)?></h1></header>
+                        <img src="<?="$base/images/meros_hospital.jpg"?>" style="width: 100%; max-height: 500px; object-fit: cover">
+                        <?=translate('about_content')?>
                         <h2>Gallery</h2>
                         <div>
                             <ul class="gallery-list">
@@ -72,17 +54,6 @@ $lang = Yii::$app->language;
                             </ul>
                             <a href="" class="read-more">Go to Gallery</a>
                         </div>
-                        <h2>Research</h2>
-                        <p>
-                            Sed bibendum, tortor in ornare sodales, sem augue suscipit tortor, auctor placerat nisi justo vel mauris.
-                            In convallis nunc nunc, in tincidunt leo volutpat et. Donec in consequat lorem.
-                        </p>
-                        <ul class="element-framed">
-                            <li>Aenean volutpat aliquet diam, id venenatis nisi faucibus sit amet. In hac habitasse platea dictumst</li>
-                            <li>Integer vel sem est. Nulla pharetra, justo vitae placerat dapibus, dui massa pellentesque magn</li>
-                            <li>Sagittis magna lorem a massa. Integer convallis augue eu felis euismod, vel iaculis velit pretium</li>
-                            <li>Nam et diam ut sem aliquet ultrices non eu ante</li>
-                        </ul>
                     </section>
                 </div><!-- /#page-main -->
             </div><!-- /.col-md-8 -->
@@ -110,24 +81,6 @@ $lang = Yii::$app->language;
                         </div><!-- /.section-content -->
                         <a href="" class="read-more">All News</a>
                     </aside><!-- /.news-small -->
-                    <aside id="newsletter">
-                        <header>
-                            <h2>Newsletter</h2>
-                            <div class="section-content">
-                                <div class="newsletter">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Your e-mail">
-                                        <span class="input-group-btn">
-                                        <button type="submit" class="btn"><i class="fa fa-angle-right"></i></button>
-                                    </span>
-                                    </div><!-- /input-group -->
-                                </div><!-- /.newsletter -->
-                                <p class="opacity-50">Ut tincidunt, quam in tincidunt vestibulum, turpis ipsum porttitor nisi, et fermentum augue
-                                    lit eu neque. In at tempor dolor, sit amet dictum lacus. Praesent porta orci eget laoreet ultrices.
-                                </p>
-                            </div><!-- /.section-content -->
-                        </header>
-                    </aside><!-- /.newsletter -->
                     <aside id="our-professors">
                         <header>
                             <h2>Our Professors</h2>

@@ -10,6 +10,14 @@ use yii\bootstrap5\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title = 'Contact Us';
+$params = Yii::$app->params;
+$lang = Yii::$app->language;
+function translate($key)
+{
+    $lang = Yii::$app->language;
+    return Yii::$app->params[$key][$lang];
+}
+
 ?>
 <!-- Breadcrumb -->
 <div class="container">
@@ -34,13 +42,14 @@ $this->title = 'Contact Us';
                                 <address>
                                     <h3><?= Yii::$app->name ?></h3>
                                     <br>
-                                    <span>4877 Spruce Drive</span>
+                                    <span>Uzbekistan Samarkand</span>
                                     <br><br>
-                                    <span>West Newton, PA 15089</span>
+                                    <span>Beruniy street, 1/5</span>
                                     <br>
-                                    <abbr title="Telephone">Telephone:</abbr> +1 (734) 123-4567
+                                    <abbr title="Telephone">Phone:</abbr> <?= $params['phone'] ?>
                                     <br>
-                                    <abbr title="Email">Email:</abbr> <a href="#">questions@youruniversity.com</a>
+                                    <abbr title="Email">Email:</abbr> <a
+                                            href="mailto:<?= $params['adminEmail'] ?>"><?= $params['adminEmail'] ?></a>
                                 </address>
                                 <div class="icons">
                                     <a href=""><i class="fa fa-twitter"></i></a>
@@ -50,9 +59,9 @@ $this->title = 'Contact Us';
                                 </div><!-- /.icons -->
                                 <hr>
                                 <p>
-                                    Morbi rutrum massa eget mi gravida, sit amet mollis magna gravida. Morbi sodales,
-                                    ligula quis ornare bibendum, magna erat convallis ipsum, id posuere ligula massa
-                                    vitae leo.
+                                    If you have an enquiry about an existing course or if you wish to talk to us about
+                                    your specific requirements please call or email using the details provided.
+                                    Alternatively you may use the form below to get in touch.
                                 </p>
                             </div>
                             <div class="col-md-6">
@@ -128,26 +137,6 @@ $this->title = 'Contact Us';
                         </div><!-- /.section-content -->
                         <a href="" class="read-more">All News</a>
                     </aside><!-- /.news-small -->
-                    <aside id="newsletter">
-                        <header>
-                            <h2>Newsletter</h2>
-                            <div class="section-content">
-                                <div class="newsletter">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Your e-mail">
-                                        <span class="input-group-btn">
-                                        <button type="submit" class="btn"><i class="fa fa-angle-right"></i></button>
-                                    </span>
-                                    </div><!-- /input-group -->
-                                </div><!-- /.newsletter -->
-                                <p class="opacity-50">Ut tincidunt, quam in tincidunt vestibulum, turpis ipsum porttitor
-                                    nisi, et fermentum augue
-                                    lit eu neque. In at tempor dolor, sit amet dictum lacus. Praesent porta orci eget
-                                    laoreet ultrices.
-                                </p>
-                            </div><!-- /.section-content -->
-                        </header>
-                    </aside><!-- /.newsletter -->
                 </div><!-- /#sidebar -->
             </div><!-- /.col-md-4 -->
         </div><!-- /.row -->

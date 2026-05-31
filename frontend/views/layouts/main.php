@@ -19,6 +19,7 @@ $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
 $category = CourseCategory::findAll(['status' => 1]);
 $params = Yii::$app->params;
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -89,8 +90,8 @@ $params = Yii::$app->params;
                                     <a href="#" class="has-child no-link">ABOUT US</a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
-                                            <a href="<?=Url::to(['site/contact']);?>">Contact Us</a>
                                             <a href="<?=Url::to(['site/about'])?>">About Meros</a>
+                                            <a href="<?=Url::to(['site/contact']);?>">Contact Us</a>
                                             <a href="<?=Url::to(['site/team'])?>">Meet the Team</a>
                                             <a href="<?=Url::to(['site/clients'])?>">Our Clients</a>
                                             <a href="<?=Url::to(['site/partners'])?>">Our Partners</a>
@@ -147,7 +148,7 @@ $params = Yii::$app->params;
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <aside class="logo">
-                                <img src="<?= "$base/logo.png" ?>" class="vertical-center">
+                                <img src="<?= "$base/img/logo-white.png" ?>" class="vertical-center">
                             </aside>
                         </div><!-- /.col-md-3 -->
                         <div class="col-md-3 col-sm-4">
@@ -182,11 +183,7 @@ $params = Yii::$app->params;
                         <div class="col-md-3 col-sm-4">
                             <aside>
                                 <header><h4>About Meros</h4></header>
-                                <p>
-                                    Aliquam feugiat turpis quis felis adipiscing, non pulvinar odio lacinia.
-                                    Aliquam elementum pharetra fringilla. Duis blandit, sapien in semper vehicula,
-                                    tellus elit gravida odio, ac tincidunt nisl mi at ante. Vivamus tincidunt nunc nibh.
-                                </p>
+                                <?=Yii::$app->params['about_short'][$lang]?>
                             </aside>
                         </div><!-- /.col-md-3 -->
                     </div><!-- /.row -->
@@ -197,7 +194,7 @@ $params = Yii::$app->params;
             <section id="footer-bottom">
                 <div class="container">
                     <div class="footer-inner">
-                        <div class="copyright">© Theme Starz, All rights reserved</div><!-- /.copyright -->
+                        <div class="copyright">© Meros inc, All rights reserved</div><!-- /.copyright -->
                     </div><!-- /.footer-inner -->
                 </div><!-- /.container -->
             </section><!-- /#footer-bottom -->

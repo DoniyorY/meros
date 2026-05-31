@@ -2,7 +2,7 @@
 return [
     'adminEmail' => 'info@merospharm.uz',
     'phone' => '+998 (55) 705 08 08',
-    'about_content' => [
+    'about_content_index' => [
         'ru' => '
         <p>
             Компания «MEROS PHARM» – компания, в основе которой лежат доверительные, честные отношения с партнёрами и сотрудниками. <br> 
@@ -33,5 +33,34 @@ return [
             Biz xodimlarimizga o‘ziga ishonch hissini va kasbiy rivojlanish imkoniyatini beramiz. <br>
         </p>
         '
+    ],
+    'about_content'=>[
+        'ru'=>'',
+        'en'=>'
+         <p style="text-align: justify">
+            Meros International Institute is a healthcare-focused education and professional development platform dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
+         </p>
+         <p style="text-align: justify">
+            Through strategic international partnerships and innovative learning technologies, we provide high-quality training programs, Medical English courses, and professional development opportunities for doctors, nurses, pharmacists, students, and healthcare organizations.
+         </p>
+         <h2>Mission & Purpose</h2>
+         <p style="text-align: justify">
+            Our mission is to bridge the gap between local healthcare talent and international standards by making world-class education accessible across Uzbekistan and Central Asia.
+         </p>
+         <p style="text-align: justify">
+            At Meros International Institute, we believe that continuous learning drives better patient care, stronger healthcare systems, and greater professional opportunities for medical specialists.
+            <br><br>
+            Learn. Grow. Lead.
+         </p>
+        ',
+    ],
+    'about_short'=>[
+        'ru'=>'',
+        'en'=>'
+        <p style="text-align: justify">
+            Meros International Institute is a healthcare-focused education and professional development platform dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
+         </p>
+        ',
+        'uz'=>'',
     ]
 ];

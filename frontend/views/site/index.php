@@ -46,7 +46,7 @@ function translate($key)
                 <div class="text-center">
                     <h2>About Meros</h2>
                 </div>
-                <?= translate('about_content') ?>
+                <?= translate('about_content_index') ?>
             </div>
             <div class="background background-color-grey-background"></div>
         </div>
