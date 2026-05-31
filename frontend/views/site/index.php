@@ -5,39 +5,36 @@
 $this->title = Yii::$app->name;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
+$lang = Yii::$app->language;
+function translate($key)
+{
+    $lang = Yii::$app->language;
+    return Yii::$app->params[$key][$lang];
+}
+
 ?>
 <!-- Homepage Slider -->
 <section id="homepage-slider">
     <div class="flexslider">
         <ul class="slides">
+            <?php foreach ($banner as $item):?>
             <li class="slide">
                 <figure>
                     <div class="slide-wrapper">
                         <div class="inner">
-                            <div class="container">
-                                <h2>Business Course</h2>
-                                <h1>Be a marketing guru</h1>
-                                <div><a href="course-detail-v1.html" class="btn">View Course Details</a></div>
+                            <div class="container" style="display: none">
+                                <h2><?=$item->{"name_$lang"}?></h2>
+                                <h1><?=$item->{"desc_$lang"}?></h1>
+                                <?php if ($item->link):?>
+                                <div><a href="<?=\yii\helpers\Url::to([$item->link])?>" class="btn">View Details</a></div>
+                                <?php endif;?>
                             </div>
                         </div><!-- /.inner -->
                     </div><!-- /.wrapper -->
                 </figure>
-                <img src="<?= "$base/" ?>img/landing-page-background.jpg">
+                <img src="<?= "$base/uploads/banners/$item->image" ?>">
             </li>
-            <li class="slide">
-                <figure>
-                    <div class="slide-wrapper">
-                        <div class="inner">
-                            <div class="container">
-                                <h2>Art and design</h2>
-                                <h1>Drawing for Everyone</h1>
-                                <div><a href="course-detail-v1.html" class="btn">View Course Details</a></div>
-                            </div>
-                        </div><!-- /.inner -->
-                    </div><!-- /.wrapper -->
-                </figure>
-                <img src="<?= "$base/" ?>img/slider-slide-02.jpg">
-            </li>
+            <?php endforeach;?>
         </ul>
     </div>
 </section>
@@ -49,16 +46,7 @@ $params = Yii::$app->params;
                 <div class="text-center">
                     <h2>About Meros</h2>
                 </div>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et lacus sit amet libero blandit
-                    ullamcorper. Aliquam iaculis purus interdum, bibendum eros vitae, semper urna. Vivamus placerat ac
-                    ante nec adipiscing. Nam vel luctus libero. Ut scelerisque dui eu nisl aliquam, ornare imperdiet
-                    augue tincidunt. Vivamus blandit sed dolor tristique consequat. Maecenas vel aliquet ligula. Nunc
-                    viverra nisl vel vulputate lobortis. Suspendisse id lobortis diam. Cras ornare, sem non cursus
-                    iaculis, felis leo egestas ante, ac rutrum lorem mauris at leo. Curabitur risus turpis, egestas at
-                    euismod vitae, vulputate et eros. Sed erat orci, facilisis id risus et, dictum sollicitudin eros.
-                    Donec vestibulum tempus molestie. Curabitur purus felis, molestie a quam ut, dignissim cursus massa.
-                </p>
+                <?= translate('about_content') ?>
             </div>
             <div class="background background-color-grey-background"></div>
         </div>
@@ -175,80 +163,58 @@ $params = Yii::$app->params;
     <section id="course-list">
         <div class="block">
             <div class="container">
-                <header><h2>Course List</h2></header>
-                <div class="table-responsive">
-                    <table class="table table-hover course-list-table tablesorter">
-                        <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Course Type</th>
-                            <th class="starts">Starts</th>
-                            <th class="length">Length</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Introduction to modo 701</a></th>
-                            <th class="course-category"><a href="#">Graphic Design and 3D</a></th>
-                            <th>01-03-2014</th>
-                            <th>3 months</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Become self marketer</a></th>
-                            <th class="course-category"><a href="#">Marketing</a></th>
-                            <th>03-03-2014</th>
-                            <th>2 lessons</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a>
-                            </th>
-                            <th class="course-category"><a href="#">Marketing</a></th>
-                            <th>06-03-2014</th>
-                            <th>1 month</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a>
-                            </th>
-                            <th class="course-category"><a href="#">Science</a></th>
-                            <th>21-03-2014</th>
-                            <th>3 weeks</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">History in complex view</a></th>
-                            <th class="course-category"><a href="#">History and Psychology</a></th>
-                            <th>06-04-2014</th>
-                            <th>1 lesson</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Become self marketer</a></th>
-                            <th class="course-category"><a href="#">Marketing</a></th>
-                            <th>03-03-2014</th>
-                            <th>2 lessons</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">How to find long term customers</a>
-                            </th>
-                            <th class="course-category"><a href="#">Marketing</a></th>
-                            <th>06-03-2014</th>
-                            <th>1 month</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">Neuroscience and the future</a>
-                            </th>
-                            <th class="course-category"><a href="#">Science</a></th>
-                            <th>21-03-2014</th>
-                            <th>3 weeks</th>
-                        </tr>
-                        <tr>
-                            <th class="course-title"><a href="course-detail-v1.html">History in complex view</a></th>
-                            <th class="course-category"><a href="#">History and Psychology</a></th>
-                            <th>06-04-2014</th>
-                            <th>1 lesson</th>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <!--MAIN Content-->
+                    <div class="col-md-12">
+                        <div id="page-main">
+                            <section class="blog-listing" id="blog-listing">
+                                <header><h1>Blog / News</h1></header>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                        <article class="blog-listing-post">
+                                            <figure class="blog-thumbnail">
+                                                <figure class="blog-meta"><span class="fa fa-file-text-o"></span>08-24-2014</figure>
+                                                <div class="image-wrapper"><a href="blog-detail.html"><img src="<?="$base/"?>img/blog-01.jpg"></a></div>
+                                            </figure>
+                                            <aside>
+                                                <header>
+                                                    <a href="blog-detail.html"><h3>Conservatory Exhibit: The garden of india a country and culture revealed</h3></a>
+                                                </header>
+                                                <div class="description">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla
+                                                        volutpat elit non, tristique lectus. Nam blandit odio nisl, ac malesuada lacus fermentum sit amet.
+                                                        Vestibulum vitae aliquet felis, ornare feugiat elit. Nulla varius condimentum elit.
+                                                    </p>
+                                                </div>
+                                                <a href="blog-detail.html" class="read-more stick-to-bottom">Read More</a>
+                                            </aside>
+                                        </article><!-- /article -->
+                                    </div><!-- /.col-md-6 -->
+                                    <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                        <article class="blog-listing-post">
+                                            <figure class="blog-thumbnail">
+                                                <figure class="blog-meta"><span class="fa fa-file-text-o"></span>08-24-2014</figure>
+                                                <div class="image-wrapper"><a href="blog-detail.html"><img src="<?="$base/"?>img/blog-02.jpg"></a></div>
+                                            </figure>
+                                            <aside>
+                                                <header>
+                                                    <a href="blog-detail.html"><h3>Pellentesque dignissim fermentum nunc vel ultricies. Vivamus nec</h3></a>
+                                                </header>
+                                                <div class="description">
+                                                    <p>Nulla in mi sed tellus porta mollis vitae ut libero. Nam id tempor augue, id scelerisque nunc.
+                                                        Mauris varius tortor in nibh dictum auctor. Cum sociis natoque penatibus et magnis dis parturient
+                                                        montes, nascetur ridiculus mus. Proin scelerisque eros mi, et convallis mi pretium id.
+                                                    </p>
+                                                </div>
+                                                <a href="blog-detail.html" class="read-more stick-to-bottom">Read More</a>
+                                            </aside>
+                                        </article><!-- /article -->
+                                    </div><!-- /.col-md-6 -->
+                                </div><!-- /.row -->
+                            </section><!-- /.blog-listing -->
+                        </div><!-- /#page-main -->
+                    </div><!-- /.col-md-8 -->
                 </div>
-                <a href="course-listing.html" class="btn btn-framed btn-color-grey pull-right">All Courses</a>
             </div>
         </div>
     </section><!-- /.course-list -->

@@ -11,7 +11,7 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use common\models\Banner;
 /**
  * Site controller
  */
@@ -71,7 +71,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $banner = Banner::findAll(['status'=>Banner::STATUS_ACTIVE]);
+        return $this->render('index',[
+            'banner'=>$banner
+        ]);
     }
 
     /**

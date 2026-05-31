@@ -45,6 +45,7 @@ AppAsset::register($this);
                 ['label' => 'Mentors', 'url' => ['/mentors']],
                 ['label' => 'Subscriptions', 'url' => ['/subscription-plans']],
                 ['label' => 'Settings', 'items' => [
+                        ['label' => 'Banner', 'url' => ['/banner']],
                         ['label' => 'Users', 'url' => ['/user']],
                         ['label' => 'Contacts', 'url' => ['/contacts']],
                 ]]

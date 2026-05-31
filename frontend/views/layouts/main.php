@@ -62,8 +62,12 @@ $params = Yii::$app->params;
                                 <span class="icon-bar"></span>
                             </button>
                             <div class="navbar-brand nav" id="brand">
-                                <a href="<?= Yii::$app->homeUrl ?>">
-                                    <img src="<?= "$base/" ?>img/logo.png" alt="brand">
+                                <a href="<?= Yii::$app->homeUrl ?>" style="width: 300px;
+    display: inherit;">
+                                    <img src="<?= "$base/logo.png" ?>" alt="brand" style="object-fit: cover;
+    width: 100%;
+    height: 80px;
+    padding-left: 12px;">
                                 </a>
                             </div>
                         </div>
@@ -143,22 +147,22 @@ $params = Yii::$app->params;
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <aside class="logo">
-                                <img src="<?= "$base/" ?>img/logo-white.png" class="vertical-center">
+                                <img src="<?= "$base/logo.png" ?>" class="vertical-center">
                             </aside>
                         </div><!-- /.col-md-3 -->
                         <div class="col-md-3 col-sm-4">
                             <aside>
                                 <header><h4>Contact Us</h4></header>
                                 <address>
-                                    <strong>University of Universo</strong>
+                                    <strong><?=Yii::$app->name?></strong>
                                     <br>
-                                    <span>4877 Spruce Drive</span>
-                                    <br><br>
-                                    <span>West Newton, PA 15089</span>
+                                    <span>Uzbekistan Samarkand</span>
                                     <br>
-                                    <abbr title="Telephone">Telephone:</abbr> +1 (734) 123-4567
+                                    <span>Beruniy street, 1/5</span>
                                     <br>
-                                    <abbr title="Email">Email:</abbr> <a href="#">questions@youruniversity.com</a>
+                                    <abbr title="Telephone">Phone:</abbr> <?=$params['phone']?>
+                                    <br>
+                                    <abbr title="Email">Email:</abbr> <a href="mailto:<?=$params['adminEmail']?>"><?=$params['adminEmail']?></a>
                                 </address>
                             </aside>
                         </div><!-- /.col-md-3 -->
@@ -166,10 +170,10 @@ $params = Yii::$app->params;
                             <aside>
                                 <header><h4>Important Links</h4></header>
                                 <ul class="list-links">
-                                    <li><a href="#">Future Students</a></li>
-                                    <li><a href="#">Alumni</a></li>
-                                    <li><a href="#">Give a Donation</a></li>
-                                    <li><a href="#">Professors</a></li>
+                                    <li><a href="#">About Meros</a></li>
+                                    <li><a href="#">FAQ - Students</a></li>
+                                    <li><a href="#">FAQ - Teachers</a></li>
+                                    <li><a href="#">Policy Privacy</a></li>
                                     <li><a href="#">Libary & Health</a></li>
                                     <li><a href="#">Research</a></li>
                                 </ul>
@@ -177,14 +181,12 @@ $params = Yii::$app->params;
                         </div><!-- /.col-md-3 -->
                         <div class="col-md-3 col-sm-4">
                             <aside>
-                                <header><h4>About Universo</h4></header>
-                                <p>Aliquam feugiat turpis quis felis adipiscing, non pulvinar odio lacinia.
+                                <header><h4>About Meros</h4></header>
+                                <p>
+                                    Aliquam feugiat turpis quis felis adipiscing, non pulvinar odio lacinia.
                                     Aliquam elementum pharetra fringilla. Duis blandit, sapien in semper vehicula,
                                     tellus elit gravida odio, ac tincidunt nisl mi at ante. Vivamus tincidunt nunc nibh.
                                 </p>
-                                <div>
-                                    <a href="" class="read-more">All News</a>
-                                </div>
                             </aside>
                         </div><!-- /.col-md-3 -->
                     </div><!-- /.row -->
