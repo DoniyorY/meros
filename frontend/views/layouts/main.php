@@ -47,6 +47,8 @@ $params = Yii::$app->params;
                             <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
                             <li><a href="my-account.html#tab-change-password">Change Password</a></li>
                             <li><a href="index.html">Log Out</a></li>
+                        <?php else:?>
+                        <li><a href="<?= Url::to(['site/login']) ?>">Login</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -80,7 +82,7 @@ $params = Yii::$app->params;
                                         <ul class="list-unstyled child-navigation">
                                             <?php foreach ($courses as $value): ?>
                                                 <li>
-                                                    <a href="<?= \yii\helpers\Url::to(['courses/index', 'slug' => $value->slug]) ?>"><?= $item->{"name_$lang"} ?></a>
+                                                    <a href="<?= \yii\helpers\Url::to(['courses/index', 'slug' => $value->slug]) ?>"><?= $value->{"name_$lang"} ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
