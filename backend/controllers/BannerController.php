@@ -114,8 +114,8 @@ class BannerController extends Controller
                 $uploaded = \common\models\UploadsImage::uploadImage($model, $file, 'banners');
                 if ($uploaded){
                     $model->image = $uploaded;
-                    $path = '@frontend/web/uploads/banners/' . $old_image;
-                    if (file_exists(Yii::getAlias($path))) {
+                    $path = Yii::getAlias('@frontend/web/uploads/banners/' . $old_image);
+                    if (file_exists($path)) {
                         unlink($path);
                     }
                 }
