@@ -107,7 +107,7 @@ class BannerController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->updated_at = time();
-            $model->save();
+
             $old_image = $model->image;
             $file = UploadedFile::getInstance($model, 'imageFile');
             if ($file) {
@@ -120,6 +120,7 @@ class BannerController extends Controller
                     }
                 }
             }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
