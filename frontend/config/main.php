@@ -62,7 +62,12 @@ return [
             'languages' => ['En'=>'en', 'Ru'=>'ru', 'Uz'=>'uz'], // List all supported languages here
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+               ''=>'site/index',
+               'about'=>'site/about',
+               'contact'=>'site/contact',
+               'courses/<slug>' => 'courses/index',
+            ],
         ],
 
     ],

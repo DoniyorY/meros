@@ -80,7 +80,7 @@ $params = Yii::$app->params;
                                         <ul class="list-unstyled child-navigation">
                                             <?php foreach ($courses as $value): ?>
                                                 <li>
-                                                    <a href="<?= \yii\helpers\Url::to(['course/view', 'alias' => $value->slug]) ?>"><?= $item->{"name_$lang"} ?></a>
+                                                    <a href="<?= \yii\helpers\Url::to(['courses/index', 'slug' => $value->slug]) ?>"><?= $item->{"name_$lang"} ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
@@ -91,15 +91,28 @@ $params = Yii::$app->params;
                                     <ul class="list-unstyled child-navigation">
                                         <li>
                                             <a href="<?=Url::to(['site/about'])?>">About Meros</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/contact']);?>">Contact Us</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/team'])?>">Meet the Team</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/clients'])?>">Our Clients</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/partners'])?>">Our Partners</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/policy'])?>">Environmental Policy</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/faq-students'])?>">FAQ - Students</a>
+                                        </li>
+                                        <li>
                                             <a href="<?=Url::to(['site/faq-org'])?>">FAQs - Organisations</a>
                                         </li>
-
                                     </ul>
                                 </li>
                             </ul>
@@ -202,6 +215,7 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
+    <script src="<?="$base/js/jquery-2.1.0.min.js"?>"></script>
     <?php $this->endBody() ?>
     </body>
     </html>

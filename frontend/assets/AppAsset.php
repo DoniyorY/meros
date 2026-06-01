@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
         'css/style.css',
     ];
     public $js = [
-        'js/jquery-2.1.0.min.js',
+      //  'js/jquery-2.1.0.min.js',
         'js/jquery-migrate-1.2.1.min.js',
         'bootstrap/js/bootstrap.min.js',
         'js/selectize.min.js',
@@ -35,9 +35,9 @@ class AppAsset extends AssetBundle
         'js/icheck.min.js',
         'js/jquery.vanillabox-0.1.5.min.js',
         'js/jquery.tablesorter.min.js',
-        'js/greensock.js',
-        'js/layerslider.transitions.js',
-        'js/layerslider.kreaturamedia.jquery.js',
+        //'js/greensock.js',
+        //'js/layerslider.transitions.js',
+        //'js/layerslider.kreaturamedia.jquery.js',
         'js/jquery.flexslider-min.js',
         'js/retina-1.1.0.min.js',
         'js/custom.js',
