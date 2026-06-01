@@ -33,7 +33,7 @@ class UploadsImage extends Model
                     mkdir($dir, 0777, true);  //make dir, give permissions
                 }
                 $name = time();
-                $fileName = $pathName . '_' . date('d.m.Y.H.i.s',$name) . '.' . $model->imageFile->extension;
+                $fileName = $pathName . '_' . date('d-m-Y-H-i-s',$name) . '.' . $model->imageFile->extension;
                 $model->imageFile->saveAs($dir . $fileName);
                 $model->imageFile = $fileName;
                 return $fileName;
