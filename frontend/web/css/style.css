@@ -18,7 +18,7 @@ address {
 
 abbr {
     border-bottom: 1px dotted;
-    color: #767676;
+    color: #000;
 }
 
 blockquote {
@@ -50,7 +50,7 @@ blockquote article header {
 }
 
 blockquote article footer {
-    color: #767676;
+    color: #000;
 }
 
 blockquote .paragraph-wrapper {
@@ -119,7 +119,7 @@ html {
 }
 
 p {
-    color: #767676;
+    color: #000;
     line-height: 30px;
     margin-top: 0px;
 }
@@ -184,7 +184,7 @@ ul.list-links a:hover {
 }
 
 .author-block article p {
-    color: #767676;
+    color: #000;
 }
 
 .author-block .paragraph-wrapper {
@@ -337,7 +337,7 @@ ul.list-links a:hover {
 
 .blog-listing-post .blog-thumbnail .blog-meta {
     background-color: #252525;
-    color: #767676;
+    color: white;
     bottom: 0;
     left: 0;
     padding: 10px;
@@ -372,7 +372,7 @@ ul.list-links a:hover {
 }
 
 .blog-detail .blog-detail-header .blog-detail-meta {
-    color: #767676;
+    color: #000;
 }
 
 .blog-detail .blog-detail-header .blog-detail-meta > span {
@@ -384,11 +384,11 @@ ul.list-links a:hover {
 }
 
 .blog-detail #share-post .icons {
-    color: #767676;
+    color: #000;
 }
 
 .blog-detail #share-post .icons a {
-    color: #767676;
+    color: #000;
     font-size: 18px;
     padding: 2px 5px;
     vertical-align: middle;
@@ -403,7 +403,7 @@ ul.list-links a:hover {
 }
 
 .breadcrumb li a {
-    color: #767676;
+    color: #000;
 }
 
 /****
@@ -635,7 +635,7 @@ ul.list-links a:hover {
 }
 
 .course-count-down .count-down-wrapper .count-description {
-    color: #767676;
+    color: #000;
     font-size: 10px;
     font-weight: normal;
     text-transform: uppercase;
@@ -653,7 +653,7 @@ ul.list-links a:hover {
 }
 
 .course-count-down .course-start {
-    color: #767676;
+    color: #000;
     display: block;
     margin-bottom: -5px;
 }
@@ -741,7 +741,7 @@ ul.list-links a:hover {
 }
 
 .course-detail .course-category, .event-detail .course-category {
-    color: #767676;
+    color: #000;
     margin: 5px 0;
 }
 
@@ -857,7 +857,7 @@ ul.list-links a:hover {
     -o-transition: 0.4s;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-    color: #767676;
+    color: #000;
     font-weight: normal;
     padding: 15px 10px;
 }
@@ -1032,7 +1032,7 @@ ul.list-links a:hover {
 }
 
 .course-thumbnail .description .course-meta {
-    color: #767676;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -1142,7 +1142,7 @@ ul.list-links a:hover {
 }
 
 .events .event aside .additional-info {
-    color: #767676;
+    color: #000;
     font-size: 12px;
     margin-bottom: 10px;
 }
@@ -1260,7 +1260,7 @@ ul.list-links a:hover {
 }
 
 .events.small .event aside .additional-info {
-    color: #767676;
+    color: #000;
     font-size: 12px;
     margin-bottom: 0px;
 }
@@ -1331,7 +1331,7 @@ ul.list-links a:hover {
 }
 
 .featured-course .description .course-meta {
-    color: #767676;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -1478,7 +1478,7 @@ ul.list-links a:hover {
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
-    height: 100vh; /*600px*/
+    height: 80vh; /*600px*/
     overflow: hidden;
     border: none;
     margin: 0;
@@ -1633,7 +1633,7 @@ ul.list-links a:hover {
 }
 
 .latest-course aside .course-meta {
-    color: #767676;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -1801,7 +1801,7 @@ ul.list-links a:hover {
     border-radius: 0px;
     border-color: transparent;
     border-width: 2px !important;
-    color: #767676;
+    color: #000;
 }
 
 .nav-tabs > li a:hover {
@@ -1923,7 +1923,7 @@ ul.list-links a:hover {
 
 .panel-group .panel .panel-collapse .panel-body {
     border-top: 2px solid #e2e2e2;
-    color: #767676;
+    color: #000;
 }
 
 .pagination {
@@ -2013,7 +2013,7 @@ ul.list-links a:hover {
 }
 
 .professor-thumbnail aside header figure {
-    color: #767676;
+    color: #000;
     font-size: 12px;
     font-weight: normal;
     margin-bottom: 3px;
@@ -2458,7 +2458,7 @@ th.header:before {
 }
 
 .font-color-grey-medium {
-    color: #767676 !important;
+    color: #000 !important;
 }
 
 .font-uppercase {
@@ -3712,7 +3712,7 @@ label.error:before {
 }
 
 .sidebar .author-block article p {
-    color: #767676;
+    color: #000;
     line-height: 18px;
 }
 
@@ -3940,7 +3940,7 @@ label.error:before {
 
 .page-landing-page .pricing .features-description li {
     border-top: 2px solid whitesmoke;
-    color: #767676;
+    color: #000;
     font-size: 14px;
     font-weight: bold;
     padding: 15px 0;

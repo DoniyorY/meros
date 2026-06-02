@@ -163,7 +163,9 @@ $params = Yii::$app->params;
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <aside class="logo">
-                                <img src="<?= "$base/img/logo-white.png" ?>" class="vertical-center">
+                                <a href="<?=Yii::$app->homeUrl?>">
+                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center" style="width: 100%;">
+                                </a>
                             </aside>
                         </div><!-- /.col-md-3 -->
                         <div class="col-md-3 col-sm-4">

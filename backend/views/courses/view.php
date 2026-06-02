@@ -109,6 +109,21 @@ $params = Yii::$app->params;
                             }
                         ],
                         'preview_video_link',
+                        [
+                            'attribute' => 'image',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                if (!$data->image) {
+                                    return 'Not Set!!!';
+                                }
+
+                                return Html::img(Yii::$app->request->hostInfo . '/uploads/courses/' . $data->image, [
+                                    'class' => 'img-thumbnail',
+                                    'style' => 'max-height: 160px;',
+                                    'alt' => $data->name_en,
+                                ]);
+                            }
+                        ],
                     ],
                 ]) ?>
             </div>

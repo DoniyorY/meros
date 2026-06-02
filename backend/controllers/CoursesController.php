@@ -147,7 +147,17 @@ class CoursesController extends Controller
                 $model->updated_at = time();
                 $model->status = 0;
                 $model->user_id = \Yii::$app->user->id;
+                $file = UploadedFile::getInstance($model, 'imageFile');
+                if ($file) {
+                    $model->imageFile = $file;
+                    $uploaded = $model->uploadImage();
 
+                    if ($uploaded === false) {
+                        throw new HttpException(500, 'Failed to upload image');
+                    }
+
+                    $model->image = $uploaded;
+                }
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -196,8 +206,30 @@ class CoursesController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->updated_at = time();
+            $oldImage = $model->image;
+            $file = UploadedFile::getInstance($model, 'imageFile');
+
+            if ($file) {
+                $model->imageFile = $file;
+                $uploaded = $model->uploadImage();
+
+                if ($uploaded === false) {
+                    throw new HttpException(500, 'Failed to upload image');
+                }
+
+                $model->image = $uploaded;
+                $oldImagePath = Yii::getAlias('@frontend/web/uploads/courses/' . $oldImage);
+
+                if ($oldImage && file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            if ($model->save(false)) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\SluggableBehavior;
+use yii\helpers\Inflector;
 
 /**
  * This is the model class for table "courses".
@@ -23,13 +24,14 @@ use yii\behaviors\SluggableBehavior;
  * @property int $user_id
  * @property int|null $mentor_id
  * @property string|null $preview_video_link
+ * @property string|null $image
  */
 class Courses extends \yii\db\ActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-
+    public $imageFile;
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -55,15 +57,34 @@ class Courses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['preview_video_link','mentor_id'], 'default', 'value' => null],
+            [['preview_video_link','mentor_id','image'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
             [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
             [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
-            [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link'], 'string', 'max' => 255],
+            [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link','image'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
         ];
     }
+    public function uploadImage()
+    {
+        if ($this->validate(['imageFile'])) {
+            $dir = Yii::getAlias('@frontend/web/uploads/courses/');
 
+            if (!file_exists($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            $baseName = $this->slug ?: Inflector::slug($this->name_en);
+            $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->imageFile->extension;
+
+            if ($this->imageFile->saveAs($dir . $fileName)) {
+                return $fileName;
+            }
+        }
+
+        return false;
+    }
     /**
      * {@inheritdoc}
      */
@@ -85,6 +106,8 @@ class Courses extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'mentor_id' => 'Mentor ID',
             'preview_video_link' => 'Preview Video Link',
+            'image'=>'Image',
+            'imageFile'=>'Image'
         ];
     }
 

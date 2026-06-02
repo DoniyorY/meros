@@ -216,6 +216,7 @@ function translate($key)
                     </div><!-- /.col-md-8 -->
                 </div>
             </div>
+            <div class="background background-color-grey-background"></div>
         </div>
     </section><!-- /.course-list -->
 

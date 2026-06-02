@@ -37,6 +37,14 @@ use common\models\Mentors;
             <?= $form->field($model, 'preview_video_link')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6 mt-4">
+            <?= $form->field($model, 'imageFile')->fileInput() ?>
+            <?php if (!$model->isNewRecord && $model->image): ?>
+                <div class="mt-2">
+                    <?= Html::img(Yii::$app->request->hostInfo . '/uploads/courses/' . $model->image, ['class' => 'img-thumbnail', 'style' => 'max-height: 160px;', 'alt' => $model->name_en]) ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="col-md-12 mt-2">
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success w-100']) ?>
             </div>
