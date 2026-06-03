@@ -1908,7 +1908,7 @@ ul.list-links a:hover {
 
 .panel-group .panel .panel-heading h4 {
     color: #252525;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .panel-group .panel .panel-heading h4 a {
@@ -2081,7 +2081,7 @@ ul.list-links a:hover {
 
 .price-box .price {
     color: #04363f;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -4941,4 +4941,7 @@ label.error:before {
         right: -15px;
         top: inherit;
     }
+}
+.about_course_text p {
+    text-align: justify;
 }
