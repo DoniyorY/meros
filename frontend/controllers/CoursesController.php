@@ -12,7 +12,7 @@ class CoursesController extends Controller
    public function actionIndex($slug)
    {
       $courses = Courses::findOne(['slug' => $slug]);
-      $subs = SubscriptionPlans::find()->all();
+      $subs = SubscriptionPlans::findAll(['status'=>1]);
       return $this->render('no_subs', [
          'courses' => $courses,
          'subs'=> $subs

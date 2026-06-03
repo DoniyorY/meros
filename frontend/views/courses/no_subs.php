@@ -108,7 +108,7 @@ $base = Yii::$app->request->baseUrl;
                     <div class="row">
                         <?php $i=1; foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id'=>$item->id]); ?>
                         <div class="col-md-4 col-sm-12">
-                            <div class="price-box <?=($i == 2)?"recommended":''?>">
+                            <div class="price-box <?=($i == 2)?"recommended":''?>" style="padding: 20px;">
                                 <header><h3><?=$item->{"name_$lang"}?></h3></header>
                                 <div class="price"><?=Yii::$app->formatter->asDecimal($item->price,0)?> uzs</div>
                                 <figure><?php
@@ -123,8 +123,8 @@ $base = Yii::$app->request->baseUrl;
                                     <div class="panel-group" id="accordion">
                                         <?php foreach ($features as $v): $k = $v->id?>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
+                                            <div class="panel-heading" style="background: #07707a ">
+                                                <h4 class="panel-title" style="color: white; font-weight: 600">
                                                     <a data-toggle="collapse" data-parent="#accordion"
                                                        href="<?="#feature-$k"?>" class="collapsed">
                                                         <span><?=$v->{"name_$lang"}?></span>
