@@ -120,19 +120,19 @@ $base = Yii::$app->request->baseUrl;
                                 ?></figure>
                                 <a href="#" class="btn btn-large">Buy Now</a>
                                 <ul class="features">
-                                    <div class="panel-group" id="accordion">
+                                    <div class="panel-group" id="accordion-<?=$item->id?>">
                                         <?php foreach ($features as $v): $k = $v->id?>
                                         <div class="panel panel-default">
                                             <div class="panel-heading" style="background: #07707a ">
                                                 <h4 class="panel-title" style="color: white; font-weight: 600">
-                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                    <a data-toggle="collapse" data-parent="#accordion<?=$item->id?>"
                                                        href="<?="#feature-$k"?>" class="collapsed">
                                                         <span><?=$v->{"name_$lang"}?></span>
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="<?="feature-$k"?>" class="panel-collapse collapse" style="height: 0px;">
-                                                <div class="panel-body">
+                                                <div class="panel-body" style="text-align: left">
                                                     <?=$v->{"desc_$lang"}?>
                                                 </div>
                                             </div>
