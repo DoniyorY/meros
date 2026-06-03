@@ -161,7 +161,7 @@ $params = Yii::$app->params;
             <section id="footer-content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-3 col-sm-12">
+                        <div class="col-md-3 col-sm-12" style="min-height: 300px">
                             <aside class="logo">
                                 <a href="<?=Yii::$app->homeUrl?>">
                                     <img src="<?= "$base/logo-white.png" ?>" class="vertical-center" style="width: 100%;">

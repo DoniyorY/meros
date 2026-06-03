@@ -4945,3 +4945,17 @@ label.error:before {
 .about_course_text p {
     text-align: justify;
 }
+#package-include .package-accordion .panel{
+    border-width: 0 !important;
+}
+#package-include .package-accordion .panel .panel-title a{
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+#package-include .package-accordion .panel .panel-heading:before{
+    content: "\f063" ;
+    color: black ;
+}
+#package-include .panel .panel-collapse .panel-body{
+    border-top: none !important;
+}

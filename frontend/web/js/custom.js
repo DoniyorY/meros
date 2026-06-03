@@ -154,7 +154,7 @@ $(document).ready(function($) {
 //  Equal Rows
 
     if(document.documentElement.clientWidth > 991) {
-        $('.row').equalHeights();
+        //$('.row').equalHeights();
     }
 
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
