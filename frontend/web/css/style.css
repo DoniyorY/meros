@@ -1897,8 +1897,8 @@ ul.list-links a:hover {
     line-height: 1;
     text-transform: none;
     bottom: 3px;
-    color: #04363f;
-    content: "\f059";
+    color: #fff;
+    content: "\f00c";
     display: inline-block;
     font-size: 12px;
     position: absolute;
