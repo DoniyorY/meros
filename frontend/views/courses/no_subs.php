@@ -125,7 +125,7 @@ $base = Yii::$app->request->baseUrl;
                                         <div class="panel panel-default">
                                             <div class="panel-heading" style="background: #07707a ">
                                                 <h4 class="panel-title" style="color: white; font-weight: 600">
-                                                    <a data-toggle="collapse" data-parent="#accordion<?=$item->id?>"
+                                                    <a data-toggle="collapse" data-parent="#accordion-<?=$item->id?>"
                                                        href="<?="#feature-$k"?>" class="collapsed">
                                                         <span><?=$v->{"name_$lang"}?></span>
                                                     </a>
