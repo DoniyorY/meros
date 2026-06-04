@@ -34,25 +34,25 @@ $params = Yii::$app->params;
     <body class="page-homepage-carousel">
     <?php $this->beginBody() ?>
     <div class="wrapper">
-        <!-- Header -->
-        <div class="navigation-wrapper">
-            <div class="secondary-navigation-wrapper">
-                <div class="container">
-                    <div class="navigation-contact pull-left">Call Us: <span
-                                class="opacity-70"><?= $params['phone'] ?></span>
-                    </div>
-                    <ul class="secondary-navigation list-unstyled pull-right">
-                        <?php if (!Yii::$app->user->isGuest): ?>
-                            <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
-                            <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
-                            <li><a href="my-account.html#tab-change-password">Change Password</a></li>
-                            <li><a href="index.html">Log Out</a></li>
-                        <?php else:?>
-                        <li><a href="<?= Url::to(['site/login']) ?>">Login</a></li>
-                        <?php endif; ?>
-                    </ul>
+        <div class="secondary-navigation-wrapper">
+            <div class="container">
+                <div class="navigation-contact pull-left" style="color: white">Call Us: <span>
+                        <?= $params['phone'] ?></span>
                 </div>
-            </div><!-- /.secondary-navigation -->
+                <ul class="secondary-navigation list-unstyled pull-right">
+                    <?php if (!Yii::$app->user->isGuest): ?>
+                        <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
+                        <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
+                        <li><a href="my-account.html#tab-change-password">Change Password</a></li>
+                        <li><a href="index.html">Log Out</a></li>
+                    <?php else: ?>
+                        <li><a href="<?= Url::to(['site/login']) ?>" style="color: white">Login</a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div><!-- /.secondary-navigation -->
+        <!-- Header -->
+        <div class="navigation-wrapper" style="position: sticky; top: 0; z-index: 99;">
             <div class="primary-navigation-wrapper">
                 <header class="navbar" id="top" role="banner">
                     <div class="container-fluid">
@@ -92,28 +92,28 @@ $params = Yii::$app->params;
                                     <a href="#" class="has-child no-link">ABOUT US</a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
-                                            <a href="<?=Url::to(['site/about'])?>">About Meros</a>
+                                            <a href="<?= Url::to(['site/about']) ?>">About Meros</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/contact']);?>">Contact Us</a>
+                                            <a href="<?= Url::to(['site/contact']); ?>">Contact Us</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/team'])?>">Meet the Team</a>
+                                            <a href="<?= Url::to(['site/team']) ?>">Meet the Team</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/clients'])?>">Our Clients</a>
+                                            <a href="<?= Url::to(['site/clients']) ?>">Our Clients</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/partners'])?>">Our Partners</a>
+                                            <a href="<?= Url::to(['site/partners']) ?>">Our Partners</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/policy'])?>">Environmental Policy</a>
+                                            <a href="<?= Url::to(['site/policy']) ?>">Environmental Policy</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/faq-students'])?>">FAQ - Students</a>
+                                            <a href="<?= Url::to(['site/faq-students']) ?>">FAQ - Students</a>
                                         </li>
                                         <li>
-                                            <a href="<?=Url::to(['site/faq-org'])?>">FAQs - Organisations</a>
+                                            <a href="<?= Url::to(['site/faq-org']) ?>">FAQs - Organisations</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -122,9 +122,7 @@ $params = Yii::$app->params;
                     </div><!-- /.container -->
                 </header><!-- /.navbar -->
             </div><!-- /.primary-navigation -->
-            <div class="background">
-                <img src="<?= "$base/" ?>img/background-city.png" alt="background">
-            </div>
+            <div class="background"></div>
         </div>
         <!-- end Header -->
 
@@ -163,8 +161,9 @@ $params = Yii::$app->params;
                     <div class="row">
                         <div class="col-md-3 col-sm-12" style="min-height: 300px">
                             <aside class="logo">
-                                <a href="<?=Yii::$app->homeUrl?>">
-                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center" style="width: 100%;">
+                                <a href="<?= Yii::$app->homeUrl ?>">
+                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center"
+                                         style="width: 100%;">
                                 </a>
                             </aside>
                         </div><!-- /.col-md-3 -->
@@ -172,15 +171,16 @@ $params = Yii::$app->params;
                             <aside>
                                 <header><h4>Contact Us</h4></header>
                                 <address>
-                                    <strong><?=Yii::$app->name?></strong>
+                                    <strong><?= Yii::$app->name ?></strong>
                                     <br>
                                     <span>Uzbekistan Samarkand</span>
                                     <br>
                                     <span>Beruniy street, 1/5</span>
                                     <br>
-                                    <abbr title="Telephone">Phone:</abbr> <?=$params['phone']?>
+                                    <abbr title="Telephone">Phone:</abbr> <?= $params['phone'] ?>
                                     <br>
-                                    <abbr title="Email">Email:</abbr> <a href="mailto:<?=$params['adminEmail']?>"><?=$params['adminEmail']?></a>
+                                    <abbr title="Email">Email:</abbr> <a
+                                            href="mailto:<?= $params['adminEmail'] ?>"><?= $params['adminEmail'] ?></a>
                                 </address>
                             </aside>
                         </div><!-- /.col-md-3 -->
@@ -200,7 +200,7 @@ $params = Yii::$app->params;
                         <div class="col-md-3 col-sm-4">
                             <aside>
                                 <header><h4>About Meros</h4></header>
-                                <?=Yii::$app->params['about_short'][$lang]?>
+                                <?= Yii::$app->params['about_short'][$lang] ?>
                             </aside>
                         </div><!-- /.col-md-3 -->
                     </div><!-- /.row -->
@@ -219,7 +219,7 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
-    <script src="<?="$base/js/jquery-2.1.0.min.js"?>"></script>
+    <script src="<?= "$base/js/jquery-2.1.0.min.js" ?>"></script>
     <?php $this->endBody() ?>
     </body>
     </html>

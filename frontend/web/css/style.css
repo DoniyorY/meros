@@ -313,14 +313,14 @@ ul.list-links a:hover {
     top: 0;
     width: 100%;
     z-index: -1;
-    overflow: hidden;
+    
 }
 
 .block {
     padding-top: 10px;
     padding-bottom: 40px;
     position: relative;
-    overflow: hidden;
+    
 }
 
 .blog-listing-post {
@@ -330,7 +330,7 @@ ul.list-links a:hover {
 .blog-listing-post .blog-thumbnail {
     height: 210px; /*140*/
     width: 100%;
-    overflow: hidden;
+    
     position: relative;
     text-align: center;
 }
@@ -460,7 +460,7 @@ ul.list-links a:hover {
 .calendar .fc-view-month .fc-event-inner {
     margin-bottom: 10px;
     height: 35px;
-    overflow: hidden;
+    
 }
 
 .calendar .fc-view-month .fc-event-inner:after {
@@ -791,7 +791,7 @@ ul.list-links a:hover {
 
 .course-image, .event-image {
     height: 165px;
-    overflow: hidden;
+    
     text-align: center;
     width: 100%;
 }
@@ -988,7 +988,7 @@ ul.list-links a:hover {
 
 .course-thumbnail .image {
     width: 100%;
-    overflow: hidden;
+    
     height: 230px;
     text-align: center;
 }
@@ -1156,7 +1156,7 @@ ul.list-links a:hover {
     color: #fff;
     float: left;
     height: 70px;
-    overflow: hidden;
+    
     width: 70px;
 }
 
@@ -1205,7 +1205,7 @@ ul.list-links a:hover {
 .events.images .event .event-thumbnail .event-image {
     height: 165px;
     width: 165px;
-    overflow: hidden;
+    
     text-align: center;
     position: relative;
 }
@@ -1287,7 +1287,7 @@ ul.list-links a:hover {
 .featured-course .image {
     border-bottom: 5px solid #04363f;
     width: 100%;
-    overflow: hidden;
+    
     height: 263px;
     text-align: center;
 }
@@ -1362,7 +1362,7 @@ ul.list-links a:hover {
     margin-right: 7px;
     height: 100px;
     width: 100px;
-    overflow: hidden;
+    
     text-align: center;
     position: relative;
     padding: inherit;
@@ -1479,7 +1479,7 @@ ul.list-links a:hover {
     -webkit-border-radius: 0px;
     border-radius: 0px;
     height: 80vh; /*600px*/
-    overflow: hidden;
+    
     border: none;
     margin: 0;
 }
@@ -1657,7 +1657,7 @@ ul.list-links a:hover {
 .latest-course .image {
     float: left;
     width: 70px;
-    overflow: hidden;
+    
     height: 70px;
     text-align: center;
 }
@@ -2030,7 +2030,7 @@ ul.list-links a:hover {
 }
 
 .profile-avatar {
-    overflow: hidden;
+    
     text-align: center;
     width: 100px;
 }
@@ -2363,7 +2363,7 @@ th.header:before {
   W
 ****/
 .wrapper {
-    overflow: hidden;
+   /* */
 }
 
 /****
@@ -2675,61 +2675,62 @@ th.header:before {
 
 .navigation-wrapper .background {
     background-color: #4bc0ca; /*#04363f*/
-    overflow: hidden;
+    
 }
 
-.navigation-wrapper .secondary-navigation-wrapper {
-    background-color: rgba(0, 0, 0, 0.1);
+.secondary-navigation-wrapper {
+    background-color: #43acb5;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     /*padding: 15px 0;*/
     position: relative;
     height: 40px;
     line-height: 40px;
-    overflow: hidden;
+    
 }
 
-.navigation-wrapper .secondary-navigation-wrapper ul {
+.secondary-navigation-wrapper ul {
     margin-bottom: 0;
     float: right;
     display: inline-block;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper ul li {
+.secondary-navigation-wrapper ul li {
     display: inline-block;
     margin-left: 20px;
     padding: inherit;
+    
 }
 
-.navigation-wrapper .secondary-navigation-wrapper ul li i {
+.secondary-navigation-wrapper ul li i {
     color: #04363f;
     margin-right: 5px;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search {
+.secondary-navigation-wrapper .search {
     float: right;
     display: inline-block;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search .input-group {
+.secondary-navigation-wrapper .search .input-group {
     -moz-transition: 0.8s;
     -o-transition: 0.8s;
     -webkit-transition: 0.8s;
     transition: 0.8s;
     margin-bottom: 0;
     width: 1px;
-    overflow: hidden;
+    
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search .input-group:hover {
+.secondary-navigation-wrapper .search .input-group:hover {
     width: 240px;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search .input-group:hover input {
+.secondary-navigation-wrapper .search .input-group:hover input {
     margin-left: 20px;
     right: 0;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search .input-group input {
+.secondary-navigation-wrapper .search .input-group input {
     -moz-transition: 0.8s;
     -o-transition: 0.8s;
     -webkit-transition: 0.8s;
@@ -2739,7 +2740,7 @@ th.header:before {
     position: relative;
 }
 
-.navigation-wrapper .secondary-navigation-wrapper .search .input-group .btn {
+.secondary-navigation-wrapper .search .input-group .btn {
     margin-left: 0 !important;
     padding: 8px 12px;
     position: relative;
@@ -2803,7 +2804,7 @@ th.header:before {
     width: 3000px;
     position: absolute;
     top: 158px;
-    overflow: hidden;
+    
     right: -80px;
     z-index: 0;
 }*/
@@ -3429,7 +3430,7 @@ label.error:before {
 
 .btn-input .btn.form-control span:first-child {
     left: 10px;
-    overflow: hidden;
+    
     position: absolute;
     right: 25px;
 }
@@ -3735,7 +3736,7 @@ label.error:before {
 .page-landing-page #homepage-slider {
     margin-top: 70px;
     height: 750px;
-    overflow: hidden;
+    
     text-align: center;
     position: relative;
 }
@@ -3910,7 +3911,7 @@ label.error:before {
     z-index: 1;
 }
 
-.page-landing-page .navigation-wrapper .secondary-navigation-wrapper {
+.page-landing-page .secondary-navigation-wrapper {
     display: none;
 }
 
@@ -4030,7 +4031,7 @@ label.error:before {
     margin-left: 15px;
 }
 
-.page-microsite .navigation-wrapper .secondary-navigation-wrapper {
+.page-microsite .secondary-navigation-wrapper {
     background-color: whitesmoke;
     color: #252525;
     font-size: 11px;
@@ -4653,7 +4654,7 @@ label.error:before {
         background-color: #000f1f !important;
         height: 0;
         min-width: inherit;
-        overflow: hidden;
+        
         position: relative !important;
         top: 0px !important;
     }
@@ -4701,7 +4702,7 @@ label.error:before {
         max-height: inherit;
         margin-bottom: -15px;
         position: relative;
-        overflow: hidden;
+        
         margin-top: 10px;
         padding-bottom: 5px;
         position: relative;

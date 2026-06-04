@@ -11,6 +11,16 @@ $base = Yii::$app->request->baseUrl;
     <div class="flexslider">
         <ul class="slides">
             <li class="slide">
+                <?php if ($courses->preview_video_link):?>
+                <iframe src="https://www.youtube.com/embed/<?=$courses->preview_video_link?>"
+                        title="YouTube video player" frameborder="0" style="    position: absolute;
+    width: 800px;
+    height: 450px;
+    right: 160px;
+    top: 180px;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <?php endif;?>
                 <figure>
                     <div class="slide-wrapper">
                         <div class="inner">
@@ -26,6 +36,7 @@ $base = Yii::$app->request->baseUrl;
                     </div><!-- /.wrapper -->
                 </figure>
                 <img src="<?= "$base/uploads/courses/$courses->image" ?>">
+                
             </li><!-- /.slide -->
         </ul><!-- /.slides -->
     </div><!-- /.flexslider -->
@@ -109,11 +120,12 @@ $base = Yii::$app->request->baseUrl;
                                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                                      aria-labelledby="headingThree">
                                     <div class="panel-body">
-                                        This English for doctors course is also excellent preparation for OET Medicine,
+                                        This English for doctors course is also excellent preparation for <strong>OET
+                                            Medicine</strong>,
                                         required by regulatory bodies for doctors registering to work in
                                         English-speaking countries such as the US, UK, Australia, Canada and Ireland. It
                                         provides the language foundation that those studying for OET Medicine need. The
-                                        course can be combined with SLC’s Reach OET B Medicine.
+                                        course can be combined with SLC’s <strong>Reach OET B Medicine</strong>.
                                     </div>
                                 </div>
                             </div>
@@ -200,17 +212,44 @@ $base = Yii::$app->request->baseUrl;
         </div>
     </section><!-- /#instructors -->
 
-    <hr>
-
     <section id="tickets">
         <div class="block">
             <div class="container-fluid">
                 <div class="pricing">
                     <div class="row">
+                        <div class="col-md-12 text-center">
+                            Choose the right plan for you
+                        </div>
+                        <div class="col-12 text-center">
+                            <h1>Subscribe to your <?= $courses->{"name_$lang"} ?> course today!</h1>
+                        </div>
+                        <div class="row" style="margin-top:20px; margin-bottom: 50px;">
+                            <div class="col-md-12" style="display: flex; justify-content: space-between; padding-right: 400px; padding-left: 400px;">
+                                <div class="secure-icon" style="display: flex; align-items: center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-shield" viewBox="0 0 16 16">
+                                        <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                                    </svg>
+                                    <span style="margin-left: 10px; font-size: 18px;">Secure Payment</span>
+                                </div>
+                                <div class="payme-icon" style="display: flex; align-items: center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-shield" viewBox="0 0 16 16">
+                                        <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                                    </svg>
+                                    <span style="margin-left: 10px; font-size: 18px;">Payme Payments</span>
+                                </div>
+                                <div class="online-icon" style="display: flex; align-items: center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
+                                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855q-.215.403-.395.872c.705.157 1.472.257 2.282.287zM4.249 3.539q.214-.577.481-1.078a7 7 0 0 1 .597-.933A7 7 0 0 0 3.051 3.05q.544.277 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9 9 0 0 1-1.565-.667A6.96 6.96 0 0 0 1.018 7.5zm1.4-2.741a12.3 12.3 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332M8.5 5.09V7.5h2.99a12.3 12.3 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.6 13.6 0 0 1 7.5 10.91V8.5zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741zm-3.282 3.696q.18.469.395.872c.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a7 7 0 0 1-.598-.933 9 9 0 0 1-.481-1.079 8.4 8.4 0 0 0-1.198.49 7 7 0 0 0 2.276 1.522zm-1.383-2.964A13.4 13.4 0 0 1 3.508 8.5h-2.49a6.96 6.96 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667m6.728 2.964a7 7 0 0 0 2.275-1.521 8.4 8.4 0 0 0-1.197-.49 9 9 0 0 1-.481 1.078 7 7 0 0 1-.597.933M8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855q.216-.403.395-.872A12.6 12.6 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.96 6.96 0 0 0 14.982 8.5h-2.49a13.4 13.4 0 0 1-.437 3.008M14.982 7.5a6.96 6.96 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008zM11.27 2.461q.266.502.482 1.078a8.4 8.4 0 0 0 1.196-.49 7 7 0 0 0-2.275-1.52c.218.283.418.597.597.932m-.488 1.343a8 8 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
+                                    </svg>
+                                    <span style="font-size: 18px; margin-left: 10px;">100% Online</span>
+                                </div>
+                            </div>
+                        </div>
                        <?php $i = 1;
                        foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
                            <div class="col-md-4 col-sm-12">
-                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?>" style="padding: 20px;">
+                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?>"
+                                    style="padding: 20px; background: #fff; border-radius: 30px">
                                    <header><h3><?= $item->{"name_$lang"} ?></h3></header>
                                    <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?> uzs</div>
                                    <figure><?php
@@ -250,7 +289,7 @@ $base = Yii::$app->request->baseUrl;
                     </div><!-- /.row -->
                 </div><!-- /.pricing -->
             </div><!-- /.container -->
-            <div class="background"></div><!-- /.background -->
+            <div class="background background-color-grey-background"></div><!-- /.background -->
         </div><!-- /.block -->
     </section><!-- /#tickets -->
 </div>
