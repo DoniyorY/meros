@@ -49,7 +49,7 @@ $params = Yii::$app->params;
          'name_en',
          //'name_uz',
          //'desc_ru:ntext',
-         'desc_en:ntext',
+         //'desc_en:ntext',
          //'desc_uz:ntext',
          //'created_at',
          [
