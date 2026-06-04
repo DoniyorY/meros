@@ -31,6 +31,7 @@ class Posts extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
     public $imageFile;
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -41,6 +42,7 @@ class Posts extends \yii\db\ActiveRecord
             ]
         ]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -58,8 +60,8 @@ class Posts extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => 1],
             [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz', 'created_at', 'updated_at', 'user_id', 'image'], 'required'],
             [['category_id', 'created_at', 'updated_at', 'status', 'user_id'], 'integer'],
-            [['desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz','slug'], 'string'],
-            [['name_ru', 'name_en', 'name_uz', 'image','slug'], 'string', 'max' => 255],
+            [['desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz', 'slug'], 'string'],
+            [['name_ru', 'name_en', 'name_uz', 'image', 'slug'], 'string', 'max' => 255],
         ];
     }
 
@@ -86,6 +88,11 @@ class Posts extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'image' => 'Image',
         ];
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(PostCategory::class, ['id' => 'category_id']);
     }
 
 }

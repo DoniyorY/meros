@@ -7,6 +7,7 @@ use common\models\search\PostsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -70,7 +71,19 @@ class PostsController extends Controller
         $model = new Posts();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_at = time();
+                $model->updated_at = time();
+                $model->user_id = \Yii::$app->user->id;
+
+                $file = UploadedFile::getInstance($model, 'imageFile');
+                if ($file) {
+                    $uploads = \common\models\UploadsImage::uploadImage($model, $file, 'posts');
+                    if ($uploads){
+                        $model->image=$uploads;
+                    }
+                }
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

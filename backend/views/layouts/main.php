@@ -30,42 +30,47 @@ AppAsset::register($this);
     <header>
         <?php
         NavBar::begin([
-                'brandLabel' => Yii::$app->name,
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                        'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-                ],
+            'brandLabel' => Yii::$app->name,
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            ],
         ]);
         $menuItems = [
-                ['label' => 'Course Settings', 'items' => [
-                        ['label' => 'Course Categories', 'url' => ['/course-category']],
-                        ['label' => 'Courses', 'url' => ['/courses']],
-                        ['label' => 'Course Packs', 'url' => ['/course-packs']],
-                ]],
-                ['label' => 'Mentors', 'url' => ['/mentors']],
-                ['label' => 'Subscriptions', 'url' => ['/subscription-plans']],
-                ['label' => 'Settings', 'items' => [
-                        ['label' => 'Banner', 'url' => ['/banner']],
-                        ['label' => 'Users', 'url' => ['/user']],
-                        ['label' => 'Contacts', 'url' => ['/contacts']],
-                ]]
+            ['label' => 'Course Settings', 'items' => [
+                ['label' => 'Course Categories', 'url' => ['/course-category']],
+                ['label' => 'Courses', 'url' => ['/courses']],
+                ['label' => 'Course Packs', 'url' => ['/course-packs']],
+            ]],
+            ['label' => 'Mentors', 'url' => ['/mentors']],
+            ['label' => 'Subscriptions', 'url' => ['/subscription-plans']],
+            ['label' => 'News', 'items' => [
+                ['label' => 'News Category', 'url' => ['/post-category']],
+                ['label' => 'News', 'url' => ['/posts']],
+
+            ]],
+            ['label' => 'Settings', 'items' => [
+                ['label' => 'Banner', 'url' => ['/banner']],
+                ['label' => 'Users', 'url' => ['/user']],
+                ['label' => 'Contacts', 'url' => ['/contacts']],
+            ]]
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
         }
         echo Nav::widget([
-                'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-                'items' => $menuItems,
+            'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
+            'items' => $menuItems,
         ]);
         if (Yii::$app->user->isGuest) {
             echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
         } else {
             echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-                    . Html::submitButton(
-                            'Logout (' . Yii::$app->user->identity->username . ')',
-                            ['class' => 'btn btn-link logout text-decoration-none']
-                    )
-                    . Html::endForm();
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout text-decoration-none']
+                )
+                . Html::endForm();
         }
         NavBar::end();
         ?>
@@ -74,7 +79,7 @@ AppAsset::register($this);
     <main role="main" class="flex-shrink-0">
         <div class="container-fluid">
             <?= Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= Alert::widget() ?>
             <?= $content ?>

@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\Url;
+
 $this->title = Yii::$app->name;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
@@ -16,26 +18,32 @@ function translate($key)
 <!-- Homepage Slider -->
 <section id="homepage-slider">
     <div class="flexslider">
-        <ul class="slides">
-            <?php foreach ($banner as $item):?>
-            <li class="slide">
-                <figure>
-                    <div class="slide-wrapper">
-                        <div class="inner">
-                            <div class="container" style="display: none">
-                                <h2><?=$item->{"name_$lang"}?></h2>
-                                <h1><?=$item->{"desc_$lang"}?></h1>
-                                <?php if ($item->link):?>
-                                <div><a href="<?=\yii\helpers\Url::to([$item->link])?>" class="btn">View Details</a></div>
-                                <?php endif;?>
-                            </div>
-                        </div><!-- /.inner -->
-                    </div><!-- /.wrapper -->
-                </figure>
-                <img src="<?= "$base/uploads/banners/$item->image" ?>">
-            </li>
-            <?php endforeach;?>
-        </ul>
+        <div class="row">
+            <div class="col-12">
+                <ul class="slides">
+                    <?php foreach ($banner as $item): ?>
+                        <li class="slide">
+                            <figure>
+                                <div class="slide-wrapper">
+                                    <div class="inner">
+                                        <div class="container" style="display: none">
+                                            <h2><?= $item->{"name_$lang"} ?></h2>
+                                            <h1><?= $item->{"desc_$lang"} ?></h1>
+                                            <?php if ($item->link): ?>
+                                                <div><a href="<?= \yii\helpers\Url::to([$item->link]) ?>" class="btn">View
+                                                        Details</a></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div><!-- /.inner -->
+                                </div><!-- /.wrapper -->
+                            </figure>
+                            <img src="<?= "$base/uploads/banners/$item->image" ?>">
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </section>
 <!-- end Homepage Slider -->
@@ -126,23 +134,25 @@ function translate($key)
                 <div class="author-carousel">
                     <div class="author has-dark-background">
                         <blockquote>
-                            <figure class="author-picture"><img src="<?= "$base/" ?>img/student-testimonial.jpg" alt="">
-                            </figure>
                             <article class="paragraph-wrapper">
                                 <div class="inner">
-                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum
-                                        semper quam. Fusce in interdum tortor.
-                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.
+                                    <header>
+                                        I would recommended this course to anyone who wants work in England. It is
+                                        an easier way to introduce everyone in the difficult pathway to work in the
+                                        environment where your language is not English. And, it is necessary to
+                                        recognize how to interact with the patient, or how to show empathy and
+                                        respect for their beliefs.
+
                                     </header>
-                                    <footer>Claire Doe</footer>
+                                    <footer>Dr Amarylis Cooper</footer>
                                 </div>
                             </article>
                         </blockquote>
                     </div><!-- /.author -->
                     <div class="author has-dark-background">
                         <blockquote>
-                            <figure class="author-picture"><img src="<?= "$base/" ?>img/student-testimonial.jpg" alt="">
-                            </figure>
+                            <!--<figure class="author-picture"><img src="<?php /*= "$base/" */?>img/student-testimonial.jpg" alt="">
+                            </figure>-->
                             <article class="paragraph-wrapper">
                                 <div class="inner">
                                     <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum
@@ -170,46 +180,39 @@ function translate($key)
                             <section class="blog-listing" id="blog-listing">
                                 <header><h1>Blog / News</h1></header>
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-6" style="min-height: 390px;">
-                                        <article class="blog-listing-post">
-                                            <figure class="blog-thumbnail">
-                                                <figure class="blog-meta"><span class="fa fa-file-text-o"></span>08-24-2014</figure>
-                                                <div class="image-wrapper"><a href="blog-detail.html"><img src="<?="$base/"?>img/blog-01.jpg"></a></div>
-                                            </figure>
-                                            <aside>
-                                                <header>
-                                                    <a href="blog-detail.html"><h3>Conservatory Exhibit: The garden of india a country and culture revealed</h3></a>
-                                                </header>
-                                                <div class="description">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et urna fringilla
-                                                        volutpat elit non, tristique lectus. Nam blandit odio nisl, ac malesuada lacus fermentum sit amet.
-                                                        Vestibulum vitae aliquet felis, ornare feugiat elit. Nulla varius condimentum elit.
-                                                    </p>
-                                                </div>
-                                                <a href="blog-detail.html" class="read-more stick-to-bottom">Read More</a>
-                                            </aside>
-                                        </article><!-- /article -->
-                                    </div><!-- /.col-md-6 -->
-                                    <div class="col-md-6 col-sm-6" style="min-height: 390px;">
-                                        <article class="blog-listing-post">
-                                            <figure class="blog-thumbnail">
-                                                <figure class="blog-meta"><span class="fa fa-file-text-o"></span>08-24-2014</figure>
-                                                <div class="image-wrapper"><a href="blog-detail.html"><img src="<?="$base/"?>img/blog-02.jpg"></a></div>
-                                            </figure>
-                                            <aside>
-                                                <header>
-                                                    <a href="blog-detail.html"><h3>Pellentesque dignissim fermentum nunc vel ultricies. Vivamus nec</h3></a>
-                                                </header>
-                                                <div class="description">
-                                                    <p>Nulla in mi sed tellus porta mollis vitae ut libero. Nam id tempor augue, id scelerisque nunc.
-                                                        Mauris varius tortor in nibh dictum auctor. Cum sociis natoque penatibus et magnis dis parturient
-                                                        montes, nascetur ridiculus mus. Proin scelerisque eros mi, et convallis mi pretium id.
-                                                    </p>
-                                                </div>
-                                                <a href="blog-detail.html" class="read-more stick-to-bottom">Read More</a>
-                                            </aside>
-                                        </article><!-- /article -->
-                                    </div><!-- /.col-md-6 -->
+                                    <?php foreach ($news as $item): ?>
+                                        <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                            <article class="blog-listing-post">
+                                                <figure class="blog-thumbnail">
+                                                    <figure class="blog-meta"><span
+                                                                class="fa fa-file-text-o"></span><?= date('d.m.Y', $item->created_at) ?>
+                                                    </figure>
+                                                    <div class="image-wrapper">
+                                                        <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
+                                                            <img src="<?= "$base/uploads/posts/$item->image" ?>" style="height: 330px; object-fit: cover">
+                                                        </a>
+                                                    </div>
+                                                </figure>
+                                                <aside>
+                                                    <header>
+                                                        <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
+                                                            <h3>
+                                                                <?=$item->{"name_$lang"}?>
+                                                            </h3>
+                                                        </a>
+                                                    </header>
+                                                    <div class="description">
+                                                        <p>
+                                                            <?=$item->{"desc_$lang"}?>
+                                                        </p>
+                                                    </div>
+                                                    <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>" class="read-more stick-to-bottom">
+                                                        Read More
+                                                    </a>
+                                                </aside>
+                                            </article><!-- /article -->
+                                        </div><!-- /.col-md-6 -->
+                                    <?php endforeach; ?>
                                 </div><!-- /.row -->
                             </section><!-- /.blog-listing -->
                         </div><!-- /#page-main -->

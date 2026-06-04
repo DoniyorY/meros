@@ -313,14 +313,14 @@ ul.list-links a:hover {
     top: 0;
     width: 100%;
     z-index: -1;
-    
+
 }
 
 .block {
     padding-top: 10px;
     padding-bottom: 40px;
     position: relative;
-    
+
 }
 
 .blog-listing-post {
@@ -328,9 +328,9 @@ ul.list-links a:hover {
 }
 
 .blog-listing-post .blog-thumbnail {
-    height: 210px; /*140*/
+    height: 330px; /*140*/
     width: 100%;
-    
+
     position: relative;
     text-align: center;
 }
@@ -338,7 +338,7 @@ ul.list-links a:hover {
 .blog-listing-post .blog-thumbnail .blog-meta {
     background-color: #252525;
     color: white;
-    bottom: 0;
+    bottom: 15px;
     left: 0;
     padding: 10px;
     position: absolute;
@@ -460,7 +460,7 @@ ul.list-links a:hover {
 .calendar .fc-view-month .fc-event-inner {
     margin-bottom: 10px;
     height: 35px;
-    
+
 }
 
 .calendar .fc-view-month .fc-event-inner:after {
@@ -791,7 +791,7 @@ ul.list-links a:hover {
 
 .course-image, .event-image {
     height: 165px;
-    
+
     text-align: center;
     width: 100%;
 }
@@ -988,7 +988,7 @@ ul.list-links a:hover {
 
 .course-thumbnail .image {
     width: 100%;
-    
+
     height: 230px;
     text-align: center;
 }
@@ -1156,7 +1156,7 @@ ul.list-links a:hover {
     color: #fff;
     float: left;
     height: 70px;
-    
+
     width: 70px;
 }
 
@@ -1205,7 +1205,7 @@ ul.list-links a:hover {
 .events.images .event .event-thumbnail .event-image {
     height: 165px;
     width: 165px;
-    
+
     text-align: center;
     position: relative;
 }
@@ -1287,7 +1287,7 @@ ul.list-links a:hover {
 .featured-course .image {
     border-bottom: 5px solid #04363f;
     width: 100%;
-    
+
     height: 263px;
     text-align: center;
 }
@@ -1362,7 +1362,7 @@ ul.list-links a:hover {
     margin-right: 7px;
     height: 100px;
     width: 100px;
-    
+
     text-align: center;
     position: relative;
     padding: inherit;
@@ -1479,7 +1479,7 @@ ul.list-links a:hover {
     -webkit-border-radius: 0px;
     border-radius: 0px;
     height: 80vh; /*600px*/
-    
+
     border: none;
     margin: 0;
 }
@@ -1657,7 +1657,7 @@ ul.list-links a:hover {
 .latest-course .image {
     float: left;
     width: 70px;
-    
+
     height: 70px;
     text-align: center;
 }
@@ -2030,7 +2030,7 @@ ul.list-links a:hover {
 }
 
 .profile-avatar {
-    
+
     text-align: center;
     width: 100px;
 }
@@ -2675,7 +2675,7 @@ th.header:before {
 
 .navigation-wrapper .background {
     background-color: #4bc0ca; /*#04363f*/
-    
+
 }
 
 .secondary-navigation-wrapper {
@@ -2685,7 +2685,7 @@ th.header:before {
     position: relative;
     height: 40px;
     line-height: 40px;
-    
+
 }
 
 .secondary-navigation-wrapper ul {
@@ -2698,7 +2698,6 @@ th.header:before {
     display: inline-block;
     margin-left: 20px;
     padding: inherit;
-    
 }
 
 .secondary-navigation-wrapper ul li i {
@@ -2718,7 +2717,7 @@ th.header:before {
     transition: 0.8s;
     margin-bottom: 0;
     width: 1px;
-    
+
 }
 
 .secondary-navigation-wrapper .search .input-group:hover {
@@ -2804,7 +2803,7 @@ th.header:before {
     width: 3000px;
     position: absolute;
     top: 158px;
-    
+
     right: -80px;
     z-index: 0;
 }*/
@@ -3430,7 +3429,7 @@ label.error:before {
 
 .btn-input .btn.form-control span:first-child {
     left: 10px;
-    
+
     position: absolute;
     right: 25px;
 }
@@ -3736,7 +3735,7 @@ label.error:before {
 .page-landing-page #homepage-slider {
     margin-top: 70px;
     height: 750px;
-    
+
     text-align: center;
     position: relative;
 }
@@ -4654,7 +4653,7 @@ label.error:before {
         background-color: #000f1f !important;
         height: 0;
         min-width: inherit;
-        
+
         position: relative !important;
         top: 0px !important;
     }
@@ -4702,7 +4701,7 @@ label.error:before {
         max-height: inherit;
         margin-bottom: -15px;
         position: relative;
-        
+
         margin-top: 10px;
         padding-bottom: 5px;
         position: relative;

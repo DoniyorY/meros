@@ -12,14 +12,17 @@ use yii\grid\GridView;
 
 $this->title = 'Post Categories';
 $this->params['breadcrumbs'][] = $this->title;
+$params = Yii::$app->params;
 ?>
 <div class="post-category-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Post Category', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+        <div class="col-md-8">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="col-md-4">
+            <?= Html::a('Create Post Category', ['create'], ['class' => 'btn btn-success w-100']) ?>
+        </div>
+    </div>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -33,7 +36,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'name_ru',
             'name_en',
             'name_uz',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($data) {
+                    if ($data->status == 0) {
+                        return Html::a('Inactive', ['status', 'id' => $data->id, 'status' => 1], ['class' => 'btn w-100 btn-sm btn-warning', 'data' => [
+                            'confirm' => 'Are you sure you want to inactivate this subscription plan?',
+                            'method' => 'post',
+                        ]]);
+                    } else {
+                        return Html::a('Active', ['status', 'id' => $data->id, 'status' => 0], ['class' => 'btn w-100 btn-sm btn-success', 'data' => [
+                            'confirm' => 'Are you sure you want to activate this subscription plan?',
+                            'method' => 'post',
+                        ]]);
+                    }
+                },
+                'format' => 'raw',
+                'filter' => $params['status'],
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, PostCategory $model, $key, $index, $column) {

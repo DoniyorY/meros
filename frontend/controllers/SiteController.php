@@ -12,6 +12,8 @@ use common\models\LoginForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Banner;
+use common\models\Posts;
+
 /**
  * Site controller
  */
@@ -72,9 +74,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $banner = Banner::findAll(['status'=>Banner::STATUS_ACTIVE]);
+        $news = Posts::findAll(['status'=>1]);
+
         return $this->render('index',[
-            'banner'=>$banner
+            'banner'=>$banner,
+            'news'=>$news
         ]);
+
     }
 
     /**

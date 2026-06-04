@@ -46,6 +46,14 @@ class PostCategoryController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionStatus($id, $status)
+    {
+        $model = $this->findModel($id);
+        $model->status = $status;
+        $model->save(false);
+        \Yii::$app->session->setFlash('success', 'Status Changed Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
 
     /**
      * Displays a single PostCategory model.
