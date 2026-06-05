@@ -178,7 +178,7 @@ function translate($key)
                     <div class="col-md-12">
                         <div id="page-main">
                             <section class="blog-listing" id="blog-listing">
-                                <header><h1>Blog / News</h1></header>
+                                <header><h1>News</h1></header>
                                 <div class="row">
                                     <?php foreach ($news as $item): ?>
                                         <div class="col-md-6 col-sm-6" style="min-height: 390px;">
@@ -234,16 +234,13 @@ function translate($key)
                         </header>
                         <div class="section-content">
                             <div class="logos">
-                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-01.png"
-                                                                  alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-02.png"
-                                                                  alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-03.png"
-                                                                  alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-04.png"
-                                                                  alt=""></a></div>
-                                <div class="logo"><a href=""><img src="<?= "$base/" ?>img/logo-partner-05.png"
-                                                                  alt=""></a></div>
+                                <div class="logo">
+                                    <a href="https://specialistlanguagecourses.com/" target="_blank">
+                                        <img src="<?= "$base/images/partners/slc.svg" ?>" style="height: 80px;"
+                                                                  alt="">
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     </section>

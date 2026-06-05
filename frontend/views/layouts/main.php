@@ -188,10 +188,10 @@ $params = Yii::$app->params;
                             <aside>
                                 <header><h4>Important Links</h4></header>
                                 <ul class="list-links">
-                                    <li><a href="#">About Meros</a></li>
+                                    <li><a href="<?=Url::to(['site/about'])?>">About Meros</a></li>
                                     <li><a href="#">FAQ - Students</a></li>
                                     <li><a href="#">FAQ - Teachers</a></li>
-                                    <li><a href="#">Policy Privacy</a></li>
+                                    <li><a href="<?=Url::to(['site/policy'])?>">Policy Privacy</a></li>
                                     <li><a href="#">Libary & Health</a></li>
                                     <li><a href="#">Research</a></li>
                                 </ul>
