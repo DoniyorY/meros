@@ -26,7 +26,6 @@ function translate($key)
                             <figure>
                                 <div class="slide-wrapper">
                                     <div class="inner">
-                                        <img src="<?= "$base/uploads/banners/$item->image" ?>">
                                         <div class="container" style="display: none">
                                             <h2><?= $item->{"name_$lang"} ?></h2>
                                             <h1><?= $item->{"desc_$lang"} ?></h1>
@@ -38,6 +37,7 @@ function translate($key)
                                     </div><!-- /.inner -->
                                 </div><!-- /.wrapper -->
                             </figure>
+                            <img src="<?= "$base/uploads/banners/$item->image" ?>">
                         </li>
                     <?php endforeach; ?>
                 </ul>
