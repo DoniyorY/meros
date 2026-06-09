@@ -70,104 +70,24 @@ $base = Yii::$app->request->baseUrl;
                     <div class="col-md-6">
                         <div class="panel-group package-accordion" id="accordion" role="tablist"
                              aria-multiselectable="true">
+                            <?php foreach ($courses->features as $item):?>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingOne">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Profession-specific focus
+                                           href="#<?="collapse-$item->id"?>" class="collapsed" aria-expanded="false" aria-controls="<?="collapse-$item->id"?>">
+                                            <?=$item->{"name_$lang"}?>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                <div id="<?="collapse-$item->id"?>" class="panel-collapse collapsed collapse" role="tabpanel"
                                      aria-labelledby="headingOne">
                                     <div class="panel-body">
-                                        The course is designed for medical professionals and students. It is not a
-                                        general English or even a general healthcare English course. Rather, it focuses
-                                        on the language used by doctors in practice – with patients, with colleagues, in
-                                        hospital settings, and when researching symptoms, conditions and treatments.
+                                        <?=$item->{"desc_$lang"}?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                                           aria-controls="collapseTwo">
-                                            Available on any device, off- and online
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingTwo">
-                                    <div class="panel-body">
-                                        Study on PC, tablet and phone through the course app. The course can be
-                                        downloaded so you can study offline as well as online.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                           aria-controls="collapseThree">
-                                            OET preparation support
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingThree">
-                                    <div class="panel-body">
-                                        This English for doctors course is also excellent preparation for <strong>OET
-                                            Medicine</strong>,
-                                        required by regulatory bodies for doctors registering to work in
-                                        English-speaking countries such as the US, UK, Australia, Canada and Ireland. It
-                                        provides the language foundation that those studying for OET Medicine need. The
-                                        course can be combined with SLC’s <strong>Reach OET B Medicine</strong>.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingFour">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseFour" aria-expanded="false"
-                                           aria-controls="collapseFour">
-                                            Face to face tuition option
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingFour">
-                                    <div class="panel-body">
-                                        Getting personalised and targeted practice and feedback can effectively
-                                        accelerate and improve your learning. If you would like to work with an expert
-                                        English for Healthcare teacher, then check out the <strong>PREMIUM</strong>
-                                        option below.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingFive">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseFive" aria-expanded="false"
-                                           aria-controls="collapseThree">
-                                            Official CPD certificate on completion
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingFive">
-                                    <div class="panel-body">
-                                        When you complete the course, you receive an official CPD certificate. English
-                                        for Doctors is accredited by the CPD Standards Office, whose qualifications are
-                                        recognised worldwide.
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endforeach;?>
                         </div>
                     </div>
                     <div class="col-md-6">

@@ -293,17 +293,20 @@ $params = Yii::$app->params;
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $i=1; foreach ($model->features as $item): ?>
-                                    <tr>
-                                        <td><?=$i++?></td>
-                                        <td><?=$item->name_en?></td>
-                                        <td><?=$item->desc_en?></td>
-                                        <td>
-                                            <a href="<?=Url::to(['delete-feature', 'id' => $item->id])?>" class="btn btn-danger btn-sm" data-method="post" data-confirm="Are you sure that you want to delete this item?">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    <?php $i = 1;
+                                    foreach ($model->features as $item): ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $item->name_en ?></td>
+                                            <td><?= $item->desc_en ?></td>
+                                            <td>
+                                                <a href="<?= Url::to(['delete-feature', 'id' => $item->id]) ?>"
+                                                   class="btn btn-danger btn-sm" data-method="post"
+                                                   data-confirm="Are you sure that you want to delete this item?">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                     </tbody>
                                 </table>
@@ -315,6 +318,10 @@ $params = Yii::$app->params;
             </div>
         </div>
     </div>
+
+    
+
+
 <?php
 Modal::begin([
    'id' => 'updateModal',
