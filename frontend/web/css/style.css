@@ -1470,96 +1470,176 @@ ul.list-links a:hover {
 #homepage-slider {
     position: relative;
     z-index: 0;
+    overflow: hidden;
+    background: #252525;
 }
 
-#homepage-slider .flexslider {
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
-    height: 80vh; /*600px*/
-
-    border: none;
-    margin: 0;
+#homepage-slider .homepage-banner-carousel,
+#homepage-slider .homepage-banner-carousel .owl-stage-outer,
+#homepage-slider .homepage-banner-carousel .owl-stage,
+#homepage-slider .homepage-banner-carousel .owl-wrapper-outer,
+#homepage-slider .homepage-banner-carousel .owl-wrapper,
+#homepage-slider .homepage-banner-carousel .owl-item,
+#homepage-slider .homepage-banner-slide {
+    height: 80vh;
+    min-height: 420px;
 }
 
-#homepage-slider .flexslider figure {
-    height: 600px;
-    position: absolute;
-    width: 100%;
-    text-align: center;
+#homepage-slider .homepage-banner-slide {
+    overflow: hidden;
+    background: #252525;
 }
 
-#homepage-slider .flexslider figure .inner {
-    vertical-align: middle;
-}
-
-#homepage-slider .flexslider h2 {
+#homepage-slider .homepage-banner-image {
     display: block;
-    color: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#homepage-slider .homepage-banner-slide:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+#homepage-slider .homepage-banner-caption {
+    z-index: 2;
+}
+
+#homepage-slider .homepage-banner-subtitle {
+    display: block;
+    color: rgba(255, 255, 255, 0.78);
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
-#homepage-slider .flexslider h2:after {
-    display: none;
-}
-
-#homepage-slider .flexslider h1 {
-    border: 4px solid rgba(255, 255, 255, 0.6);
+#homepage-slider .homepage-banner-title {
+    display: inline-block;
+    border: 4px solid rgba(255, 255, 255, 0.65);
     color: #fff;
-    font-size: 80px;
+    font-size: 64px;
     font-weight: bold;
+    line-height: 1.15;
     padding: 15px 20px;
     text-transform: uppercase;
 }
 
-#homepage-slider .flexslider h1:after {
-    display: none;
+#homepage-slider .owl-nav {
+    margin: 0;
 }
 
-#homepage-slider .flexslider ul li {
-    padding: 0;
-}
-
-#homepage-slider .flexslider .flex-direction-nav .flex-next, #homepage-slider .flexslider .flex-direction-nav .flex-prev {
-    background-color: #fff;
-    height: 30px;
-    width: 30px;
-}
-
-#homepage-slider .flexslider .flex-direction-nav .flex-next:before, #homepage-slider .flexslider .flex-direction-nav .flex-prev:before {
-    display: none;
-}
-
-#homepage-slider .flexslider .flex-direction-nav .flex-next:after, #homepage-slider .flexslider .flex-direction-nav .flex-prev:after {
-    text-shadow: none;
-    -webkit-font-smoothing: antialiased;
-    font-family: 'fontawesome';
-    speak: none;
-    font-weight: normal;
-    font-variant: normal;
-    line-height: 1;
-    text-transform: none;
-    color: #252525;
-    font-size: 16px;
+#homepage-slider .owl-nav button.owl-prev,
+#homepage-slider .owl-nav button.owl-next,
+#homepage-slider .owl-controls .owl-buttons div {
     position: absolute;
-    right: 11px;
-    top: 6px;
-    z-index: 2;
+    top: 50%;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    margin: -21px 0 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #252525;
+    font-size: 28px;
+    line-height: 38px;
+    text-align: center;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-#homepage-slider .flexslider .flex-direction-nav .flex-next:after {
-    content: "\f105";
+#homepage-slider .owl-nav button.owl-prev:hover,
+#homepage-slider .owl-nav button.owl-next:hover,
+#homepage-slider .owl-controls .owl-buttons div:hover {
+    background: #fff;
+    color: #252525;
 }
 
-#homepage-slider .flexslider .flex-direction-nav .flex-prev:after {
-    content: "\f104";
-    right: 12px;
+#homepage-slider .owl-nav button.owl-prev,
+#homepage-slider .owl-controls .owl-buttons .owl-prev {
+    left: 24px;
+}
+
+#homepage-slider .owl-nav button.owl-next,
+#homepage-slider .owl-controls .owl-buttons .owl-next {
+    right: 24px;
+}
+
+#homepage-slider .owl-dots,
+#homepage-slider .owl-pagination {
+    position: absolute;
+    right: 0;
+    bottom: 22px;
+    left: 0;
+    z-index: 3;
+    text-align: center;
+}
+
+#homepage-slider .owl-dots .owl-dot span,
+#homepage-slider .owl-pagination .owl-page span {
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+#homepage-slider .owl-dots .owl-dot.active span,
+#homepage-slider .owl-dots .owl-dot:hover span,
+#homepage-slider .owl-pagination .owl-page.active span,
+#homepage-slider .owl-pagination .owl-page:hover span {
+    background: #fff;
+}
+
+@media (max-width: 991px) {
+    #homepage-slider .homepage-banner-carousel,
+    #homepage-slider .homepage-banner-carousel .owl-stage-outer,
+    #homepage-slider .homepage-banner-carousel .owl-stage,
+    #homepage-slider .homepage-banner-carousel .owl-wrapper-outer,
+    #homepage-slider .homepage-banner-carousel .owl-wrapper,
+    #homepage-slider .homepage-banner-carousel .owl-item,
+    #homepage-slider .homepage-banner-slide {
+        height: 70vh;
+        min-height: 360px;
+    }
+
+    #homepage-slider .homepage-banner-title {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 575px) {
+    #homepage-slider .homepage-banner-carousel,
+    #homepage-slider .homepage-banner-carousel .owl-stage-outer,
+    #homepage-slider .homepage-banner-carousel .owl-stage,
+    #homepage-slider .homepage-banner-carousel .owl-wrapper-outer,
+    #homepage-slider .homepage-banner-carousel .owl-wrapper,
+    #homepage-slider .homepage-banner-carousel .owl-item,
+    #homepage-slider .homepage-banner-slide {
+        height: 62vh;
+        min-height: 320px;
+    }
+
+    #homepage-slider .homepage-banner-subtitle {
+        font-size: 16px;
+    }
+
+    #homepage-slider .homepage-banner-title {
+        border-width: 2px;
+        font-size: 28px;
+        padding: 10px 14px;
+    }
+
+    #homepage-slider .owl-nav button.owl-prev,
+    #homepage-slider .owl-nav button.owl-next,
+    #homepage-slider .owl-controls .owl-buttons div {
+        display: none;
+    }
 }
 
 /****

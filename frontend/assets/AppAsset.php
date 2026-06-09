@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
         'css/font-awesome.css',
         'css/selectize.css',
         'css/owl.carousel.css',
+        'css/owl.theme.default.css',
         'css/vanillabox/vanillabox.css',
         'css/layerslider.css',
         'css/flexslider.css',
