@@ -39,7 +39,7 @@ class CourseFeatures extends \yii\db\ActiveRecord
    public function rules()
    {
       return [
-         [['course_id', 'name_en', 'name_ru', 'name_uz', 'desc_en', 'desc_ru', 'desc_uz'], 'required'],
+         [['course_id', 'name_en'], 'required'],
          [['course_id'], 'integer'],
          [['desc_en', 'desc_ru', 'desc_uz'], 'string'],
          [['name_en', 'name_ru', 'name_uz'], 'string', 'max' => 255],
