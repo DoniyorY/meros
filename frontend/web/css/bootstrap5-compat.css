@@ -1,0 +1,120 @@
+/* Bootstrap 5 compatibility for the legacy Universo frontend markup. */
+.navigation-wrapper .navbar {
+    --bs-navbar-padding-y: 0;
+    --bs-navbar-toggler-border-color: rgba(255, 255, 255, .55);
+    --bs-navbar-toggler-focus-width: .1rem;
+}
+
+.navigation-wrapper .navbar-toggler {
+    border-color: rgba(255, 255, 255, .65);
+    margin: 22px 15px 0 0;
+}
+
+.navigation-wrapper .navbar-toggler-icon {
+    background-image: none;
+    display: inline-block;
+    height: 16px;
+    position: relative;
+    width: 22px;
+}
+
+.navigation-wrapper .navbar-toggler-icon,
+.navigation-wrapper .navbar-toggler-icon::before,
+.navigation-wrapper .navbar-toggler-icon::after {
+    border-top: 2px solid #fff;
+}
+
+.navigation-wrapper .navbar-toggler-icon::before,
+.navigation-wrapper .navbar-toggler-icon::after {
+    content: "";
+    left: 0;
+    position: absolute;
+    width: 22px;
+}
+
+.navigation-wrapper .navbar-toggler-icon::before {
+    top: 6px;
+}
+
+.navigation-wrapper .navbar-toggler-icon::after {
+    top: 14px;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
+    flex-wrap: wrap;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav > li > a {
+    display: block;
+}
+
+.secondary-navigation-wrapper::after,
+.footer-inner::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.input-group > .btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.panel-group {
+    margin-bottom: 20px;
+}
+
+.panel {
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    margin-bottom: 10px;
+}
+
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel-heading {
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px 15px;
+}
+
+.panel-default > .panel-heading {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    color: #333;
+}
+
+.panel-title {
+    font-size: 16px;
+    margin: 0;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel-collapse.collapse:not(.show) {
+    display: none;
+}
+
+.nav-tabs > li > a.active,
+.nav-tabs > li.active > a {
+    color: inherit;
+}
+
+@media (max-width: 991.98px) {
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation {
+        position: static;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
+        width: 100%;
+    }
+}

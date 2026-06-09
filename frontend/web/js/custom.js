@@ -27,12 +27,32 @@ $(document).ready(function($) {
 
 //  Open tab from another page
 
-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {});
+    function showBootstrapTab(hash) {
+        if (!hash || hash === '#') {
+            return;
+        }
 
-    $('#tabs a[href=' + location.hash +']').tab('show');
+        var tabTrigger;
+
+        try {
+            tabTrigger = document.querySelector('#tabs a[href="' + hash + '"], #tabs a[data-bs-target="' + hash + '"]');
+        } catch (e) {
+            return;
+        }
+
+        if (!tabTrigger || typeof bootstrap === 'undefined' || !bootstrap.Tab) {
+            return;
+        }
+
+        bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
+    }
+
+    $('a[data-bs-toggle="tab"], a[data-toggle="tab"]').on('show.bs.tab', function(e) {});
+
+    showBootstrapTab(location.hash);
 
     $('.secondary-navigation li a').on('click',function (e) {
-        $('#tabs a[href=' + this.hash +']').tab('show');
+        showBootstrapTab(this.hash);
     });
 
 //  Table Sorter
@@ -86,7 +106,9 @@ $(document).ready(function($) {
 
 //  Selectize
 
-    $('select').selectize();
+    if ($.fn.selectize) {
+        $('select').selectize();
+    }
 
 //  Center Slide Vertically
 
@@ -119,9 +141,19 @@ $(document).ready(function($) {
 //  Smooth Scroll
 
     $('.navigation-wrapper .nav a[href^="#"], a[href^="#"].roll').on('click',function (e) {
+        var target = this.hash;
+
+        if (!target || target === '#') {
+            return;
+        }
+
+        var $target = $(target);
+
+        if (!$target.length) {
+            return;
+        }
+
         e.preventDefault();
-        var target = this.hash,
-            $target = $(target);
         $('html, body').stop().animate({
             'scrollTop': $target.offset().top
         }, 2000, 'swing', function () {
@@ -158,11 +190,16 @@ $(document).ready(function($) {
     }
 
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
-        var $target = $( event.currentTarget );
+        var $target = $( event.currentTarget ),
+            dropdownToggle = $target.closest( '.btn-group' ).children( '.dropdown-toggle' )[0];
+
         $target.closest( '.btn-group' )
-            .find( '[data-bind="label"]' ).text( $target.text() )
-            .end()
-            .children( '.dropdown-toggle' ).dropdown( 'toggle' );
+            .find( '[data-bind="label"]' ).text( $target.text() );
+
+        if (dropdownToggle && typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+            bootstrap.Dropdown.getOrCreateInstance(dropdownToggle).toggle();
+        }
+
         return false;
     });
 
@@ -252,12 +289,22 @@ function disableJoin() {
     // Find "join to course" button on bottom of course detail
     var buttonToBeRemovedBottom = document.getElementById("btn-course-join-bottom");
     // Remove button
-    buttonToBeRemoved.remove();
+    if (buttonToBeRemoved) {
+        buttonToBeRemoved.remove();
+    }
     // Remove button on the bottom
-    buttonToBeRemovedBottom.remove();
+    if (buttonToBeRemovedBottom) {
+        buttonToBeRemovedBottom.remove();
+    }
     // Give the ".course-count-down" element new class to hide date
-    document.getElementById("course-count-down").className += " disable-join";
-    document.getElementById("course-start").className += " disable-join";
+    var courseCountDown = document.getElementById("course-count-down");
+    var courseStart = document.getElementById("course-start");
+    if (courseCountDown) {
+        courseCountDown.className += " disable-join";
+    }
+    if (courseStart) {
+        courseStart.className += " disable-join";
+    }
 }
 
 //  Count Down - Course Detail

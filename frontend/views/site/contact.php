@@ -103,7 +103,7 @@ function translate($key)
                                     </div><!-- /.control-group -->
                                 </div><!-- /.col-md-4 -->
                             </div><!-- /.row -->
-                            <div class="pull-right">
+                            <div class="float-end">
                                 <input type="submit" class="btn btn-color-primary" id="submit" value="Send a Message">
                             </div><!-- /.form-actions -->
                             <div id="form-status"></div>

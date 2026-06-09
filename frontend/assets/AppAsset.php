@@ -13,20 +13,19 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         //'css/site.css',
-        'http://fonts.googleapis.com/css?family=Montserrat:400,700',
+        'https://fonts.googleapis.com/css?family=Montserrat:400,700',
         'css/font-awesome.css',
-        'bootstrap/css/bootstrap.css',
         'css/selectize.css',
         'css/owl.carousel.css',
         'css/vanillabox/vanillabox.css',
         'css/layerslider.css',
         'css/flexslider.css',
         'css/style.css',
+        'css/bootstrap5-compat.css',
     ];
     public $js = [
       //  'js/jquery-2.1.0.min.js',
         'js/jquery-migrate-1.2.1.min.js',
-        'bootstrap/js/bootstrap.min.js',
         'js/selectize.min.js',
         'js/owl.carousel.min.js',
         'js/jquery.validate.min.js',
@@ -45,5 +44,6 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
+        'yii\bootstrap5\BootstrapPluginAsset',
     ];
 }

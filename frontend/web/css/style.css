@@ -3067,7 +3067,7 @@ th.header:before {
     padding: 12px 22px;
 }
 
-.input-group-btn .btn {
+.input-group > .btn {
     margin-left: 20px !important;
 }
 
@@ -4145,7 +4145,7 @@ label.error:before {
         max-width: 180px;
     }
 
-    .navigation-wrapper .primary-navigation-wrapper .navbar-right {
+    .navigation-wrapper .primary-navigation-wrapper .ms-auto {
         float: left !important;
     }
 
@@ -4737,7 +4737,7 @@ label.error:before {
         opacity: 0;
     }
 
-    .navigation-wrapper .primary-navigation-wrapper header .collapse.in ul {
+    .navigation-wrapper .primary-navigation-wrapper header .collapse.show ul {
         -moz-transition: 0.4s;
         -o-transition: 0.4s;
         -webkit-transition: 0.4s;
@@ -4746,7 +4746,7 @@ label.error:before {
         opacity: 1;
     }
 
-    .navbar-toggle .icon-bar {
+    .navbar-toggler-icon {
         background-color: #fff;
     }
 

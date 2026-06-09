@@ -74,7 +74,7 @@ $base = Yii::$app->request->baseUrl;
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingOne">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                        <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
                                            href="#<?="collapse-$item->id"?>" class="collapsed" aria-expanded="false" aria-controls="<?="collapse-$item->id"?>">
                                             <?=$item->{"name_$lang"}?>
                                         </a>
@@ -190,15 +190,14 @@ $base = Yii::$app->request->baseUrl;
                                               <div class="panel panel-default">
                                                   <div class="panel-heading" style="background: #07707a ">
                                                       <h4 class="panel-title" style="color: white; font-weight: 600">
-                                                          <a data-toggle="collapse"
-                                                             data-parent="#accordion-<?= $item->id ?>"
+                                                          <a data-bs-toggle="collapse"
+                                                             data-bs-parent="#accordion-<?= $item->id ?>"
                                                              href="<?= "#feature-$k" ?>" class="collapsed">
                                                               <span><?= $v->{"name_$lang"} ?></span>
                                                           </a>
                                                       </h4>
                                                   </div>
-                                                  <div id="<?= "feature-$k" ?>" class="panel-collapse collapse"
-                                                       style="height: 0px;">
+                                                  <div id="<?= "feature-$k" ?>" class="panel-collapse collapse">
                                                       <div class="panel-body" style="text-align: left">
                                                          <?= $v->{"desc_$lang"} ?>
                                                       </div>

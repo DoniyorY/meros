@@ -36,10 +36,10 @@ $params = Yii::$app->params;
     <div class="wrapper">
         <div class="secondary-navigation-wrapper">
             <div class="container">
-                <div class="navigation-contact pull-left" style="color: white">Call Us: <span>
+                <div class="navigation-contact float-start" style="color: white">Call Us: <span>
                         <?= $params['phone'] ?></span>
                 </div>
-                <ul class="secondary-navigation list-unstyled pull-right">
+                <ul class="secondary-navigation list-unstyled float-end">
                     <?php if (!Yii::$app->user->isGuest): ?>
                         <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
                         <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
@@ -54,15 +54,13 @@ $params = Yii::$app->params;
         <!-- Header -->
         <div class="navigation-wrapper" style="position: sticky; top: 0; z-index: 99;">
             <div class="primary-navigation-wrapper">
-                <header class="navbar" id="top" role="banner">
+                <header class="navbar navbar-expand-lg" id="top" role="banner">
                     <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button class="navbar-toggle" type="button" data-toggle="collapse"
-                                    data-target=".bs-navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
+                        <div class="navbar-header d-flex align-items-center">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false">
+                                <span class="visually-hidden">Toggle navigation</span>
+                                <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-brand nav" id="brand">
                                 <a href="<?= Yii::$app->homeUrl ?>" style="width: 300px;
@@ -74,8 +72,8 @@ $params = Yii::$app->params;
                                 </a>
                             </div>
                         </div>
-                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right mr-5" role="navigation">
-                            <ul class="nav navbar-nav">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse ms-auto me-5" id="primary-navigation" role="navigation">
+                            <ul class="navbar-nav">
                                 <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
                                     <li>
                                         <a href="#" class=" has-child no-link"><?= $item->{"name_$lang"} ?></a>
@@ -144,14 +142,12 @@ $params = Yii::$app->params;
                                 <a href=""><i class="fa fa-youtube-play"></i></a>
                             </div><!-- /.icons -->
                         </div><!-- /.social -->
-                        <div class="search pull-right">
+                        <div class="search float-end">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search">
-                                <span class="input-group-btn">
-                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-                    </span>
+                                <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                             </div><!-- /input-group -->
-                        </div><!-- /.pull-right -->
+                        </div><!-- /.float-end -->
                     </div><!-- /.footer-inner -->
                 </div><!-- /.container -->
             </section><!-- /#footer-top -->
@@ -219,7 +215,6 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
-    <script src="<?= "$base/js/jquery-2.1.0.min.js" ?>"></script>
     <?php $this->endBody() ?>
     </body>
     </html>
