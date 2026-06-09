@@ -23,7 +23,7 @@ return [
                     'sourcePath' => null,
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
-                    'js' => ['js/jquery-2.1.0.min.js'],
+                    //'js' => '',
                 ],
             ],
         ],

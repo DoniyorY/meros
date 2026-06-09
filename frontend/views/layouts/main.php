@@ -72,7 +72,7 @@ $params = Yii::$app->params;
                                 </a>
                             </div>
                         </div>
-                        <nav class="collapse navbar-collapse bs-navbar-collapse ms-auto me-5" id="primary-navigation" role="navigation">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-end me-5" id="primary-navigation" role="navigation">
                             <ul class="navbar-nav">
                                 <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
                                     <li>
@@ -159,7 +159,7 @@ $params = Yii::$app->params;
                             <aside class="logo">
                                 <a href="<?= Yii::$app->homeUrl ?>">
                                     <img src="<?= "$base/logo-white.png" ?>" class="vertical-center"
-                                         style="width: 100%;">
+                                         style="width: 350px;">
                                 </a>
                             </aside>
                         </div><!-- /.col-md-3 -->
@@ -215,6 +215,7 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
+    <script src="js/jquery-2.1.0.min.js"></script>
     <?php $this->endBody() ?>
     </body>
     </html>
