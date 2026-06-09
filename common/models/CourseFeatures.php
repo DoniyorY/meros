@@ -30,6 +30,9 @@ class CourseFeatures extends \yii\db\ActiveRecord
       return 'course_features';
    }
    
+
+   
+   
    /**
     * {@inheritdoc}
     */

@@ -25,106 +25,114 @@ use yii\helpers\Inflector;
  * @property int|null $mentor_id
  * @property string|null $preview_video_link
  * @property string|null $image
+ * @property string $syllabus_file
+ * @property string $flyer_file
  */
 class Courses extends \yii\db\ActiveRecord
 {
-
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-    public $imageFile;
-    public function behaviors()
-    {
-        return array_merge(parent::behaviors(), [
-            'slug' => [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'name_en',
-                'slugAttribute' => 'slug',
-            ]
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'courses';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['preview_video_link','mentor_id','image'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 1],
-            [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
-            [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
-            [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
-            [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link','image'], 'string', 'max' => 255],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
-        ];
-    }
-    public function uploadImage()
-    {
-        if ($this->validate(['imageFile'])) {
-            $dir = Yii::getAlias('@frontend/web/uploads/courses/');
-
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
-            }
-
-            $baseName = $this->slug ?: Inflector::slug($this->name_en);
-            $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->imageFile->extension;
-
-            if ($this->imageFile->saveAs($dir . $fileName)) {
-                return $fileName;
-            }
-        }
-
-        return false;
-    }
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'category_id' => 'Category ID',
-            'slug' => 'Slug',
-            'name_ru' => 'Name Ru',
-            'name_en' => 'Name En',
-            'name_uz' => 'Name Uz',
-            'desc_ru' => 'Desc Ru',
-            'desc_en' => 'Desc En',
-            'desc_uz' => 'Desc Uz',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'status' => 'Status',
-            'user_id' => 'User ID',
-            'mentor_id' => 'Mentor ID',
-            'preview_video_link' => 'Preview Video Link',
-            'image'=>'Image',
-            'imageFile'=>'Image'
-        ];
-    }
-
-    public function getCategory()
-    {
-        return $this->hasOne(CourseCategory::class, ['id' => 'category_id']);
-    }
-
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
-
-    public function getMentor()
-    {
-        return $this->hasOne(Mentors::class, ['id' => 'mentor_id']);
-    }
+   
+   const STATUS_ACTIVE = 1;
+   const STATUS_INACTIVE = 0;
+   public $imageFile;
+   public $syllabus;
+   public $flyer;
+   
+   public function behaviors()
+   {
+      return array_merge(parent::behaviors(), [
+         'slug' => [
+            'class' => SluggableBehavior::class,
+            'attribute' => 'name_en',
+            'slugAttribute' => 'slug',
+         ]
+      ]);
+   }
+   
+   /**
+    * {@inheritdoc}
+    */
+   public static function tableName()
+   {
+      return 'courses';
+   }
+   
+   /**
+    * {@inheritdoc}
+    */
+   public function rules()
+   {
+      return [
+         [['preview_video_link', 'mentor_id', 'image'], 'default', 'value' => null],
+         [['status'], 'default', 'value' => 1],
+         [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
+         [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
+         [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
+         [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image'], 'string', 'max' => 255],
+         [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
+         [['syllabus', 'flyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, doc, docx'],
+      ];
+   }
+   
+   public function uploadImage()
+   {
+      if ($this->validate(['imageFile'])) {
+         $dir = Yii::getAlias('@frontend/web/uploads/courses/');
+         
+         if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+         }
+         
+         $baseName = $this->slug ?: Inflector::slug($this->name_en);
+         $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->imageFile->extension;
+         
+         if ($this->imageFile->saveAs($dir . $fileName)) {
+            return $fileName;
+         }
+      }
+      
+      return false;
+   }
+   
+   /**
+    * {@inheritdoc}
+    */
+   public function attributeLabels()
+   {
+      return [
+         'id' => 'ID',
+         'category_id' => 'Category ID',
+         'slug' => 'Slug',
+         'name_ru' => 'Name Ru',
+         'name_en' => 'Name En',
+         'name_uz' => 'Name Uz',
+         'desc_ru' => 'Desc Ru',
+         'desc_en' => 'Desc En',
+         'desc_uz' => 'Desc Uz',
+         'created_at' => 'Created At',
+         'updated_at' => 'Updated At',
+         'status' => 'Status',
+         'user_id' => 'User ID',
+         'mentor_id' => 'Mentor ID',
+         'preview_video_link' => 'Preview Video Link',
+         'image' => 'Image',
+         'imageFile' => 'Image'
+      ];
+   }
+   
+   public function getCategory()
+   {
+      return $this->hasOne(CourseCategory::class, ['id' => 'category_id']);
+   }
+   
+   public function getUser()
+   {
+      return $this->hasOne(User::class, ['id' => 'user_id']);
+   }
+   
+   public function getMentor()
+   {
+      return $this->hasOne(Mentors::class, ['id' => 'mentor_id']);
+   }
    
    public function getLessons()
    {

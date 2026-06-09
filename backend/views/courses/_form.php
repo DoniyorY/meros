@@ -39,6 +39,12 @@ use common\models\Mentors;
         <div class="col-md-6 mt-4">
             <?= $form->field($model, 'imageFile')->fileInput() ?>
         </div>
+        <div class="col-md-6 mt-4">
+           <?= $form->field($model, 'syllabus')->fileInput() ?>
+        </div>
+        <div class="col-md-6 mt-4">
+           <?=$form->field($model,'flyer')->fileInput()?>
+        </div>
         <div class="col-md-12 mt-2">
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success w-100']) ?>

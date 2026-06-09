@@ -10,8 +10,8 @@ $params = Yii::$app->params;
 $lang = Yii::$app->language;
 function translate($key)
 {
-    $lang = Yii::$app->language;
-    return Yii::$app->params[$key][$lang];
+   $lang = Yii::$app->language;
+   return Yii::$app->params[$key][$lang];
 }
 
 ?>
@@ -21,25 +21,25 @@ function translate($key)
         <div class="row">
             <div class="col-12">
                 <ul class="slides">
-                    <?php foreach ($banner as $item): ?>
-                        <li class="slide">
-                            <figure>
-                                <div class="slide-wrapper">
-                                    <div class="inner">
-                                        <div class="container" style="display: none">
-                                            <h2><?= $item->{"name_$lang"} ?></h2>
-                                            <h1><?= $item->{"desc_$lang"} ?></h1>
-                                            <?php if ($item->link): ?>
-                                                <div><a href="<?= \yii\helpers\Url::to([$item->link]) ?>" class="btn">View
-                                                        Details</a></div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div><!-- /.inner -->
-                                </div><!-- /.wrapper -->
-                            </figure>
-                            <img src="<?= "$base/uploads/banners/$item->image" ?>">
-                        </li>
-                    <?php endforeach; ?>
+                   <?php foreach ($banner as $item): ?>
+                       <li class="slide">
+                           <figure>
+                               <div class="slide-wrapper">
+                                   <div class="inner">
+                                       <div class="container" style="display: none">
+                                           <h2><?= $item->{"name_$lang"} ?></h2>
+                                           <h1><?= $item->{"desc_$lang"} ?></h1>
+                                          <?php if ($item->link): ?>
+                                              <div><a href="<?= \yii\helpers\Url::to([$item->link]) ?>" class="btn">View
+                                                      Details</a></div>
+                                          <?php endif; ?>
+                                       </div>
+                                   </div><!-- /.inner -->
+                               </div><!-- /.wrapper -->
+                           </figure>
+                           <img src="<?= "$base/uploads/banners/$item->image" ?>">
+                       </li>
+                   <?php endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -54,7 +54,7 @@ function translate($key)
                 <div class="text-center">
                     <h2>About Meros</h2>
                 </div>
-                <?= translate('about_content_index') ?>
+               <?= translate('about_content_index') ?>
             </div>
             <div class="background background-color-grey-background"></div>
         </div>
@@ -151,7 +151,7 @@ function translate($key)
                     </div><!-- /.author -->
                     <div class="author has-dark-background">
                         <blockquote>
-                            <!--<figure class="author-picture"><img src="<?php /*= "$base/" */?>img/student-testimonial.jpg" alt="">
+                            <!--<figure class="author-picture"><img src="<?php /*= "$base/" */ ?>img/student-testimonial.jpg" alt="">
                             </figure>-->
                             <article class="paragraph-wrapper">
                                 <div class="inner">
@@ -180,39 +180,41 @@ function translate($key)
                             <section class="blog-listing" id="blog-listing">
                                 <header><h1>News</h1></header>
                                 <div class="row">
-                                    <?php foreach ($news as $item): ?>
-                                        <div class="col-md-6 col-sm-6" style="min-height: 390px;">
-                                            <article class="blog-listing-post">
-                                                <figure class="blog-thumbnail">
-                                                    <figure class="blog-meta"><span
-                                                                class="fa fa-file-text-o"></span><?= date('d.m.Y', $item->created_at) ?>
-                                                    </figure>
-                                                    <div class="image-wrapper">
-                                                        <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
-                                                            <img src="<?= "$base/uploads/posts/$item->image" ?>" style="height: 330px; object-fit: cover">
-                                                        </a>
-                                                    </div>
-                                                </figure>
-                                                <aside>
-                                                    <header>
-                                                        <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
-                                                            <h3>
-                                                                <?=$item->{"name_$lang"}?>
-                                                            </h3>
-                                                        </a>
-                                                    </header>
-                                                    <div class="description">
-                                                        <p>
-                                                            <?=$item->{"desc_$lang"}?>
-                                                        </p>
-                                                    </div>
-                                                    <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>" class="read-more stick-to-bottom">
-                                                        Read More
-                                                    </a>
-                                                </aside>
-                                            </article><!-- /article -->
-                                        </div><!-- /.col-md-6 -->
-                                    <?php endforeach; ?>
+                                   <?php foreach ($news as $item): ?>
+                                       <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                           <article class="blog-listing-post">
+                                               <figure class="blog-thumbnail">
+                                                   <figure class="blog-meta"><span
+                                                               class="fa fa-file-text-o"></span><?= date('d.m.Y', $item->created_at) ?>
+                                                   </figure>
+                                                   <div class="image-wrapper">
+                                                       <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
+                                                           <img src="<?= "$base/uploads/posts/$item->image" ?>"
+                                                                style="height: 330px; object-fit: cover">
+                                                       </a>
+                                                   </div>
+                                               </figure>
+                                               <aside>
+                                                   <header>
+                                                       <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
+                                                           <h3>
+                                                              <?= $item->{"name_$lang"} ?>
+                                                           </h3>
+                                                       </a>
+                                                   </header>
+                                                   <div class="description">
+                                                       <p>
+                                                          <?= $item->{"desc_$lang"} ?>
+                                                       </p>
+                                                   </div>
+                                                   <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"
+                                                      class="read-more stick-to-bottom">
+                                                       Read More
+                                                   </a>
+                                               </aside>
+                                           </article><!-- /article -->
+                                       </div><!-- /.col-md-6 -->
+                                   <?php endforeach; ?>
                                 </div><!-- /.row -->
                             </section><!-- /.blog-listing -->
                         </div><!-- /#page-main -->
@@ -237,7 +239,7 @@ function translate($key)
                                 <div class="logo">
                                     <a href="https://specialistlanguagecourses.com/" target="_blank">
                                         <img src="<?= "$base/images/partners/slc.svg" ?>" style="height: 80px;"
-                                                                  alt="">
+                                             alt="">
                                     </a>
                                 </div>
 

@@ -159,6 +159,22 @@ class CoursesController extends Controller
                
                $model->image = $uploaded;
             }
+            $file = UploadedFile::getInstance($model, 'syllabus');
+            if ($file) {
+               $model->syllabus = $file;
+               $name = "syllabus_". date('d.m.Y.H.i.s').".".$file->extension;
+               $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
+               $file->saveAs($path . $name);
+               $model->syllabus_file = $name;
+            }
+            $file = UploadedFile::getInstance($model, 'flyer');
+            if ($file) {
+               $model->flyer = $file;
+               $name = "flyer_".date('d.m.Y.H.i.s').".".$file->extension;
+               $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
+               $file->saveAs($path . $name);
+               $model->flyer_file = $name;
+            }
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
          }
@@ -174,7 +190,9 @@ class CoursesController extends Controller
    public function actionAddFeature($course_id)
    {
       $model = new CourseFeatures(['course_id' => $course_id]);
-      if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+      if ($model->load(Yii::$app->request->post())) {
+         
+         $model->save();
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
@@ -233,6 +251,32 @@ class CoursesController extends Controller
             
             if ($oldImage && file_exists($oldImagePath)) {
                unlink($oldImagePath);
+            }
+         }
+         $file = UploadedFile::getInstance($model, 'syllabus');
+         if ($file) {
+            $oldFile = $model->syllabus_file;
+            $model->syllabus = $file;
+            $name = "syllabus_". date('d.m.Y.H.i.s').".".$file->extension;
+            $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
+            $file->saveAs($path . $name);
+            $model->syllabus_file = $name;
+            if ($oldFile && file_exists($oldFile)) {
+               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
+               unlink($oldFile);
+            }
+         }
+         $file = UploadedFile::getInstance($model, 'flyer');
+         if ($file) {
+            $oldFile = $model->flyer_file;
+            $model->flyer = $file;
+            $name = "flyer_".date('d.m.Y.H.i.s').".".$file->extension;
+            $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
+            $file->saveAs($path . $name);
+            $model->flyer_file = $name;
+            if ($oldFile && file_exists($oldFile)) {
+               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
+               unlink($oldFile);
             }
          }
          
