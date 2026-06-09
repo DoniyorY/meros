@@ -11,7 +11,7 @@ class m260609_093619_add_column_to_courses extends Migration
     {
       $this->addColumn('courses','syllabus_file',$this->string());
       $this->addColumn('courses','flyer_file',$this->string());
-    }K
+    }
 
     /**
      * {@inheritdoc}
