@@ -5,6 +5,7 @@ a {
     transition: 0.3s;
     color: #4bc0ca;
     outline: none !important;
+    text-decoration: none !important;
 }
 
 a:hover, a:active, a a:visited {
@@ -2751,7 +2752,8 @@ th.header:before {
     -o-transition: 0.4s;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-    padding: 30px 0px;
+    padding-top: 20px;
+    padding-bottom: 10px;
     position: relative;
 }
 
@@ -2789,7 +2791,7 @@ th.header:before {
     height: 110px; /*190*/
     width: 3000px;
     position: absolute;
-    top: -30px;
+    top: -20px;
     right: -40px;
     z-index: 0;
 }
