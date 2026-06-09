@@ -290,6 +290,7 @@ $params = Yii::$app->params;
                                         <th>Name En</th>
                                         <th>Desc En</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -300,6 +301,12 @@ $params = Yii::$app->params;
                                             <td><?= $item->name_en ?></td>
                                             <td><?= $item->desc_en ?></td>
                                             <td>
+                                                <button class="btn btn-primary btn-sm modalUpdateBtn" data-url="<?=Url::to(['update-feature-ajax','id' => $item->id])?>'])?>">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                               
                                                 <a href="<?= Url::to(['delete-feature', 'id' => $item->id]) ?>"
                                                    class="btn btn-danger btn-sm" data-method="post"
                                                    data-confirm="Are you sure that you want to delete this item?">

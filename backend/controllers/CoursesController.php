@@ -162,7 +162,7 @@ class CoursesController extends Controller
             $file = UploadedFile::getInstance($model, 'syllabus');
             if ($file) {
                $model->syllabus = $file;
-               $name = "syllabus_". date('d.m.Y.H.i.s').".".$file->extension;
+               $name = "syllabus_" . date('d.m.Y.H.i.s') . "." . $file->extension;
                $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
                $file->saveAs($path . $name);
                $model->syllabus_file = $name;
@@ -170,7 +170,7 @@ class CoursesController extends Controller
             $file = UploadedFile::getInstance($model, 'flyer');
             if ($file) {
                $model->flyer = $file;
-               $name = "flyer_".date('d.m.Y.H.i.s').".".$file->extension;
+               $name = "flyer_" . date('d.m.Y.H.i.s') . "." . $file->extension;
                $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
                $file->saveAs($path . $name);
                $model->flyer_file = $name;
@@ -257,7 +257,7 @@ class CoursesController extends Controller
          if ($file) {
             $oldFile = $model->syllabus_file;
             $model->syllabus = $file;
-            $name = "syllabus_". date('d.m.Y.H.i.s').".".$file->extension;
+            $name = "syllabus_" . date('d.m.Y.H.i.s') . "." . $file->extension;
             $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
             $file->saveAs($path . $name);
             $model->syllabus_file = $name;
@@ -270,7 +270,7 @@ class CoursesController extends Controller
          if ($file) {
             $oldFile = $model->flyer_file;
             $model->flyer = $file;
-            $name = "flyer_".date('d.m.Y.H.i.s').".".$file->extension;
+            $name = "flyer_" . date('d.m.Y.H.i.s') . "." . $file->extension;
             $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
             $file->saveAs($path . $name);
             $model->flyer_file = $name;
@@ -288,6 +288,25 @@ class CoursesController extends Controller
       return $this->render('update', [
          'model' => $model,
       ]);
+   }
+   
+   public function actionUpdateFeatureAjax($id)
+   {
+      $feature = CourseFeatures::findOne($id);
+      return $this->renderAjax('_form_features', [
+         'model' => $feature,
+         'course_id' => $feature->course_id,
+         'url' => Url::to(['update-feature', 'id' => $feature->id]),
+      ]);
+   }
+   
+   public function actionUpdateFeature($id)
+   {
+      $feature = CourseFeatures::findOne($id);
+      if ($this->request->isPost && $feature->load($this->request->post())) {
+         $feature->save();
+      }
+      return $this->redirect(Yii::$app->request->referrer);
    }
    
    /**
