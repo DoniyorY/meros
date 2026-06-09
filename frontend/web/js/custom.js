@@ -104,14 +104,45 @@ $(document).ready(function($) {
         $('.flexslider').css('height', $(window).height());
     }
 
+//  Homepage Banner Slider (Owl Carousel 2.x with legacy Owl 1.x fallbacks)
+
+    if ($('.homepage-banner-carousel').length > 0) {
+        $('.homepage-banner-carousel').owlCarousel({
+            items: 1,
+            loop: $('.homepage-banner-carousel .homepage-banner-slide').length > 1,
+            margin: 0,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            autoplayHoverPause: true,
+            smartSpeed: 700,
+            nav: true,
+            dots: true,
+            navText: ['‹', '›'],
+            // Owl Carousel 1.x fallbacks kept for older bundled assets.
+            singleItem: true,
+            autoPlay: true,
+            stopOnHover: true,
+            navigation: true,
+            pagination: true,
+            navigationText: ['‹', '›']
+        });
+    }
+
 //  Homepage Carousel
 
     $(".image-carousel").owlCarousel({
         items: 1,
+        loop: true,
+        autoplay: true,
+        autoplayHoverPause: true,
+        nav: true,
+        dots: true,
+        navText: ['‹', '›'],
+        // Owl Carousel 1.x fallbacks kept for older bundled assets.
         autoPlay: true,
         stopOnHover: true,
         navigation: true,
-        navigationText : false,
+        navigationText: ['‹', '›'],
         responsiveBaseWidth: ".image-carousel-slide"
         //responsiveBaseWidth: ".author"
     });
@@ -146,6 +177,11 @@ $(document).ready(function($) {
 
     $(".author-carousel").owlCarousel({
         items: 1,
+        loop: false,
+        autoplay: false,
+        autoplayHoverPause: true,
+        dots: true,
+        // Owl Carousel 1.x fallbacks kept for older bundled assets.
         autoPlay: false,
         stopOnHover: true,
         responsiveBaseWidth: ".author"
