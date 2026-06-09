@@ -8,15 +8,15 @@ $base = Yii::$app->request->baseUrl;
 
 <!-- Page Content -->
 <div id="page-content">
-    <div class="container-fluid" style="padding: 60px;">
-        <div class="row">
+    <div class="container-fluid course-listing-container">
+        <div class="row g-4">
             <!--MAIN Content-->
-            <div class="col-md-9">
+            <div class="col-lg-9 col-md-12">
                 <div id="page-main">
                     <section class="course-listing" id="courses">
                         <header><h1>Courses Lessons</h1></header>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-12">
                                 <article class="course-thumbnail">
                                     <figure class="image">
                                         <div class="image-wrapper"><a href="course-detail-v1.html"><img
@@ -38,7 +38,7 @@ $base = Yii::$app->request->baseUrl;
                                     </div>
                                 </article><!-- /.featured-course -->
                             </div><!-- /.col-md-3 -->
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6 col-12">
                                 <article class="course-thumbnail">
                                     <figure class="image">
                                         <div class="image-wrapper"><a href="course-detail-v1.html"><img
@@ -60,7 +60,7 @@ $base = Yii::$app->request->baseUrl;
                                     </div>
                                 </article><!-- /.featured-course -->
                             </div><!-- /.col-md-3 -->
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6 col-12">
                                 <article class="course-thumbnail">
                                     <figure class="image">
                                         <div class="image-wrapper"><a href="course-detail-v1.html"><img
@@ -84,17 +84,17 @@ $base = Yii::$app->request->baseUrl;
                         </div><!-- /.row -->
                     </section><!-- /.course-listing -->
                     <div class="center">
-                        <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
+                        <ul class="pagination justify-content-center flex-wrap">
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
                         </ul>
                     </div>
                 </div><!-- /#page-main -->
             </div><!-- /.col-md-8 -->
 
             <!--SIDEBAR Content-->
-            <div class="col-md-3">
+            <div class="col-lg-3 col-md-12">
                 <div id="page-sidebar" class="sidebar">
                     <aside class="news-small" id="news-small">
                         <header>
