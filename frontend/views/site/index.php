@@ -184,15 +184,15 @@ function translate($key)
     <section id="course-list">
         <div class="block">
             <div class="container">
-                <div class="row">
+                <div class="row g-4">
                     <!--MAIN Content-->
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div id="page-main">
                             <section class="blog-listing" id="blog-listing">
                                 <header><h1>News</h1></header>
-                                <div class="row">
+                                <div class="row g-4">
                                    <?php foreach ($news as $item): ?>
-                                       <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                       <div class="col-md-6 col-12" style="min-height: 390px;">
                                            <article class="blog-listing-post">
                                                <figure class="blog-thumbnail">
                                                    <figure class="blog-meta"><span
@@ -239,8 +239,8 @@ function translate($key)
     <!-- Partners, Become a Partner -->
     <div class="block">
         <div class="container">
-            <div class="row">
-                <div class="col-md-9">
+            <div class="row g-4">
+                <div class="col-lg-9 col-md-12">
                     <section id="partners">
                         <header>
                             <h2>Partners & Donors</h2>
@@ -258,7 +258,7 @@ function translate($key)
                         </div>
                     </section>
                 </div><!-- /.col-md-9 -->
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-12">
                     <section id="donation">
                         <header>
                             <h2>Make a Donation</h2>

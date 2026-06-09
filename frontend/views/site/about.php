@@ -17,9 +17,9 @@ function translate($key)
 ?>
 <!-- Breadcrumb -->
 <div class="container">
-    <ol class="breadcrumb">
-        <li><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
-        <li class="active"><?= htmlspecialchars($this->title) ?></li>
+    <ol class="breadcrumb flex-wrap">
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($this->title) ?></li>
     </ol>
 </div>
 <!-- end Breadcrumb -->
@@ -28,14 +28,14 @@ function translate($key)
 <!-- Page Content -->
 <div id="page-content">
     <div class="container">
-        <div class="row">
+        <div class="row g-4">
             <!--MAIN Content-->
-            <div class="col-md-8">
+            <div class="col-lg-8 col-md-12">
                 <div id="page-main">
                     <section id="about">
                         <header><h1><?= Html::encode($this->title) ?></h1></header>
                         <img src="<?= "$base/images/meros_hospital.jpg" ?>"
-                             style="width: 100%; max-height: 500px; object-fit: cover">
+                             class="img-fluid rounded about-hero-image" alt="Meros International Hospital">
                         <?= translate('about_content') ?>
                         <h2>Gallery</h2>
                         <div>
@@ -76,7 +76,7 @@ function translate($key)
             </div><!-- /.col-md-8 -->
 
             <!--SIDEBAR Content-->
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-12">
                 <div id="page-sidebar" class="sidebar">
                     <aside class="news-small" id="news-small">
                         <header>
