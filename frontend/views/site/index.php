@@ -34,7 +34,7 @@ function translate($key)
                     ]) ?>
 
                     <?php if ($title || $description || $item->link): ?>
-                        <div class="homepage-banner-caption position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                        <div class="homepage-banner-caption d-none position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
                             <div class="container">
                                 <?php if ($title): ?>
                                     <h2 class="homepage-banner-subtitle mb-3"><?= Html::encode($title) ?></h2>
@@ -58,6 +58,7 @@ function translate($key)
     <?php endif; ?>
 </section>
 <!-- end Homepage Slider -->
+
 <div id="page-content">
     <section id="right-sidebar">
         <div class="block">

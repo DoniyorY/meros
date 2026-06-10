@@ -164,7 +164,7 @@ img {
 .navigation-wrapper .brand-logo {
     display: block;
     height: 80px;
-    object-fit: contain;
+    object-fit: cover;
     padding-left: 12px;
     width: 100%;
 }

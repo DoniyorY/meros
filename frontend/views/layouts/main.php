@@ -47,7 +47,7 @@ $params = Yii::$app->params;
             </div>
         </div><!-- /.secondary-navigation -->
         <!-- Header -->
-        <div class="navigation-wrapper sticky-top">
+        <div class="navigation-wrapper sticky-top" style="position:sticky">
             <div class="primary-navigation-wrapper">
                 <header class="navbar navbar-expand-lg" id="top" role="banner">
                     <div class="container-fluid px-3 px-lg-4">
@@ -205,6 +205,7 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
+    <!--<script src="/js/jquery-2.1.0.min.js"></script>-->
     <?php $this->endBody() ?>
     </body>
     </html>

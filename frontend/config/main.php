@@ -19,12 +19,7 @@ return [
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
-                'yii\web\JqueryAsset' => [
-                    'sourcePath' => null,
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    //'js' => '',
-                ],
+                
             ],
         ],
         'request' => [
