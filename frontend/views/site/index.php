@@ -18,44 +18,58 @@ function translate($key)
 ?>
 <!-- Homepage Slider -->
 <section id="homepage-slider" class="homepage-slider" aria-label="Homepage banner slider">
-    <?php if (!empty($banner)): ?>
-        <div class="homepage-banner-carousel owl-carousel owl-theme">
-            <?php foreach ($banner as $item): ?>
-                <?php
-                $title = $item->{"name_$lang"};
-                $description = $item->{"desc_$lang"};
-                $imageUrl = "$base/uploads/banners/$item->image";
-                ?>
-                <div class="homepage-banner-slide position-relative">
-                    <?= Html::img($imageUrl, [
-                        'class' => 'homepage-banner-image img-fluid w-100',
-                        'alt' => $title ?: Yii::$app->name,
-                        'loading' => 'eager',
-                    ]) ?>
-
-                    <?php if ($title || $description || $item->link): ?>
-                        <div class="homepage-banner-caption d-none position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
-                            <div class="container">
-                                <?php if ($title): ?>
-                                    <h2 class="homepage-banner-subtitle mb-3"><?= Html::encode($title) ?></h2>
-                                <?php endif; ?>
-
-                                <?php if ($description): ?>
-                                    <h1 class="homepage-banner-title mb-4"><?= Html::encode($description) ?></h1>
-                                <?php endif; ?>
-
-                                <?php if ($item->link): ?>
-                                    <a href="<?= Url::to([$item->link]) ?>" class="btn btn-primary btn-lg">
-                                        View Details
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+   <?php if (!empty($banner)): ?>
+       <div class="homepage-banner-carousel owl-carousel owl-theme">
+          <?php foreach ($banner as $item): ?>
+             <?php
+             $title = $item->{"name_$lang"};
+             $description = $item->{"desc_$lang"};
+             $imageUrl = "$base/uploads/banners/$item->image";
+             ?>
+              <div class="homepage-banner-slide position-relative">
+                 <?= Html::img($imageUrl, [
+                    'class' => 'homepage-banner-image img-fluid w-100',
+                    'alt' => $title ?: Yii::$app->name,
+                    'loading' => 'eager',
+                 ]) ?>
+                 
+                 <?php if ($title || $description || $item->link): ?>
+                     <div class="homepage-banner-caption position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                         <div class="container-fluid">
+                             <div class="row">
+                                 <div class="col-md-1"></div>
+                                 <div class="col-md-6 banner-title">
+                                    <?php if ($title): ?>
+                                        <h2 class="homepage-banner-subtitle mb-3"><?= Html::encode($title) ?></h2>
+                                    <?php endif; ?>
+                                    
+                                    <?php if ($description != '-'): ?>
+                                        <h1 class="homepage-banner-title mb-4"><?= Html::encode($description) ?></h1>
+                                    <?php endif; ?>
+                                    
+                                    <?php if ($item->link): ?>
+                                        <a href="<?= Url::to([$item->link]) ?>" class="btn btn-primary btn-lg">
+                                            View Details
+                                        </a>
+                                    <?php endif; ?>
+                                     <div class="banner-logo row">
+                                         <div class="col-6 mt-4 text-md-start">
+                                             <img src="<?= "$base/logo.png" ?>" alt=""
+                                                  style="width: 300px; height: auto;">
+                                         </div>
+                                         <div class="col-6">
+                                         
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 <?php endif; ?>
+              </div>
+          <?php endforeach; ?>
+       </div>
+   <?php endif; ?>
 </section>
 <!-- end Homepage Slider -->
 

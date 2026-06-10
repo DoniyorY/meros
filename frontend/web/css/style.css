@@ -100,7 +100,7 @@ h1 {
     position: relative;
 }
 
-h1:after {
+/*h1:after {
     background-color: #c5c5c5;
     bottom: -15px;
     content: "";
@@ -109,7 +109,7 @@ h1:after {
     width: 30px;
     position: absolute;
     z-index: 0;
-}
+}*/
 
 h2 {
     display: inline-block;
@@ -1504,7 +1504,7 @@ ul.list-links a:hover {
 #homepage-slider .homepage-banner-carousel .owl-wrapper,
 #homepage-slider .homepage-banner-carousel .owl-item,
 #homepage-slider .homepage-banner-slide {
-    height: 80vh;
+    height: 600px;
     min-height: 420px;
 }
 
@@ -1538,10 +1538,11 @@ ul.list-links a:hover {
 
 #homepage-slider .homepage-banner-subtitle {
     display: block;
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 24px;
+    color: black;
+    font-size: 50px;
     font-weight: bold;
-    text-transform: uppercase;
+    text-align:left;
+    /*text-transform: uppercase;*/
 }
 
 #homepage-slider .homepage-banner-title {
@@ -1644,7 +1645,7 @@ ul.list-links a:hover {
     #homepage-slider .homepage-banner-carousel .owl-wrapper,
     #homepage-slider .homepage-banner-carousel .owl-item,
     #homepage-slider .homepage-banner-slide {
-        height: 62vh;
+        height: 350px;
         min-height: 320px;
     }
 
