@@ -159,6 +159,15 @@ class CoursesController extends Controller
                
                $model->image = $uploaded;
             }
+            $file = UploadedFile::getInstance($model, 'icon');
+            if ($file) {
+               $model->icon = $file;
+               $name = "{$model->slug}_icon_" . date('d.m.Y.H.i.s') . "." . $file->extension;
+               $path = Yii::getAlias('@frontend/web/uploads/course_icons/');
+               $file->saveAs($path . $name);
+               $model->course_icons = $name;
+            }
+            
             $file = UploadedFile::getInstance($model, 'syllabus');
             if ($file) {
                $model->syllabus = $file;
@@ -237,7 +246,6 @@ class CoursesController extends Controller
          $model->updated_at = time();
          $oldImage = $model->image;
          $file = UploadedFile::getInstance($model, 'imageFile');
-         
          if ($file) {
             $model->imageFile = $file;
             $uploaded = $model->uploadImage();
@@ -253,6 +261,20 @@ class CoursesController extends Controller
                unlink($oldImagePath);
             }
          }
+         $file = UploadedFile::getInstance($model, 'icon');
+         if ($file) {
+            $oldFile = $model->course_icons;
+            $model->icon = $file;
+            $name = "{$model->slug}_icon_" . date('d.m.Y.H.i.s') . "." . $file->extension;
+            $path = Yii::getAlias('@frontend/web/uploads/course_icons/');
+            $file->saveAs($path . $name);
+            $model->course_icons = $name;
+            if ($oldFile && file_exists($oldFile)) {
+               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
+               unlink($oldFile);
+            }
+         }
+         
          $file = UploadedFile::getInstance($model, 'syllabus');
          if ($file) {
             $oldFile = $model->syllabus_file;

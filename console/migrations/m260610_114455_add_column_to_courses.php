@@ -10,6 +10,9 @@ class m260610_114455_add_column_to_courses extends Migration
     public function safeUp()
     {
       $this->addColumn('courses','course_icons',$this->string());
+      $this->addColumn('courses','title_ru',$this->string());
+      $this->addColumn('courses','title_en',$this->string());
+      $this->addColumn('courses','title_uz',$this->string());
     }
 
     /**
@@ -18,6 +21,9 @@ class m260610_114455_add_column_to_courses extends Migration
     public function safeDown()
     {
        $this->dropColumn('courses','course_icons');
+       $this->addColumn('courses','title_ru',$this->string());
+       $this->addColumn('courses','title_en',$this->string());
+       $this->addColumn('courses','title_uz',$this->string());
     }
 
     /*
