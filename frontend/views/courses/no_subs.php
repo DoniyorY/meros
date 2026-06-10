@@ -1,43 +1,39 @@
 <?php
 
 use common\models\SubscriptionPlanItems;
+use yii\helpers\Html;
 
 $this->title = "Courses";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 ?>
-<!-- Landing Page Slider -->
-<section id="homepage-slider">
-    <div class="flexslider">
-        <ul class="slides">
-            <li class="slide">
-               <?php if ($courses->preview_video_link): ?>
-                   <iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
-                           title="YouTube video player" class="course-preview-video"
-                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-               <?php endif; ?>
-                <figure>
-                    <div class="slide-wrapper">
-                        <div class="inner">
-                            <div class="container" style="display: none">
-                                <h2>Business Course</h2>
-                                <h1>Be a marketing guru</h1>
-                                <div class="scroll-down">
-                                    <h3>Scroll down to find out more</h3>
-                                    <div class="fa fa-angle-down"></div>
-                                </div><!-- /.scroll-down -->
-                            </div>
-                        </div><!-- /.inner -->
-                    </div><!-- /.wrapper -->
-                </figure>
-                <img src="<?= "$base/uploads/courses/$courses->image" ?>" alt="<?= htmlspecialchars($courses->{"name_$lang"}) ?>">
+<!-- course banner -->
+<section id="course-banner" class="course-banner" aria-label="course banner banner">
+    <div class="course-banner position-relative"
+         style="background-image: url(<?= "$base/uploads/courses/$courses->image" ?>)">
+        <div class="container-fluid h-100">
+            <div class="row h-100 align-items-md-center">
+                <div class="col-md-6">
+                    <div class="course-banner-caption text-center w-100 px-3">
+                        <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
+                        <h1 class="course-banner-subtitle mb-3"><?=$courses->{"name_$lang"}?></h1>
+                        <h2>Advanced Communication Skills</h2>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                   <?php if ($courses->preview_video_link): ?>
+                       <iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
+                               title="YouTube video player" class="course-preview-video"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                   <?php endif; ?>
+                </div>
+            </div>
+        </div>
 
-            </li><!-- /.slide -->
-        </ul><!-- /.slides -->
-    </div><!-- /.flexslider -->
+    </div>
 </section>
-<!-- end Landing Page Slider -->
+<!-- end course banner -->
 
 <!-- Page Content -->
 <div id="page-content">
@@ -66,28 +62,31 @@ $base = Yii::$app->request->baseUrl;
                     <div class="col-md-6">
                         <div class="panel-group package-accordion" id="accordion" role="tablist"
                              aria-multiselectable="true">
-                            <?php foreach ($courses->features as $item):?>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
-                                        <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                           href="#<?="collapse-$item->id"?>" class="collapsed" aria-expanded="false" aria-controls="<?="collapse-$item->id"?>">
-                                            <?=$item->{"name_$lang"}?>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="<?="collapse-$item->id"?>" class="panel-collapse collapsed collapse" role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <div class="panel-body">
-                                        <?=$item->{"desc_$lang"}?>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php endforeach;?>
+                           <?php foreach ($courses->features as $item): ?>
+                               <div class="panel panel-default">
+                                   <div class="panel-heading" role="tab" id="headingOne">
+                                       <h4 class="panel-title">
+                                           <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
+                                              href="#<?= "collapse-$item->id" ?>" class="collapsed"
+                                              aria-expanded="false" aria-controls="<?= "collapse-$item->id" ?>">
+                                              <?= $item->{"name_$lang"} ?>
+                                           </a>
+                                       </h4>
+                                   </div>
+                                   <div id="<?= "collapse-$item->id" ?>" class="panel-collapse collapsed collapse"
+                                        role="tabpanel"
+                                        aria-labelledby="headingOne">
+                                       <div class="panel-body">
+                                          <?= $item->{"desc_$lang"} ?>
+                                       </div>
+                                   </div>
+                               </div>
+                           <?php endforeach; ?>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="<?= "$base/images/English-for-Doctors-1-300x231.png" ?>" alt="English for Doctors" class="package-image">
+                        <img src="<?= "$base/images/English-for-Doctors-1-300x231.png" ?>" alt="English for Doctors"
+                             class="package-image">
                     </div>
                 </div>
             </div>
@@ -123,7 +122,7 @@ $base = Yii::$app->request->baseUrl;
             <div class="background"></div><!-- /.background -->
         </div>
     </section><!-- /#instructors -->
-    
+
     <section id="tickets">
         <div class="block">
             <div class="container-fluid">

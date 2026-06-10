@@ -59,7 +59,7 @@ $params = Yii::$app->params;
                             </button>
                             <div class="navbar-brand nav" id="brand">
                                 <a href="<?= Yii::$app->homeUrl ?>" class="brand-link">
-                                    <img src="<?= "$base/logo.png" ?>" alt="brand" class="brand-logo">
+                                    <img src="<?= "$base/logo-white.png" ?>" alt="brand" class="brand-logo">
                                 </a>
                             </div>
                         </div>
