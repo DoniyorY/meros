@@ -133,12 +133,6 @@ $params = Yii::$app->params;
                                 <a href=""><i class="fa fa-youtube-play"></i></a>
                             </div><!-- /.icons -->
                         </div><!-- /.social -->
-                        <div class="search float-end">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-                            </div><!-- /input-group -->
-                        </div><!-- /.float-end -->
                     </div><!-- /.footer-inner -->
                 </div><!-- /.container -->
             </section><!-- /#footer-top -->

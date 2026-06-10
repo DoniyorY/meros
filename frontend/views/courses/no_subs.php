@@ -13,21 +13,27 @@ $base = Yii::$app->request->baseUrl;
          style="background-image: url(<?= "$base/uploads/courses/$courses->image" ?>)">
         <div class="container-fluid h-100">
             <div class="row h-100 align-items-md-center">
-                <div class="col-md-6">
+                <div class="col">
                     <div class="course-banner-caption text-center w-100 px-3">
-                        <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
-                        <h1 class="course-banner-subtitle mb-3"><?=$courses->{"name_$lang"}?></h1>
-                        <h2>Advanced Communication Skills</h2>
+                        <div>
+                            <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
+                        </div>
+                        <div>
+                            <h1 class="course-banner-subtitle mb-3"><?= $courses->{"name_$lang"} ?></h1>
+                        </div>
+                        <div>
+                            <h2>Advanced Communication Skills</h2>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                   <?php if ($courses->preview_video_link): ?>
+               <?php if ($courses->preview_video_link): ?>
+                   <div class="col">
                        <iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
                                title="YouTube video player" class="course-preview-video"
                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                   <?php endif; ?>
-                </div>
+                   </div>
+               <?php endif; ?>
             </div>
         </div>
 
@@ -178,8 +184,9 @@ $base = Yii::$app->request->baseUrl;
                                           <?php foreach ($features as $v): $k = $v->id ?>
                                               <div class="panel panel-default">
                                                   <div class="panel-heading" style="background: #07707a ">
-                                                      <h4 class="panel-title" style="color: white; font-weight: 600">
+                                                      <h4 class="panel-title">
                                                           <a data-bs-toggle="collapse"
+                                                             style="color: white; font-weight: 600"
                                                              data-bs-parent="#accordion-<?= $item->id ?>"
                                                              href="<?= "#feature-$k" ?>" class="collapsed">
                                                               <span><?= $v->{"name_$lang"} ?></span>
