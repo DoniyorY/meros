@@ -53,12 +53,13 @@ function translate($key)
                                         </a>
                                     <?php endif; ?>
                                      <div class="banner-logo row">
-                                         <div class="col-6 mt-4 text-md-start">
+                                         <div class="col-md-6 mt-4 text-md-start">
                                              <img src="<?= "$base/logo.png" ?>" alt=""
-                                                  style="width: 300px; height: auto;">
+                                                  style="width: 200px; height: auto;">
                                          </div>
-                                         <div class="col-6">
-                                         
+                                         <div class="col-md-6">
+                                             <img src="<?= "$base/slc_logo.png" ?>" alt=""
+                                                  style="width: 200px; height: auto;">
                                          </div>
                                      </div>
                                  </div>
