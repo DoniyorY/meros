@@ -6,10 +6,7 @@
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 use common\models\CourseCategory;
 use common\models\Courses;
 use yii\helpers\Url;
@@ -26,7 +23,7 @@ $params = Yii::$app->params;
     <html lang="<?= Yii::$app->language ?>" class="h-100">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
@@ -35,11 +32,9 @@ $params = Yii::$app->params;
     <?php $this->beginBody() ?>
     <div class="wrapper">
         <div class="secondary-navigation-wrapper">
-            <div class="container">
-                <div class="navigation-contact pull-left" style="color: white">Call Us: <span>
-                        <?= $params['phone'] ?></span>
-                </div>
-                <ul class="secondary-navigation list-unstyled pull-right">
+            <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
+                <div class="navigation-contact text-white">Call Us: <span><?= $params['phone'] ?></span></div>
+                <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
                     <?php if (!Yii::$app->user->isGuest): ?>
                         <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
                         <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
@@ -52,33 +47,27 @@ $params = Yii::$app->params;
             </div>
         </div><!-- /.secondary-navigation -->
         <!-- Header -->
-        <div class="navigation-wrapper" style="position: sticky; top: 0; z-index: 99;">
+        <div class="navigation-wrapper sticky-top" style="position:sticky">
             <div class="primary-navigation-wrapper">
-                <header class="navbar" id="top" role="banner">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button class="navbar-toggle" type="button" data-toggle="collapse"
-                                    data-target=".bs-navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
+                <header class="navbar navbar-expand-lg" id="top" role="banner">
+                    <div class="container-fluid px-3 px-lg-4">
+                        <div class="navbar-header d-flex align-items-center justify-content-between">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="visually-hidden">Toggle navigation</span>
+                                <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-brand nav" id="brand">
-                                <a href="<?= Yii::$app->homeUrl ?>" style="width: 300px;
-    display: inherit;">
-                                    <img src="<?= "$base/logo.png" ?>" alt="brand" style="object-fit: cover;
-    width: 100%;
-    height: 80px;
-    padding-left: 12px;">
+                                <a href="<?= Yii::$app->homeUrl ?>" class="brand-link">
+                                    <img src="<?= "$base/logo-white.png" ?>" alt="brand" class="brand-logo">
                                 </a>
                             </div>
                         </div>
-                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right mr-5" role="navigation">
-                            <ul class="nav navbar-nav">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-lg-end" id="primary-navigation" role="navigation">
+                            <ul class="navbar-nav ms-lg-auto align-items-lg-center">
                                 <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
-                                    <li>
-                                        <a href="#" class=" has-child no-link"><?= $item->{"name_$lang"} ?></a>
+                                    <li class="nav-item has-child-wrapper">
+                                        <a href="#" class="nav-link has-child no-link"><?= $item->{"name_$lang"} ?></a>
                                         <ul class="list-unstyled child-navigation">
                                             <?php foreach ($courses as $value): ?>
                                                 <li>
@@ -88,8 +77,8 @@ $params = Yii::$app->params;
                                         </ul>
                                     </li>
                                 <?php endforeach; ?>
-                                <li>
-                                    <a href="#" class="has-child no-link">ABOUT US</a>
+                                <li class="nav-item has-child-wrapper">
+                                    <a href="#" class="nav-link has-child no-link">ABOUT US</a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
                                             <a href="<?= Url::to(['site/about']) ?>">About Meros</a>
@@ -144,30 +133,21 @@ $params = Yii::$app->params;
                                 <a href=""><i class="fa fa-youtube-play"></i></a>
                             </div><!-- /.icons -->
                         </div><!-- /.social -->
-                        <div class="search pull-right">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <span class="input-group-btn">
-                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-                    </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /.pull-right -->
                     </div><!-- /.footer-inner -->
                 </div><!-- /.container -->
             </section><!-- /#footer-top -->
 
             <section id="footer-content">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12" style="min-height: 300px">
+                    <div class="row g-4">
+                        <div class="col-lg-3 col-md-6 col-12 footer-logo-column">
                             <aside class="logo">
                                 <a href="<?= Yii::$app->homeUrl ?>">
-                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center"
-                                         style="width: 100%;">
+                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center footer-logo" alt="Meros">
                                 </a>
                             </aside>
                         </div><!-- /.col-md-3 -->
-                        <div class="col-md-3 col-sm-4">
+                        <div class="col-lg-3 col-md-6 col-12">
                             <aside>
                                 <header><h4>Contact Us</h4></header>
                                 <address>
@@ -184,20 +164,20 @@ $params = Yii::$app->params;
                                 </address>
                             </aside>
                         </div><!-- /.col-md-3 -->
-                        <div class="col-md-3 col-sm-4">
+                        <div class="col-lg-3 col-md-6 col-12">
                             <aside>
                                 <header><h4>Important Links</h4></header>
                                 <ul class="list-links">
-                                    <li><a href="<?=Url::to(['site/about'])?>">About Meros</a></li>
+                                    <li><a href="<?= Url::to(['site/about']) ?>">About Meros</a></li>
                                     <li><a href="#">FAQ - Students</a></li>
                                     <li><a href="#">FAQ - Teachers</a></li>
-                                    <li><a href="<?=Url::to(['site/policy'])?>">Policy Privacy</a></li>
+                                    <li><a href="<?= Url::to(['site/policy']) ?>">Policy Privacy</a></li>
                                     <li><a href="#">Libary & Health</a></li>
                                     <li><a href="#">Research</a></li>
                                 </ul>
                             </aside>
                         </div><!-- /.col-md-3 -->
-                        <div class="col-md-3 col-sm-4">
+                        <div class="col-lg-3 col-md-6 col-12">
                             <aside>
                                 <header><h4>About Meros</h4></header>
                                 <?= Yii::$app->params['about_short'][$lang] ?>
@@ -219,7 +199,7 @@ $params = Yii::$app->params;
         </footer>
         <!-- end Footer -->
     </div>
-    <script src="<?= "$base/js/jquery-2.1.0.min.js" ?>"></script>
+    <!--<script src="/js/jquery-2.1.0.min.js"></script>-->
     <?php $this->endBody() ?>
     </body>
     </html>

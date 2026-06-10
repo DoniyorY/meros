@@ -15,6 +15,9 @@ use yii\helpers\Inflector;
  * @property string $name_ru
  * @property string $name_en
  * @property string $name_uz
+ * @property string $title_ru
+ * @property string $title_en
+ * @property string $title_uz
  * @property string $desc_ru
  * @property string $desc_en
  * @property string $desc_uz
@@ -27,6 +30,7 @@ use yii\helpers\Inflector;
  * @property string|null $image
  * @property string $syllabus_file
  * @property string $flyer_file
+ * @property string $course_icons
  */
 class Courses extends \yii\db\ActiveRecord
 {
@@ -36,7 +40,7 @@ class Courses extends \yii\db\ActiveRecord
    public $imageFile;
    public $syllabus;
    public $flyer;
-   
+   public $icon;
    public function behaviors()
    {
       return array_merge(parent::behaviors(), [
@@ -67,8 +71,8 @@ class Courses extends \yii\db\ActiveRecord
          [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
          [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
          [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
-         [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image'], 'string', 'max' => 255],
-         [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
+         [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image','title_ru','title_en','title_uz'], 'string', 'max' => 255],
+         [['imageFile','icon'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
          [['syllabus', 'flyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, doc, docx'],
       ];
    }

@@ -16,18 +16,10 @@ return [
     'components' => [
         'assetManager' => [
             'bundles' => [
-                'yii\bootstrap5\BootstrapAsset' => [
-                    'css' => []
-                ],
-                'yii\bootstrap5\BootstrapPluginAsset' => [
-                    'js' => []
-                ],
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
-                'yii\web\JqueryAsset' => [
-                    'js' => []
-                ],
+                
             ],
         ],
         'request' => [

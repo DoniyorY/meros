@@ -10,24 +10,24 @@ $this->title = $model->name_en;
 ?>
 <!-- Breadcrumb -->
 <div class="container">
-    <ol class="breadcrumb">
-        <li><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
-        <li class="active"><?= Html::encode($this->title) ?></li>
+    <ol class="breadcrumb flex-wrap">
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
 <!-- end Breadcrumb -->
 <!-- Page Content -->
 <div id="page-content">
     <div class="container">
-        <div class="row">
+        <div class="row g-4">
             <!--MAIN Content-->
-            <div class="col-md-8">
+            <div class="col-lg-8 col-md-12">
                 <div id="page-main">
                     <section id="blog-detail">
                         <header><h1>News</h1></header>
                         <article class="blog-detail">
                             <header class="blog-detail-header">
-                                <img src="<?= "$base/uploads/posts/$model->image" ?>">
+                                <img src="<?= "$base/uploads/posts/$model->image" ?>" class="img-fluid" alt="<?= Html::encode($model->{"name_$lang"}) ?>">
                                 <h2><?= Html::encode($model->name_en) ?></h2>
                                 <div class="blog-detail-meta">
                                     <span class="date"><span
@@ -41,9 +41,9 @@ $this->title = $model->name_en;
                     <hr>
                     <section id="related-articles">
                         <header><h2>Related News</h2></header>
-                        <div class="row">
+                        <div class="row g-4">
                             <?php foreach ($related as $item): ?>
-                                <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                <div class="col-md-6 col-12" style="min-height: 390px;">
                                     <article class="blog-listing-post">
                                         <figure class="blog-thumbnail">
                                             <figure class="blog-meta"><span
@@ -80,7 +80,7 @@ $this->title = $model->name_en;
             </div><!-- /.col-md-8 -->
 
             <!--SIDEBAR Content-->
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-12">
                 <div id="page-sidebar" class="sidebar">
                     <aside class="news-small" id="news-small">
                         <header>

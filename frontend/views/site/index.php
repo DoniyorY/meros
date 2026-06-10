@@ -2,6 +2,7 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = Yii::$app->name;
@@ -16,37 +17,48 @@ function translate($key)
 
 ?>
 <!-- Homepage Slider -->
-<section id="homepage-slider">
-    <div class="flexslider">
-        <div class="row">
-            <div class="col-12">
-                <ul class="slides">
-                   <?php foreach ($banner as $item): ?>
-                       <li class="slide">
-                           <figure>
-                               <div class="slide-wrapper">
-                                   <div class="inner">
-                                       <div class="container" style="display: none">
-                                           <h2><?= $item->{"name_$lang"} ?></h2>
-                                           <h1><?= $item->{"desc_$lang"} ?></h1>
-                                          <?php if ($item->link): ?>
-                                              <div><a href="<?= \yii\helpers\Url::to([$item->link]) ?>" class="btn">View
-                                                      Details</a></div>
-                                          <?php endif; ?>
-                                       </div>
-                                   </div><!-- /.inner -->
-                               </div><!-- /.wrapper -->
-                           </figure>
-                           <img src="<?= "$base/uploads/banners/$item->image" ?>">
-                       </li>
-                   <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
+<section id="homepage-slider" class="homepage-slider" aria-label="Homepage banner slider">
+    <?php if (!empty($banner)): ?>
+        <div class="homepage-banner-carousel owl-carousel owl-theme">
+            <?php foreach ($banner as $item): ?>
+                <?php
+                $title = $item->{"name_$lang"};
+                $description = $item->{"desc_$lang"};
+                $imageUrl = "$base/uploads/banners/$item->image";
+                ?>
+                <div class="homepage-banner-slide position-relative">
+                    <?= Html::img($imageUrl, [
+                        'class' => 'homepage-banner-image img-fluid w-100',
+                        'alt' => $title ?: Yii::$app->name,
+                        'loading' => 'eager',
+                    ]) ?>
 
-    </div>
+                    <?php if ($title || $description || $item->link): ?>
+                        <div class="homepage-banner-caption d-none position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                            <div class="container">
+                                <?php if ($title): ?>
+                                    <h2 class="homepage-banner-subtitle mb-3"><?= Html::encode($title) ?></h2>
+                                <?php endif; ?>
+
+                                <?php if ($description): ?>
+                                    <h1 class="homepage-banner-title mb-4"><?= Html::encode($description) ?></h1>
+                                <?php endif; ?>
+
+                                <?php if ($item->link): ?>
+                                    <a href="<?= Url::to([$item->link]) ?>" class="btn btn-primary btn-lg">
+                                        View Details
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </section>
 <!-- end Homepage Slider -->
+
 <div id="page-content">
     <section id="right-sidebar">
         <div class="block">
@@ -173,15 +185,15 @@ function translate($key)
     <section id="course-list">
         <div class="block">
             <div class="container">
-                <div class="row">
+                <div class="row g-4">
                     <!--MAIN Content-->
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div id="page-main">
                             <section class="blog-listing" id="blog-listing">
                                 <header><h1>News</h1></header>
-                                <div class="row">
+                                <div class="row g-4">
                                    <?php foreach ($news as $item): ?>
-                                       <div class="col-md-6 col-sm-6" style="min-height: 390px;">
+                                       <div class="col-md-6 col-12" style="min-height: 390px;">
                                            <article class="blog-listing-post">
                                                <figure class="blog-thumbnail">
                                                    <figure class="blog-meta"><span
@@ -228,8 +240,8 @@ function translate($key)
     <!-- Partners, Become a Partner -->
     <div class="block">
         <div class="container">
-            <div class="row">
-                <div class="col-md-9">
+            <div class="row g-4">
+                <div class="col-lg-9 col-md-12">
                     <section id="partners">
                         <header>
                             <h2>Partners & Donors</h2>
@@ -247,7 +259,7 @@ function translate($key)
                         </div>
                     </section>
                 </div><!-- /.col-md-9 -->
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-12">
                     <section id="donation">
                         <header>
                             <h2>Make a Donation</h2>

@@ -42,7 +42,7 @@
           img { max-width: 180px; }
         }
       }
-      .navbar-right { float: left !important; }
+      .ms-auto { float: left !important; }
     }
   }
 
@@ -329,9 +329,7 @@
       }
     }
   }
-  .navbar-toggle {
-    .icon-bar { background-color: #fff; }
-  }
+  .navbar-toggler-icon { background-color: transparent; }
 
   .nav-tabs {
     > li { display: block !important; float: none !important;

@@ -23,22 +23,30 @@ use common\models\Mentors;
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_ru')->textInput() ?>
             <?= $form->field($model, 'desc_ru')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_en')->textInput() ?>
             <?= $form->field($model, 'desc_en')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'name_uz')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_uz')->textInput() ?>
             <?= $form->field($model, 'desc_uz')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'preview_video_link')->textInput(['maxlength' => true]) ?>
         </div>
+        <hr>
+        <div class="col-md-6 mt-4">
+            <?=$form->field($model,'icon')->fileInput()?>
+        </div>
         <div class="col-md-6 mt-4">
             <?= $form->field($model, 'imageFile')->fileInput() ?>
         </div>
+        <hr>
         <div class="col-md-6 mt-4">
            <?= $form->field($model, 'syllabus')->fileInput() ?>
         </div>
