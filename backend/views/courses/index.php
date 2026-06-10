@@ -90,7 +90,7 @@ $params = Yii::$app->params;
             'urlCreator' => function ($action, Courses $model, $key, $index, $column) {
                return Url::toRoute([$action, 'id' => $model->id]);
             },
-            'template' => '{view}'
+            'template' => '{update}{view}'
          ],
       ],
    ]); ?>
