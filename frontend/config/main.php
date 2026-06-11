@@ -59,6 +59,7 @@ return [
                'about'=>'site/about',
                'contact'=>'site/contact',
                'courses/<slug>' => 'courses/index',
+               'courses/get-plan/<id>'=> 'courses/get-plan',
             ],
         ],
 

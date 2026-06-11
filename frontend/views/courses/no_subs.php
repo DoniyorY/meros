@@ -2,6 +2,7 @@
 
 use common\models\SubscriptionPlanItems;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = "Courses";
 $lang = Yii::$app->language;
@@ -178,7 +179,8 @@ $base = Yii::$app->request->baseUrl;
                                          echo "3 Months";
                                       }
                                       ?></figure>
-                                   <a href="#" class="btn btn-primary btn-lg w-100">Buy Now</a>
+                                   <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
+                                      class="btn btn-primary btn-lg w-100">Buy Now</a>
                                    <div class="features">
                                        <div class="panel-group" id="accordion-<?= $item->id ?>">
                                           <?php foreach ($features as $v): $k = $v->id ?>
