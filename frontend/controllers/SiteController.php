@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -167,5 +168,13 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+    
+    public function actionVerifyEmail($token,$rer){
+       $user = User::findByVerificationToken($token);
+       $user->status = User::STATUS_ACTIVE;
+       $user->updated_at=time();
+       $user->save(false);
+       return $this->redirect($rer);
     }
 }
