@@ -54,7 +54,7 @@ return [
             'languages' => ['En'=>'en', 'Ru'=>'ru', 'Uz'=>'uz'], // List all supported languages here
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            /*'rules' => [
                ''=>'site/index',
                'about'=>'site/about',
                'contact'=>'site/contact',
@@ -63,7 +63,7 @@ return [
                'courses/get-plan/<id>'=> 'courses/get-plan',
                'guest-register' => 'courses/guest-register',
                'courses/test'=>'courses/test',
-            ],
+            ],*/
         ],
 
     ],
