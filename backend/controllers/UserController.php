@@ -52,9 +52,9 @@ class UserController extends Controller
       ]);
    }
    
-   public function actionSendEmail()
+   public function actionSendEmail($id)
    {
-      $user = User::findOne(['id'=>4]);
+      $user = User::findOne(['id'=>$id]);
       echo "<pre>";
       var_dump($user->sendEmail($user));
    }
