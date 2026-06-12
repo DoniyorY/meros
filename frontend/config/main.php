@@ -58,6 +58,7 @@ return [
                ''=>'site/index',
                'about'=>'site/about',
                'contact'=>'site/contact',
+               'verify-email/<token>-<rer>'=>'site/verify-email',
                '<category>/<slug>' => 'courses/index',
                'courses/get-plan/<id>'=> 'courses/get-plan',
                'guest-register' => 'courses/guest-register',
