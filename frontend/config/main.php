@@ -58,9 +58,10 @@ return [
                ''=>'site/index',
                'about'=>'site/about',
                'contact'=>'site/contact',
-               'courses/<slug>' => 'courses/index',
+               '<category>/<slug>' => 'courses/index',
                'courses/get-plan/<id>'=> 'courses/get-plan',
                'guest-register' => 'courses/guest-register',
+               'courses/test'=>'courses/test',
             ],
         ],
 

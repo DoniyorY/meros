@@ -4,16 +4,19 @@ namespace frontend\controllers;
 
 use common\models\AuthAssignment;
 use common\models\Billing;
+use common\models\CourseCategory;
 use common\models\Courses;
 use common\models\SubscriptionPlans;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 
 class CoursesController extends Controller
 {
    
-   public function actionIndex($slug)
+   public function actionIndex($category, $slug)
    {
+      $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       return $this->render('no_subs', [
@@ -115,7 +118,7 @@ class CoursesController extends Controller
             $user_permission->save(false);
             Yii::$app->user->login($user, 3600 * 24 * 30);
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            // $user->sendEmail($user);
+            $user->sendEmail($user);
             $transaction->commit();
          } catch (\Exception $e) {
             $transaction->rollBack();
@@ -125,6 +128,13 @@ class CoursesController extends Controller
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
+   public function actionTest(){
+      $user = User::findOne(['id'=>4]);
+      echo "<pre>";
+      print_r($user->sendEmail($user));
+      die();
+   }
+   
    private static function getClient()
    {
       return new \yii\httpclient\Client();

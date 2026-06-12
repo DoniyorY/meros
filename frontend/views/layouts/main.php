@@ -71,7 +71,7 @@ $params = Yii::$app->params;
                                         <ul class="list-unstyled child-navigation">
                                             <?php foreach ($courses as $value): ?>
                                                 <li>
-                                                    <a href="<?= \yii\helpers\Url::to(['courses/index', 'slug' => $value->slug]) ?>"><?= $value->{"name_$lang"} ?></a>
+                                                    <a href="<?= \yii\helpers\Url::to(['courses/index','category'=>$item->slug, 'slug' => $value->slug]) ?>"><?= $value->{"name_$lang"} ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
