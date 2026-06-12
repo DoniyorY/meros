@@ -12,7 +12,7 @@ class m260611_123517_create_table_billing extends Migration
       $this->createTable('billing', [
          'id' => $this->primaryKey(),
          'billing_token' => $this->string()->notNull(),
-         'user_id' => $this->integer()->notNull(),
+         'user_id' => $this->integer(),
          'subscription_id' => $this->integer()->notNull(),
          'start_date' => $this->integer(),
          'expires_date' => $this->integer(),
