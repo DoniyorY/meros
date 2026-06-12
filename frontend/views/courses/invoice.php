@@ -11,7 +11,7 @@ use yii\helpers\Url;
 $this->title = "Invoice";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
-
+$params = Yii::$app->params;
 ?>
 
 <div id="page-content">
@@ -19,10 +19,12 @@ $base = Yii::$app->request->baseUrl;
 
         <div class="card shadow border-0">
             <div class="card-body p-4">
-                <div class="alert alert-warning">
-                    Вы ещё не зарегистрированы. Пожалуйста, <a href="<?= Url::to(['site/login']) ?>">войдите в
-                        систему</a> или <a href="<?= Url::to(['site/signup']) ?>">зарегистрируйтесь</a>.
+                <?php if (Yii::$app->user->isGuest):?>
+                <div class="alert alert-warning" style="color: black">
+                    You are not registered yet. Please
+                    <a href="<?= Url::to(['site/login']) ?>">log in</a> or fill the fields to create an account.
                 </div>
+                <?php endif;?>
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
@@ -33,10 +35,10 @@ $base = Yii::$app->request->baseUrl;
                     </div>
 
                     <div class="text-end">
-                        <div><strong>Date:</strong> <?= date('d.m.Y') ?></div>
+                        <div><strong>Date:</strong> <?= date('d.m.Y', $billing->created_at) ?></div>
                         <div><strong>Status:</strong>
-                            <span class="badge bg-warning">
-                            Pending
+                            <span class="<?= $params['billing_status_class'][$billing->status] ?>">
+                            <?= $params['billing_status'][$lang][$billing->status] ?>
                         </span>
                         </div>
                     </div>
@@ -50,43 +52,98 @@ $base = Yii::$app->request->baseUrl;
                     <div class="col-lg-7">
 
                         <h5 class="mb-3">Customer Information</h5>
+                       <?php if (Yii::$app->user->isGuest): ?>
+                          <?php $form = ActiveForm::begin(['action'=>Url::to(['guest-register'])]); ?>
+
+                           <div class="row">
+                               <div class="col-md-12 mb-3">
+                                   <div class="form-group">
+                                       <label>Email</label>
+                                       <input name="User[email]" type="email" class="form-control">
+                                   </div>
+                               </div>
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>First Name</label>
+                                       <input name="User[first_name]" type="text" class="form-control">
+                                   </div>
+                               </div>
+
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Last Name</label>
+                                       <input name="User[last_name]" type="text" class="form-control">
+                                   </div>
+                               </div>
+
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Username</label>
+                                       <input name="User[username]" type="text" class="form-control">
+                                   </div>
+                               </div>
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Phone</label>
+                                       <input type="text" name="User[phone]" class="form-control">
+                                   </div>
+                               </div>
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Password</label>
+                                       <input name="User[password]" type="password" class="form-control">
+                                   </div>
+                               </div>
+
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Confirm Password</label>
+                                       <input name="User[password_confirm]" type="password" class="form-control">
+                                   </div>
+                               </div>
+                               <div class="col-md-12">
+                                   <div class="form-group">
+                                       <button type="submit" class="btn btn-primary w-100 ">Submit</button>
+                                   </div>
+                               </div>
+                           </div>
                        
-                       <?php $form = ActiveForm::begin(); ?>
+                          <?php ActiveForm::end(); ?>
+                       <?php else: ?>
+                          <?php $form = ActiveForm::begin();
+                          $user = Yii::$app->user->identity;
+                          [$first_name, $last_name]= explode(' ', $user->fullname); ?>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>First Name</label>
-                                <input type="text" class="form-control">
-                            </div>
+                           <div class="row">
+                               <div class="col-md-12 mb-3">
+                                   <div class="form-group">
+                                       <label>Email</label>
+                                       <input name="User[email]" type="email" class="form-control" value="<?=$user->email?>" readonly>
+                                   </div>
+                               </div>
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>First Name</label>
+                                       <input name="User[first_name]" type="text" class="form-control" value="<?=$first_name?>" readonly>
+                                   </div>
+                               </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Username</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Email</label>
-                                <input type="email" class="form-control">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control">
-                            </div>
-                        </div>
-                       
-                       <?php ActiveForm::end(); ?>
-
+                               <div class="col-md-6 mb-3">
+                                   <div class="form-group">
+                                       <label>Last Name</label>
+                                       <input name="User[last_name]" type="text" class="form-control" value="<?=$last_name?>" readonly>
+                                   </div>
+                               </div>
+                               <div class="col-md-12 mb-3">
+                                   <div class="form-group">
+                                       <label>Phone</label>
+                                       <input type="text" name="User[phone]" class="form-control" value="<?=$user->phone?>" readonly>
+                                   </div>
+                               </div>
+                           </div>
+                          
+                          <?php ActiveForm::end(); ?>
+                       <?php endif; ?>
                     </div>
 
                     <!-- Order Summary -->
@@ -118,7 +175,6 @@ $base = Yii::$app->request->baseUrl;
                                         UZS
                                     </strong>
                                 </div>
-
                                 <hr>
 
                                 <div class="d-flex justify-content-between align-items-center">
@@ -128,6 +184,7 @@ $base = Yii::$app->request->baseUrl;
                                     UZS
                                 </span>
                                 </div>
+                                <?php if (!Yii::$app->user->isGuest):?>
                                 <button id="btn-confirm" class="btn w-100 mt-2 btn-secondary me-2">Подтвердить</button>
                                 <button id="btn-click" class="btn w-100 mt-2 btn-success me-2">
                                     <!-- Место для логотипа Click -->
@@ -137,7 +194,7 @@ $base = Yii::$app->request->baseUrl;
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
                                          alt="Payme" style="height: 70px; object-fit: cover;">
                                 </button>
-
+                                <?php endif;?>
                             </div>
                         </div>
 

@@ -218,6 +218,20 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+   
+   public function sendEmail($user)
+   {
+      return Yii::$app
+         ->mailer
+         ->compose(
+            ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+            ['user' => $user]
+         )
+         ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+         ->setTo($this->email)
+         ->setSubject('Account registration at ' . Yii::$app->name)
+         ->send();
+   }
 
     public function getSubscriptions()
     {

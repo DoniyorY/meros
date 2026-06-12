@@ -60,6 +60,7 @@ return [
                'contact'=>'site/contact',
                'courses/<slug>' => 'courses/index',
                'courses/get-plan/<id>'=> 'courses/get-plan',
+               'guest-register' => 'courses/guest-register',
             ],
         ],
 
