@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'info@merospharm.uz',
+    //'adminEmail' => 'info@merospharm.uz',
     'phone' => '+998 (55) 705 08 08',
     'about_content_index' => [
         'ru' => '

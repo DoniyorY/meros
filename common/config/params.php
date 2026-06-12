@@ -1,9 +1,9 @@
 <?php
 return [
    'adminEmail' => 'info@merosedu.uz',
-   'supportEmail' => 'support@example.com',
-   'senderEmail' => 'noreply@example.com',
-   'senderName' => 'Example.com mailer',
+   'supportEmail' => 'support@merosedu.uz',
+   'senderEmail' => 'noreply@merosedu.uz',
+   'senderName' => 'Meros Edu mailer',
    'user.passwordResetTokenExpire' => 3600,
    'user.passwordMinLength' => 6,
    'user_status' => [
