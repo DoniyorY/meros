@@ -6,6 +6,7 @@ use common\models\CourseFeatures;
 use common\models\CourseLessons;
 use common\models\Courses;
 use common\models\search\CoursesSearch;
+use common\models\SubscriptionPlans;
 use common\models\UploadsImage;
 use Yii;
 use yii\helpers\Url;
@@ -329,6 +330,47 @@ class CoursesController extends Controller
          $feature->save();
       }
       return $this->redirect(Yii::$app->request->referrer);
+   }
+   
+   public function actionUpdateSubsStatus($id, $status)
+   {
+      $model = SubscriptionPlans::findOne(['id' => $id]);
+      $model->status = $status;
+      $model->updated_at = time();
+      $model->save(false);
+      Yii::$app->session->setFlash('success', 'Status Changed Successfully');
+      return $this->redirect(Yii::$app->request->referrer);
+   }
+   
+   public function actionUpdateSubsModal($id)
+   {
+      $model = SubscriptionPlans::findOne(['id' => $id]);
+      
+      return $this->renderAjax('/subscription-plans/view', [
+         'model' => $model,
+         'url' => Url::to(['update-subs', 'id' => $model->id]),
+      ]);
+   }
+   
+   public function actionAddSubscription($course_id)
+   {
+      $model = new SubscriptionPlans(['course_id' => $course_id]);
+      
+      if ($this->request->isPost) {
+         if ($model->load($this->request->post())) {
+            $model->created_at = time();
+            $model->updated_at = time();
+            $model->status = 0;
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->id]);
+         }
+      } else {
+         $model->loadDefaultValues();
+      }
+      
+      return $this->render('create', [
+         'model' => $model,
+      ]);
    }
    
    /**

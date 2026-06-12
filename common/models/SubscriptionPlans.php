@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "subscription_plans".
  *
  * @property int $id
+ * @property int $course_id
  * @property string $name_ru
  * @property string $name_en
  * @property string $name_uz
@@ -40,7 +41,7 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => 0],
             [['name_ru', 'name_en', 'name_uz', 'price', 'duration_days', 'created_at', 'updated_at'], 'required'],
             [['price'], 'number'],
-            [['duration_days', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['duration_days', 'status', 'created_at', 'updated_at','course_id',], 'integer'],
             [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
         ];
     }
@@ -67,5 +68,7 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SubscriptionPlanItems::className(), ['plan_id' => 'id']);
     }
-
+   public function getCourse(){
+       return $this->hasOne(Courses::className(), ['id' => 'course_id']);
+   }
 }

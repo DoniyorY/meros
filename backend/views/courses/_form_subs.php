@@ -1,6 +1,5 @@
 <?php
 
-use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,14 +10,9 @@ use yii\widgets\ActiveForm;
 
 <div class="subscription-plans-form">
    
-   <?php $form = ActiveForm::begin(); ?>
+   <?php $form = ActiveForm::begin(['action' => $url]); ?>
+   <?= $form->field($model, 'course_id')->hiddenInput(['value' => $course_id])->label(false) ?>
     <div class="row">
-        <div class="col-md-12">
-           <?= $form->field($model, 'course_id')->widget(Select2::classname(), [
-              'data' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_ru'),
-              'options' => ['placeholder' => 'Select a course ...'],
-           ]) ?>
-        </div>
         <div class="col-md-4">
            <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
         </div>

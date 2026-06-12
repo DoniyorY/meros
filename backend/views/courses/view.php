@@ -1,5 +1,6 @@
 <?php
 
+use common\models\SubscriptionPlans;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -130,7 +131,13 @@ $params = Yii::$app->params;
             <div class="col-md-8">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="lessons-tab" data-bs-toggle="tab"
+                        <button class="nav-link active" id="subs-tab" data-bs-toggle="tab"
+                                data-bs-target="#subs-tab-pane" type="button" role="tab"
+                                aria-controls="subs-tab-pane" aria-selected="true">Subscriptions
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="lessons-tab" data-bs-toggle="tab"
                                 data-bs-target="#lessons-tab-pane" type="button" role="tab"
                                 aria-controls="lessons-tab-pane" aria-selected="true">Course Lessons
                         </button>
@@ -143,7 +150,98 @@ $params = Yii::$app->params;
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane p-3 fade show active" id="lessons-tab-pane" role="tabpanel"
+                    <div class="tab-pane p-3 fade show active" id="subs-tab-pane" role="tabpanel"
+                         aria-labelledby="subs-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>Subscriptions</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                        data-bs-target="#subsModal">
+                                    Add Subscription
+                                </button>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <!-- Modal -->
+                                <div class="modal fade" id="subsModal" tabindex="-1"
+                                     aria-labelledby="subsModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="subsModalLabel">New Lesson</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <?= $this->render('_form_subs', [
+                                                  'model' => new SubscriptionPlans(),
+                                                  'url' => Url::to(['add-subscription', 'course_id' => $model->id]),
+                                                  'course_id' => $model->id,
+                                               ]) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <table class="table table-sm table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name Ru</th>
+                                        <th>Name En</th>
+                                        <th>Name Uz</th>
+                                        <th>Price</th>
+                                        <th>Days</th>
+                                        <th>Status</th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1;
+                                    foreach ($model->subs as $item): ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $item->name_en ?></td>
+                                            <td><?= $item->name_ru ?></td>
+                                            <td><?= $item->name_uz ?></td>
+                                            <td><?= Yii::$app->formatter->asDecimal($item->price, 0) ?></td>
+                                            <td><?= $item->duration_days ?></td>
+                                            <td><?php
+                                               if ($item->status == 0) {
+                                                  echo Html::a('Inactive',
+                                                     ['update-subs-status', 'id' => $item->id, 'status' => 1],
+                                                     [
+                                                        'class' => 'btn btn-warning btn-sm w-100',
+                                                        'data-confirm' => 'Are you sure you want to activate this Lesson?',
+                                                     ]);
+                                               } else {
+                                                  echo Html::a('Active', ['update-subs-status', 'id' => $item->id, 'status' => 0],
+                                                     [
+                                                        'class' => 'btn btn-success btn-sm w-100',
+                                                        'data-confirm' => 'Are you sure you want to inactivate this Lesson?',
+                                                     ]);
+                                               }
+                                               ?></td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                        data-url="<?= Url::to(['update-subs-modal', 'id' => $item->id]) ?>">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane p-3 fade" id="lessons-tab-pane" role="tabpanel"
                          aria-labelledby="lessons-tab" tabindex="0">
                         <div class="row">
                             <div class="col-md-8">
@@ -301,12 +399,13 @@ $params = Yii::$app->params;
                                             <td><?= $item->name_en ?></td>
                                             <td><?= $item->desc_en ?></td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm modalUpdateBtn" data-url="<?=Url::to(['update-feature-ajax','id' => $item->id])?>'])?>">
+                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                        data-url="<?= Url::to(['update-feature-ajax', 'id' => $item->id]) ?>'])?>">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                             </td>
                                             <td>
-                                               
+
                                                 <a href="<?= Url::to(['delete-feature', 'id' => $item->id]) ?>"
                                                    class="btn btn-danger btn-sm" data-method="post"
                                                    data-confirm="Are you sure that you want to delete this item?">
@@ -326,14 +425,12 @@ $params = Yii::$app->params;
         </div>
     </div>
 
-    
-
 
 <?php
 Modal::begin([
    'id' => 'updateModal',
    'title' => 'Редактировать',
-   'size' => Modal::SIZE_LARGE,
+   'size' => Modal::SIZE_EXTRA_LARGE,
    'options' => ['tabindex' => false],
 ]);
 echo '<div class="modal-body p-0"></div>';
