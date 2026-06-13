@@ -11,18 +11,14 @@
 }
 
 .navigation-wrapper .navbar-toggler-icon {
-    background-image: none;
+    /*background-image: none;*/
     display: inline-block;
     height: 16px;
     position: relative;
     width: 22px;
 }
 
-.navigation-wrapper .navbar-toggler-icon,
-.navigation-wrapper .navbar-toggler-icon::before,
-.navigation-wrapper .navbar-toggler-icon::after {
-    border-top: 2px solid #fff;
-}
+
 
 .navigation-wrapper .navbar-toggler-icon::before,
 .navigation-wrapper .navbar-toggler-icon::after {
@@ -106,16 +102,23 @@
 .nav-tabs > li.active > a {
     color: inherit;
 }
-
 @media (max-width: 991.98px) {
-    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation {
-        position: static;
+    .navbar-nav {
+        flex-wrap: nowrap !important;
+        flex-direction: column;
+    }
+}
+@media (max-width: 991.98px) {
+
+    .navigation-wrapper .child-navigation {
+        display: none;
         visibility: visible;
         opacity: 1;
+        position: static;
     }
 
-    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
-        width: 100%;
+    .navigation-wrapper .has-child-wrapper.active > .child-navigation {
+        display: block;
     }
 }
 
@@ -210,11 +213,11 @@ img {
 
 #homepage-slider .slide {
     position: relative;
-}#course-slider .slide {
-     position: relative;
- }
+}
 
-
+#course-slider .slide {
+    position: relative;
+}
 
 
 .package-title {
@@ -336,6 +339,7 @@ img {
         min-height: 260px;
         object-fit: cover;
     }
+
     #course-slider .slide > img {
         min-height: 260px;
         object-fit: cover;

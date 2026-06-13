@@ -14,8 +14,8 @@ $base = Yii::$app->request->baseUrl;
          style="background-image: url(<?= "$base/uploads/courses/$courses->image" ?>)">
         <div class="container-fluid h-100">
             <div class="row h-100 align-items-md-center">
-                <div class="col">
-                    <div class="course-banner-caption text-center w-100 px-3">
+                <div class="col-md-6 col-12">
+                    <div class="course-banner-caption text-center w-100 px-3 mt-4">
                         <div>
                             <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
                         </div>

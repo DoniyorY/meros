@@ -4826,7 +4826,7 @@ label.error:before {
     }
 
     .navigation-wrapper .primary-navigation-wrapper header .navbar-collapse .navbar-nav {
-        margin: 0px -15px;
+        /*margin: 0px -15px;*/
         padding: 5px 0;
     }
 
@@ -4852,9 +4852,9 @@ label.error:before {
         opacity: 1;
     }
 
-    .navbar-toggler-icon {
+    /*.navbar-toggler-icon {
         background-color: #fff;
-    }
+    }*/
 
     .nav-tabs > li {
         display: block !important;

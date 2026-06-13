@@ -1,0 +1,162 @@
+
+/* mobile-header-fix.css
+   Подключить ПОСЛЕ bootstrap5-compat.css
+*/
+
+@media (max-width: 991.98px) {
+
+    /* Шапка */
+    .navigation-wrapper .primary-navigation-wrapper {
+        padding: 0 !important;
+    }
+
+    .navigation-wrapper .navbar-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+
+    .navigation-wrapper #brand,
+    .navigation-wrapper .navbar-brand {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .navigation-wrapper .brand-link {
+        display: block;
+        width: auto !important;
+    }
+
+    .navigation-wrapper .brand-logo,
+    .navigation-wrapper .navbar-brand img {
+        max-width: 170px !important;
+        height: auto !important;
+        max-height: 60px !important;
+    }
+
+    .navigation-wrapper .navbar-toggler {
+        margin: 0 !important;
+        flex-shrink: 0;
+        z-index: 1001;
+    }
+
+    /* Меню */
+    .navigation-wrapper .navbar-collapse {
+        background: #011529 !important;
+        margin-top: 10px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden;
+    }
+
+    .navigation-wrapper .navbar-collapse:after {
+        display: none !important;
+    }
+
+    .navigation-wrapper .navbar-nav {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .navigation-wrapper .navbar-nav > li {
+        width: 100% !important;
+        border-bottom: 1px solid rgba(255,255,255,.08) !important;
+        padding: 0 !important;
+    }
+
+    .navigation-wrapper .navbar-nav > li > a {
+        display: block !important;
+        padding: 16px 20px !important;
+        white-space: normal !important;
+    }
+
+    /* Убираем hover-логику десктопа */
+    .navigation-wrapper .navbar-nav li:hover .child-navigation {
+        opacity: inherit !important;
+    }
+
+    /* Подменю */
+    .navigation-wrapper .child-navigation {
+        display: none !important;
+        position: static !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #001022 !important;
+    }
+
+    .navigation-wrapper .has-child-wrapper.active > .child-navigation {
+        display: block !important;
+    }
+
+    .navigation-wrapper .child-navigation li {
+        margin: 0 !important;
+        padding: 0 !important;
+        border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .navigation-wrapper .child-navigation li a {
+        display: block !important;
+        padding: 14px 20px 14px 40px !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    .navigation-wrapper .child-navigation li:first-child a:before,
+    .navigation-wrapper .child-navigation li:first-child a:after {
+        display: none !important;
+    }
+
+    /* Стрелка */
+    .navigation-wrapper .has-child {
+        position: relative;
+    }
+
+    .navigation-wrapper .has-child:after {
+        position: absolute !important;
+        right: 20px !important;
+        top: 50% !important;
+        transform: translateY(-50%);
+        margin: 0 !important;
+    }
+
+    /* Фикс Bootstrap collapse */
+    .navbar-collapse:not(.show) {
+        display: none !important;
+    }
+
+    .navbar-collapse.show {
+        display: block !important;
+    }
+
+    /* Убираем старые отрицательные отступы */
+    .navigation-wrapper .navbar-collapse .navbar-nav,
+    .navigation-wrapper .primary-navigation-wrapper header .navbar-collapse .navbar-nav {
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .navigation-wrapper .brand-logo,
+    .navigation-wrapper .navbar-brand img {
+        max-width: 140px !important;
+        max-height: 50px !important;
+    }
+
+    .navigation-wrapper .navbar-nav > li > a {
+        font-size: 15px !important;
+    }
+
+    .navigation-wrapper .child-navigation li a {
+        font-size: 14px !important;
+    }
+}
