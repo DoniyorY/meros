@@ -24,9 +24,9 @@ $params = Yii::$app->params;
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?php $this->registerCsrfMetaTags() ?>
+       <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
+       <?php $this->head() ?>
     </head>
     <body class="page-homepage-carousel">
     <?php $this->beginBody() ?>
@@ -35,14 +35,14 @@ $params = Yii::$app->params;
             <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
                 <div class="navigation-contact text-white">Call Us: <span><?= $params['phone'] ?></span></div>
                 <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
-                    <?php if (!Yii::$app->user->isGuest): ?>
-                        <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
-                        <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
-                        <li><a href="my-account.html#tab-change-password">Change Password</a></li>
-                        <li><a href="index.html">Log Out</a></li>
-                    <?php else: ?>
-                        <li><a href="<?= Url::to(['site/login']) ?>" style="color: white">Login</a></li>
-                    <?php endif; ?>
+                   <?php if (!Yii::$app->user->isGuest): ?>
+                       <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
+                       <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
+                       <li><a href="my-account.html#tab-change-password">Change Password</a></li>
+                       <li><a href="index.html">Log Out</a></li>
+                   <?php else: ?>
+                       <li><a href="<?= Url::to(['site/login']) ?>" style="color: white">Login</a></li>
+                   <?php endif; ?>
                 </ul>
             </div>
         </div><!-- /.secondary-navigation -->
@@ -53,32 +53,37 @@ $params = Yii::$app->params;
                     <div class="container-fluid px-3 px-lg-4">
                         <div class="navbar-header d-flex align-items-center justify-content-between">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                                    data-bs-target="#primary-navigation" aria-controls="primary-navigation"
+                                    aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="visually-hidden">Toggle navigation</span>
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-brand nav" id="brand">
                                 <a href="<?= Yii::$app->homeUrl ?>" class="brand-link">
-                                    <img src="<?= "$base/logo-white.png" ?>" alt="brand" class="brand-logo">
+                                    <img src="<?= "$base/logo-white.png" ?>" alt="brand" class="brand-logo"
+                                         style="height: 50px;object-fit:contain">
                                 </a>
                             </div>
                         </div>
-                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-lg-end" id="primary-navigation" role="navigation">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-lg-end"
+                             id="primary-navigation" role="navigation">
                             <ul class="navbar-nav ms-lg-auto align-items-lg-center">
-                                <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
-                                    <li class="nav-item has-child-wrapper">
-                                        <a href="#" class="nav-link has-child no-link" aria-haspopup="true" aria-expanded="false"><?= $item->{"name_$lang"} ?></a>
-                                        <ul class="list-unstyled child-navigation">
-                                            <?php foreach ($courses as $value): ?>
-                                                <li>
-                                                    <a href="<?= \yii\helpers\Url::to(['courses/index','category'=>$item->slug, 'slug' => $value->slug]) ?>"><?= $value->{"name_$lang"} ?></a>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </li>
-                                <?php endforeach; ?>
+                               <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
+                                   <li class="nav-item has-child-wrapper">
+                                       <a href="#" class="nav-link has-child no-link" aria-haspopup="true"
+                                          aria-expanded="false"><?= $item->{"name_$lang"} ?></a>
+                                       <ul class="list-unstyled child-navigation">
+                                          <?php foreach ($courses as $value): ?>
+                                              <li>
+                                                  <a href="<?= \yii\helpers\Url::to(['courses/index', 'category' => $item->slug, 'slug' => $value->slug]) ?>"><?= $value->{"name_$lang"} ?></a>
+                                              </li>
+                                          <?php endforeach; ?>
+                                       </ul>
+                                   </li>
+                               <?php endforeach; ?>
                                 <li class="nav-item has-child-wrapper">
-                                    <a href="#" class="nav-link has-child no-link" aria-haspopup="true" aria-expanded="false">ABOUT US</a>
+                                    <a href="#" class="nav-link has-child no-link" aria-haspopup="true"
+                                       aria-expanded="false">ABOUT US</a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
                                             <a href="<?= Url::to(['site/about']) ?>">About Meros</a>
@@ -114,9 +119,9 @@ $params = Yii::$app->params;
             <div class="background"></div>
         </div>
         <!-- end Header -->
-
-<?php
-$headerDropdownJs = <<<JS
+       
+       <?php
+       $headerDropdownJs = <<<JS
 (function () {
     var mobileQuery = window.matchMedia('(max-width: 991.98px)');
     var navigation = document.getElementById('primary-navigation');
@@ -164,11 +169,11 @@ $headerDropdownJs = <<<JS
     });
 }());
 JS;
-$this->registerJs($headerDropdownJs);
-?>
-
-        <?= Alert::widget() ?>
-        <?= $content ?>
+       $this->registerJs($headerDropdownJs);
+       ?>
+       
+       <?= Alert::widget() ?>
+       <?= $content ?>
 
         <!-- Footer -->
         <footer id="page-footer">
@@ -194,7 +199,8 @@ $this->registerJs($headerDropdownJs);
                         <div class="col-lg-3 col-md-6 col-12 footer-logo-column">
                             <aside class="logo">
                                 <a href="<?= Yii::$app->homeUrl ?>">
-                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center footer-logo" alt="Meros">
+                                    <img src="<?= "$base/logo-white.png" ?>" class="vertical-center footer-logo"
+                                         alt="Meros">
                                 </a>
                             </aside>
                         </div><!-- /.col-md-3 -->
@@ -231,7 +237,7 @@ $this->registerJs($headerDropdownJs);
                         <div class="col-lg-3 col-md-6 col-12">
                             <aside>
                                 <header><h4>About Meros</h4></header>
-                                <?= Yii::$app->params['about_short'][$lang] ?>
+                               <?= Yii::$app->params['about_short'][$lang] ?>
                             </aside>
                         </div><!-- /.col-md-3 -->
                     </div><!-- /.row -->
