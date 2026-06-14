@@ -10,8 +10,8 @@ class PostController extends Controller
 
     public function actionIndex()
     {
-        $model = Posts::findAll(['status' => 1]);
-        return $this->render('index', ['model' => $model]);
+        $posts = Posts::findAll(['status' => 1]);
+        return $this->render('index', ['posts' => $posts]);
     }
 
     public function actionView($id)

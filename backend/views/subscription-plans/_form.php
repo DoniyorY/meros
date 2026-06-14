@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-12">
            <?= $form->field($model, 'course_id')->widget(Select2::classname(), [
-              'data' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_ru'),
+              'data' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_en'),
               'options' => ['placeholder' => 'Select a course ...'],
            ]) ?>
         </div>

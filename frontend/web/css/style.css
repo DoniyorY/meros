@@ -1528,7 +1528,7 @@ ul.list-links a:hover {
     bottom: 0;
     left: 0;
     z-index: 1;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.2);
     pointer-events: none;
 }
 
@@ -1538,7 +1538,7 @@ ul.list-links a:hover {
 
 #homepage-slider .homepage-banner-subtitle {
     display: block;
-    color: black;
+    color: white;
     font-size: 50px;
     font-weight: bold;
     text-align:left;
@@ -4951,5 +4951,8 @@ label.error:before {
     }
     .course-preview-video{
         height: 250px;
+    }
+    .course-banner {
+        background-position: 15% center !important;
     }
 }
