@@ -67,7 +67,7 @@ $params = Yii::$app->params;
                             <ul class="navbar-nav ms-lg-auto align-items-lg-center">
                                 <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
                                     <li class="nav-item has-child-wrapper">
-                                        <a href="#" class="nav-link has-child no-link"><?= $item->{"name_$lang"} ?></a>
+                                        <a href="#" class="nav-link has-child no-link" aria-haspopup="true" aria-expanded="false"><?= $item->{"name_$lang"} ?></a>
                                         <ul class="list-unstyled child-navigation">
                                             <?php foreach ($courses as $value): ?>
                                                 <li>
@@ -78,7 +78,7 @@ $params = Yii::$app->params;
                                     </li>
                                 <?php endforeach; ?>
                                 <li class="nav-item has-child-wrapper">
-                                    <a href="#" class="nav-link has-child no-link">ABOUT US</a>
+                                    <a href="#" class="nav-link has-child no-link" aria-haspopup="true" aria-expanded="false">ABOUT US</a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
                                             <a href="<?= Url::to(['site/about']) ?>">About Meros</a>
@@ -115,6 +115,57 @@ $params = Yii::$app->params;
         </div>
         <!-- end Header -->
 
+<?php
+$headerDropdownJs = <<<JS
+(function () {
+    var mobileQuery = window.matchMedia('(max-width: 991.98px)');
+    var navigation = document.getElementById('primary-navigation');
+
+    if (!navigation) {
+        return;
+    }
+
+    navigation.addEventListener('click', function (event) {
+        var trigger = event.target.closest('.has-child-wrapper > .has-child');
+
+        if (!trigger || !navigation.contains(trigger) || !mobileQuery.matches) {
+            return;
+        }
+
+        event.preventDefault();
+
+        var item = trigger.parentElement;
+        var isOpen = item.classList.contains('is-open');
+
+        navigation.querySelectorAll('.has-child-wrapper.is-open').forEach(function (openItem) {
+            if (openItem !== item) {
+                openItem.classList.remove('is-open');
+                var openTrigger = openItem.querySelector(':scope > .has-child');
+                if (openTrigger) {
+                    openTrigger.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        item.classList.toggle('is-open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    mobileQuery.addEventListener('change', function () {
+        if (!mobileQuery.matches) {
+            navigation.querySelectorAll('.has-child-wrapper.is-open').forEach(function (openItem) {
+                openItem.classList.remove('is-open');
+                var trigger = openItem.querySelector(':scope > .has-child');
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    });
+}());
+JS;
+$this->registerJs($headerDropdownJs);
+?>
 
         <?= Alert::widget() ?>
         <?= $content ?>
