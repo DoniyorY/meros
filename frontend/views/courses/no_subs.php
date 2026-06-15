@@ -28,7 +28,7 @@ $base = Yii::$app->request->baseUrl;
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
-                   <div class="col">
+                   <div class="col col-md-5">
                        <iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
                                title="YouTube video player" class="course-preview-video"
                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

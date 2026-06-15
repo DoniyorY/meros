@@ -72,9 +72,9 @@ $params = Yii::$app->params;
                      'name_ru',
                      'name_en',
                      'name_uz',
-                     'desc_ru:ntext',
-                     'desc_en:ntext',
-                     'desc_uz:ntext',
+                     'desc_ru:html',
+                     'desc_en:html',
+                     'desc_uz:html',
                      [
                         'attribute' => 'created_at',
                         'value' => function ($data) {

@@ -141,13 +141,13 @@ class SubscriptionPlansController extends Controller
         return $this->renderAjax('_form_item', [
             'model' => $model,
             'plan_id'=>$model->plan_id,
-            'url'=>Url::to(['update-facility','plan_id'=>$model->plan_id])
+            'url'=>Url::to(['update-facility','id'=>$model->$id])
         ]);
     }
 
-    public function actionUpdateFacility($plan_id)
+    public function actionUpdateFacility($id)
     {
-        $item = SubscriptionPlanItems::findOne($plan_id);
+        $item = SubscriptionPlanItems::findOne(['id'=>$id]);
         if ($item->load($this->request->post())) {
             $item->save();
             \Yii::$app->session->setFlash('success','Facility is Successfully Updated');

@@ -31,6 +31,19 @@ $params = Yii::$app->params;
    <?= GridView::widget([
       'dataProvider' => $dataProvider,
       'filterModel' => $searchModel,
+      'pager' => [
+         'prevPageLabel' => '<span class="page-item">Prev</span>',
+         'nextPageLabel' => '<span class="page-item">Next</span>',
+         'disabledPageCssClass' => 'page-link',
+         'activePageCssClass' => 'page-item active',
+         'maxButtonCount' => 5,
+         'linkOptions' => ['class' => 'page-link'],
+         'options' => [
+            'tag' => 'ul',
+            'class' => 'pagination',
+            'style' => 'margin-left: 1px;'
+         ],
+      ],
       'columns' => [
          ['class' => 'yii\grid\SerialColumn'],
          
@@ -38,9 +51,9 @@ $params = Yii::$app->params;
          [
             'attribute' => 'category_id',
             'value' => function ($data) {
-                if ($data->category) {
-                    return $data->category->name_en;
-                }
+               if ($data->category) {
+                  return $data->category->name_en;
+               }
             },
             'filter' => ArrayHelper::map(CourseCategory::find()->all(), 'id', 'name_en'),
          ],
@@ -94,6 +107,5 @@ $params = Yii::$app->params;
          ],
       ],
    ]); ?>
-
 
 </div>
