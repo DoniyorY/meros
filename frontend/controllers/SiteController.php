@@ -75,8 +75,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $banner = Banner::findAll(['status'=>Banner::STATUS_ACTIVE]);
-        $news = Posts::findAll(['status'=>1]);
-
+        $news = Posts::find()->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->limit(6)->all();
+        
         return $this->render('index',[
             'banner'=>$banner,
             'news'=>$news

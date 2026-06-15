@@ -106,7 +106,22 @@ class PostsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+           $model->updated_at = time();
+           $model->user_id=\Yii::$app->user->id;
+           $old_image = $model->image;
+           $file = UploadedFile::getInstance($model, 'imageFile');
+           if ($file) {
+              $uploads = \common\models\UploadsImage::uploadImage($model, $file, 'posts');
+              if ($uploads){
+                 $model->image=$uploads;
+                 
+              }
+           }
+           $model->save();
+           if ($old_image && file_exists($old_image)) {
+              unlink($old_image);
+           }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
