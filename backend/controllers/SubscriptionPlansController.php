@@ -137,7 +137,7 @@ class SubscriptionPlansController extends Controller
     }
     public function actionUpdateItemModal($id)
     {
-        $model = SubscriptionPlanItems::findOne($id);
+        $model = SubscriptionPlanItems::findOne(['id'=>$id]);
         return $this->renderAjax('_form_item', [
             'model' => $model,
             'plan_id'=>$model->plan_id,
