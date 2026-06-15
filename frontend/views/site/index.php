@@ -49,7 +49,7 @@ function translate($key)
                                     
                                     <?php if ($item->link): ?>
                                         <a href="<?= Url::to([$item->link]) ?>" class="btn btn-primary btn-lg">
-                                            View Details
+                                            <?=translate('banner_button')?>
                                         </a>
                                     <?php endif; ?>
                                      <div class="banner-logo row mt-5">
@@ -79,7 +79,7 @@ function translate($key)
         <div class="block">
             <div class="container">
                 <div class="text-center">
-                    <h2>About Meros</h2>
+                    <h2><?=translate('about_meros')?></h2>
                 </div>
                <?= translate('about_content_index') ?>
             </div>
@@ -176,21 +176,6 @@ function translate($key)
                             </article>
                         </blockquote>
                     </div><!-- /.author -->
-                    <div class="author has-dark-background">
-                        <blockquote>
-                            <!--<figure class="author-picture"><img src="<?php /*= "$base/" */ ?>img/student-testimonial.jpg" alt="">
-                            </figure>-->
-                            <article class="paragraph-wrapper">
-                                <div class="inner">
-                                    <header>Morbi nec nisi ante. Quisque lacus ligula, iaculis in elit et, interdum
-                                        semper quam. Fusce in interdum tortor.
-                                        Ut sollicitudin lectus dolor eget imperdiet libero pulvinar sit amet.
-                                    </header>
-                                    <footer>Claire Doe</footer>
-                                </div>
-                            </article>
-                        </blockquote>
-                    </div><!-- /.author -->
                 </div><!-- /.author-carousel -->
             </div><!-- /.container -->
         </div><!-- /.block -->
@@ -205,7 +190,7 @@ function translate($key)
                     <div class="col-12">
                         <div id="page-main">
                             <section class="blog-listing" id="blog-listing">
-                                <header><h1>News</h1></header>
+                                <header><h1><?=translate('news')?></h1></header>
                                 <div class="row g-4">
                                    <?php foreach ($news as $item): ?>
                                        <div class="col-md-6 col-12" style="min-height: 390px;">
@@ -236,7 +221,7 @@ function translate($key)
                                                    </div>
                                                    <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"
                                                       class="read-more stick-to-bottom">
-                                                       Read More
+                                                       <?=translate('read_more')?>
                                                    </a>
                                                </aside>
                                            </article><!-- /article -->
@@ -259,7 +244,7 @@ function translate($key)
                 <div class="col-lg-9 col-md-12">
                     <section id="partners">
                         <header>
-                            <h2>Partners & Donors</h2>
+                            <h2><?=translate('partners')?></h2>
                         </header>
                         <div class="section-content">
                             <div class="logos">
@@ -274,19 +259,6 @@ function translate($key)
                         </div>
                     </section>
                 </div><!-- /.col-md-9 -->
-                <div class="col-lg-3 col-md-12">
-                    <section id="donation">
-                        <header>
-                            <h2>Make a Donation</h2>
-                        </header>
-                        <div class="section-content">
-                            <a href="" class="universal-button">
-                                <h3>Become a Partner</h3>
-                                <figure class="date"><i class="fa fa-arrow-right"></i></figure>
-                            </a>
-                        </div><!-- /.section-content -->
-                    </section>
-                </div><!-- /.col-md-3 -->
             </div><!-- /.row -->
         </div><!-- /.container -->
     </div>

@@ -36,16 +36,14 @@ $params = Yii::$app->params;
                 <div class="navigation-contact text-white">Call Us: <span><?= $params['phone'] ?></span></div>
                 <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
                    <?php if (!Yii::$app->user->isGuest): ?>
-                       <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i>My Profile</a></li>
-                       <li><a href="my-account.html#tab-my-courses">My Courses</a></li>
-                       <li><a href="my-account.html#tab-change-password">Change Password</a></li>
+                       <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i><?=$params['my_profile'][$lang]?></a></li>
                       <?php \yii\widgets\ActiveForm::begin(['action' => Url::to(['site/logout']),'method' => 'post', 'options' => ['class' => 'logout_form']]) ?>
                         <li>
-                            <button type="submit" class="btn btn-link logout text-decoration-none" style="color: white">Log Out</button>
+                            <button type="submit" class="btn btn-link logout text-decoration-none" style="color: white"><?=$params['logout'][$lang]?></button>
                         </li>
                       <?php \yii\widgets\ActiveForm::end(); ?>
                    <?php else: ?>
-                       <li><a href="<?= Url::to(['site/login']) ?>">Login</a></li>
+                       <li><a href="<?= Url::to(['site/login']) ?>"><?=$params['login'][$lang]?></a></li>
                    <?php endif; ?>
                 </ul>
             </div>
@@ -87,31 +85,25 @@ $params = Yii::$app->params;
                                <?php endforeach; ?>
                                 <li class="nav-item has-child-wrapper">
                                     <a href="#" class="nav-link has-child no-link" aria-haspopup="true"
-                                       aria-expanded="false">ABOUT US</a>
+                                       aria-expanded="false"><?=$params['about_us'][$lang]?></a>
                                     <ul class="list-unstyled child-navigation">
                                         <li>
-                                            <a href="<?= Url::to(['site/about']) ?>">About Meros</a>
+                                            <a href="<?= Url::to(['site/about']) ?>"> <?=$params['about_meros'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/contact']); ?>">Contact Us</a>
+                                            <a href="<?= Url::to(['site/contact']); ?>"> <?=$params['contact_us'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/team']) ?>">Meet the Team</a>
+                                            <a href="<?= Url::to(['site/team']) ?>"> <?=$params['meet_the_team'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/clients']) ?>">Our Clients</a>
+                                            <a href="<?= Url::to(['site/partners']) ?>"> <?=$params['our_partners'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/partners']) ?>">Our Partners</a>
+                                            <a href="<?= Url::to(['site/policy']) ?>"> <?=$params['policy'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/policy']) ?>">Environmental Policy</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= Url::to(['site/faq-students']) ?>">FAQ - Students</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= Url::to(['site/faq-org']) ?>">FAQs - Organisations</a>
+                                            <a href="<?= Url::to(['site/faq-students']) ?>"> <?=$params['faq_students'][$lang]?></a>
                                         </li>
                                     </ul>
                                 </li>
@@ -185,7 +177,7 @@ JS;
                 <div class="container">
                     <div class="footer-inner">
                         <div class="footer-social">
-                            <figure>Follow us:</figure>
+                            <figure><?=$params['follow_us'][$lang]?>:</figure>
                             <div class="icons">
                                 <a href=""><i class="fa fa-twitter"></i></a>
                                 <a href=""><i class="fa fa-facebook"></i></a>
@@ -210,37 +202,33 @@ JS;
                         </div><!-- /.col-md-3 -->
                         <div class="col-lg-3 col-md-6 col-12">
                             <aside>
-                                <header><h4>Contact Us</h4></header>
+                                <header><h4><?=$params['contact_us'][$lang]?></h4></header>
                                 <address>
                                     <strong><?= Yii::$app->name ?></strong>
                                     <br>
-                                    <span>Uzbekistan Samarkand</span>
+                                    <?=$params['address_footer'][$lang]?>
                                     <br>
-                                    <span>Beruniy street, 1/5</span>
+                                    <abbr title="Telephone"><?=$params['label_phone'][$lang]?>:</abbr> <?= $params['phone'] ?>
                                     <br>
-                                    <abbr title="Telephone">Phone:</abbr> <?= $params['phone'] ?>
-                                    <br>
-                                    <abbr title="Email">Email:</abbr> <a
+                                    <abbr title="Email"><?=$params['label_email'][$lang]?>:</abbr> <a
                                             href="mailto:<?= $params['adminEmail'] ?>"><?= $params['adminEmail'] ?></a>
                                 </address>
                             </aside>
                         </div><!-- /.col-md-3 -->
                         <div class="col-lg-3 col-md-6 col-12">
                             <aside>
-                                <header><h4>Important Links</h4></header>
+                                <header><h4><?=$params['important_links'][$lang]?></h4></header>
                                 <ul class="list-links">
-                                    <li><a href="<?= Url::to(['site/about']) ?>">About Meros</a></li>
-                                    <li><a href="#">FAQ - Students</a></li>
-                                    <li><a href="#">FAQ - Teachers</a></li>
-                                    <li><a href="<?= Url::to(['site/policy']) ?>">Policy Privacy</a></li>
-                                    <li><a href="#">Libary & Health</a></li>
-                                    <li><a href="#">Research</a></li>
+                                    <li><a href="<?= Url::to(['site/about']) ?>"><?=$params['about_meros'][$lang]?></a></li>
+                                    <li><a href="#"><?=$params['faq_students'][$lang]?></a></li>
+                                    <li><a href="#"><?=$params['faq_teachers'][$lang]?></a></li>
+                                    <li><a href="<?= Url::to(['site/policy']) ?>"><?=$params['policy_privacy'][$lang]?></a></li>
                                 </ul>
                             </aside>
                         </div><!-- /.col-md-3 -->
                         <div class="col-lg-3 col-md-6 col-12">
                             <aside>
-                                <header><h4>About Meros</h4></header>
+                                <header><h4><?=$params['about_meros'][$lang]?></h4></header>
                                <?= Yii::$app->params['about_short'][$lang] ?>
                             </aside>
                         </div><!-- /.col-md-3 -->

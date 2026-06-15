@@ -149,7 +149,8 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+       $posts = Posts::find()->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->limit(6)->all();
+        return $this->render('about',['posts'=>$posts]);
     }
 
     /**

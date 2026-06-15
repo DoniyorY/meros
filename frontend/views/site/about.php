@@ -3,22 +3,24 @@
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-$this->title = 'About Meros International Institute';
+function translate($key)
+{
+   $lang = Yii::$app->language;
+   return Yii::$app->params[$key][$lang];
+}
+$this->title = translate('about_meros_international_institute');
 $params = Yii::$app->params;
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
-function translate($key)
-{
-    $lang = Yii::$app->language;
-    return Yii::$app->params[$key][$lang];
-}
+
 
 ?>
 <!-- Breadcrumb -->
 <div class="container">
     <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?=translate('home')?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($this->title) ?></li>
     </ol>
 </div>
@@ -37,7 +39,7 @@ function translate($key)
                         <img src="<?= "$base/images/meros_hospital.jpg" ?>"
                              class="img-fluid rounded about-hero-image" alt="Meros International Hospital">
                         <?= translate('about_content') ?>
-                        <h2>Gallery</h2>
+                        <h2><?=translate('gallery')?></h2>
                         <div>
                             <ul class="gallery-list">
                                 <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
@@ -69,7 +71,7 @@ function translate($key)
                                 <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
                                                 src="<?= "$base/" ?>img/image-14.jpg" alt=""></a></li>
                             </ul>
-                            <a href="" class="read-more">Go to Gallery</a>
+                            <a href="" class="read-more"><?=translate('go_to_gallery')?></a>
                         </div>
                     </section>
                 </div><!-- /#page-main -->
@@ -80,29 +82,26 @@ function translate($key)
                 <div id="page-sidebar" class="sidebar">
                     <aside class="news-small" id="news-small">
                         <header>
-                            <h2>Related News</h2>
+                            <h2><?=translate('latest_news')?></h2>
                         </header>
                         <div class="section-content">
+                            <?php foreach ($posts as $item):?>
                             <article>
-                                <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">U-M School of Public Health, Detroit partners aim to improve air
-                                        quality in the city</a></header>
+                                <figure class="date"><i class="fa fa-file-o"></i><?=date('d.m.Y',$item->created_at)?></figure>
+                                <header>
+                                    <a href="<?=Url::to(['post/view','id'=>$item->id])?>">
+                                        <?=$item->{"name_$lang"}?>
+                                    </a>
+                                </header>
                             </article><!-- /article -->
-                            <article>
-                                <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">At 50, Center for the Education of Women celebrates a wider
-                                        mission</a></header>
-                            </article><!-- /article -->
-                            <article>
-                                <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">Three U-Michigan scientists receive Sloan fellowships</a></header>
-                            </article><!-- /article -->
+                            <?php endforeach;?>
+                      
                         </div><!-- /.section-content -->
-                        <a href="" class="read-more">All News</a>
+                        <a href="<?=Url::to(['post/index'])?>" class="read-more"><?=translate('all_news')?></a>
                     </aside><!-- /.news-small -->
                     <aside id="our-professors">
                         <header>
-                            <h2>Our Professors</h2>
+                            <h2><?=translate('our_professors')?></h2>
                         </header>
                         <div class="section-content">
                             <div class="professors">
