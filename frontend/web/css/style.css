@@ -1482,6 +1482,9 @@ ul.list-links a:hover {
 .gallery img {
     vertical-align: top;
 }
+.secondary-navigation a{
+    color:white !important;
+}
 
 /****
   H
