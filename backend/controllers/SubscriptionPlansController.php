@@ -141,7 +141,7 @@ class SubscriptionPlansController extends Controller
         return $this->renderAjax('_form_item', [
             'model' => $model,
             'plan_id'=>$model->plan_id,
-            'url'=>Url::to(['update-facility','id'=>$model->$id])
+            'url'=>Url::to(['update-facility','id'=>$model->id])
         ]);
     }
 
