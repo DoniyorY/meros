@@ -38,5 +38,9 @@ return [
       1 => 'badge bg-success',
       2 => 'badge bg-danger',
       3 => 'badge bg-danger'
+   ],
+   'page_type' => [
+      0 => 'B2B',
+      1 => 'B2C',
    ]
 ];

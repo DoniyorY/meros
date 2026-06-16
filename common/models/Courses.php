@@ -11,6 +11,7 @@ use yii\helpers\Inflector;
  *
  * @property int $id
  * @property int $category_id
+ * @property int $page_type
  * @property string $slug
  * @property string $name_ru
  * @property string $name_en
@@ -69,7 +70,7 @@ class Courses extends \yii\db\ActiveRecord
       return [
          [['preview_video_link', 'mentor_id', 'image'], 'default', 'value' => null],
          [['status'], 'default', 'value' => 1],
-         [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
+         [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id','page_type'], 'required'],
          [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
          [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
          [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image', 'title_ru', 'title_en', 'title_uz'], 'string', 'max' => 255],

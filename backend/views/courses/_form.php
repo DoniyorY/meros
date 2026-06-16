@@ -9,12 +9,16 @@ use common\models\Mentors;
 /** @var yii\web\View $this */
 /** @var common\models\Courses $model */
 /** @var yii\widgets\ActiveForm $form */
+
 ?>
 
 <div class="courses-form">
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
+        <div class="col-md-12">
+            <?=$form->field($model,'page_type')->dropDownList(Yii::$app->params['page_type'],['prompt'=>'Select the type'])?>
+        </div>
         <div class="col-md-6">
             <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(CourseCategory::find()->all(), 'id', 'name_en'), ['prompt' => 'Select the Category']) ?>
         </div>

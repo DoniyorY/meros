@@ -61,6 +61,12 @@ $params = Yii::$app->params;
                   'attributes' => [
                      'id',
                      [
+                        'attribute' => 'page_type',
+                        'value' => function ($data) {
+                           return Yii::$app->params['page_type'][$data->page_type];
+                        }
+                     ],
+                     [
                         'attribute' => 'category_id',
                         'value' => function ($data) {
                            if ($data->category) {
