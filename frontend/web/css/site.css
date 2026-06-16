@@ -375,6 +375,12 @@ a.desc:after {
 .profile-reset-box .btn {
     margin-top: 18px;
 }
+.nav-link .lang-selected img {
+    width: 30px;
+}
+ul.list-unstyled li a img {
+    width: 30px;
+}
 
 @media (max-width: 991.98px) {
     .auth-shell {

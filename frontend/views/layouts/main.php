@@ -114,7 +114,7 @@ $params = Yii::$app->params;
                                   'image_type'  => 'rounded', // classic or rounded
                                   'link_home'   => true, // true or false
                                   'widget_type' => 'selector', // classic or selector
-                                  'width'       => '28'
+                                  //'width'       => '28'
                                ]); ?>
                             </ul>
                         </nav><!-- /.navbar collapse-->
