@@ -33,7 +33,7 @@ $base = Yii::$app->request->baseUrl;
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
-                   <div class="col-md-5 col-12">
+                   <div class="col-md col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
                                    title="YouTube video player" class="course-preview-video"
