@@ -262,19 +262,53 @@ $base = Yii::$app->request->baseUrl;
                                 <span class="meros-kicker">FAQ</span>
                                 <h2>Frequently Asked Questions</h2>
                             </div>
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <h3>How do I start?</h3>
-                                    <p>Choose the plan that fits your schedule, complete the secure payment, and begin learning online.</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <h3>Can I study online?</h3>
-                                    <p>Yes. Course materials are designed for flexible online study by busy healthcare professionals.</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <h3>What is included?</h3>
-                                    <p>Each subscription includes access to course content and practical communication modules.</p>
-                                </div>
+                            <div class="row g-3" id="course-faq-accordion">
+                                <?php $faqItems = [
+                                   [
+                                      'id' => 'faq-start',
+                                      'question' => 'How do I start?',
+                                      'answer' => 'Choose the plan that fits your schedule, complete the secure payment, and begin learning online.',
+                                   ],
+                                   [
+                                      'id' => 'faq-online',
+                                      'question' => 'Can I study online?',
+                                      'answer' => 'Yes. Course materials are designed for flexible online study by busy healthcare professionals.',
+                                   ],
+                                   [
+                                      'id' => 'faq-included',
+                                      'question' => 'What is included?',
+                                      'answer' => 'Each subscription includes access to course content and practical communication modules.',
+                                   ],
+                                   [
+                                      'id' => 'faq-access',
+                                      'question' => 'How long is access available?',
+                                      'answer' => 'Access follows the duration of the subscription plan you select during checkout.',
+                                   ],
+                                ]; ?>
+                                <?php foreach ($faqItems as $faq): ?>
+                                    <div class="col-md-6 col-12">
+                                        <div class="accordion meros-accordion meros-faq-accordion">
+                                            <div class="accordion-item meros-accordion-item">
+                                                <h3 class="accordion-header" id="<?= $faq['id'] ?>-heading">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#<?= $faq['id'] ?>-collapse"
+                                                            aria-expanded="false"
+                                                            aria-controls="<?= $faq['id'] ?>-collapse">
+                                                        <?= Html::encode($faq['question']) ?>
+                                                    </button>
+                                                </h3>
+                                                <div id="<?= $faq['id'] ?>-collapse" class="accordion-collapse collapse"
+                                                     aria-labelledby="<?= $faq['id'] ?>-heading"
+                                                     data-bs-parent="#course-faq-accordion">
+                                                    <div class="accordion-body">
+                                                        <?= Html::encode($faq['answer']) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
