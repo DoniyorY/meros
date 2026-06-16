@@ -415,3 +415,326 @@ ul.list-unstyled li a img {
         width: 100%;
     }
 }
+
+/* Modern medical institute redesign */
+:root {
+    --meros-primary: #07717b;
+    --meros-primary-dark: #04363f;
+    --meros-primary-soft: #e7f6f7;
+    --meros-accent: #4bc0ca;
+    --meros-ink: #12343b;
+    --meros-muted: #65777b;
+    --meros-card: #ffffff;
+    --meros-border: rgba(7, 113, 123, 0.14);
+    --meros-shadow: 0 24px 70px rgba(4, 54, 63, 0.13);
+}
+
+body {
+    color: var(--meros-ink);
+    font-family: "Inter", "Montserrat", "Segoe UI", Arial, sans-serif;
+}
+
+body p,
+.meros-modern-page p {
+    color: var(--meros-muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.meros-modern-page h1,
+.meros-modern-page h2,
+.meros-modern-page h3,
+.meros-hero h1,
+.meros-hero h2 {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+}
+
+.reveal-section {
+    animation: merosReveal 0.85s ease both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 32%;
+}
+
+@keyframes merosReveal {
+    from { opacity: 0; transform: translateY(34px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes merosFloat {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -18px, 0); }
+}
+
+@keyframes merosZoom {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+}
+
+.meros-section {
+    padding: 86px 0;
+    position: relative;
+}
+
+.meros-section:nth-child(even) {
+    background: linear-gradient(135deg, #f7fbfb 0%, #eef8f9 100%);
+}
+
+.meros-section-heading {
+    margin-bottom: 34px;
+}
+
+.meros-kicker {
+    color: var(--meros-primary);
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.meros-section-heading h2,
+.meros-modern-page h1,
+.meros-modern-page h2 {
+    display: block;
+    font-size: clamp(30px, 4vw, 48px);
+    margin: 0;
+}
+
+.meros-section-heading h2:after,
+.meros-modern-page h2:after { display: none; }
+
+.meros-primary-btn,
+.btn.btn-primary.meros-primary-btn {
+    background: linear-gradient(135deg, var(--meros-primary), var(--meros-accent));
+    border: 0;
+    border-radius: 999px;
+    box-shadow: 0 16px 36px rgba(7, 113, 123, 0.25);
+    font-weight: 800;
+    padding: 14px 30px;
+}
+
+.meros-primary-btn:hover { transform: translateY(-2px); }
+
+#homepage-slider.meros-hero .homepage-banner-slide,
+#homepage-slider.meros-hero .homepage-banner-carousel,
+#homepage-slider.meros-hero .owl-stage-outer,
+#homepage-slider.meros-hero .owl-stage,
+#homepage-slider.meros-hero .owl-item {
+    min-height: 760px;
+}
+
+.meros-hero-slide:after {
+    background: linear-gradient(90deg, rgba(4, 54, 63, 0.88) 0%, rgba(7, 113, 123, 0.58) 46%, rgba(7, 113, 123, 0.12) 100%) !important;
+}
+
+.meros-hero .homepage-banner-image {
+    animation: merosZoom 6s ease both;
+    height: 760px;
+    object-fit: cover;
+}
+
+.meros-hero-card {
+    animation: merosReveal 0.95s ease 0.18s both;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 34px;
+    box-shadow: var(--meros-shadow);
+    padding: clamp(28px, 5vw, 58px);
+    text-align: left;
+    backdrop-filter: blur(14px);
+}
+
+.meros-hero-card .meros-kicker,
+.meros-hero .homepage-banner-subtitle,
+.meros-hero .homepage-banner-title { color: #fff; }
+
+.meros-hero .homepage-banner-subtitle { font-size: clamp(20px, 2.5vw, 32px); }
+.meros-hero .homepage-banner-title { font-size: clamp(34px, 5.5vw, 72px); line-height: 1.02; }
+
+.meros-hero-logos {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.meros-hero-logos img { height: auto; max-width: 190px; width: 42%; }
+
+.meros-hero-pulse {
+    animation: merosFloat 5s ease-in-out infinite;
+    background: rgba(75, 192, 202, 0.22);
+    border-radius: 50%;
+    filter: blur(2px);
+    height: 180px;
+    position: absolute;
+    width: 180px;
+    z-index: 2;
+}
+
+.meros-hero-pulse-one { right: 12%; top: 18%; }
+.meros-hero-pulse-two { animation-delay: 1.2s; bottom: 16%; right: 30%; }
+
+.meros-about-card,
+.meros-event-card,
+.meros-news-card,
+.meros-quote-card,
+.meros-partner-card,
+.meros-faq-card,
+.meros-plan-card {
+    background: var(--meros-card);
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+}
+
+.meros-about-card { padding: clamp(26px, 4vw, 48px); }
+
+.meros-event-card,
+.meros-news-card { height: 100%; overflow: hidden; transition: 0.35s ease; }
+.meros-event-card:hover,
+.meros-news-card:hover,
+.meros-plan-card:hover { transform: translateY(-8px); }
+
+.meros-event-image,
+.meros-news-image { display: block; height: 260px; overflow: hidden; position: relative; }
+.meros-event-image img,
+.meros-news-image img { height: 100%; object-fit: cover; transition: 0.5s ease; width: 100%; }
+.meros-event-card:hover img,
+.meros-news-card:hover img { transform: scale(1.06); }
+
+.meros-event-date,
+.meros-news-image span {
+    background: var(--meros-primary);
+    border-radius: 18px;
+    bottom: 18px;
+    color: #fff;
+    font-weight: 800;
+    left: 18px;
+    padding: 10px 14px;
+    position: absolute;
+    text-transform: uppercase;
+}
+
+.meros-event-date strong { display: block; font-size: 26px; line-height: 1; }
+.meros-event-body,
+.meros-news-body { padding: 28px; }
+.meros-event-body h3 a,
+.meros-news-body h3 a { color: var(--meros-primary-dark); }
+.meros-muted { color: var(--meros-muted); }
+.meros-link { color: var(--meros-primary); font-weight: 800; }
+
+.meros-quote-card {
+    background: linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
+    padding: clamp(30px, 5vw, 62px);
+}
+
+.meros-quote-card p,
+.meros-quote-card footer,
+.meros-quote-card .meros-kicker { color: #fff; }
+.meros-quote-card blockquote { display: block; padding: 0; }
+.meros-quote-card p { font-size: clamp(21px, 3vw, 34px); line-height: 1.45; }
+.meros-quote-card footer { font-weight: 800; opacity: 0.82; }
+
+.meros-partner-card { align-items: center; display: flex; justify-content: center; padding: 42px; }
+.meros-partner-card img { max-height: 86px; max-width: 100%; }
+
+.meros-course-hero-bg {
+    min-height: 650px;
+    overflow: hidden;
+}
+
+.meros-course-hero-bg:after {
+    background: radial-gradient(circle at 20% 30%, rgba(75, 192, 202, 0.34), transparent 28%), linear-gradient(90deg, rgba(4,54,63,0.86), rgba(7,113,123,0.42));
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+}
+
+.meros-course-hero-bg > .container-fluid { position: relative; z-index: 1; }
+.meros-course-caption { animation: merosReveal 0.9s ease both; }
+.meros-course-caption img { max-width: min(460px, 92%); }
+.meros-course-caption .meros-kicker,
+.meros-course-caption h1,
+.meros-course-caption h2 { color: #fff; }
+
+.meros-video-frame {
+    border: 12px solid rgba(255,255,255,0.18);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    overflow: hidden;
+}
+
+.meros-video-frame iframe { display: block; width: 100%; }
+
+.package-accordion .panel,
+.meros-plan-card .panel {
+    border: 1px solid var(--meros-border);
+    border-radius: 18px;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.package-accordion .panel-heading,
+.meros-feature-heading {
+    background: var(--meros-primary) !important;
+    border-radius: 18px;
+}
+
+.package-accordion .panel-title a,
+.meros-feature-heading a { color: #fff !important; display: block; font-weight: 800; padding: 12px 16px; }
+
+.package-image { animation: merosFloat 5s ease-in-out infinite; max-width: 100%; }
+
+.meros-pricing .container-fluid,
+.meros-pricing { max-width: 1200px; margin: 0 auto; }
+.subscription-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+}
+.subscription-benefit {
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 20px;
+    color: var(--meros-primary);
+    display: flex;
+    gap: 12px;
+    padding: 16px 22px;
+}
+.subscription-benefit span { color: var(--meros-primary-dark); font-weight: 800; }
+
+.meros-plan-card {
+    height: 100%;
+    padding: 30px;
+    position: relative;
+    transition: 0.35s ease;
+}
+.meros-plan-card.recommended { border: 2px solid var(--meros-accent); transform: translateY(-10px); }
+.meros-plan-card header h3 { font-size: 28px; }
+.meros-plan-card .price { color: var(--meros-primary); font-size: 34px; font-weight: 900; margin: 18px 0 8px; }
+.meros-plan-card figure { color: var(--meros-muted); font-weight: 700; }
+.meros-plan-card .features { margin-top: 24px; }
+
+.meros-faq-card { margin-top: 48px; padding: clamp(26px, 4vw, 46px); }
+.meros-faq-card h3 { color: var(--meros-primary-dark); font-size: 20px; font-weight: 800; }
+
+@media (max-width: 767px) {
+    .meros-section { padding: 58px 0; }
+    #homepage-slider.meros-hero .homepage-banner-slide,
+    #homepage-slider.meros-hero .homepage-banner-carousel,
+    #homepage-slider.meros-hero .owl-stage-outer,
+    #homepage-slider.meros-hero .owl-stage,
+    #homepage-slider.meros-hero .owl-item,
+    .meros-hero .homepage-banner-image { min-height: 680px; height: 680px; }
+    .meros-hero-card { text-align: center; }
+    .meros-hero-logos { justify-content: center; }
+    .meros-event-image,
+    .meros-news-image { height: 220px; }
+    .meros-plan-card.recommended { transform: none; }
+}

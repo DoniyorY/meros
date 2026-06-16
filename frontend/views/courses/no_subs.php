@@ -13,17 +13,18 @@ $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 ?>
 <!-- course banner -->
-<section id="course-banner" class="course-banner" aria-label="course banner banner">
-    <div class="course-banner position-relative"
+<section id="course-banner" class="course-banner meros-course-hero reveal-section" aria-label="Course banner">
+    <div class="course-banner position-relative meros-course-hero-bg"
          style="background-image: url(<?= "$base/uploads/courses/$courses->image" ?>)">
         <div class="container-fluid h-100">
             <div class="row h-100 align-items-md-center">
                 <div class="col-md-6 col-12">
-                    <div class="course-banner-caption text-center w-100 px-3 mt-4">
+                    <div class="course-banner-caption meros-course-caption text-center w-100 px-3 mt-4">
                         <div>
                             <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
                         </div>
                         <div>
+                            <span class="meros-kicker">Medical English Course</span>
                             <h1 class="course-banner-subtitle mb-3"><?= $courses->{"name_$lang"} ?></h1>
                         </div>
                         <div>
@@ -33,10 +34,10 @@ $base = Yii::$app->request->baseUrl;
                 </div>
                <?php if ($courses->preview_video_link): ?>
                    <div class="col col-md-5">
-                       <iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
+                       <div class="meros-video-frame reveal-section"><iframe src="https://www.youtube.com/embed/<?= $courses->preview_video_link ?>"
                                title="YouTube video player" class="course-preview-video"
                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
                    </div>
                <?php endif; ?>
             </div>
@@ -47,13 +48,13 @@ $base = Yii::$app->request->baseUrl;
 <!-- end course banner -->
 
 <!-- Page Content -->
-<div id="page-content">
+<div id="page-content" class="meros-modern-page meros-course-page">
 
-    <section id="course-detail">
+    <section id="course-detail" class="meros-section reveal-section">
         <div class="block">
             <div class="container">
                 <div class="row g-4">
-                    <div class="col-12 about_course_text">
+                    <div class="col-12 about_course_text meros-about-card">
                         <h1><?=translate('about_the_course')?></h1>
                        <?= $courses->{"desc_$lang"} ?>
                     </div>
@@ -63,7 +64,7 @@ $base = Yii::$app->request->baseUrl;
         </div>
     </section><!-- /#course-detail -->
 
-    <section id="package-include">
+    <section id="package-include" class="meros-section reveal-section">
         <div class="block">
             <div class="container">
                 <div class="row g-4">
@@ -105,7 +106,7 @@ $base = Yii::$app->request->baseUrl;
         </div>
     </section>
 
-    <section id="instructors" class="instructors-section">
+    <section id="instructors" class="instructors-section meros-section meros-testimonial reveal-section">
         <div class="block">
             <div class="container">
                 <div class="instructors">
@@ -134,13 +135,13 @@ $base = Yii::$app->request->baseUrl;
         </div>
     </section><!-- /#instructors -->
 
-    <section id="tickets">
+    <section id="tickets" class="meros-section meros-pricing-section reveal-section">
         <div class="block">
             <div class="container-fluid">
-                <div class="pricing">
+                <div class="pricing meros-pricing">
                     <div class="row g-4">
-                        <div class="col-md-12 text-center">
-                            <?=translate('choose_the_right_plan_for_you')?>
+                        <div class="col-md-12 text-center meros-section-heading">
+                            <span class="meros-kicker"><?=translate('choose_the_right_plan_for_you')?></span>
                         </div>
                         <div class="col-12 text-center">
                             <h1><?php
@@ -151,7 +152,7 @@ $base = Yii::$app->request->baseUrl;
                                ?>
                             </h1>
                         </div>
-                        <div class="row g-4 subscription-benefits-row">
+                        <div class="row g-4 subscription-benefits-row reveal-section">
                             <div class="col-12 subscription-benefits">
                                 <div class="subscription-benefit secure-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
@@ -179,7 +180,7 @@ $base = Yii::$app->request->baseUrl;
                        <?php $i = 1;
                        foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
                            <div class="col-lg-4 col-md-6 col-12">
-                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card">
+                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card meros-plan-card reveal-section">
                                    <header><h3><?= $item->{"name_$lang"} ?></h3></header>
                                    <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?> uzs</div>
                                    <figure><?php
@@ -212,15 +213,14 @@ $base = Yii::$app->request->baseUrl;
                                       }
                                       ?></figure>
                                    <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
-                                      class="btn btn-primary btn-lg w-100">Buy Now</a>
+                                      class="btn btn-primary btn-lg w-100 meros-primary-btn">Buy Now</a>
                                    <div class="features">
                                        <div class="panel-group" id="accordion-<?= $item->id ?>">
                                           <?php foreach ($features as $v): $k = $v->id ?>
                                               <div class="panel panel-default">
-                                                  <div class="panel-heading" style="background: #07707a ">
+                                                  <div class="panel-heading meros-feature-heading">
                                                       <h4 class="panel-title">
                                                           <a data-bs-toggle="collapse"
-                                                             style="color: white; font-weight: 600"
                                                              data-bs-parent="#accordion-<?= $item->id ?>"
                                                              href="<?= "#feature-$k" ?>" class="collapsed">
                                                               <span><?= $v->{"name_$lang"} ?></span>
@@ -239,6 +239,29 @@ $base = Yii::$app->request->baseUrl;
                                </div><!-- /.price-box -->
                            </div><!-- /.col-md-3 -->
                           <?php $i++; endforeach; ?>
+
+                    <div class="col-12">
+                        <div class="meros-faq-card reveal-section">
+                            <div class="meros-section-heading text-center">
+                                <span class="meros-kicker">FAQ</span>
+                                <h2>Frequently Asked Questions</h2>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <h3>How do I start?</h3>
+                                    <p>Choose the plan that fits your schedule, complete the secure payment, and begin learning online.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>Can I study online?</h3>
+                                    <p>Yes. Course materials are designed for flexible online study by busy healthcare professionals.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>What is included?</h3>
+                                    <p>Each subscription includes access to course content and practical communication modules.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div><!-- /.row -->
                 </div><!-- /.pricing -->
             </div><!-- /.container -->
