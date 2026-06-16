@@ -1040,3 +1040,120 @@ body p,
 #homepage-slider.meros-hero .meros-hero-pulse {
     z-index: 2;
 }
+
+/* News index and detail pages */
+.meros-news-page .breadcrumb {
+    margin-bottom: 0;
+}
+
+.meros-news-hero {
+    padding-bottom: 34px;
+}
+
+.meros-news-sidebar-card,
+.meros-detail-card {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    padding: clamp(24px, 3vw, 34px);
+}
+
+.meros-news-sidebar-card h2 {
+    color: var(--meros-primary-dark);
+    font-size: 26px;
+    font-weight: 900;
+    margin: 0 0 18px;
+}
+
+.meros-search-box .form-control {
+    border: 1px solid var(--meros-border);
+    border-radius: 999px 0 0 999px;
+    min-height: 48px;
+}
+
+.meros-search-box .btn {
+    border-radius: 0 999px 999px 0;
+    min-width: 58px;
+}
+
+.meros-sidebar-links a {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+}
+
+.meros-detail-card {
+    overflow: hidden;
+    padding: 0;
+}
+
+.meros-detail-image {
+    height: clamp(320px, 48vw, 520px);
+    overflow: hidden;
+    position: relative;
+}
+
+.meros-detail-image img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.meros-detail-image span {
+    background: var(--meros-primary);
+    border-radius: 18px;
+    bottom: 22px;
+    color: #fff;
+    font-weight: 900;
+    left: 22px;
+    padding: 10px 16px;
+    position: absolute;
+}
+
+.meros-detail-body {
+    padding: clamp(26px, 4vw, 48px);
+}
+
+.meros-detail-body h1 {
+    color: var(--meros-primary-dark);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin: 0 0 24px;
+}
+
+.meros-detail-content img {
+    border-radius: 22px;
+    height: auto;
+    max-width: 100%;
+}
+
+.meros-related-section {
+    margin-top: 58px;
+}
+
+.meros-mini-news-list {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.meros-mini-news-list article {
+    border-bottom: 1px solid var(--meros-border);
+    display: grid;
+    gap: 8px;
+    padding-bottom: 18px;
+}
+
+.meros-mini-news-list time {
+    color: var(--meros-primary);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.meros-mini-news-list a {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+}

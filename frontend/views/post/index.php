@@ -1,94 +1,79 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
+
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
+$this->title = 'News';
 ?>
 
-<!-- Breadcrumb -->
 <div class="container">
-    <ol class="breadcrumb">
-        <li><a href="<?=Yii::$app->homeUrl?>">Home</a></li>
-        <li class="active">Blog</li>
+    <ol class="breadcrumb flex-wrap">
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
-<!-- end Breadcrumb -->
 
-<!-- Page Content -->
-<div id="page-content">
-    <div class="container">
-        <div class="row">
-            <!--MAIN Content-->
-            <div class="col-md-8">
-                <div id="page-main">
-                    <section class="blog-listing" id="blog-listing">
-                        <header><h1>News</h1></header>
-                        <div class="row">
-                            <?php foreach ($posts as $post): ?>
-                            <div class="col-md-6 col-sm-6">
-                                <article class="blog-listing-post">
-                                    <figure class="blog-thumbnail">
-                                        <figure class="blog-meta"><span class="fa fa-file-text-o"></span><?=date('d.m.Y',$post->created_at)?></figure>
-                                        <div class="image-wrapper"><a href="<?=Url::to(['view','id'=>$post->id])?>"><img src="<?="$base/uploads/posts/$post->image"?>"></a></div>
-                                    </figure>
-                                    <aside>
-                                        <header>
-                                            <a href="<?=Url::to(['view','id'=>$post->id])?>"><h3><?=$post->{"name_$lang"}?></h3></a>
-                                        </header>
-                                        <div class="description">
-                                            <p>
-                                                <?=$post->{"desc_$lang"}?>
-                                            </p>
-                                        </div>
-                                        <a href="<?=Url::to(['view','id'=>$post->id])?>" class="read-more">Read More</a>
-                                    </aside>
-                                </article><!-- /article -->
-                            </div><!-- /.col-md-6 -->
-                            <?php endforeach;?>
-                        </div><!-- /.row -->
-                    </section><!-- /.blog-listing -->
-                    <div class="center d-none">
-                        <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
+<div id="page-content" class="meros-modern-page meros-news-page">
+    <section class="meros-section meros-news-hero reveal-section">
+        <div class="container">
+            <div class="meros-section-heading text-center">
+                <span class="meros-kicker">Meros updates</span>
+                <h1><?= Html::encode($this->title) ?></h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="meros-section reveal-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8 col-12">
+                    <div class="row g-4">
+                        <?php foreach ($posts as $post): ?>
+                            <div class="col-md-6 col-12">
+                                <article class="meros-news-card h-100">
+                                    <a class="meros-news-image" href="<?= Url::to(['view', 'id' => $post->id]) ?>">
+                                        <img src="<?= Html::encode("$base/uploads/posts/$post->image") ?>"
+                                             alt="<?= Html::encode($post->{"name_$lang"}) ?>"
+                                             loading="lazy">
+                                        <span><?= date('d.m.Y', $post->created_at) ?></span>
+                                    </a>
+                                    <div class="meros-news-body">
+                                        <h3>
+                                            <a href="<?= Url::to(['view', 'id' => $post->id]) ?>">
+                                                <?= Html::encode($post->{"name_$lang"}) ?>
+                                            </a>
+                                        </h3>
+                                        <p><?= Html::encode(strip_tags($post->{"desc_$lang"})) ?></p>
+                                        <a href="<?= Url::to(['view', 'id' => $post->id]) ?>" class="meros-link">Read More</a>
+                                    </div>
+                                </article>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                </div><!-- /#page-main -->
-            </div><!-- /.col-md-8 -->
+                </div>
 
-            <!--SIDEBAR Content-->
-            <div class="col-md-4">
-                <div id="page-sidebar" class="sidebar">
-                    <aside id="newsletter">
-                        <header>
-                            <h2>Search</h2>
-                            <div class="section-content">
-                                <div class="newsletter">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Your e-mail">
-                                        <span class="input-group-btn">
-                                        <button type="submit" class="btn"><i class="fa fa-angle-right"></i></button>
-                                    </span>
-                                    </div><!-- /input-group -->
-                                </div><!-- /.newsletter -->
-                                <p class="opacity-50">
-                                    Fill the filed to search news
-                                </p>
-                            </div><!-- /.section-content -->
-                        </header>
-                    </aside><!-- /.newsletter -->
-                    <aside id="archive">
-                        <header>
-                            <h2>Categories</h2>
-                            <ul class="list-links">
-                                <li><a href="#">University News</a></li>
-                            </ul>
-                        </header>
-                    </aside><!-- /archive -->
-                </div><!-- /#sidebar -->
-            </div><!-- /.col-md-4 -->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
+                <div class="col-lg-4 col-12">
+                    <aside class="meros-news-sidebar-card reveal-section">
+                        <span class="meros-kicker">Search</span>
+                        <h2>Search News</h2>
+                        <div class="input-group meros-search-box">
+                            <input type="text" class="form-control" placeholder="Search news">
+                            <button type="submit" class="btn meros-primary-btn"><i class="fa fa-angle-right"></i></button>
+                        </div>
+                        <p>Fill the field to search news.</p>
+                    </aside>
+
+                    <aside class="meros-news-sidebar-card reveal-section mt-4">
+                        <span class="meros-kicker">Categories</span>
+                        <h2>Categories</h2>
+                        <ul class="list-unstyled meros-sidebar-links">
+                            <li><a href="#">University News</a></li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
-<!-- end Page Content -->
