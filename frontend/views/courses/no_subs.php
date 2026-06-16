@@ -13,11 +13,11 @@ $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 ?>
 <!-- course banner -->
-<section id="course-banner" class="course-banner meros-course-hero reveal-section" aria-label="Course banner">
-    <div class="course-banner position-relative meros-course-hero-bg"
-         style="background-image: url(<?= "$base/uploads/courses/$courses->image" ?>)">
-        <div class="container-fluid h-100">
-            <div class="row h-100 align-items-md-center">
+<section id="course-banner" class="meros-course-hero reveal-section" aria-label="Course banner">
+    <div class="position-relative meros-course-hero-bg"
+         style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center g-4">
                 <div class="col-md-6 col-12">
                     <div class="course-banner-caption meros-course-caption text-center w-100 px-3 mt-4">
                         <div>
@@ -33,7 +33,7 @@ $base = Yii::$app->request->baseUrl;
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
-                   <div class="col col-md-5">
+                   <div class="col-md-5 col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
                                    title="YouTube video player" class="course-preview-video"
