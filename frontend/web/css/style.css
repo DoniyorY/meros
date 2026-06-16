@@ -7,6 +7,22 @@ a {
     outline: none !important;
     text-decoration: none !important;
 }
+#homepage-slider,
+#course-slider {
+    overflow: hidden;
+}
+
+#homepage-slider .owl-wrapper-outer,
+#course-slider .owl-wrapper-outer {
+    overflow: hidden !important;
+    width: 100%;
+}
+
+#homepage-slider .owl-wrapper,
+#course-slider .owl-wrapper {
+    width: auto !important;
+}
+
 a:hover, a:active, a a:visited {
     color: #07717b;
     text-decoration: none !important;

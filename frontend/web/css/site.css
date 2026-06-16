@@ -918,3 +918,63 @@ body p,
 .meros-payment-payme img {
     max-height: 44px !important;
 }
+
+/* Banner stability fixes: keep Owl wrappers clipped and stop Bootstrap translate from using carousel widths */
+#homepage-slider.meros-hero {
+    max-width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+
+#homepage-slider.meros-hero .owl-stage-outer,
+#homepage-slider.meros-hero .owl-wrapper-outer {
+    overflow: hidden !important;
+    width: 100%;
+}
+
+#homepage-slider.meros-hero .owl-wrapper {
+    width: auto !important;
+}
+
+#homepage-slider.meros-hero .homepage-banner-caption {
+    left: 0 !important;
+    right: 0;
+    transform: translateY(-50%) !important;
+}
+
+#homepage-slider.meros-hero .homepage-banner-slide {
+    max-width: 100vw;
+}
+
+/* Reduced-gradient treatment using the same palette */
+.btn.btn-primary.meros-primary-btn,
+.meros-primary-btn {
+    background: var(--meros-primary);
+}
+
+.meros-hero-slide:after {
+    background: rgba(4, 54, 63, 0.62) !important;
+}
+
+.meros-section:nth-child(even),
+.meros-auth-page,
+.meros-invoice-page {
+    background: var(--meros-primary-soft);
+}
+
+.meros-quote-card,
+.meros-accordion .accordion-button:not(.collapsed) {
+    background: var(--meros-primary);
+}
+
+.meros-course-hero-bg:after {
+    background: rgba(4, 54, 63, 0.58);
+}
+
+.meros-auth-brand {
+    background: var(--meros-primary);
+}
+
+.meros-order-summary {
+    background: #fff;
+}
