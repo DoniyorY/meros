@@ -5,26 +5,26 @@ return [
    'about_content_index' => [
       'ru' => '
         <p style="text-align: justify; font-size: 20px;">
-            Meros International Institute — образовательная платформа в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения. <br>
+            Meros International Institute — Образовательный институт в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения. <br>
             Благодаря стратегическим международным партнёрствам и инновационным образовательным технологиям мы предлагаем качественные учебные программы, курсы медицинского английского языка и возможности профессионального развития для врачей, медсестёр, фармацевтов, студентов и организаций здравоохранения.
         </p>',
       'en' => '
         <p style="text-align: justify; font-size: 20px;">
-       Meros International Institute is a healthcare-focused education and professional development platform dedicated
+       Meros International Institute is a healthcare-focused education and professional development institute dedicated
        to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment. <br>
        Through strategic international partnerships and innovative learning technologies, we provide high-quality training programs,
        Medical English courses, and professional development opportunities for doctors, nurses, pharmacists, students, and healthcare organizations.
         </p>',
       'uz' => '
         <p style="text-align: justify; font-size: 20px;">
-            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish platformasidir. <br>
+            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish institutidir. <br>
             Strategik xalqaro hamkorlik va innovatsion ta’lim texnologiyalari orqali biz shifokorlar, hamshiralar, farmatsevtlar, talabalar va sog‘liqni saqlash tashkilotlari uchun yuqori sifatli o‘quv dasturlari, tibbiy ingliz tili kurslari va kasbiy rivojlanish imkoniyatlarini taqdim etamiz.
         </p>',
    ],
    'about_content' => [
       'ru' => '
          <p style="text-align: justify">
-            Meros International Institute — образовательная платформа в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения.
+            Meros International Institute — Образовательный институт в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения.
          </p>
          <p style="text-align: justify">
             Благодаря стратегическим международным партнёрствам и инновационным образовательным технологиям мы предлагаем качественные учебные программы, курсы медицинского английского языка и возможности профессионального развития для врачей, медсестёр, фармацевтов, студентов и организаций здравоохранения.
@@ -41,7 +41,7 @@ return [
         ',
       'en' => '
          <p style="text-align: justify">
-            Meros International Institute is a healthcare-focused education and professional development platform dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
+            Meros International Institute is a healthcare-focused education and professional development institute dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
          </p>
          <p style="text-align: justify">
             Through strategic international partnerships and innovative learning technologies, we provide high-quality training programs, Medical English courses, and professional development opportunities for doctors, nurses, pharmacists, students, and healthcare organizations.
@@ -58,7 +58,7 @@ return [
         ',
       'uz' => '
          <p style="text-align: justify">
-            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish platformasidir.
+            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish institutidir.
          </p>
          <p style="text-align: justify">
             Strategik xalqaro hamkorlik va innovatsion ta’lim texnologiyalari orqali biz shifokorlar, hamshiralar, farmatsevtlar, talabalar va sog‘liqni saqlash tashkilotlari uchun yuqori sifatli o‘quv dasturlari, tibbiy ingliz tili kurslari va kasbiy rivojlanish imkoniyatlarini taqdim etamiz.
@@ -77,17 +77,17 @@ return [
    'about_short' => [
       'ru' => '
         <p style="text-align: justify">
-            Meros International Institute — образовательная платформа в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения.
+            Meros International Institute — Образовательный институт в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения.
          </p>
         ',
       'en' => '
         <p style="text-align: justify">
-            Meros International Institute is a healthcare-focused education and professional development platform dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
+            Meros International Institute is a healthcare-focused education and professional development institute dedicated to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment.
          </p>
         ',
       'uz' => '
         <p style="text-align: justify">
-            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish platformasidir.
+            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish institutidir.
          </p>
         ',
    ],
