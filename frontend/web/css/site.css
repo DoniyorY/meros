@@ -952,9 +952,6 @@ body p,
     background: var(--meros-primary);
 }
 
-.meros-hero-slide:after {
-    background: rgba(4, 54, 63, 0.62) !important;
-}
 
 .meros-section:nth-child(even),
 .meros-auth-page,
