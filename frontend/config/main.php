@@ -58,7 +58,8 @@ return [
                ''=>'site/index',
                'about'=>'site/about',
                'contact'=>'site/contact',
-               'courses/<slug>' => 'courses/index',
+               ['class' => 'frontend\components\CourseUrlRule'],
+               'courses/<slug:[a-z0-9-]+>' => 'courses/index',
             ],
         ],
 
