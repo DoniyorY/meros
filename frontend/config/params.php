@@ -203,6 +203,11 @@ return [
       'en' => 'Home',
       'uz' => 'Bosh sahifa',
    ],
+   'error_home_button' => [
+      'ru' => 'На главную',
+      'en' => 'Go Home',
+      'uz' => 'Bosh sahifaga',
+   ],
    'gallery' => [
       'ru' => 'Галерея',
       'en' => 'Gallery',
