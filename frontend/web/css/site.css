@@ -1026,3 +1026,17 @@ body p,
         text-align: center;
     }
 }
+
+/* Ensure homepage hero overlay is rendered after legacy banner CSS removal */
+#homepage-slider.meros-hero .meros-hero-slide:after {
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+}
+
+#homepage-slider.meros-hero .homepage-banner-caption,
+#homepage-slider.meros-hero .meros-hero-pulse {
+    z-index: 2;
+}
