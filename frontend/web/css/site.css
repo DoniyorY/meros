@@ -523,7 +523,8 @@ body p,
 #homepage-slider.meros-hero .owl-stage-outer,
 #homepage-slider.meros-hero .owl-stage,
 #homepage-slider.meros-hero .owl-item {
-    min-height: 760px;
+    height: clamp(560px, 78vh, 720px);
+    min-height: 0;
 }
 
 .meros-hero-slide:after {
@@ -532,7 +533,8 @@ body p,
 
 .meros-hero .homepage-banner-image {
     animation: merosZoom 6s ease both;
-    height: 760px;
+    height: clamp(560px, 78vh, 720px);
+    min-height: 0;
     object-fit: cover;
 }
 
@@ -670,22 +672,69 @@ body p,
 
 .meros-video-frame iframe { display: block; width: 100%; }
 
-.package-accordion .panel,
-.meros-plan-card .panel {
+.meros-accordion {
+    display: grid;
+    gap: 14px;
+}
+
+.meros-accordion .accordion-item,
+.meros-check-item {
+    background: #fff;
     border: 1px solid var(--meros-border);
     border-radius: 18px;
-    box-shadow: none;
+    box-shadow: 0 12px 34px rgba(4, 54, 63, 0.08);
     overflow: hidden;
 }
 
-.package-accordion .panel-heading,
-.meros-feature-heading {
-    background: var(--meros-primary) !important;
-    border-radius: 18px;
+.meros-accordion .accordion-button {
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+    color: var(--meros-primary-dark);
+    font-size: 17px;
+    font-weight: 800;
+    padding: 18px 20px;
 }
 
-.package-accordion .panel-title a,
-.meros-feature-heading a { color: #fff !important; display: block; font-weight: 800; padding: 12px 16px; }
+.meros-accordion .accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, var(--meros-primary), var(--meros-accent));
+    color: #fff;
+}
+
+.meros-accordion .accordion-button:after {
+    filter: none;
+}
+
+.meros-accordion .accordion-button:not(.collapsed):after {
+    filter: brightness(0) invert(1);
+}
+
+.meros-accordion .accordion-body {
+    color: var(--meros-muted);
+    padding: 20px;
+    text-align: left;
+}
+
+.meros-check-item {
+    align-items: center;
+    color: var(--meros-primary-dark);
+    display: flex;
+    font-size: 17px;
+    font-weight: 800;
+    gap: 12px;
+    padding: 18px 20px;
+}
+
+.meros-check-item .fa {
+    align-items: center;
+    background: var(--meros-primary-soft);
+    border-radius: 50%;
+    color: var(--meros-primary);
+    display: inline-flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+}
 
 .package-image { animation: merosFloat 5s ease-in-out infinite; max-width: 100%; }
 
@@ -731,7 +780,7 @@ body p,
     #homepage-slider.meros-hero .owl-stage-outer,
     #homepage-slider.meros-hero .owl-stage,
     #homepage-slider.meros-hero .owl-item,
-    .meros-hero .homepage-banner-image { min-height: 680px; height: 680px; }
+    .meros-hero .homepage-banner-image { min-height: 0; height: 620px; }
     .meros-hero-card { text-align: center; }
     .meros-hero-logos { justify-content: center; }
     .meros-event-image,
@@ -773,4 +822,99 @@ body p,
         transform: none !important;
         transition: none !important;
     }
+}
+
+
+/* Login and invoice pages aligned with the Meros redesign */
+.meros-auth-page,
+.meros-invoice-page {
+    background: linear-gradient(135deg, #f7fbfb 0%, #eef8f9 100%);
+}
+
+.meros-auth-shell,
+.meros-invoice-card {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 34px;
+    box-shadow: var(--meros-shadow);
+    overflow: hidden;
+}
+
+.meros-auth-brand {
+    background: radial-gradient(circle at top left, rgba(75, 192, 202, 0.28), transparent 36%), linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
+}
+
+.meros-auth-brand h1,
+.meros-auth-brand p,
+.meros-auth-brand li {
+    color: #fff;
+}
+
+.meros-auth-brand li i {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    color: #fff;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 10px;
+    text-align: center;
+    width: 34px;
+}
+
+.meros-auth-panel .form-control,
+.meros-invoice-panel .form-control {
+    border: 1px solid var(--meros-border);
+    border-radius: 16px;
+    box-shadow: none;
+    min-height: 48px;
+}
+
+.meros-auth-panel label,
+.meros-invoice-panel label {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+}
+
+.meros-invoice-card {
+    padding: clamp(24px, 4vw, 44px);
+}
+
+.meros-invoice-header h1 {
+    color: var(--meros-primary-dark);
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 900;
+}
+
+.meros-invoice-panel,
+.meros-order-summary {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 26px;
+    box-shadow: 0 18px 48px rgba(4, 54, 63, 0.09);
+    height: 100%;
+    padding: clamp(22px, 3vw, 32px);
+}
+
+.meros-order-summary {
+    background: linear-gradient(180deg, #ffffff 0%, var(--meros-primary-soft) 100%);
+}
+
+.meros-invoice-alert {
+    border: 0;
+    border-radius: 18px;
+    color: var(--meros-primary-dark);
+}
+
+.meros-payment-btn {
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    min-height: 52px;
+}
+
+.meros-payment-payme img {
+    max-height: 44px !important;
 }

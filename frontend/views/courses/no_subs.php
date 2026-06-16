@@ -74,27 +74,39 @@ $base = Yii::$app->request->baseUrl;
                         <h2 class="package-title"><?=translate('all_package_include')?></h2>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel-group package-accordion" id="accordion" role="tablist"
-                             aria-multiselectable="true">
+                        <div class="accordion meros-accordion package-accordion" id="package-accordion">
                            <?php foreach ($courses->features as $item): ?>
-                               <div class="panel panel-default">
-                                   <div class="panel-heading" role="tab" id="headingOne">
-                                       <h4 class="panel-title">
-                                           <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                              href="#<?= "collapse-$item->id" ?>" class="collapsed"
-                                              aria-expanded="false" aria-controls="<?= "collapse-$item->id" ?>">
-                                              <?= $item->{"name_$lang"} ?>
-                                           </a>
-                                       </h4>
-                                   </div>
-                                   <div id="<?= "collapse-$item->id" ?>" class="panel-collapse collapsed collapse"
-                                        role="tabpanel"
-                                        aria-labelledby="headingOne">
-                                       <div class="panel-body">
-                                          <?= $item->{"desc_$lang"} ?>
-                                       </div>
-                                   </div>
-                               </div>
+                              <?php
+                              $featureName = $item->{"name_$lang"};
+                              $featureDesc = $item->{"desc_$lang"};
+                              $englishDescription = trim(strip_tags((string) ($item->desc_en ?? '')));
+                              $hasEnglishDescription = $englishDescription !== '' && $englishDescription !== '-';
+                              ?>
+                              <?php if ($hasEnglishDescription): ?>
+                                  <div class="accordion-item meros-accordion-item">
+                                      <h3 class="accordion-header" id="<?= "package-heading-$item->id" ?>">
+                                          <button class="accordion-button collapsed" type="button"
+                                                  data-bs-toggle="collapse"
+                                                  data-bs-target="#<?= "package-collapse-$item->id" ?>"
+                                                  aria-expanded="false"
+                                                  aria-controls="<?= "package-collapse-$item->id" ?>">
+                                              <?= Html::encode($featureName) ?>
+                                          </button>
+                                      </h3>
+                                      <div id="<?= "package-collapse-$item->id" ?>" class="accordion-collapse collapse"
+                                           aria-labelledby="<?= "package-heading-$item->id" ?>"
+                                           data-bs-parent="#package-accordion">
+                                          <div class="accordion-body">
+                                             <?= $featureDesc ?>
+                                          </div>
+                                      </div>
+                                  </div>
+                              <?php else: ?>
+                                  <div class="meros-check-item">
+                                      <span class="fa fa-check" aria-hidden="true"></span>
+                                      <span><?= Html::encode($featureName) ?></span>
+                                  </div>
+                              <?php endif; ?>
                            <?php endforeach; ?>
                         </div>
                     </div>
@@ -217,20 +229,22 @@ $base = Yii::$app->request->baseUrl;
                                    <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
                                       class="btn btn-primary btn-lg w-100 meros-primary-btn">Buy Now</a>
                                    <div class="features">
-                                       <div class="panel-group" id="accordion-<?= $item->id ?>">
+                                       <div class="accordion meros-accordion meros-plan-accordion" id="<?= "plan-accordion-$item->id" ?>">
                                           <?php foreach ($features as $v): $k = $v->id ?>
-                                              <div class="panel panel-default">
-                                                  <div class="panel-heading meros-feature-heading">
-                                                      <h4 class="panel-title">
-                                                          <a data-bs-toggle="collapse"
-                                                             data-bs-parent="#accordion-<?= $item->id ?>"
-                                                             href="<?= "#feature-$k" ?>" class="collapsed">
-                                                              <span><?= $v->{"name_$lang"} ?></span>
-                                                          </a>
-                                                      </h4>
-                                                  </div>
-                                                  <div id="<?= "feature-$k" ?>" class="panel-collapse collapse">
-                                                      <div class="panel-body" style="text-align: left">
+                                              <div class="accordion-item meros-accordion-item">
+                                                  <h4 class="accordion-header" id="<?= "plan-feature-heading-$k" ?>">
+                                                      <button class="accordion-button collapsed" type="button"
+                                                              data-bs-toggle="collapse"
+                                                              data-bs-target="<?= "#plan-feature-$k" ?>"
+                                                              aria-expanded="false"
+                                                              aria-controls="<?= "plan-feature-$k" ?>">
+                                                          <?= Html::encode($v->{"name_$lang"}) ?>
+                                                      </button>
+                                                  </h4>
+                                                  <div id="<?= "plan-feature-$k" ?>" class="accordion-collapse collapse"
+                                                       aria-labelledby="<?= "plan-feature-heading-$k" ?>"
+                                                       data-bs-parent="#<?= "plan-accordion-$item->id" ?>">
+                                                      <div class="accordion-body">
                                                          <?= $v->{"desc_$lang"} ?>
                                                       </div>
                                                   </div>

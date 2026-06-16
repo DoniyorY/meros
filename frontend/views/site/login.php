@@ -23,11 +23,11 @@ $this->title = $t('login_title');
     </ol>
 </div>
 
-<div id="page-content">
-    <section class="auth-page">
+<div id="page-content" class="meros-modern-page meros-auth-page">
+    <section class="auth-page meros-section reveal-section">
         <div class="container">
-            <div class="auth-shell">
-                <div class="auth-brand">
+            <div class="auth-shell meros-auth-shell">
+                <div class="auth-brand meros-auth-brand">
                     <img src="<?= Html::encode("$base/logo-white.png") ?>" alt="<?= Html::encode(Yii::$app->name) ?>">
                     <h1><?= Html::encode($t('login_title')) ?></h1>
                     <p><?= Html::encode($t('login_intro')) ?></p>
@@ -37,7 +37,7 @@ $this->title = $t('login_title');
                         <li><i class="fa fa-lock"></i><?= Html::encode($t('login_feature_security')) ?></li>
                     </ul>
                 </div>
-                <div class="auth-form-panel">
+                <div class="auth-form-panel meros-auth-panel">
                     <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'auth-form']]); ?>
 
                     <?= $form->field($model, 'username')->textInput([
@@ -59,7 +59,7 @@ $this->title = $t('login_title');
                     </div>
 
                     <?= Html::submitButton($t('login'), [
-                        'class' => 'btn btn-color-primary auth-submit',
+                        'class' => 'btn btn-primary meros-primary-btn auth-submit',
                         'name' => 'login-button',
                     ]) ?>
 

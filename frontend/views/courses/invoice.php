@@ -1,6 +1,7 @@
 <?php
 
 use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
@@ -14,21 +15,21 @@ $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
 ?>
 
-<div id="page-content">
-    <div class="container py-5">
-
-        <div class="card shadow border-0">
-            <div class="card-body p-4">
+<div id="page-content" class="meros-modern-page meros-invoice-page">
+    <section class="meros-section reveal-section">
+        <div class="container">
+            <div class="meros-invoice-card">
                 <?php if (Yii::$app->user->isGuest):?>
-                <div class="alert alert-warning" style="color: black">
+                <div class="alert alert-warning meros-invoice-alert">
                     You are not registered yet. Please
                     <a href="<?= Url::to(['site/login']) ?>">log in</a> or fill the fields to create an account.
                 </div>
                 <?php endif;?>
                 <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 meros-invoice-header">
                     <div>
-                        <h1 class="h3 mb-1">Invoice</h1>
+                        <span class="meros-kicker">Secure checkout</span>
+                            <h1 class="h3 mb-1">Invoice</h1>
                         <small class="text-muted">
                             Invoice #12345
                         </small>
@@ -50,6 +51,7 @@ $params = Yii::$app->params;
 
                     <!-- Customer Info -->
                     <div class="col-lg-7">
+                        <div class="meros-invoice-panel">
 
                         <h5 class="mb-3">Customer Information</h5>
                        <?php if (Yii::$app->user->isGuest): ?>
@@ -103,7 +105,7 @@ $params = Yii::$app->params;
                                </div>
                                <div class="col-md-12">
                                    <div class="form-group">
-                                       <button type="submit" class="btn btn-primary w-100 ">Submit</button>
+                                       <button type="submit" class="btn btn-primary meros-primary-btn w-100">Submit</button>
                                    </div>
                                </div>
                            </div>
@@ -112,45 +114,47 @@ $params = Yii::$app->params;
                        <?php else: ?>
                           <?php $form = ActiveForm::begin();
                           $user = Yii::$app->user->identity;
-                          [$first_name, $last_name]= explode(' ', $user->fullname); ?>
+                          $nameParts = preg_split('/\s+/', trim((string) $user->fullname), 2);
+                          $first_name = $nameParts[0] ?? '';
+                          $last_name = $nameParts[1] ?? ''; ?>
 
                            <div class="row">
                                <div class="col-md-12 mb-3">
                                    <div class="form-group">
                                        <label>Email</label>
-                                       <input name="User[email]" type="email" class="form-control" value="<?=$user->email?>" readonly>
+                                       <input name="User[email]" type="email" class="form-control" value="<?= Html::encode($user->email) ?>" readonly>
                                    </div>
                                </div>
                                <div class="col-md-6 mb-3">
                                    <div class="form-group">
                                        <label>First Name</label>
-                                       <input name="User[first_name]" type="text" class="form-control" value="<?=$first_name?>" readonly>
+                                       <input name="User[first_name]" type="text" class="form-control" value="<?= Html::encode($first_name) ?>" readonly>
                                    </div>
                                </div>
 
                                <div class="col-md-6 mb-3">
                                    <div class="form-group">
                                        <label>Last Name</label>
-                                       <input name="User[last_name]" type="text" class="form-control" value="<?=$last_name?>" readonly>
+                                       <input name="User[last_name]" type="text" class="form-control" value="<?= Html::encode($last_name) ?>" readonly>
                                    </div>
                                </div>
                                <div class="col-md-12 mb-3">
                                    <div class="form-group">
                                        <label>Phone</label>
-                                       <input type="text" name="User[phone]" class="form-control" value="<?=$user->phone?>" readonly>
+                                       <input type="text" name="User[phone]" class="form-control" value="<?= Html::encode($user->phone) ?>" readonly>
                                    </div>
                                </div>
                            </div>
                           
                           <?php ActiveForm::end(); ?>
                        <?php endif; ?>
+                        </div>
                     </div>
 
                     <!-- Order Summary -->
                     <div class="col-lg-5">
 
-                        <div class="card bg-light border-0">
-                            <div class="card-body">
+                        <div class="meros-order-summary">
 
                                 <h5 class="mb-4">
                                     Order Summary
@@ -159,7 +163,7 @@ $params = Yii::$app->params;
                                 <div class="d-flex justify-content-between mb-3">
                                     <span>Product</span>
                                     <strong>
-                                       <?= $model->{"name_$lang"} ?>
+                                       <?= Html::encode($model->{"name_$lang"}) ?>
                                     </strong>
                                 </div>
 
@@ -185,17 +189,16 @@ $params = Yii::$app->params;
                                 </span>
                                 </div>
                                 <?php if (!Yii::$app->user->isGuest):?>
-                                <button id="btn-confirm" class="btn w-100 mt-2 btn-secondary me-2">Подтвердить</button>
-                                <button id="btn-click" class="btn w-100 mt-2 btn-success me-2">
+                                <button id="btn-confirm" class="btn w-100 mt-2 meros-primary-btn">Подтвердить</button>
+                                <button id="btn-click" class="btn w-100 mt-2 meros-payment-btn meros-payment-click">
                                     <!-- Место для логотипа Click -->
                                     <img src="https://click.uz/click/images/logo.svg" alt="Click" height="20"></button>
-                                <button id="btn-payme" class="btn w-100 mt-2 btn-primary">
+                                <button id="btn-payme" class="btn w-100 mt-2 meros-payment-btn meros-payment-payme">
                                     <!-- Место для логотипа Payme -->
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
                                          alt="Payme" style="height: 70px; object-fit: cover;">
                                 </button>
                                 <?php endif;?>
-                            </div>
                         </div>
 
                     </div>
@@ -204,6 +207,5 @@ $params = Yii::$app->params;
 
             </div>
         </div>
-
-    </div>
+    </section>
 </div>
