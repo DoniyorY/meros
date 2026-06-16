@@ -5,7 +5,8 @@
 
 # phpstorm project files
 .idea
-
+.agents
+.codex
 # netbeans project files
 nbproject
 

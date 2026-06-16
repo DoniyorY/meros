@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'css/flexslider.css',
         'css/style.css',
         'css/bootstrap5-compat.css',
+        'css/site.css',
         //'css/mobile-header-fix.css',
     ];
     public $js = [

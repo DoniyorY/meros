@@ -3,10 +3,16 @@
 namespace frontend\controllers;
 
 use common\models\User;
+use common\models\UserSubscriptions;
+use frontend\models\ChangePasswordForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ProfileForm;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\web\Controller;
+use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -28,7 +34,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,7 +42,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -92,7 +98,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['site/profile']);
         }
 
         $model = new LoginForm();
@@ -107,6 +113,43 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionProfile()
+    {
+        $user = Yii::$app->user->identity;
+        $profileModel = new ProfileForm($user);
+        $passwordModel = new ChangePasswordForm($user);
+
+        if ($profileModel->load(Yii::$app->request->post()) && $profileModel->save()) {
+            Yii::$app->session->setFlash('success', $this->t('profile_saved_message'));
+            return $this->redirect(['site/profile']);
+        }
+
+        if ($passwordModel->load(Yii::$app->request->post()) && $passwordModel->changePassword()) {
+            Yii::$app->session->setFlash('success', $this->t('profile_password_changed_message'));
+            return $this->redirect(['site/profile', '#' => 'tab-change-password']);
+        }
+
+        $currentSubscription = UserSubscriptions::find()
+            ->where(['user_id' => $user->id, 'status' => 1])
+            ->with(['plan'])
+            ->orderBy(['expires_date' => SORT_DESC, 'id' => SORT_DESC])
+            ->one();
+
+        $subscriptionHistory = UserSubscriptions::find()
+            ->where(['user_id' => $user->id])
+            ->with(['plan'])
+            ->orderBy(['created_at' => SORT_DESC, 'id' => SORT_DESC])
+            ->all();
+
+        return $this->render('profile', [
+            'user' => $user,
+            'profileModel' => $profileModel,
+            'passwordModel' => $passwordModel,
+            'currentSubscription' => $currentSubscription,
+            'subscriptionHistory' => $subscriptionHistory,
+        ]);
+    }
+
     /**
      * Logs out the current user.
      *
@@ -117,6 +160,45 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionRequestPasswordReset()
+    {
+        $model = new PasswordResetRequestForm();
+        if (!Yii::$app->user->isGuest) {
+            $model->email = Yii::$app->user->identity->email;
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', $this->t('password_reset_email_sent'));
+                return $this->goHome();
+            }
+
+            Yii::$app->session->setFlash('error', $this->t('password_reset_email_error'));
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionResetPassword($token)
+    {
+        try {
+            $model = new ResetPasswordForm($token);
+        } catch (\InvalidArgumentException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', $this->t('password_reset_success'));
+            return $this->goHome();
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -177,5 +259,11 @@ class SiteController extends Controller
        $user->updated_at=time();
        $user->save(false);
        return $this->redirect($rer);
+    }
+
+    private function t($key)
+    {
+        $lang = Yii::$app->language;
+        return Yii::$app->params[$key][$lang] ?? Yii::$app->params[$key]['en'] ?? $key;
     }
 }

@@ -68,4 +68,9 @@ class UserSubscriptions extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getPlan()
+    {
+        return $this->hasOne(SubscriptionPlans::class, ['id' => 'plan_id']);
+    }
+
 }

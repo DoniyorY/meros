@@ -15,7 +15,7 @@ $homeButtonText = $params['error_home_button'][$lang] ?? $params['error_home_but
 $this->title = $name;
 ?>
 <div id="page-content" class="site-error-page">
-    <div class="container">
+    <div class="container mt-5">
         <section class="error-card text-center">
             <div class="error-card__icon" aria-hidden="true">
                 <i class="fa fa-stethoscope"></i>

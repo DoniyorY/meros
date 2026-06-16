@@ -26,8 +26,15 @@ class PasswordResetRequestForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => $this->t('password_reset_email_not_found')
             ],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'email' => $this->t('profile_email'),
         ];
     }
 
@@ -50,7 +57,7 @@ class PasswordResetRequestForm extends Model
         
         if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
-            if (!$user->save()) {
+            if (!$user->save(false)) {
                 return false;
             }
         }
@@ -65,5 +72,11 @@ class PasswordResetRequestForm extends Model
             ->setTo($this->email)
             ->setSubject('Password reset for ' . Yii::$app->name)
             ->send();
+    }
+
+    private function t($key)
+    {
+        $lang = Yii::$app->language;
+        return Yii::$app->params[$key][$lang] ?? Yii::$app->params[$key]['en'] ?? $key;
     }
 }

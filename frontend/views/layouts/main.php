@@ -36,7 +36,7 @@ $params = Yii::$app->params;
                 <div class="navigation-contact text-white">Call Us: <span><?= $params['phone'] ?></span></div>
                 <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
                    <?php if (!Yii::$app->user->isGuest): ?>
-                       <li><a href="my-account.html#tab-profile"><i class="fa fa-user"></i><?=$params['my_profile'][$lang]?></a></li>
+                       <li><a href="<?= Url::to(['site/profile']) ?>"><i class="fa fa-user"></i><?=$params['my_profile'][$lang]?></a></li>
                       <?php \yii\widgets\ActiveForm::begin(['action' => Url::to(['site/logout']),'method' => 'post', 'options' => ['class' => 'logout_form']]) ?>
                         <li>
                             <button type="submit" class="btn btn-link logout text-decoration-none" style="color: white"><?=$params['logout'][$lang]?></button>

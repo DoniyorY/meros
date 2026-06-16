@@ -1,42 +1,71 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
 /** @var \common\models\LoginForm $model */
 
-use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Html;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+$params = Yii::$app->params;
+$lang = Yii::$app->language;
+$base = Yii::$app->request->baseUrl;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
+
+$this->title = $t('login_title');
 ?>
-<div class="container py-5"><div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row g-4">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div class="my-1 mx-0" style="color:#999;">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-
-                <div class="mb-3">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
+<div class="container">
+    <ol class="breadcrumb flex-wrap">
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
+    </ol>
 </div>
+
+<div id="page-content">
+    <section class="auth-page">
+        <div class="container">
+            <div class="auth-shell">
+                <div class="auth-brand">
+                    <img src="<?= Html::encode("$base/logo-white.png") ?>" alt="<?= Html::encode(Yii::$app->name) ?>">
+                    <h1><?= Html::encode($t('login_title')) ?></h1>
+                    <p><?= Html::encode($t('login_intro')) ?></p>
+                    <ul>
+                        <li><i class="fa fa-user"></i><?= Html::encode($t('login_feature_profile')) ?></li>
+                        <li><i class="fa fa-credit-card"></i><?= Html::encode($t('login_feature_subscription')) ?></li>
+                        <li><i class="fa fa-lock"></i><?= Html::encode($t('login_feature_security')) ?></li>
+                    </ul>
+                </div>
+                <div class="auth-form-panel">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'auth-form']]); ?>
+
+                    <?= $form->field($model, 'username')->textInput([
+                        'autofocus' => true,
+                        'placeholder' => $t('login_username'),
+                    ])->label($t('login_username')) ?>
+
+                    <?= $form->field($model, 'password')->passwordInput([
+                        'placeholder' => $t('login_password'),
+                    ])->label($t('login_password')) ?>
+
+                    <?= $form->field($model, 'rememberMe')->checkbox()->label($t('login_remember_me')) ?>
+
+                    <div class="auth-links">
+                        <span><?= Html::encode($t('login_forgot_prefix')) ?></span>
+                        <?= Html::a($t('login_reset_link'), ['site/request-password-reset']) ?>
+                        <span><?= Html::encode($t('login_resend_prefix')) ?></span>
+                        <?= Html::a($t('login_resend_link'), ['site/resend-verification-email']) ?>
+                    </div>
+
+                    <?= Html::submitButton($t('login'), [
+                        'class' => 'btn btn-color-primary auth-submit',
+                        'name' => 'login-button',
+                    ]) ?>
+
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

@@ -50,6 +50,13 @@ class ResetPasswordForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'password' => $this->t('profile_new_password'),
+        ];
+    }
+
     /**
      * Resets password.
      *
@@ -63,5 +70,11 @@ class ResetPasswordForm extends Model
         $user->generateAuthKey();
 
         return $user->save(false);
+    }
+
+    private function t($key)
+    {
+        $lang = Yii::$app->language;
+        return Yii::$app->params[$key][$lang] ?? Yii::$app->params[$key]['en'] ?? $key;
     }
 }

@@ -32,6 +32,15 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => $this->t('login_username'),
+            'password' => $this->t('login_password'),
+            'rememberMe' => $this->t('login_remember_me'),
+        ];
+    }
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -44,7 +53,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, $this->t('login_incorrect_credentials'));
             }
         }
     }
@@ -75,5 +84,17 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    private function t($key)
+    {
+        $fallback = [
+            'login_username' => 'Username',
+            'login_password' => 'Password',
+            'login_remember_me' => 'Remember me',
+            'login_incorrect_credentials' => 'Incorrect username or password.',
+        ];
+        $lang = Yii::$app->language;
+        return Yii::$app->params[$key][$lang] ?? Yii::$app->params[$key]['en'] ?? $fallback[$key] ?? $key;
     }
 }

@@ -7,13 +7,25 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Reset password';
-$this->params['breadcrumbs'][] = $this->title;
+$params = Yii::$app->params;
+$lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
+$this->title = $t('password_reset_title');
 ?>
-<div class="container py-5"><div class="site-reset-password">
+<div class="container">
+    <ol class="breadcrumb flex-wrap">
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
+    </ol>
+</div>
+
+<div id="page-content">
+<div class="container py-5"><div class="site-reset-password auth-narrow">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please choose your new password:</p>
+    <p><?= Html::encode($t('password_reset_new_text')) ?></p>
 
     <div class="row g-4">
         <div class="col-lg-5">
@@ -22,11 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
 
                 <div class="mb-3">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton($t('password_reset_save_button'), ['class' => 'btn btn-color-primary']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+</div>
 </div>
 </div>
