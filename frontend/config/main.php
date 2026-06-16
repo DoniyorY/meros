@@ -1,4 +1,7 @@
 <?php
+
+use frontend\components\CourseUrlRule;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -12,7 +15,8 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'name' => 'Meros International Institute',
-    'language' => 'en',
+   'language' => 'ru',
+   'sourceLanguage' => 'en',
     'components' => [
         'assetManager' => [
             'bundles' => [
@@ -49,22 +53,61 @@ return [
         ],
 
         // Url Manager
-        'urlManager' => [
-            'class' => 'codemix\localeurls\UrlManager',
-            'languages' => ['En'=>'en', 'Ru'=>'ru', 'Uz'=>'uz'], // List all supported languages here
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            /*'rules' => [
-               ''=>'site/index',
-               'about'=>'site/about',
-               'contact'=>'site/contact',
-               'verify-email/<token>-<rer>'=>'site/verify-email',
-               '<category>/<slug>' => 'courses/index',
-               'courses/get-plan/<id>'=> 'courses/get-plan',
-               'guest-register' => 'courses/guest-register',
-               'courses/test'=>'courses/test',
-            ],*/
-        ],
+       'urlManager' => [
+          'class' => \codemix\localeurls\UrlManager::class,
+          
+          'languages' => [
+             'ru',
+             'en',
+             'uz',
+          ],
+          
+          // Чтобы даже язык по умолчанию всегда был в URL:
+          // /ru/site/about, а не /site/about
+          'enableDefaultLanguageUrlCode' => true,
+          
+          'enablePrettyUrl' => true,
+          'showScriptName' => false,
+          'enableStrictParsing' => false,
+          
+          'rules' => [
+             /*
+              * Системные страницы ставим выше,
+              * чтобы не обращаться к базе без необходимости.
+              */
+             '' => 'site/index',
+             'about' => 'site/about',
+             'login' => 'site/login',
+             'logout' => 'site/logout',
+             'contact' => 'site/contact',
+             
+             /*
+              * Динамическая категория + динамический курс.
+              *
+              * ВАЖНО: lang здесь отсутствует.
+              * Язык обработает codemix\localeurls\UrlManager.
+              */
+             [
+                'class' => CourseUrlRule::class,
+                'pattern' => '<category:[a-z0-9-]+>/<slug:[a-z0-9-]+>',
+                'route' => 'courses/index',
+             ],
+             
+             /*
+              * Обычные Yii-маршруты должны идти после курса.
+              *
+              * Иначе /medical-english/english-for-doctors
+              * будет воспринят как controller/action.
+              */
+             '<controller:[a-zA-Z0-9_-]+>/<action:[a-zA-Z0-9_-]+>'
+             => '<controller>/<action>',
+             
+             '<controller:[a-zA-Z0-9_-]+>'
+             => '<controller>/index',
+             
+             
+          ],
+       ],
 
     ],
     'params' => $params,

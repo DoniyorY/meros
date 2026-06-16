@@ -19,6 +19,9 @@ class CoursesController extends Controller
       $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      if ($courses === null) {
+         throw new \yii\web\NotFoundHttpException('Курс не найден.');
+      }
       return $this->render('no_subs', [
          'courses' => $courses,
          'subs' => $subs

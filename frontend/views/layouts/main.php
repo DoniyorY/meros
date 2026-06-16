@@ -4,6 +4,7 @@
 
 /** @var string $content */
 
+use cinghie\multilanguage\widgets\MultiLanguageWidget;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap5\Html;
@@ -107,6 +108,14 @@ $params = Yii::$app->params;
                                         </li>
                                     </ul>
                                 </li>
+                               <?= MultiLanguageWidget::widget([
+                                  'addCurrentLang' => true, // add current lang
+                                  'calling_controller' => $this->context,
+                                  'image_type'  => 'rounded', // classic or rounded
+                                  'link_home'   => true, // true or false
+                                  'widget_type' => 'selector', // classic or selector
+                                  'width'       => '28'
+                               ]); ?>
                             </ul>
                         </nav><!-- /.navbar collapse-->
                     </div><!-- /.container -->
