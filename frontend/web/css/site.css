@@ -738,3 +738,39 @@ body p,
     .meros-news-image { height: 220px; }
     .meros-plan-card.recommended { transform: none; }
 }
+
+/* Reliable JS-backed reveal fallback for browsers without scroll-timeline support */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(34px) scale(0.98);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal-section.is-visible,
+.meros-hero-card.reveal-section,
+.meros-course-caption.reveal-section {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@supports (animation-timeline: view()) {
+    .reveal-section {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-section,
+    .meros-hero .homepage-banner-image,
+    .meros-hero-pulse,
+    .package-image,
+    .meros-course-caption,
+    .meros-hero-card {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

@@ -13,7 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         //'css/site.css',
-        'https://fonts.googleapis.com/css?family=Montserrat:400,700',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;700&display=swap',
         'css/font-awesome.css',
         'css/selectize.css',
         'css/owl.carousel.css',
