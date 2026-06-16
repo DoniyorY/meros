@@ -66,8 +66,80 @@ class SubscriptionPlansController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+       $subscriptionPlans = $this->findModel($id);
+       /*$items = [
+          [
+             'name_en' => '5 x 1-hour lessons with an expert teacher',
+             'desc_en' => '<p>You receive one-to-one lessons with an expert Nursing English tutor (5 classes of 1 hour each). These classes target what you want to practise and what you most need to work on to develop your professional English.</p>',
+          ],
+          [
+             'name_en' => 'Personal study programme',
+             'desc_en' => '<p>Do you have specific language goals? Do you want to improve your spoken confidence? Do you want feedback on your written English from an expert? Then the Premium course is a great choice for you.</p><p>Before you take the course, we ask you to complete a detailed needs analysis form. This means your lessons will be targeted to your needs from the very start.</p>',
+          ],
+          [
+             'name_en' => 'Classes organised around your schedule',
+             'desc_en' => '<p>You take your classes with your teacher when you are available. We understand how busy nurses and nursing students are, so offer you maximum flexibility.</p>',
+          ],
+          [
+             'name_en' => "60 hours' online study",
+             'desc_en' => '<p>A wide range of language, covering communication skills, nursing and everyday terms, hospital and care scenarios, interactions with patients and colleagues – all explained clearly with multiple practice activities.</p>',
+          ],
+          [
+             'name_en' => 'Healthcare-focus at all times',
+             'desc_en' => '<p>All the course content is nursing-focused, including terminology, communication skills, and language skills development. All grammar, vocabulary and pronunciation work is contextualised, so your learning remains relevant at all times.</p>',
+          ],
+          [
+             'name_en' => 'Multi media- video, audio, visual',
+             'desc_en' => '<p>Learning inputs and exercises are varied throughout – from animated videos to voice recording tasks to charts, diagrams, articles, dialogues and practice activities.</p>',
+          ],
+          [
+             'name_en' => 'Authentic hospital documents',
+             'desc_en' => '<p>The course includes authentic hospital charts and forms throughout, so you can analyse and learn nursing English as it is used in practice.</p>',
+          ],
+          [
+             'name_en' => 'Interactive recording tasks',
+             'desc_en' => '<p>Practise your communication skills by responding to what patients and colleagues say in unique voice recording activities. Your conversations can be downloaded as mp3 files.</p>',
+          ],
+          [
+             'name_en' => 'Downloadable glossaries',
+             'desc_en' => '<p>Download the key language items from each unit so you have a convenient reference guide to hand at any time.</p>',
+          ],
+          [
+             'name_en' => 'Wide range of tasks and quizzes',
+             'desc_en' => '<p>Tasks and quizzes include drag and drop, multiple choice, gap-fill, drop-down selection, re-ordering language, spotting errors and voice recording. And all optimised for mobile phone use as well as PC and tablet.</p>',
+          ],
+          [
+             'name_en' => 'Up-to-date content',
+             'desc_en' => '<p>Content is continuously updated to make sure it is up-to-date and relevant at all times.</p>',
+          ],
+          [
+             'name_en' => 'CPD certificate',
+             'desc_en' => '<p>English for Nurses is accredited by the CPD Standards Office in the UK, whose qualifications are recognised worldwide. You will receive your Certificate of Achievement after completing the course with an overall score of 70% accuracy or more.</p>',
+          ],
+          [
+             'name_en' => '3 months access',
+             'desc_en' => '<p>You have 3 months to work through the course. This can be extended at any time for a small fee.</p>',
+          ],
+       ];
+       foreach ($items as $item) {
+          $plan = SubscriptionPlans::find()->where(['id' => $subscriptionPlans->id])->one();
+          $check = SubscriptionPlans::find()
+             ->where(['name_en'=>$item['name_en']])->exists();
+          if ($check) continue;
+          if (!$plan) continue;
+          $plan_item = new SubscriptionPlanItems([
+             'plan_id'=>$plan->id,
+             'name_ru'=>'-',
+             'name_uz'=>'-',
+             'name_en'=>$item['name_en'],
+             'desc_ru'=>'-',
+             'desc_uz'=>'-',
+             'desc_en'=>$item['desc_en'],
+          ]);
+          $plan_item->save(false);
+       }*/
+       return $this->render('view', [
+            'model' => $subscriptionPlans,
         ]);
     }
 

@@ -17,7 +17,7 @@ class SubscriptionPlansSearch extends SubscriptionPlans
     public function rules()
     {
         return [
-            [['id', 'duration_days', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'duration_days', 'status', 'created_at', 'updated_at','course_id'], 'integer'],
             [['name_ru', 'name_en', 'name_uz'], 'safe'],
             [['price'], 'number'],
         ];
@@ -64,6 +64,7 @@ class SubscriptionPlansSearch extends SubscriptionPlans
             'price' => $this->price,
             'duration_days' => $this->duration_days,
             'status' => $this->status,
+            'course_id' => $this->course_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

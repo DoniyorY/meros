@@ -6,6 +6,7 @@ use common\models\CourseFeatures;
 use common\models\CourseLessons;
 use common\models\Courses;
 use common\models\search\CoursesSearch;
+use common\models\SubscriptionPlanItems;
 use common\models\SubscriptionPlans;
 use common\models\UploadsImage;
 use Yii;
@@ -129,8 +130,10 @@ class CoursesController extends Controller
     */
    public function actionView($id)
    {
+      $model = $this->findModel($id);
+      
       return $this->render('view', [
-         'model' => $this->findModel($id),
+         'model' => $model,
       ]);
    }
    
