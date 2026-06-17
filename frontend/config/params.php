@@ -598,10 +598,10 @@ return [
       'en'=>'100% Online',
       'uz'=>'',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   'Trusted partners'=>[
+      'ru'=>'Доверенные партнёры',
+      'en'=>'Trusted partners',
+      'uz'=>'Ishonchli hamkorlar',
    ],
    ''=>[
       'ru'=>'',
