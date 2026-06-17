@@ -1375,3 +1375,161 @@ body p,
         grid-template-columns: 1fr;
     }
 }
+
+/* Global page loader */
+.meros-page-loader {
+    align-items: center;
+    background: linear-gradient(135deg, #04363f 0%, #07717b 48%, #4bc0ca 100%);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    opacity: 1;
+    position: fixed;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+    visibility: visible;
+    z-index: 99999;
+}
+
+.meros-page-loader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.meros-loader-mark {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 32px;
+    box-shadow: 0 28px 70px rgba(4, 54, 63, 0.35);
+    color: #fff;
+    display: inline-flex;
+    flex-direction: column;
+    font-weight: 800;
+    gap: 18px;
+    letter-spacing: 0.16em;
+    padding: 34px 42px;
+    text-transform: uppercase;
+}
+
+.meros-loader-spinner {
+    animation: merosLoaderSpin 0.9s linear infinite;
+    border: 4px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    border-top-color: #fff;
+    height: 54px;
+    width: 54px;
+}
+
+@keyframes merosLoaderSpin { to { transform: rotate(360deg); } }
+
+/* Homepage consultation form */
+.meros-consultation {
+    background: linear-gradient(90deg, rgba(2, 40, 47, 0.05) 0%, rgba(75, 192, 202, 0.95) 50%, rgba(75, 192, 202, 0.95) 100%);
+    min-height: 720px;
+    overflow: hidden;
+    padding: 70px 0;
+}
+
+.meros-consultation-photo {
+    background: linear-gradient(90deg, rgba(4, 54, 63, 0.15), rgba(75, 192, 202, 0.72)), url('../img/about-us-head-img.jpg') center/cover no-repeat;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 58%;
+}
+
+.meros-consultation-pattern {
+    bottom: 0;
+    color: rgba(255, 255, 255, 0.28);
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 52%;
+}
+
+.meros-medical-circle {
+    align-items: center;
+    border: 4px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+}
+
+.meros-medical-circle-lg { font-size: 150px; height: 260px; left: 8%; top: 24%; width: 260px; }
+.meros-medical-circle-sm { font-size: 58px; height: 132px; width: 132px; }
+.meros-medical-one { right: 18%; top: 16%; }
+.meros-medical-two { bottom: 18%; left: 28%; }
+
+.meros-consultation-doctor {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px dashed rgba(255, 255, 255, 0.65);
+    border-radius: 160px 160px 0 0;
+    bottom: 0;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    font-weight: 800;
+    height: 320px;
+    justify-content: center;
+    position: absolute;
+    right: 3%;
+    text-align: center;
+    text-transform: uppercase;
+    width: 190px;
+    z-index: 1;
+}
+
+.meros-consultation .container { position: relative; z-index: 2; }
+
+.meros-consultation-card {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 12px;
+    box-shadow: 0 30px 90px rgba(4, 54, 63, 0.18);
+    padding: clamp(28px, 4vw, 54px);
+    backdrop-filter: blur(18px);
+}
+
+.meros-consultation-brand {
+    align-items: center;
+    color: rgba(255, 255, 255, 0.86);
+    display: flex;
+    font-size: 12px;
+    font-weight: 800;
+    gap: 10px;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+}
+
+.meros-consultation-brand img { height: 28px; width: auto; }
+.meros-consultation h2 { color: #fff; font-size: clamp(28px, 3.8vw, 46px); line-height: 1.22; margin: 0 0 34px; text-align: center; }
+.meros-consultation-form .form-label { color: #fff; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+.meros-consultation-form .form-control {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 14px;
+    color: #fff;
+    min-height: 56px;
+}
+.meros-consultation-form textarea.form-control { min-height: 150px; }
+.meros-consultation-form .form-control:focus { background: rgba(255, 255, 255, 0.14); border-color: #fff; box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.14); color: #fff; }
+.meros-consultation-btn { background: #667786; border: 0; border-radius: 999px; color: #fff; font-weight: 800; margin-top: 8px; min-width: 245px; padding: 14px 28px; }
+.meros-consultation-btn:hover { background: #536675; color: #fff; transform: translateY(-2px); }
+.meros-consultation-note { color: rgba(78, 94, 110, 0.82) !important; font-size: 14px !important; line-height: 1.7 !important; margin: 14px 0 0; }
+
+@media (max-width: 991px) {
+    .meros-consultation-photo { width: 100%; }
+    .meros-consultation:after { background: rgba(75, 192, 202, 0.74); content: ""; inset: 0; position: absolute; }
+    .meros-consultation-doctor { display: none; }
+}
+
+@media (max-width: 575px) {
+    .meros-consultation { min-height: 0; padding: 48px 0; }
+    .meros-consultation-card { border-radius: 24px; }
+    .meros-consultation-btn { width: 100%; }
+}

@@ -1,7 +1,9 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var \frontend\models\ContactForm $contactModel */
 
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -185,4 +187,48 @@ function translate($key)
             </div>
         </div>
     </section>
+
+    <section class="meros-section meros-consultation reveal-section" id="consultation">
+        <div class="meros-consultation-photo" aria-hidden="true"></div>
+        <div class="meros-consultation-pattern" aria-hidden="true">
+            <span class="meros-medical-circle meros-medical-circle-lg"><i class="fa fa-plus"></i></span>
+            <span class="meros-medical-circle meros-medical-circle-sm meros-medical-one"><i class="fa fa-heartbeat"></i></span>
+            <span class="meros-medical-circle meros-medical-circle-sm meros-medical-two"><i class="fa fa-stethoscope"></i></span>
+        </div>
+        <div class="meros-consultation-doctor" aria-label="Reserved place for doctor photo">
+            <span>Doctor photo</span>
+        </div>
+        <div class="container">
+            <div class="row justify-content-lg-end justify-content-center">
+                <div class="col-xl-6 col-lg-7 col-md-10">
+                    <div class="meros-consultation-card">
+                        <div class="meros-consultation-brand">
+                            <img src="<?= "$base/logo-white.png" ?>" alt="Meros Hospital" loading="lazy">
+                            <span>Meros Hospital</span>
+                        </div>
+                        <h2>Персональная консультация<br>в Meros Hospital</h2>
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'homepage-consultation-form',
+                            'options' => ['class' => 'meros-consultation-form'],
+                            'fieldConfig' => [
+                                'template' => "{label}
+{input}
+{error}",
+                                'labelOptions' => ['class' => 'form-label'],
+                                'errorOptions' => ['class' => 'invalid-feedback d-block'],
+                            ],
+                        ]); ?>
+                            <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label('Как мы можем к вам обращаться') ?>
+                            <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label('Телефон (обязательно)') ?>
+                            <?= $form->field($contactModel, 'direction')->textInput()->label('Направление') ?>
+                            <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label('Сообщение') ?>
+                            <?= Html::submitButton('Отправить сообщение', ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
+                            <p class="meros-consultation-note">Ваши персональные данные находятся под защитой и используются только для связи с вами.</p>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>

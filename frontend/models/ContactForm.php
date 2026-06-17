@@ -14,8 +14,9 @@ class ContactForm extends Model
     public $email;
     public $subject;
     public $body;
+    public $phone;
+    public $direction;
     public $verifyCode;
-
 
     /**
      * {@inheritdoc}
@@ -23,12 +24,15 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            // name, email, subject and body are required on the contact page
+            [['name', 'email', 'subject', 'body'], 'required', 'except' => 'homepage'],
+            // homepage callback form asks for only the fields visible in that block
+            [['name', 'phone', 'body'], 'required', 'on' => 'homepage'],
+            [['phone', 'direction'], 'string', 'max' => 255],
             // email has to be a valid email address
             ['email', 'email'],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            // verifyCode needs to be entered correctly outside of the homepage form
+            ['verifyCode', 'captcha', 'except' => 'homepage'],
         ];
     }
 
@@ -38,6 +42,8 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
+            'phone' => 'Phone',
+            'direction' => 'Direction',
             'verifyCode' => 'Verification Code',
         ];
     }
@@ -53,9 +59,33 @@ class ContactForm extends Model
         return Yii::$app->mailer->compose()
             ->setTo($email)
             ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
+            ->setReplyTo([$this->email ?: Yii::$app->params['senderEmail'] => $this->name])
+            ->setSubject($this->subject ?: 'Homepage consultation request')
+            ->setTextBody($this->buildMessageBody())
             ->send();
+    }
+
+    private function buildMessageBody()
+    {
+        $lines = [
+            'Name: ' . $this->name,
+        ];
+
+        if ($this->phone) {
+            $lines[] = 'Phone: ' . $this->phone;
+        }
+
+        if ($this->direction) {
+            $lines[] = 'Direction: ' . $this->direction;
+        }
+
+        if ($this->email) {
+            $lines[] = 'Email: ' . $this->email;
+        }
+
+        $lines[] = '';
+        $lines[] = $this->body;
+
+        return implode(PHP_EOL, $lines);
     }
 }

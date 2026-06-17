@@ -31,6 +31,12 @@ $params = Yii::$app->params;
     </head>
     <body class="page-homepage-carousel">
     <?php $this->beginBody() ?>
+    <div class="meros-page-loader" id="meros-page-loader" role="status" aria-live="polite" aria-label="Loading">
+        <div class="meros-loader-mark">
+            <span class="meros-loader-spinner" aria-hidden="true"></span>
+            <span>Meros</span>
+        </div>
+    </div>
     <div class="wrapper">
         <div class="secondary-navigation-wrapper">
             <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
@@ -175,6 +181,35 @@ $params = Yii::$app->params;
 }());
 JS;
        $this->registerJs($headerDropdownJs);
+       ?>
+       
+       <?php
+       $pageLoaderJs = <<<JS
+(function () {
+    var loader = document.getElementById('meros-page-loader');
+
+    if (!loader) {
+        return;
+    }
+
+    function hideLoader() {
+        loader.classList.add('is-hidden');
+        window.setTimeout(function () {
+            if (loader && loader.parentNode) {
+                loader.parentNode.removeChild(loader);
+            }
+        }, 500);
+    }
+
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader);
+        window.setTimeout(hideLoader, 2500);
+    }
+}());
+JS;
+       $this->registerJs($pageLoaderJs);
        ?>
        
        <?= Alert::widget() ?>

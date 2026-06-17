@@ -82,10 +82,25 @@ class SiteController extends Controller
     {
         $banner = Banner::findAll(['status'=>Banner::STATUS_ACTIVE]);
         $news = Posts::find()->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->limit(6)->all();
+        $contactModel = new ContactForm(['scenario' => 'homepage']);
+
+        if ($contactModel->load(Yii::$app->request->post())) {
+            $contactModel->email = Yii::$app->params['senderEmail'];
+            $contactModel->subject = 'Homepage consultation request';
+
+            if ($contactModel->validate() && $contactModel->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+            }
+
+            return $this->refresh();
+        }
         
         return $this->render('index',[
             'banner'=>$banner,
-            'news'=>$news
+            'news'=>$news,
+            'contactModel' => $contactModel,
         ]);
 
     }
