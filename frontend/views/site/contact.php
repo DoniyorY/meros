@@ -9,8 +9,10 @@ use yii\captcha\Captcha;
 
 $this->title = Yii::$app->params['contact_us'][Yii::$app->language] ?? 'Contact Us';
 $params = Yii::$app->params;
+$lang = Yii::$app->language;
 function translate($key)
 {
+    $lang = Yii::$app->language;
         return Yii::$app->params[$key][$lang];
 }
 
