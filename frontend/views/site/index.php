@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var \frontend\models\ContactForm $contactModel */
 
 use yii\bootstrap5\ActiveForm;
@@ -58,7 +59,8 @@ function translate($key)
                                                <?= translate('banner_button') ?>
                                             </a>
                                         <?php endif; ?>
-                                         <div class="banner-logo meros-hero-logos mt-5">
+                                         <div class="banner-logo meros-hero-logos mt-5"
+                                              style="justify-content:space-around">
                                              <img src="<?= "$base/logo-white.png" ?>" alt="Meros" loading="lazy">
                                              <img src="<?= "$base/slc_logo_white.png" ?>" alt="SLC" loading="lazy">
                                          </div>
@@ -169,7 +171,7 @@ function translate($key)
     <section class="meros-section meros-partners reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker"><?=translate('Trusted partners')?></span>
+                <span class="meros-kicker"><?= translate('Trusted partners') ?></span>
                 <h2><?= translate('partners') ?></h2>
             </div>
             <div class="meros-partner-card">
@@ -193,10 +195,16 @@ function translate($key)
         <div class="meros-consultation-pattern" aria-hidden="true">
             <span class="meros-medical-circle meros-medical-circle-lg"><i class="fa fa-plus"></i></span>
             <span class="meros-medical-circle meros-medical-circle-sm meros-medical-one"><i class="fa fa-heartbeat"></i></span>
-            <span class="meros-medical-circle meros-medical-circle-sm meros-medical-two"><i class="fa fa-stethoscope"></i></span>
+            <span class="meros-medical-circle meros-medical-circle-sm meros-medical-two"><i
+                        class="fa fa-stethoscope"></i></span>
         </div>
-        <div class="meros-consultation-doctor" aria-label="Reserved place for doctor photo">
-            <span>Doctor photo</span>
+        <div class="meros-consultation-doctor d-none d-md-block" aria-label="Reserved place for doctor photo">
+            <img src="<?="$base/images/doctor_photo.png"?>" alt="" style="    width: 215px;
+    object-fit: cover;
+    height: 450px;
+    position: absolute;
+    right: 10px;
+    bottom: -55px;">
         </div>
         <div class="container">
             <div class="row justify-content-lg-end justify-content-center">
@@ -204,27 +212,28 @@ function translate($key)
                     <div class="meros-consultation-card">
                         <div class="meros-consultation-brand">
                             <img src="<?= "$base/logo-white.png" ?>" alt="Meros Hospital" loading="lazy">
-                            <span>Meros Hospital</span>
+                            <span><?= Yii::$app->name ?></span>
                         </div>
-                        <h2>Персональная консультация<br>в Meros Hospital</h2>
-                        <?php $form = ActiveForm::begin([
-                            'id' => 'homepage-consultation-form',
-                            'options' => ['class' => 'meros-consultation-form'],
-                            'fieldConfig' => [
-                                'template' => "{label}
+                        <h2>Персональная консультация в<br> <?= Yii::$app->name ?></h2>
+                       <?php $form = ActiveForm::begin([
+                          'id' => 'homepage-consultation-form',
+                          'options' => ['class' => 'meros-consultation-form'],
+                          'fieldConfig' => [
+                             'template' => "{label}
 {input}
 {error}",
-                                'labelOptions' => ['class' => 'form-label'],
-                                'errorOptions' => ['class' => 'invalid-feedback d-block'],
-                            ],
-                        ]); ?>
-                            <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label('Как мы можем к вам обращаться') ?>
-                            <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label('Телефон (обязательно)') ?>
-                            <?= $form->field($contactModel, 'direction')->textInput()->label('Направление') ?>
-                            <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label('Сообщение') ?>
-                            <?= Html::submitButton('Отправить сообщение', ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
-                            <p class="meros-consultation-note">Ваши персональные данные находятся под защитой и используются только для связи с вами.</p>
-                        <?php ActiveForm::end(); ?>
+                             'labelOptions' => ['class' => 'form-label'],
+                             'errorOptions' => ['class' => 'invalid-feedback d-block'],
+                          ],
+                       ]); ?>
+                       <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label('Как мы можем к вам обращаться') ?>
+                       <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label('Телефон (обязательно)') ?>
+                       <?= $form->field($contactModel, 'direction')->textInput()->label('Направление') ?>
+                       <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label('Сообщение') ?>
+                       <?= Html::submitButton('Отправить сообщение', ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
+                        <p class="meros-consultation-note">Ваши персональные данные находятся под защитой и используются
+                            только для связи с вами.</p>
+                       <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>

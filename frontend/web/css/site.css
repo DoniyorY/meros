@@ -1432,12 +1432,12 @@ body p,
 }
 
 .meros-consultation-photo {
-    background: linear-gradient(90deg, rgba(4, 54, 63, 0.15), rgba(75, 192, 202, 0.72)), url('../img/about-us-head-img.jpg') center/cover no-repeat;
+    background: linear-gradient(90deg, rgba(4, 54, 63, 0.15), rgba(75, 192, 202, 0.72)), url('/images/contanc_bg.jpg') center/cover no-repeat;
     bottom: 0;
     left: 0;
     position: absolute;
     top: 0;
-    width: 58%;
+    width: 100%;
 }
 
 .meros-consultation-pattern {

@@ -143,15 +143,15 @@ $params = Yii::$app->params;
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="lessons-tab" data-bs-toggle="tab"
-                                data-bs-target="#lessons-tab-pane" type="button" role="tab"
-                                aria-controls="lessons-tab-pane" aria-selected="true">Course Lessons
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="features-tab" data-bs-toggle="tab"
                                 data-bs-target="#features-tab-pane" type="button" role="tab"
                                 aria-controls="features-tab-pane" aria-selected="false">Features
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="faq-tab" data-bs-toggle="tab"
+                                data-bs-target="#faq-tab-pane" type="button" role="tab"
+                                aria-controls="faq-tab-pane" aria-selected="true">FAQ
                         </button>
                     </li>
                 </ul>
@@ -247,35 +247,35 @@ $params = Yii::$app->params;
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane p-3 fade" id="lessons-tab-pane" role="tabpanel"
-                         aria-labelledby="lessons-tab" tabindex="0">
+                    <div class="tab-pane p-3 fade" id="faq-tab-pane" role="tabpanel"
+                         aria-labelledby="faq-tab" tabindex="0">
                         <div class="row">
                             <div class="col-md-8">
-                                <h4>Course Lessons</h4>
+                                <h4>FAQ</h4>
                             </div>
                             <div class="col-md-4">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                        data-bs-target="#LessonModal">
-                                    Add Lesson
+                                        data-bs-target="#FaqModal">
+                                    Add FAQ
                                 </button>
                             </div>
                             <div class="col-md-12 mt-2">
                                 <!-- Modal -->
-                                <div class="modal fade" id="LessonModal" tabindex="-1"
-                                     aria-labelledby="LessonModalLabel"
+                                <div class="modal fade" id="FaqModal" tabindex="-1"
+                                     aria-labelledby="FaqModalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="LessonModalLabel">New Lesson</h1>
+                                                <h1 class="modal-title fs-5" id="FaqModalLabel">New faq</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                               <?= $this->render('_form_lessons', [
-                                                  'model' => new CourseLessons(),
-                                                  'url' => \yii\helpers\Url::to(['add-lesson', 'course_id' => $model->id]),
+                                               <?= $this->render('_form_faq', [
+                                                  'model' => new \common\models\Faq(),
+                                                  'url' => \yii\helpers\Url::to(['add-faq', 'course_id' => $model->id]),
                                                   'course_id' => $model->id,
                                                ]) ?>
                                             </div>
@@ -289,54 +289,35 @@ $params = Yii::$app->params;
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
-                                        <th>User ID</th>
-                                        <th>Status</th>
-                                        <th>Sort</th>
+                                        <th>Question Ru</th>
+                                        <th>Question En</th>
+                                        <th>Question Uz</th>
+                                        <th>Answer Ru</th>
+                                        <th>Answer En</th>
+                                        <th>Answer Uz</th>
+                                        <th>Created</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php $i = 1;
-                                    foreach ($model->lessons as $item): ?>
+                                    foreach ($faq as $item): ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $item->name_en ?></td>
-                                            <td><?= $item->desc_en ?></td>
-                                            <td><?= date('d.m.Y H:i:s', $item->created_at) ?></td>
-                                            <td><?= date('d.m.Y H:i:s', $item->updated_at) ?></td>
-                                            <td><?= $item->user->username ?></td>
-                                            <td><?php
-                                               if ($item->status == 0) {
-                                                  echo Html::a('Inactive',
-                                                     ['update-lesson-status', 'id' => $item->id, 'status' => 1],
-                                                     [
-                                                        'class' => 'btn btn-warning btn-sm w-100',
-                                                        'data-confirm' => 'Are you sure you want to activate this Lesson?',
-                                                     ]);
-                                               } else {
-                                                  echo Html::a('Active', ['update-lesson-status', 'id' => $item->id, 'status' => 0],
-                                                     [
-                                                        'class' => 'btn btn-success btn-sm w-100',
-                                                        'data-confirm' => 'Are you sure you want to inactivate this Lesson?',
-                                                     ]);
-                                               }
-                                               ?></td>
-                                            <td><?= $item->sort ?></td>
+                                            <td><?= $item->question_ru ?></td>
+                                            <td><?= $item->question_en ?></td>
+                                            <td><?= $item->question_uz ?></td>
+                                            <td><?= $item->answer_ru ?></td>
+                                            <td><?= $item->answer_en ?></td>
+                                            <td><?= $item->answer_uz ?></td>
+                                            <td><?=date('d.m.Y H:i',$item->created_at)?></td>
                                             <td>
-                                                <button class="btn btn-info btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['show-video', 'id' => $item->id]) ?>">
-                                                    <i class="bi bi-play-circle"></i>
-                                                </button>
                                                 <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['update-lesson-modal', 'id' => $item->id]) ?>">
+                                                        data-url="<?= Url::to(['update-faq-modal', 'id' => $item->id]) ?>">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <a class="btn btn-sm btn-danger"
-                                                   href="<?= Url::to(['delete-video', 'id' => $item->id]) ?>"
+                                                   href="<?= Url::to(['delete-faq', 'id' => $item->id]) ?>"
                                                    data-method="post"
                                                    data-confirm="Are you sure you want to delete this video?">
                                                     <i class="bi bi-trash"></i>

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\CourseFeatures;
 use common\models\CourseLessons;
 use common\models\Courses;
+use common\models\Faq;
 use common\models\search\CoursesSearch;
 use common\models\SubscriptionPlanItems;
 use common\models\SubscriptionPlans;
@@ -90,6 +91,41 @@ class CoursesController extends Controller
       ]);
    }
    
+   public function actionUpdateFaqModal($id)
+   {
+      $model = Faq::findOne($id);
+      return $this->renderAjax('_form_faq', [
+         'model' => $model,
+         'url' => Url::to(['update-faq', 'id' => $model->id]),
+      ]);
+   }
+   public function actionUpdateFaq($id)
+   {
+      $model = Faq::findOne($id);
+      if ($this->request->isPost && $model->load($this->request->post())) {
+         $model->updated_at=time();
+         $model->user_id=\Yii::$app->user->id;
+         $model->save();
+      }
+      return $this->redirect(Yii::$app->request->referrer);
+   }
+   
+   public function actionAddFaq($course_id)
+   {
+      $model = new Faq(['course_id' => $course_id]);
+      if ($this->request->isPost && $model->load($this->request->post())) {
+         $model->created_at=time();
+         $model->updated_at=time();
+         $model->user_id=\Yii::$app->user->id;
+         $model->save();
+         return $this->redirect(Yii::$app->request->referrer);
+      }
+      return $this->renderAjax('_form_faq', [
+         'model' => $model,
+         'url' => Url::to(['add-faq', 'course_id' => $course_id]),
+      ]);
+   }
+   
    public function actionUpdateLesson($id)
    {
       $lesson = CourseLessons::findOne($id);
@@ -131,9 +167,10 @@ class CoursesController extends Controller
    public function actionView($id)
    {
       $model = $this->findModel($id);
-      
+      $faq = Faq::find()->where(['course_id' => $id])->all();
       return $this->render('view', [
          'model' => $model,
+         'faq'=>$faq,
       ]);
    }
    
