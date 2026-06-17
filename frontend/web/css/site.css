@@ -1157,3 +1157,221 @@ body p,
     color: var(--meros-primary-dark);
     font-weight: 800;
 }
+
+/* About and contact pages aligned with the Meros redesign */
+.meros-content-page {
+    background: #fff;
+}
+
+.meros-page-hero {
+    overflow: hidden;
+}
+
+.meros-page-hero:before {
+    background: radial-gradient(circle at 12% 16%, rgba(75, 192, 202, 0.18), transparent 28%);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.meros-page-hero > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.meros-page-hero h1 {
+    font-size: clamp(38px, 5.5vw, 72px);
+    line-height: 1.02;
+    margin-bottom: 24px;
+}
+
+.meros-hero-copy {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--meros-border);
+    border-radius: 26px;
+    padding: clamp(22px, 3vw, 34px);
+}
+
+.meros-page-hero-image {
+    border-radius: 34px;
+    box-shadow: var(--meros-shadow);
+    min-height: 430px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meros-page-hero-image img {
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+}
+
+.meros-page-hero-image:after {
+    background: linear-gradient(180deg, transparent 38%, rgba(4, 54, 63, 0.74));
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.meros-floating-badge {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 22px;
+    bottom: 24px;
+    box-shadow: 0 18px 42px rgba(4, 54, 63, 0.18);
+    left: 24px;
+    padding: 18px 22px;
+    position: absolute;
+    z-index: 1;
+}
+
+.meros-floating-badge strong,
+.meros-floating-badge span {
+    display: block;
+}
+
+.meros-floating-badge strong {
+    color: var(--meros-primary-dark);
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.meros-floating-badge span {
+    color: var(--meros-primary);
+    font-weight: 800;
+}
+
+.meros-story-card h2 {
+    margin-bottom: 22px;
+}
+
+.meros-gallery-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.meros-gallery-item {
+    border-radius: 24px;
+    box-shadow: 0 16px 42px rgba(4, 54, 63, 0.10);
+    display: block;
+    height: 210px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meros-gallery-item:after {
+    background: linear-gradient(180deg, transparent, rgba(4, 54, 63, 0.42));
+    content: "";
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+    transition: 0.35s ease;
+}
+
+.meros-gallery-item img {
+    height: 100%;
+    object-fit: cover;
+    transition: 0.45s ease;
+    width: 100%;
+}
+
+.meros-gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+.meros-gallery-item:hover:after {
+    opacity: 1;
+}
+
+.meros-contact-card,
+.meros-map-card,
+.meros-contact-form-card {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    overflow: hidden;
+}
+
+.meros-contact-card {
+    padding: clamp(24px, 3vw, 34px);
+    text-align: center;
+}
+
+.meros-contact-card .fa {
+    align-items: center;
+    background: var(--meros-primary-soft);
+    border-radius: 50%;
+    color: var(--meros-primary);
+    display: inline-flex;
+    font-size: 24px;
+    height: 66px;
+    justify-content: center;
+    margin-bottom: 18px;
+    width: 66px;
+}
+
+.meros-contact-card h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.meros-contact-card a {
+    color: var(--meros-primary);
+    font-weight: 800;
+}
+
+.meros-map-card {
+    min-height: 560px;
+}
+
+.meros-map-card iframe {
+    display: block;
+    min-height: 560px;
+}
+
+.meros-contact-form-card {
+    padding: clamp(26px, 4vw, 46px);
+}
+
+.meros-contact-form-card h2 {
+    margin-bottom: 18px;
+}
+
+.meros-form .form-control {
+    border: 1px solid var(--meros-border);
+    border-radius: 16px;
+    box-shadow: none;
+    min-height: 50px;
+}
+
+.meros-form textarea.form-control {
+    min-height: 140px;
+}
+
+.meros-form label {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+}
+
+@media (max-width: 991px) {
+    .meros-gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .meros-page-hero-image,
+    .meros-map-card,
+    .meros-map-card iframe {
+        min-height: 360px;
+    }
+
+    .meros-gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -11,133 +11,92 @@ function translate($key)
    return Yii::$app->params[$key][$lang];
 }
 $this->title = translate('about_meros_international_institute');
-$params = Yii::$app->params;
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
-
+$galleryImages = range(1, 14);
 
 ?>
 <!-- Breadcrumb -->
 <div class="container">
     <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?=translate('home')?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($this->title) ?></li>
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= translate('home') ?></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
 <!-- end Breadcrumb -->
 
-
-<!-- Page Content -->
-<div id="page-content">
-    <div class="container">
-        <div class="row g-4">
-            <!--MAIN Content-->
-            <div class="col-lg-8 col-md-12">
-                <div id="page-main">
-                    <section id="about">
-                        <header><h1><?= Html::encode($this->title) ?></h1></header>
-                        <img src="<?= "$base/images/meros_hospital.jpg" ?>"
-                             class="img-fluid rounded about-hero-image" alt="Meros International Hospital">
-                        <?= translate('about_content') ?>
-                        <h2><?=translate('gallery')?></h2>
-                        <div>
-                            <ul class="gallery-list">
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-01.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-02.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-03.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-04.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-05.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-06.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-07.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-08.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-09.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-10.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-11.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-12.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-13.jpg" alt=""></a></li>
-                                <li><a href="<?= "$base/" ?>img/gallery-big-image.jpg" class="image-popup"><img
-                                                src="<?= "$base/" ?>img/image-14.jpg" alt=""></a></li>
-                            </ul>
-                            <a href="" class="read-more"><?=translate('go_to_gallery')?></a>
+<div id="page-content" class="meros-modern-page meros-content-page meros-about-page">
+    <section class="meros-section meros-page-hero reveal-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="meros-kicker">Medical English Institute</span>
+                    <h1><?= Html::encode($this->title) ?></h1>
+                    <div class="meros-hero-copy">
+                        <?= translate('about_short') ?>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="meros-page-hero-image">
+                        <img src="<?= "$base/images/meros_hospital.jpg" ?>" alt="Meros International Hospital" loading="eager">
+                        <div class="meros-floating-badge">
+                            <strong>Meros</strong>
+                            <span>International Institute</span>
                         </div>
-                    </section>
-                </div><!-- /#page-main -->
-            </div><!-- /.col-md-8 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!--SIDEBAR Content-->
-            <div class="col-lg-4 col-md-12">
-                <div id="page-sidebar" class="sidebar">
-                    <aside class="news-small" id="news-small">
-                        <header>
-                            <h2><?=translate('latest_news')?></h2>
-                        </header>
-                        <div class="section-content">
-                            <?php foreach ($posts as $item):?>
-                            <article>
-                                <figure class="date"><i class="fa fa-file-o"></i><?=date('d.m.Y',$item->created_at)?></figure>
-                                <header>
-                                    <a href="<?=Url::to(['post/view','id'=>$item->id])?>">
-                                        <?=$item->{"name_$lang"}?>
+    <section class="meros-section reveal-section">
+        <div class="container">
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-8">
+                    <div class="meros-about-card meros-story-card">
+                        <span class="meros-kicker">About Meros</span>
+                        <h2><?= translate('about_meros') ?></h2>
+                        <?= translate('about_content') ?>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <aside class="meros-news-sidebar-card h-100">
+                        <span class="meros-kicker"><?= translate('latest_news') ?></span>
+                        <h2><?= translate('news') ?></h2>
+                        <div class="meros-mini-news-list">
+                            <?php foreach ($posts as $item): ?>
+                                <article>
+                                    <time datetime="<?= date('Y-m-d', $item->created_at) ?>"><?= date('d.m.Y', $item->created_at) ?></time>
+                                    <a href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">
+                                        <?= Html::encode($item->{"name_$lang"}) ?>
                                     </a>
-                                </header>
-                            </article><!-- /article -->
-                            <?php endforeach;?>
-                      
-                        </div><!-- /.section-content -->
-                        <a href="<?=Url::to(['post/index'])?>" class="read-more"><?=translate('all_news')?></a>
-                    </aside><!-- /.news-small -->
-                    <aside id="our-professors">
-                        <header>
-                            <h2><?=translate('our_professors')?></h2>
-                        </header>
-                        <div class="section-content">
-                            <div class="professors">
-                                <article class="professor-thumbnail">
-                                    <figure class="professor-image"><a href="member-detail.html"><img
-                                                    src="<?= "$base/" ?>img/professor.jpg" alt=""></a></figure>
-                                    <aside>
-                                        <header>
-                                            <a href="member-detail.html">Prof. Mathew Davis</a>
-                                            <div class="divider"></div>
-                                            <figure class="professor-description">Applied Science and Engineering
-                                            </figure>
-                                        </header>
-                                        <a href="member-detail.html" class="show-profile">Show Profile</a>
-                                    </aside>
-                                </article><!-- /.professor-thumbnail -->
-                                <article class="professor-thumbnail">
-                                    <figure class="professor-image"><a href="member-detail.html"><img
-                                                    src="<?= "$base/" ?>img/professor-02.jpg" alt=""></a></figure>
-                                    <aside>
-                                        <header>
-                                            <a href="member-detail.html">Prof. Jane Stairway</a>
-                                            <div class="divider"></div>
-                                            <figure class="professor-description">Applied Science and Engineering
-                                            </figure>
-                                        </header>
-                                        <a href="member-detail.html" class="show-profile">Show Profile</a>
-                                    </aside>
-                                </article><!-- /.professor-thumbnail -->
-                                <a href="" class="read-more">All Professors</a>
-                            </div><!-- /.professors -->
-                        </div><!-- /.section-content -->
-                    </aside><!-- /.our-professors -->
-                </div><!-- /#sidebar -->
-            </div><!-- /.col-md-4 -->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                        <a href="<?= Url::to(['post/index']) ?>" class="meros-link"><?= translate('all_news') ?></a>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="meros-section reveal-section">
+        <div class="container">
+            <div class="meros-section-heading text-center">
+                <span class="meros-kicker">Campus life</span>
+                <h2><?= translate('gallery') ?></h2>
+            </div>
+            <div class="meros-gallery-grid">
+                <?php foreach ($galleryImages as $imageNumber): ?>
+                    <?php $image = sprintf('image-%02d.jpg', $imageNumber); ?>
+                    <a href="<?= "$base/img/gallery-big-image.jpg" ?>" class="image-popup meros-gallery-item">
+                        <img src="<?= "$base/img/$image" ?>" alt="Meros gallery image <?= $imageNumber ?>" loading="lazy">
+                    </a>
+                <?php endforeach; ?>
+            </div>
+            <div class="text-center mt-4">
+                <a href="<?= Url::to(['site/about']) ?>" class="btn btn-primary meros-primary-btn"><?= translate('go_to_gallery') ?></a>
+            </div>
+        </div>
+    </section>
 </div>
-<!-- end Page Content -->
