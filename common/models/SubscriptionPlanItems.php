@@ -36,7 +36,7 @@ class SubscriptionPlanItems extends \yii\db\ActiveRecord
         return [
             [['plan_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz'], 'required'],
             [['plan_id'], 'integer'],
-            [['name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz'], 'string', 'max' => 255],
+            [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
         ];
     }
 
