@@ -3,10 +3,13 @@
 namespace backend\controllers;
 
 use common\models\Events;
+use common\models\UploadsImage;
 use common\models\search\EventsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use Yii;
 
 /**
  * EventsController implements the CRUD actions for Events model.
@@ -25,6 +28,7 @@ class EventsController extends Controller
                'class' => VerbFilter::className(),
                'actions' => [
                   'delete' => ['POST'],
+                  'status' => ['POST'],
                ],
             ],
          ]
@@ -71,11 +75,16 @@ class EventsController extends Controller
          'created_at' => time(),
          'updated_at' => time(),
          'status' => 1,
-         'user_id' => \Yii::$app->user->id,
+         'user_id' => Yii::$app->user->id,
       ]);
       
-      if ($this->request->isPost) {
-         if ($model->load($this->request->post()) && $model->save()) {
+      if ($this->request->isPost && $model->load($this->request->post())) {
+         $file = UploadedFile::getInstance($model, 'imageFile');
+         if ($file) {
+            $model->image = UploadsImage::uploadImage($model, $file, 'events');
+         }
+         
+         if ($model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
          }
       } else {
@@ -98,8 +107,23 @@ class EventsController extends Controller
    {
       $model = $this->findModel($id);
       
-      if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-         return $this->redirect(['view', 'id' => $model->id]);
+      if ($this->request->isPost && $model->load($this->request->post())) {
+         $model->updated_at = time();
+         $model->user_id = Yii::$app->user->id;
+         $oldImage = $model->image;
+         $file = UploadedFile::getInstance($model, 'imageFile');
+         
+         if ($file) {
+            $model->image = UploadsImage::uploadImage($model, $file, 'events');
+            $oldImagePath = Yii::getAlias('@frontend/web/uploads/events/' . $oldImage);
+            if ($oldImage && file_exists($oldImagePath)) {
+               unlink($oldImagePath);
+            }
+         }
+         
+         if ($model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+         }
       }
       
       return $this->render('update', [
@@ -116,9 +140,25 @@ class EventsController extends Controller
     */
    public function actionDelete($id)
    {
-      $this->findModel($id)->delete();
+      $model = $this->findModel($id);
+      $imagePath = Yii::getAlias('@frontend/web/uploads/events/' . $model->image);
+      if ($model->image && file_exists($imagePath)) {
+         unlink($imagePath);
+      }
+      $model->delete();
       
       return $this->redirect(['index']);
+   }
+   
+   public function actionStatus($id, $status)
+   {
+      $model = $this->findModel($id);
+      $model->status = $status;
+      $model->updated_at = time();
+      $model->save(false, ['status', 'updated_at']);
+      Yii::$app->session->setFlash('success', 'Status Changed Successfully');
+      
+      return $this->redirect(Yii::$app->request->referrer ?: ['index']);
    }
    
    /**

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Events;
+use common\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -21,7 +22,7 @@ $params = Yii::$app->params;
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="col-md-4">
-           <?= Html::a('Create Courses', ['create'], ['class' => 'btn btn-success w-100']) ?>
+           <?= Html::a('Create Events', ['create'], ['class' => 'btn btn-success w-100']) ?>
         </div>
     </div>
 
@@ -43,7 +44,17 @@ $params = Yii::$app->params;
             //'content_ru:ntext',
             //'content_en:ntext',
             //'content_uz:ntext',
-            'image',
+            [
+                'attribute' => 'image',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return $data->image ? Html::img(Yii::getAlias('@web') . '/../uploads/events/' . $data->image, [
+                        'style' => 'max-width: 90px; max-height: 70px;',
+                        'class' => 'img-thumbnail',
+                        'alt' => $data->name_en,
+                    ]) : null;
+                },
+            ],
             //'created_at',
            [
               'attribute' => 'updated_at',
@@ -72,9 +83,9 @@ $params = Yii::$app->params;
            [
               'attribute' => 'user_id',
               'value' => function ($data) {
-                 return $data->user->username;
+                 return $data->user ? $data->user->username : null;
               },
-              'filter' => ArrayHelper::map(Events::find()->all(), 'id', 'username')
+              'filter' => ArrayHelper::map(User::find()->all(), 'id', 'username')
            ],
             //'video_link',
             [

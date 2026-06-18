@@ -9,8 +9,8 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="events-form">
-   
-   <?php $form = ActiveForm::begin(); ?>
+
+   <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <div class="row">
         <div class="col-md-4">
            <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
@@ -28,10 +28,22 @@ use yii\widgets\ActiveForm;
            <?= $form->field($model, 'content_uz')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-6 mt-4">
-            <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+            <?php if (!$model->isNewRecord && $model->image): ?>
+                <div class="mb-3">
+                    <?= Html::img(Yii::getAlias('@web') . '/../uploads/events/' . $model->image, [
+                        'class' => 'img-thumbnail',
+                        'style' => 'max-width: 220px; max-height: 160px;',
+                        'alt' => $model->name_en,
+                    ]) ?>
+                </div>
+            <?php endif; ?>
+            <?= $form->field($model, 'imageFile')->fileInput() ?>
         </div>
         <div class="col-md-6 mt-4">
-            <?= $form->field($model, 'video_link')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'video_link')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'https://www.youtube.com/watch?v=...',
+            ]) ?>
         </div>
         <div class="col-md-12 mt-3">
             <div class="form-group">
@@ -39,10 +51,7 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
-   
 
-    
-   
    <?php ActiveForm::end(); ?>
 
 </div>

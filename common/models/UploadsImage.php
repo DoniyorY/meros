@@ -27,7 +27,7 @@ class UploadsImage extends Model
 
         if ($uploadedFile) {
             $model->imageFile = $uploadedFile;
-            if ($model->validate(['file'])) {
+            if ($model->validate(['imageFile'])) {
                 $dir = \Yii::getAlias("@frontend/web/uploads/$pathName/");
                 if (!file_exists($dir)) {     //check if dir already exists
                     mkdir($dir, 0777, true);  //make dir, give permissions

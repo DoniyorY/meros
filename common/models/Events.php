@@ -46,10 +46,11 @@ class Events extends \yii\db\ActiveRecord
       return [
          [['name_ru', 'name_uz', 'desc_ru', 'desc_uz', 'content_ru', 'content_uz', 'image', 'video_link'], 'default', 'value' => null],
          [['name_en', 'desc_en', 'content_en', 'created_at', 'updated_at', 'user_id', 'status'], 'required'],
+         ['video_link', 'url', 'defaultScheme' => 'https'],
          [['content_ru', 'content_en', 'content_uz'], 'string'],
          [['created_at', 'updated_at', 'user_id', 'status'], 'integer'],
          [['name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'image', 'video_link'], 'string', 'max' => 255],
-         [['imageFile'], 'file', 'extensions' => 'jpg, gif, png', 'skipOnEmpty' => true],
+         [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, gif, png, webp', 'skipOnEmpty' => true],
       ];
    }
    
@@ -76,6 +77,11 @@ class Events extends \yii\db\ActiveRecord
          'status' => 'Status',
          'video_link' => 'Video Link',
       ];
+   }
+   
+   public function getUser()
+   {
+      return $this->hasOne(User::class, ['id' => 'user_id']);
    }
    
 }
