@@ -18,11 +18,12 @@ class CoursesController extends Controller
    {
       $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
-      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       if ($courses === null) {
          throw new \yii\web\NotFoundHttpException('Курс не найден.');
       }
-      return $this->render('no_subs', [
+      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      $view = (int)$courses->page_type === 0 ? 'b2b' : 'no_subs';
+      return $this->render($view, [
          'courses' => $courses,
          'subs' => $subs
       ]);
