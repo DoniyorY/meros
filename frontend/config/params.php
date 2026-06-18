@@ -639,4 +639,276 @@ return [
       'uz'=>'',
    ],
    
+   'b2b_meta_description' => [
+      'ru' => 'Институциональные программы медицинского английского Meros для университетов, медицинских вузов и организаций здравоохранения',
+      'en' => 'Meros institutional Medical English programmes for universities, medical schools and healthcare organisations',
+      'uz' => 'Universitetlar, tibbiyot oliygohlari va sog‘liqni saqlash tashkilotlari uchun Meros institutsional tibbiy ingliz tili dasturlari',
+   ],
+   'b2b_meta_keywords' => [
+      'ru' => 'Meros, медицинский английский, B2B, университеты, английский для здравоохранения',
+      'en' => 'Meros, Medical English, B2B, universities, healthcare English',
+      'uz' => 'Meros, tibbiy ingliz tili, B2B, universitetlar, sog‘liqni saqlash ingliz tili',
+   ],
+   'b2b_page_title' => [
+      'ru' => 'Медицинский английский для организаций',
+      'en' => 'Medical English for Institutions',
+      'uz' => 'Tashkilotlar uchun tibbiy ingliz tili',
+   ],
+   'b2b_hero_aria' => [
+      'ru' => 'Баннер институционального курса',
+      'en' => 'Institutional course banner',
+      'uz' => 'Institutsional kurs banneri',
+   ],
+   'b2b_logo_alt' => [
+      'ru' => 'Meros',
+      'en' => 'Meros',
+      'uz' => 'Meros',
+   ],
+   'b2b_hero_kicker' => [
+      'ru' => 'Для университетов, медицинских вузов и команд здравоохранения',
+      'en' => 'For universities, medical schools and healthcare teams',
+      'uz' => 'Universitetlar, tibbiyot oliygohlari va sog‘liqni saqlash jamoalari uchun',
+   ],
+   'b2b_hero_title' => [
+      'ru' => 'Институциональный медицинский английский, который масштабируется вместе с вашими студентами',
+      'en' => 'Institutional Medical English that scales with your learners',
+      'uz' => 'Talabalaringiz bilan birga kengayadigan institutsional tibbiy ingliz tili',
+   ],
+   'b2b_hero_text' => [
+      'ru' => 'Предоставьте каждой группе структурированный доступ к медицинскому английскому, практическим заданиям по коммуникации, прозрачному прогрессу и брендированной учебной среде.',
+      'en' => 'Give every cohort structured access to healthcare-focused English, practical communication tasks, progress visibility, and a branded learning environment.',
+      'uz' => 'Har bir guruhga sog‘liqni saqlashga yo‘naltirilgan ingliz tili, amaliy muloqot topshiriqlari, progress ko‘rinishi va brendlangan o‘quv muhitidan tartibli foydalanish imkonini bering.',
+   ],
+   'b2b_email_subject' => [
+      'ru' => 'Демо институционального медицинского английского',
+      'en' => 'Institutional Medical English Demo',
+      'uz' => 'Institutsional tibbiy ingliz tili demosi',
+   ],
+   'b2b_book_consultation' => [
+      'ru' => 'Записаться на консультацию',
+      'en' => 'Book a consultation',
+      'uz' => 'Konsultatsiyaga yozilish',
+   ],
+   'b2b_explore_programme' => [
+      'ru' => 'Изучить программу',
+      'en' => 'Explore programme',
+      'uz' => 'Dasturni ko‘rish',
+   ],
+   'b2b_platform_kicker' => [
+      'ru' => 'Одна платформа',
+      'en' => 'One platform',
+      'uz' => 'Yagona platforma',
+   ],
+   'b2b_platform_title' => [
+      'ru' => 'Создано для руководителей программ, преподавателей и студентов',
+      'en' => 'Designed for programme directors, teachers and students',
+      'uz' => 'Dastur rahbarlari, o‘qituvchilar va talabalar uchun yaratilgan',
+   ],
+   'b2b_platform_text' => [
+      'ru' => 'Управляйте группами, назначайте специализированные материалы, поддерживайте аудиторное обучение и отслеживайте результаты в едином онлайн-пространстве.',
+      'en' => 'Manage cohorts, assign specialist materials, support classroom delivery, and track outcomes from a single online learning space.',
+      'uz' => 'Guruhlarni boshqaring, maxsus materiallarni biriktiring, dars jarayonini qo‘llab-quvvatlang va natijalarni yagona onlayn o‘quv maydonida kuzating.',
+   ],
+   'b2b_stat_hours' => [
+      'ru' => 'часов',
+      'en' => 'hours',
+      'uz' => 'soat',
+   ],
+   'b2b_stat_levels' => [
+      'ru' => 'уровни',
+      'en' => 'levels',
+      'uz' => 'darajalar',
+   ],
+   'b2b_challenge_kicker' => [
+      'ru' => 'Задача',
+      'en' => 'The challenge',
+      'uz' => 'Muammo',
+   ],
+   'b2b_challenge_title' => [
+      'ru' => 'Медицинскому английскому нужны не просто общие материалы',
+      'en' => 'Medical English needs more than generic materials',
+      'uz' => 'Tibbiy ingliz tili oddiy umumiy materiallardan ko‘proq narsani talab qiladi',
+   ],
+   'b2b_challenge_text' => [
+      'ru' => 'Медицинским студентам и специалистам нужен язык для клинической практики, общения с пациентами, академического письма, экзаменов и профессиональной уверенности. Организациям нужны точные, управляемые и простые во внедрении материалы.',
+      'en' => 'Healthcare learners need language for clinical placements, patient communication, academic writing, exams, and professional confidence. Institutions need materials that are accurate, manageable, and easy to deploy.',
+      'uz' => 'Tibbiyot yo‘nalishidagi o‘quvchilarga klinik amaliyot, bemorlar bilan muloqot, akademik yozuv, imtihonlar va kasbiy ishonch uchun til kerak. Tashkilotlarga aniq, boshqarish oson va tez joriy qilinadigan materiallar zarur.',
+   ],
+   'b2b_challenge_cards' => [
+      'ru' => [
+         ['icon' => 'fa-book', 'title' => 'Специализированная глубина', 'text' => 'Профессиональные темы заменяют общий английский клиническими сценариями.'],
+         ['icon' => 'fa-layer-group', 'title' => 'Простой доступ', 'text' => 'Единая структура программы уменьшает фрагментацию покупок и администрирования курсов.'],
+         ['icon' => 'fa-chart-line', 'title' => 'Видимый прогресс', 'text' => 'Преподаватели и менеджеры могут использовать отчётность, чтобы раньше выявлять потребности и поддерживать студентов.'],
+      ],
+      'en' => [
+         ['icon' => 'fa-book', 'title' => 'Specialist depth', 'text' => 'Profession-specific topics replace generic English with clinical scenarios.'],
+         ['icon' => 'fa-layer-group', 'title' => 'Simple access', 'text' => 'One programme structure reduces fragmented course purchasing and administration.'],
+         ['icon' => 'fa-chart-line', 'title' => 'Progress visibility', 'text' => 'Teachers and managers can use reporting to identify needs and support learners earlier.'],
+      ],
+      'uz' => [
+         ['icon' => 'fa-book', 'title' => 'Maxsus yo‘nalish', 'text' => 'Kasbga xos mavzular umumiy ingliz tilini klinik vaziyatlar bilan almashtiradi.'],
+         ['icon' => 'fa-layer-group', 'title' => 'Qulay kirish', 'text' => 'Yagona dastur tuzilmasi kurs xaridi va boshqaruvidagi tarqoqlikni kamaytiradi.'],
+         ['icon' => 'fa-chart-line', 'title' => 'Progress ko‘rinishi', 'text' => 'O‘qituvchilar va menejerlar ehtiyojlarni erta aniqlash va talabalarni qo‘llab-quvvatlash uchun hisobotlardan foydalanishlari mumkin.'],
+      ],
+   ],
+   'b2b_solution_kicker' => [
+      'ru' => 'Решение',
+      'en' => 'The solution',
+      'uz' => 'Yechim',
+   ],
+   'b2b_solution_title' => [
+      'ru' => 'Единый институциональный учебный хаб',
+      'en' => 'One institutional learning hub',
+      'uz' => 'Yagona institutsional o‘quv markazi',
+   ],
+   'b2b_solution_cards' => [
+      'ru' => [
+         ['title' => 'Брендированная платформа', 'text' => 'Ваш логотип, цвета, группы и приветственные сообщения в одной выделенной зоне.'],
+         ['title' => 'Настраиваемый доступ', 'text' => 'Используйте всю библиотеку или выберите курсы под вашу программу.'],
+         ['title' => 'Гибкий формат', 'text' => 'Поддерживает самостоятельное, смешанное, преподавательское обучение и подготовку к экзаменам.'],
+         ['title' => 'Поддержка запуска', 'text' => 'Мы помогаем настроить доступ и провести администраторов и преподавателей через старт.'],
+      ],
+      'en' => [
+         ['title' => 'Branded platform', 'text' => 'Your logo, colours, cohorts and welcome messaging in one dedicated area.'],
+         ['title' => 'Curated access', 'text' => 'Use the full library or select the courses that match your programme.'],
+         ['title' => 'Flexible delivery', 'text' => 'Support self-study, blended learning, teacher-led classes and exam preparation.'],
+         ['title' => 'Onboarding support', 'text' => 'We help configure access and guide administrators and teachers through launch.'],
+      ],
+      'uz' => [
+         ['title' => 'Brendlangan platforma', 'text' => 'Logotipingiz, ranglaringiz, guruhlaringiz va salomlashuv xabarlari bitta maxsus hududda.'],
+         ['title' => 'Moslangan kirish', 'text' => 'To‘liq kutubxonadan foydalaning yoki dasturingizga mos kurslarni tanlang.'],
+         ['title' => 'Moslashuvchan format', 'text' => 'Mustaqil ta’lim, aralash ta’lim, o‘qituvchi boshchiligidagi darslar va imtihonga tayyorgarlikni qo‘llab-quvvatlang.'],
+         ['title' => 'Ishga tushirish yordami', 'text' => 'Biz kirishni sozlashga yordam beramiz va administrator hamda o‘qituvchilarni start jarayonidan olib o‘tamiz.'],
+      ],
+   ],
+   'b2b_library_kicker' => [
+      'ru' => 'Что получают студенты',
+      'en' => 'What students get',
+      'uz' => 'Talabalar nimalarga ega bo‘ladi',
+   ],
+   'b2b_library_title' => [
+      'ru' => 'Библиотека медицинского английского для разных профессий и целей',
+      'en' => 'Medical English library for multiple professions and goals',
+      'uz' => 'Turli kasblar va maqsadlar uchun tibbiy ingliz tili kutubxonasi',
+   ],
+   'b2b_library_text' => [
+      'ru' => 'Курсы могут поддерживать медицинскую коммуникацию, терминологию, академические цели, написание публикаций и подготовку к экзаменам.',
+      'en' => 'Courses can support healthcare communication, terminology, academic purposes, publication writing, and exam preparation.',
+      'uz' => 'Kurslar tibbiy muloqot, terminologiya, akademik maqsadlar, maqola yozish va imtihonga tayyorgarlikni qo‘llab-quvvatlaydi.',
+   ],
+   'b2b_library_courses' => [
+      'ru' => [
+         ['title' => 'Английский для врачей', 'level' => 'B2-C1', 'hours' => '120 ч.'],
+         ['title' => 'Английский для медсестёр', 'level' => 'B1-B2', 'hours' => '120 ч.'],
+         ['title' => 'Основы сестринского дела', 'level' => 'A2-B1', 'hours' => '60 ч.'],
+         ['title' => 'Английский для фармации', 'level' => 'B1-B2', 'hours' => '20 ч.'],
+         ['title' => 'Английский для рентгенологии', 'level' => 'B1-B2', 'hours' => '30 ч.'],
+         ['title' => 'Медицинская терминология', 'level' => 'A2-B2', 'hours' => '30 ч.'],
+         ['title' => 'Медицинский академический английский', 'level' => 'B2-C1', 'hours' => '50 ч.'],
+         ['title' => 'Подготовка к OET и IELTS', 'level' => 'A2-C1', 'hours' => '300+ ч.'],
+      ],
+      'en' => [
+         ['title' => 'English for Doctors', 'level' => 'B2-C1', 'hours' => '120 hrs'],
+         ['title' => 'English for Nurses', 'level' => 'B1-B2', 'hours' => '120 hrs'],
+         ['title' => 'Nursing Foundation', 'level' => 'A2-B1', 'hours' => '60 hrs'],
+         ['title' => 'English for Pharmacy', 'level' => 'B1-B2', 'hours' => '20 hrs'],
+         ['title' => 'English for Radiography', 'level' => 'B1-B2', 'hours' => '30 hrs'],
+         ['title' => 'Medical Terminology', 'level' => 'A2-B2', 'hours' => '30 hrs'],
+         ['title' => 'Medical Academic Purposes', 'level' => 'B2-C1', 'hours' => '50 hrs'],
+         ['title' => 'OET & IELTS Preparation', 'level' => 'A2-C1', 'hours' => '300+ hrs'],
+      ],
+      'uz' => [
+         ['title' => 'Shifokorlar uchun ingliz tili', 'level' => 'B2-C1', 'hours' => '120 soat'],
+         ['title' => 'Hamshiralar uchun ingliz tili', 'level' => 'B1-B2', 'hours' => '120 soat'],
+         ['title' => 'Hamshiralik asoslari', 'level' => 'A2-B1', 'hours' => '60 soat'],
+         ['title' => 'Farmatsiya uchun ingliz tili', 'level' => 'B1-B2', 'hours' => '20 soat'],
+         ['title' => 'Radiografiya uchun ingliz tili', 'level' => 'B1-B2', 'hours' => '30 soat'],
+         ['title' => 'Tibbiy terminologiya', 'level' => 'A2-B2', 'hours' => '30 soat'],
+         ['title' => 'Tibbiy akademik maqsadlar', 'level' => 'B2-C1', 'hours' => '50 soat'],
+         ['title' => 'OET va IELTS tayyorgarligi', 'level' => 'A2-C1', 'hours' => '300+ soat'],
+      ],
+   ],
+   'b2b_about_course' => [
+      'ru' => 'Об этом курсе',
+      'en' => 'About this course',
+      'uz' => 'Ushbu kurs haqida',
+   ],
+   'b2b_roles_kicker' => [
+      'ru' => 'Создано для организаций',
+      'en' => 'Built for institutions',
+      'uz' => 'Tashkilotlar uchun yaratilgan',
+   ],
+   'b2b_roles_title' => [
+      'ru' => 'Понятная ценность для каждой роли',
+      'en' => 'Clear value for every role',
+      'uz' => 'Har bir rol uchun aniq qiymat',
+   ],
+   'b2b_roles' => [
+      'ru' => [
+         ['role' => 'Руководители программ', 'text' => 'Отчётность, группы, контроль доступа и масштабируемый запуск.'],
+         ['role' => 'Преподаватели', 'text' => 'Готовые активности, назначаемый контент и поддержка смешанного обучения.'],
+         ['role' => 'Студенты', 'text' => 'Интерактивная практика на любом устройстве и структурированные медицинские языковые траектории.'],
+      ],
+      'en' => [
+         ['role' => 'Programme directors', 'text' => 'Reporting, cohorts, access control and scalable rollout.'],
+         ['role' => 'Teachers', 'text' => 'Ready-made activities, assignable content and blended-learning support.'],
+         ['role' => 'Students', 'text' => 'Interactive practice on any device with structured healthcare language pathways.'],
+      ],
+      'uz' => [
+         ['role' => 'Dastur rahbarlari', 'text' => 'Hisobotlar, guruhlar, kirish nazorati va kengaytiriladigan ishga tushirish.'],
+         ['role' => 'O‘qituvchilar', 'text' => 'Tayyor mashg‘ulotlar, biriktiriladigan kontent va aralash ta’lim yordami.'],
+         ['role' => 'Talabalar', 'text' => 'Har qanday qurilmada interaktiv amaliyot va tuzilgan tibbiy til yo‘nalishlari.'],
+      ],
+   ],
+   'b2b_cta_kicker' => [
+      'ru' => 'Готовы начать?',
+      'en' => 'Ready to start?',
+      'uz' => 'Boshlashga tayyormisiz?',
+   ],
+   'b2b_cta_title' => [
+      'ru' => 'Измените подход вашей организации к медицинскому английскому',
+      'en' => 'Transform how your organisation delivers Medical English',
+      'uz' => 'Tashkilotingiz tibbiy ingliz tilini qanday taqdim etishini o‘zgartiring',
+   ],
+   'b2b_cta_text' => [
+      'ru' => 'Расскажите о ваших группах, профессиях и сроках. Мы порекомендуем практичную модель доступа и план внедрения.',
+      'en' => 'Tell us about your cohorts, professions and timeline. We will recommend a practical access model and implementation plan.',
+      'uz' => 'Guruhlaringiz, kasblar va muddatlar haqida ayting. Biz amaliy kirish modeli va joriy etish rejasini tavsiya qilamiz.',
+   ],
+   'b2b_request_consultation' => [
+      'ru' => 'Запросить бесплатную консультацию',
+      'en' => 'Request a free consultation',
+      'uz' => 'Bepul konsultatsiya so‘rash',
+   ],
+   'b2b_faq_kicker' => [
+      'ru' => 'FAQ',
+      'en' => 'FAQ',
+      'uz' => 'FAQ',
+   ],
+   'b2b_faq_title' => [
+      'ru' => 'Часто задаваемые вопросы',
+      'en' => 'Frequently Asked Questions',
+      'uz' => 'Ko‘p beriladigan savollar',
+   ],
+   'b2b_faq_items' => [
+      'ru' => [
+         ['q' => 'Что включает институциональная лицензия?', 'a' => 'Ваша организация получает масштабируемый доступ к материалам медицинского английского, практическим модулям коммуникации, отчётности и поддержке запуска для студентов и администраторов.'],
+         ['q' => 'Можно ли адаптировать платформу под наш бренд?', 'a' => 'Да. Мы можем подготовить учебное пространство с вашим логотипом, цветами, группами и структурой программы, чтобы студенты работали в знакомой среде.'],
+         ['q' => 'Подходит ли это для групп с разным уровнем?', 'a' => 'Да. Структура контента поддерживает начальный, средний и продвинутый уровни в разных медицинских специализациях.'],
+         ['q' => 'Как начать?', 'a' => 'Запишитесь на консультацию, выберите модель доступа, и наша команда поможет настроить платформу и подключить первую группу.'],
+      ],
+      'en' => [
+         ['q' => 'What does an institutional licence include?', 'a' => 'Your organisation receives scalable access to Medical English learning materials, practical communication modules, reporting, and onboarding support for learners and administrators.'],
+         ['q' => 'Can the platform match our brand?', 'a' => 'Yes. We can prepare a learning space with your logo, colours, cohorts, and programme structure so students work in a familiar environment.'],
+         ['q' => 'Is this suitable for mixed-level groups?', 'a' => 'Yes. The content structure supports foundation, intermediate, and advanced learners across healthcare specialisms.'],
+         ['q' => 'How do we get started?', 'a' => 'Book a consultation, choose the access model, and our team will help configure the platform and onboard your first cohort.'],
+      ],
+      'uz' => [
+         ['q' => 'Institutsional litsenziya nimalarni o‘z ichiga oladi?', 'a' => 'Tashkilotingiz tibbiy ingliz tili materiallari, amaliy muloqot modullari, hisobotlar hamda o‘quvchilar va administratorlar uchun ishga tushirish yordami bilan kengaytiriladigan kirishga ega bo‘ladi.'],
+         ['q' => 'Platformani brendimizga moslashtirish mumkinmi?', 'a' => 'Ha. Talabalar tanish muhitda ishlashi uchun logotipingiz, ranglaringiz, guruhlaringiz va dastur tuzilmasi bilan o‘quv maydonini tayyorlay olamiz.'],
+         ['q' => 'Bu turli darajadagi guruhlar uchun mosmi?', 'a' => 'Ha. Kontent tuzilmasi tibbiyotning turli ixtisosliklarida boshlang‘ich, o‘rta va yuqori darajadagi o‘quvchilarni qo‘llab-quvvatlaydi.'],
+         ['q' => 'Qanday boshlaymiz?', 'a' => 'Konsultatsiyaga yoziling, kirish modelini tanlang va jamoamiz platformani sozlash hamda birinchi guruhni ulashga yordam beradi.'],
+      ],
+   ],
+
 ];
