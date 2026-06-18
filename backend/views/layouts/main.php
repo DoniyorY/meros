@@ -53,6 +53,7 @@ AppAsset::register($this);
                 ['label' => 'Banner', 'url' => ['/banner']],
                 ['label' => 'Users', 'url' => ['/user']],
                 ['label' => 'Contacts', 'url' => ['/contacts']],
+                ['label' => 'Events', 'url' => ['/events']],
             ]]
         ];
         if (Yii::$app->user->isGuest) {
