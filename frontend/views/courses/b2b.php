@@ -10,6 +10,13 @@ $t = static function ($key) use ($params, $lang) {
 $tList = static function ($key) use ($params, $lang) {
    return $params[$key][$lang] ?? $params[$key]['en'] ?? [];
 };
+$limitText = static function ($text, $limit = 200) {
+   $text = trim(strip_tags((string)$text));
+   if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+      return mb_strlen($text, 'UTF-8') > $limit ? mb_substr($text, 0, $limit, 'UTF-8') . '...' : $text;
+   }
+   return strlen($text) > $limit ? substr($text, 0, $limit) . '...' : $text;
+};
 
 $this->registerMetaTag(['name' => 'description', 'content' => $t('b2b_meta_description')]);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $t('b2b_meta_keywords')]);
@@ -54,8 +61,15 @@ JS, \yii\web\View::POS_READY);
    .meros-b2b-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:26px; color:#fff; padding:28px; text-align:center; }
    .meros-b2b-stat strong { color:#fff; display:block; font-size:clamp(34px,4vw,56px); font-weight:900; line-height:1; }
    .meros-b2b-stat span { color:rgba(255,255,255,.82); font-weight:800; }
-   .meros-b2b-course { align-items:center; display:flex; gap:18px; }
+   .meros-b2b-course { display:block; overflow:hidden; padding:0; position:relative; }
+   .meros-b2b-course-image { height:190px; overflow:hidden; position:relative; }
+   .meros-b2b-course-image img { height:100%; object-fit:cover; transition:transform .55s ease; width:100%; }
+   .meros-b2b-course-content { align-items:center; display:flex; gap:18px; padding:24px; }
    .meros-b2b-course-badge { align-items:center; background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:18px; color:#fff; display:flex; flex:0 0 64px; font-weight:900; height:64px; justify-content:center; }
+   .meros-b2b-course-overlay { align-items:center; background:linear-gradient(135deg,rgba(4,54,63,.94),rgba(7,113,123,.9)); color:#fff; display:flex; flex-direction:column; inset:0; justify-content:center; opacity:0; padding:28px; position:absolute; text-align:center; transform:translateY(18px); transition:opacity .35s ease, transform .35s ease; z-index:2; }
+   .meros-b2b-course-overlay h3, .meros-b2b-course-overlay p { color:#fff; }
+   .meros-b2b-course:hover .meros-b2b-course-overlay, .meros-b2b-course:focus-within .meros-b2b-course-overlay { opacity:1; transform:translateY(0); }
+   .meros-b2b-course:hover .meros-b2b-course-image img, .meros-b2b-course:focus-within .meros-b2b-course-image img { transform:scale(1.08); }
    .meros-b2b-table { border-collapse:separate; border-spacing:0 12px; width:100%; }
    .meros-b2b-table td, .meros-b2b-table th { background:#fff; border-bottom:1px solid var(--meros-border); border-top:1px solid var(--meros-border); padding:18px; }
    .meros-b2b-table th { color:var(--meros-primary-dark); }
@@ -134,7 +148,22 @@ JS, \yii\web\View::POS_READY);
          <div class="row g-4 align-items-end mb-4"><div class="col-lg-8"><span class="meros-kicker"><?= Html::encode($t('b2b_library_kicker')) ?></span><h2><?= Html::encode($t('b2b_library_title')) ?></h2></div><div class="col-lg-4"><p><?= Html::encode($t('b2b_library_text')) ?></p></div></div>
          <div class="row g-4">
             <?php foreach ($libraryCourses as $item): ?>
-               <div class="col-lg-3 col-md-6"><div class="meros-b2b-card meros-b2b-course"><div class="meros-b2b-course-badge"><?= Html::encode($item['level']) ?></div><div><h3><?= Html::encode($item['title']) ?></h3><p class="mb-0"><?= Html::encode($item['hours']) ?></p></div></div></div>
+               <?php $courseImage = $base . '/' . ltrim($item['image'] ?? 'images/meros_hospital.jpg', '/'); ?>
+               <div class="col-lg-3 col-md-6">
+                  <article class="meros-b2b-card meros-b2b-course" tabindex="0">
+                     <div class="meros-b2b-course-image">
+                        <img src="<?= Html::encode($courseImage) ?>" alt="<?= Html::encode($item['title']) ?>">
+                     </div>
+                     <div class="meros-b2b-course-content">
+                        <div class="meros-b2b-course-badge"><?= Html::encode($item['level']) ?></div>
+                        <div><h3><?= Html::encode($item['title']) ?></h3><p class="mb-0"><?= Html::encode($item['hours']) ?></p></div>
+                     </div>
+                     <div class="meros-b2b-course-overlay">
+                        <h3><?= Html::encode($item['title']) ?></h3>
+                        <p><?= Html::encode($limitText($item['description'] ?? '')) ?></p>
+                     </div>
+                  </article>
+               </div>
             <?php endforeach; ?>
          </div>
       </div>
