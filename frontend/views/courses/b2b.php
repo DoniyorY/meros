@@ -30,6 +30,23 @@ $faqItems = [
    ['q' => 'Is this suitable for mixed-level groups?', 'a' => 'Yes. The content structure supports foundation, intermediate, and advanced learners across healthcare specialisms.'],
    ['q' => 'How do we get started?', 'a' => 'Book a consultation, choose the access model, and our team will help configure the platform and onboard your first cohort.'],
 ];
+
+$this->registerJs(<<<JS
+const exploreProgrammeButton = document.querySelector('[data-b2b-scroll="programme"]');
+if (exploreProgrammeButton) {
+   exploreProgrammeButton.addEventListener('click', function (event) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) {
+         return;
+      }
+      event.preventDefault();
+      target.scrollIntoView({
+         behavior: 'smooth',
+         block: 'start'
+      });
+   });
+}
+JS, \yii\web\View::POS_READY);
 ?>
 
 <style>
@@ -64,7 +81,7 @@ $faqItems = [
                   <p class="text-white fs-5 mb-4">Give every cohort structured access to healthcare-focused English, practical communication tasks, progress visibility, and a branded learning environment.</p>
                   <div class="d-flex flex-wrap gap-3">
                      <a href="mailto:info@merosedu.uz?subject=Institutional%20Medical%20English%20Demo" class="btn btn-primary btn-lg meros-primary-btn">Book a consultation</a>
-                     <a href="#b2b-library" class="btn btn-outline-light btn-lg rounded-pill px-4">Explore programme</a>
+                     <a href="#b2b-library" class="btn btn-outline-light btn-lg rounded-pill px-4" data-b2b-scroll="programme">Explore programme</a>
                   </div>
                </div>
             </div>
