@@ -20,6 +20,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Banner;
 use common\models\Posts;
+use common\models\Events;
 
 /**
  * Site controller
@@ -82,6 +83,7 @@ class SiteController extends Controller
     {
         $banner = Banner::findAll(['status'=>Banner::STATUS_ACTIVE]);
         $news = Posts::find()->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->limit(6)->all();
+        $events = Events::find()->where(['status' => 1])->orderBy(['created_at' => SORT_DESC])->limit(2)->all();
         $contactModel = new ContactForm(['scenario' => 'homepage']);
 
         if ($contactModel->load(Yii::$app->request->post())) {
@@ -100,6 +102,7 @@ class SiteController extends Controller
         return $this->render('index',[
             'banner'=>$banner,
             'news'=>$news,
+            'events' => $events,
             'contactModel' => $contactModel,
         ]);
 

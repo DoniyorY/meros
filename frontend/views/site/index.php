@@ -97,29 +97,34 @@ function translate($key)
                 <h2>Events</h2>
             </div>
             <div class="row g-4">
-               <?php $events = [
-                  ['image' => 'event-img-01.jpg', 'month' => 'jan', 'day' => '18', 'title' => 'Conservatory Exhibit: The garden of india a country and culture revealed', 'place' => 'Matthaei Botanical Gardens'],
-                  ['image' => 'event-img-02.jpg', 'month' => 'feb', 'day' => '01', 'title' => 'February Half-Term Activities: Big Stars and Little Secrets', 'place' => 'Pitt Rivers and Natural History Museums'],
-               ]; ?>
                <?php foreach ($events as $event): ?>
+                  <?php
+                  $title = $event->{"name_$lang"} ?: $event->name_en;
+                  $description = $event->{"desc_$lang"} ?: $event->desc_en;
+                  $image = $event->image ? "$base/uploads/events/$event->image" : "$base/img/event-img-01.jpg";
+                  ?>
                    <div class="col-lg-6">
                        <article class="meros-event-card">
-                           <div class="meros-event-image">
-                               <img src="<?= "$base/img/{$event['image']}" ?>"
-                                    alt="<?= Html::encode($event['title']) ?>" loading="lazy">
-                               <span class="meros-event-date"><strong><?= $event['day'] ?></strong><?= $event['month'] ?></span>
-                           </div>
+                           <a class="meros-event-image" href="<?= Url::to(['events/view', 'id' => $event->id]) ?>">
+                               <img src="<?= Html::encode($image) ?>"
+                                    alt="<?= Html::encode($title) ?>" loading="lazy">
+                               <span class="meros-event-date"><strong><?= date('d', $event->created_at) ?></strong><?= date('M', $event->created_at) ?></span>
+                           </a>
                            <div class="meros-event-body">
-                               <h3><a href="#"><?= Html::encode($event['title']) ?></a></h3>
-                               <p class="meros-muted"><span
-                                           class="fa fa-map-marker"></span> <?= Html::encode($event['place']) ?></p>
-                               <p>Interactive learning sessions for healthcare professionals who want confident,
-                                   patient-centered communication.</p>
-                               <a href="#" class="meros-link">View Details</a>
+                               <h3><a href="<?= Url::to(['events/view', 'id' => $event->id]) ?>"><?= Html::encode($title) ?></a></h3>
+                               <p class="meros-muted"><span class="fa fa-calendar"></span> <?= date('d.m.Y', $event->created_at) ?></p>
+                               <p><?= Html::encode(strip_tags($description)) ?></p>
+                               <?php if ($event->video_link): ?>
+                                   <p class="meros-muted"><span class="fa fa-youtube-play"></span> YouTube video available</p>
+                               <?php endif; ?>
+                               <a href="<?= Url::to(['events/view', 'id' => $event->id]) ?>" class="meros-link">View Details</a>
                            </div>
                        </article>
                    </div>
                <?php endforeach; ?>
+               <?php if (empty($events)): ?>
+                   <div class="col-12 text-center"><p class="meros-muted">Events will be announced soon.</p></div>
+               <?php endif; ?>
             </div>
         </div>
     </section>
