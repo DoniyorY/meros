@@ -82,6 +82,13 @@ return [
              'contact' => 'site/contact',
              
              /*
+              * Events ставим выше динамических правил курсов,
+              * чтобы /events и /events/123 не попадали в CourseUrlRule.
+              */
+             'events' => 'events/index',
+             'events/<id:\d+>' => 'events/view',
+             
+             /*
               * Динамическая категория + динамический курс.
               *
               * ВАЖНО: lang здесь отсутствует.
