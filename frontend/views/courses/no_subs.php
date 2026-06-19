@@ -20,8 +20,8 @@ $base = Yii::$app->request->baseUrl;
             <div class="row h-100 align-items-center g-4">
                 <div class="col-md-6 col-12">
                     <div class="course-banner-caption meros-course-caption text-center w-100 px-3 mt-4">
-                        <div>
-                            <img src="<?= "$base/uploads/course_icons/English-for-Doctor-600x96.png" ?>" alt="">
+                        <div class="mb-3">
+                            <img src="<?= "$base/uploads/course_icons/$courses->course_icons" ?>" alt="">
                         </div>
                         <div>
                             <span class="meros-kicker">Medical English Course</span>
