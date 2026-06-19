@@ -198,27 +198,124 @@ $returnURL = "сайт поставщика";
                                     UZS
                                 </span>
                                 </div>
-                                <?php if (!Yii::$app->user->isGuest):?>
-                                <button id="btn-confirm" class="btn w-100 mt-2 meros-primary-btn d-none">Подтвердить</button>
-                                    <form action="<?=Url::to(['payment/click-pay','id'=>$billing->id])?>" id="click_form" method="post" target="_blank">
-                                        <?=Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->csrfToken)?>
-                                        <input type="hidden" name="amount" value="<?=$billing->amount?>" />
-                                        <input type="hidden" name="merchant_id" value="<?=$params['click']['merchant_id']?>" />
-                                        <input type="hidden" name="merchant_user_id" value="<?=$params['click']['merchant_user_id']?>" />
-                                        <input type="hidden" name="service_id" value="<?=$params['click']['service_id']?>" />
-                                        <input type="hidden" name="transaction_param" value="<?=$billing->id?>" />
-                                        <input type="hidden" name="return_url" value="<?=Url::to(['payments/click-webhook','id'=>$billing->id])?>" />
-                                        <input type="hidden" name="card_type" value="uzcard" />
-                                        <button type="submit" class="btn w-100 mt-2 meros-payment-btn meros-primary-btn">
-                                            <img src="https://click.uz/click/images/logo.svg" alt="Click" style="height: 30px;">
-                                        </button>
-                                    </form>
-                                <button id="btn-payme" class="btn w-100 mt-2 meros-payment-btn meros-payment-payme">
-                                    <!-- Место для логотипа Payme -->
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
-                                         alt="Payme" style="height: 70px; object-fit: cover;">
-                                </button>
-                                <?php endif;?>
+                           <?php if (!Yii::$app->user->isGuest): ?>
+
+                               <button
+                                       id="btn-confirm"
+                                       class="btn w-100 mt-2 meros-primary-btn d-none"
+                                       type="button"
+                               >
+                                   Подтвердить
+                               </button>
+
+                               <form
+                                       action="<?= Url::to([
+                                          'payment/click-pay',
+                                          'id' => $billing->id,
+                                       ]) ?>"
+                                       id="click_form"
+                                       method="post"
+                                       target="_blank"
+                               >
+                                  <?= Html::hiddenInput(
+                                     Yii::$app->request->csrfParam,
+                                     Yii::$app->request->csrfToken
+                                  ) ?>
+
+                                   <input
+                                           type="hidden"
+                                           name="amount"
+                                           value="<?= (int) $billing->amount ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="merchant_id"
+                                           value="<?= Html::encode(
+                                              $params['click']['merchant_id']
+                                           ) ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="merchant_user_id"
+                                           value="<?= Html::encode(
+                                              $params['click']['merchant_user_id']
+                                           ) ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="service_id"
+                                           value="<?= Html::encode(
+                                              $params['click']['service_id']
+                                           ) ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="transaction_param"
+                                           value="<?= (int) $billing->id ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="return_url"
+                                           value="<?= Url::to(
+                                              [
+                                                 'payments/click-webhook',
+                                                 'id' => $billing->id,
+                                              ],
+                                              true
+                                           ) ?>"
+                                   >
+
+                                   <input
+                                           type="hidden"
+                                           name="card_type"
+                                           value="uzcard"
+                                   >
+
+                                   <button
+                                           type="submit"
+                                           class="btn w-100 mt-2 meros-payment-btn meros-primary-btn"
+                                   >
+                                       <img
+                                               src="https://click.uz/click/images/logo.svg"
+                                               alt="Click"
+                                               style="height: 30px;"
+                                       >
+                                   </button>
+                               </form>
+
+                               <!--
+                                   В Payme-форму не передаём amount и merchant_id из браузера.
+                                   Сервер заново загружает Billing по ID и сам формирует checkout URL.
+                               -->
+                              <?= Html::beginForm(
+                              ['payment/payme', 'id' => $billing->id],
+                              'post',
+                              [
+                                 'id' => 'payme-form',
+                                 'target' => '_blank',
+                              ]
+                           ) ?>
+
+                               <button
+                                       id="btn-payme"
+                                       type="submit"
+                                       class="btn w-100 mt-2 meros-payment-btn meros-payment-payme"
+                               >
+                                   <img
+                                           src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
+                                           alt="Payme"
+                                           style="height: 70px; object-fit: contain;"
+                                   >
+                               </button>
+                              
+                              <?= Html::endForm() ?>
+                           
+                           <?php endif; ?>
                         </div>
 
                     </div>

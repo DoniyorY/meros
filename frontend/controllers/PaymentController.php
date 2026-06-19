@@ -16,10 +16,12 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
-
+use frontend\controllers\traits\PaymePaymentActions;
 final class PaymentController extends Controller
 {
-    public function behaviors(): array
+   use PaymePaymentActions;
+   
+   public function behaviors(): array
     {
         $behaviors = parent::behaviors();
         $behaviors['verbs'] = [
