@@ -18,7 +18,7 @@ $base = Yii::$app->request->baseUrl;
          style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
         <div class="container h-100">
             <div class="row h-100 align-items-center g-4">
-                <div class="col-md-6 col-12">
+                <div class="col-md col-12">
                     <div class="course-banner-caption meros-course-caption text-center w-100 px-3 mt-4">
                         <div class="mb-3">
                             <img src="<?= "$base/uploads/course_icons/$courses->course_icons" ?>" alt="">
