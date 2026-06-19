@@ -13,6 +13,60 @@ return [
       'secret_key' => 'YOUR_SECRET_KEY',
       'merchant_user_id'=>'123',
    ],
+   'payme' => [
+      'merchantId' => getenv('PAYME_MERCHANT_ID') ?: '',
+      'login' => getenv('PAYME_LOGIN') ?: '',
+      'key' => getenv('PAYME_KEY') ?: '',
+      
+      'checkoutUrl' => YII_ENV_PROD
+         ? 'https://checkout.paycom.uz'
+         : 'https://test.paycom.uz',
+      
+      // false: billing.amount хранится в сумах.
+      // true: billing.amount уже хранится в тийинах.
+      'amountAlreadyInTiyin' => false,
+      
+      // Укажите ваш числовой код Payme для billing.payment_provider.
+      'providerCode' => 2,
+      
+      // Сейчас на странице указан срок 3 месяца.
+      // Если срок зависит от subscription_id, замените вычисление
+      // в PaymeController::markBillingSuccess().
+      'subscriptionDuration' => '+3 months',
+      
+      // Записывается в user_subscriptions.currency_code.
+      // ISO 4217 numeric code: UZS = 860.
+      'currencyCode' => 860,
+      
+      // Строковое значение для
+      // user_subscriptions.payment_provider.
+      'subscriptionPaymentProvider' => 'payme',
+      
+      // Для теста отмены подтверждённой транзакции в песочнице.
+      // В продакшене лучше проверять, была ли услуга уже использована.
+      'allowCancelPerformed' => true,
+      
+      // Обнулять даты подписки после возврата успешного платежа.
+      'clearSubscriptionDatesOnRefund' => true,
+      
+      'allowedIps' => [
+         '185.234.113.1',
+         '185.234.113.2',
+         '185.234.113.3',
+         '185.234.113.4',
+         '185.234.113.5',
+         '185.234.113.6',
+         '185.234.113.7',
+         '185.234.113.8',
+         '185.234.113.9',
+         '185.234.113.10',
+         '185.234.113.11',
+         '185.234.113.12',
+         '185.234.113.13',
+         '185.234.113.14',
+         '185.234.113.15',
+      ],
+   ],
    'user_status' => [
       10 => 'Active',
       9 => 'Inactive',

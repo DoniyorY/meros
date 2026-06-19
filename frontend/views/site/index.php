@@ -59,7 +59,7 @@ function translate($key)
                                                <?= translate('banner_button') ?>
                                             </a>
                                         <?php endif; ?>
-                                         <div class="banner-logo meros-hero-logos mt-5"
+                                         <div class="banner-logo meros-hero-logos mt-5 d-none"
                                               style="justify-content:space-around">
                                              <img src="<?= "$base/logo-white.png" ?>" alt="Meros" loading="lazy">
                                              <img src="<?= "$base/slc_logo_white.png" ?>" alt="SLC" loading="lazy">
@@ -81,8 +81,7 @@ function translate($key)
     <section id="right-sidebar" class="meros-section meros-about reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Medical English Institute</span>
-                <h2><?= translate('about_meros') ?></h2>
+                <h2>Medical English Institute</h2>
             </div>
             <div class="meros-about-card">
                <?= translate('about_content_index') ?>
@@ -134,10 +133,8 @@ function translate($key)
             <div class="meros-quote-card">
                 <span class="meros-kicker">Student outcomes</span>
                 <blockquote>
-                    <p>I would recommended this course to anyone who wants work in England. It is an easier way to
-                        introduce everyone in the difficult pathway to work in the environment where your language is
-                        not English.</p>
-                    <footer>Dr Amarylis Cooper</footer>
+                    <p><?=translate('comments')?></p>
+                    <footer>Dr Sofia Karimova</footer>
                 </blockquote>
             </div>
         </div>
@@ -203,7 +200,7 @@ function translate($key)
             <span class="meros-medical-circle meros-medical-circle-sm meros-medical-two"><i
                         class="fa fa-stethoscope"></i></span>
         </div>
-        <div class="meros-consultation-doctor d-none d-md-block" aria-label="Reserved place for doctor photo">
+        <div class="meros-consultation-doctor d-none" aria-label="Reserved place for doctor photo">
             <img src="<?="$base/images/doctor_photo.png"?>" alt="" style="    width: 215px;
     object-fit: cover;
     height: 450px;

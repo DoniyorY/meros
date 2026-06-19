@@ -80,7 +80,12 @@ return [
              'login' => 'site/login',
              'logout' => 'site/logout',
              'contact' => 'site/contact',
-             'POST payment/click-pay/<id>'=> 'payment/click-pay',
+             'POST payme/webhook' => 'payme/webhook',
+             
+             'POST payment/payme/<id:\d+>' => 'payment/payme',
+             
+             'GET payment/payme-result/<token:[A-Za-z0-9_-]+>'
+             => 'payment/payme-result',
              /*
               * Events ставим выше динамических правил курсов,
               * чтобы /events и /events/123 не попадали в CourseUrlRule.

@@ -548,95 +548,95 @@ return [
       'en' => 'Our Professors',
       'uz' => 'Professorlarimiz',
    ],
-   'about_meros_international_institute'=>[
-      'ru'=>'О международном институте Meros',
-      'en'=>'About Meros International Institute',
-      'uz'=>'Meros xalqaro institut haqida',
+   'about_meros_international_institute' => [
+      'ru' => 'О международном институте Meros',
+      'en' => 'About Meros International Institute',
+      'uz' => 'Meros xalqaro institut haqida',
    ],
-   'label_phone'=>[
-      'ru'=>'Телефон',
-      'en'=>'Phone',
-      'uz'=>'Telefon'
+   'label_phone' => [
+      'ru' => 'Телефон',
+      'en' => 'Phone',
+      'uz' => 'Telefon'
    ],
-   'label_email'=>[
-      'ru'=>'Эл.почта',
-      'en'=>'Email',
-      'uz'=>'El.Manzil',
+   'label_email' => [
+      'ru' => 'Эл.почта',
+      'en' => 'Email',
+      'uz' => 'El.Manzil',
    ],
-   'about_the_course'=>[
-      'ru'=>'Коротко про курс',
-      'en'=>'About the Course',
-      'uz'=>'Kurs haqida',
+   'about_the_course' => [
+      'ru' => 'Коротко про курс',
+      'en' => 'About the Course',
+      'uz' => 'Kurs haqida',
    ],
-   'all_package_include'=>[
-      'ru'=>'Все пакеты включают в себя',
-      'en'=>'All Packages include',
-      'uz'=>'Barcha paketlarga quyidagilar kiradi',
+   'all_package_include' => [
+      'ru' => 'Все пакеты включают в себя',
+      'en' => 'All Packages include',
+      'uz' => 'Barcha paketlarga quyidagilar kiradi',
    ],
-   'choose_the_right_plan_for_you'=>[
-      'ru'=>'Выбери подходящий план для себя',
-      'en'=>'Choose the right plan for you',
-      'uz'=>"Siz uchun to'g'ri rejani tanlang",
+   'choose_the_right_plan_for_you' => [
+      'ru' => 'Выбери подходящий план для себя',
+      'en' => 'Choose the right plan for you',
+      'uz' => "Siz uchun to'g'ri rejani tanlang",
    ],
    'subscribe_course' => [
       'ru' => 'Запишитесь на курс «{course}» уже сегодня!',
       'en' => 'Subscribe in the {course} course today!',
       'uz' => '{course} kursiga bugunoq yoziling!',
    ],
-   'secure_payment'=>[
-      'ru'=>'Безопасная оплата',
-      'en'=>'Secure Payment',
-      'uz'=>'',
+   'secure_payment' => [
+      'ru' => 'Безопасная оплата',
+      'en' => 'Secure Payment',
+      'uz' => '',
    ],
-   'payme_payments'=>[
-      'ru'=>'Оплата по Payme',
-      'en'=>'Payme Payments',
-      'uz'=>'',
+   'payme_payments' => [
+      'ru' => 'Оплата по Payme',
+      'en' => 'Payme Payments',
+      'uz' => '',
    ],
-   'online'=>[
-      'ru'=>'100% онлайн',
-      'en'=>'100% Online',
-      'uz'=>'',
+   'online' => [
+      'ru' => '100% онлайн',
+      'en' => '100% Online',
+      'uz' => '',
    ],
-   'Trusted partners'=>[
-      'ru'=>'Доверенные партнёры',
-      'en'=>'Trusted partners',
-      'uz'=>'Ishonchli hamkorlar',
+   'Trusted partners' => [
+      'ru' => 'Доверенные партнёры',
+      'en' => 'Trusted partners',
+      'uz' => 'Ishonchli hamkorlar',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   'comments' => [
+      'ru' => 'Medical English Institute полностью изменил мой подход к профессиональному общению в сфере здравоохранения. Занятия практичные, хорошо структурированные и основаны на реальных ситуациях, с которыми медицинские специалисты сталкиваются каждый день. Преподаватели опытные, внимательные и действительно понимают потребности медицинских работников, работающих в международной среде. Теперь я чувствую себя намного увереннее при общении с пациентами и коллегами',
+      'en' => 'Medical English Institute has completely changed the way I communicate in a professional healthcare environment. The lessons are practical, well-structured, and focused on real situations that medical professionals face every day. The teachers are supportive, experienced, and truly understand the needs of international healthcare workers. I feel much more confident speaking with patients and colleagues now.',
+      'uz' => 'Medical English Institute tibbiyot sohasidagi professional muloqotga bo‘lgan yondashuvimni butunlay o‘zgartirdi. Darslar amaliy, yaxshi tuzilgan va tibbiyot mutaxassislari har kuni duch keladigan haqiqiy vaziyatlarga asoslangan. O‘qituvchilar tajribali, e’tiborli va xalqaro muhitda ishlaydigan tibbiyot xodimlarining ehtiyojlarini yaxshi tushunadilar. Endi bemorlar va hamkasblar bilan muloqot qilishda o‘zimni ancha ishonchli his qilaman.',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
-   ''=>[
-      'ru'=>'',
-      'en'=>'',
-      'uz'=>'',
+   '' => [
+      'ru' => '',
+      'en' => '',
+      'uz' => '',
    ],
    
    'b2b_meta_description' => [
