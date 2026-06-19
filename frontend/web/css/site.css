@@ -940,6 +940,7 @@ body p,
 
 #homepage-slider.meros-hero .owl-item {
     float: left;
+    overflow: hidden;
 }
 
 #homepage-slider.meros-hero .owl-controls {
@@ -1006,6 +1007,12 @@ body p,
 
 #homepage-slider.meros-hero .homepage-banner-slide {
     max-width: 100vw;
+    overflow: hidden;
+}
+
+#homepage-slider.meros-hero .homepage-banner-image {
+    display: block;
+    transform-origin: center center;
 }
 
 /* Reduced-gradient treatment using the same palette */
