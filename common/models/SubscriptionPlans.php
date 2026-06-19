@@ -39,10 +39,11 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
     {
         return [
             [['status'], 'default', 'value' => 0],
-            [['name_ru', 'name_en', 'name_uz', 'price', 'duration_days', 'created_at', 'updated_at'], 'required'],
+            [[ 'name_en', 'price', 'duration_days', 'created_at', 'updated_at'], 'required'],
             [['price'], 'number'],
             [['duration_days', 'status', 'created_at', 'updated_at','course_id',], 'integer'],
             [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
+           [['name_ru','name_uz'],'default', 'value' => '-']
         ];
     }
 
