@@ -522,6 +522,7 @@ body p,
 #homepage-slider.meros-hero .homepage-banner-carousel,
 #homepage-slider.meros-hero .owl-stage-outer,
 #homepage-slider.meros-hero .owl-stage,
+#homepage-slider.meros-hero .owl-wrapper,
 #homepage-slider.meros-hero .owl-item {
     height: clamp(560px, 78vh, 720px);
     min-height: 0;
@@ -779,6 +780,7 @@ body p,
     #homepage-slider.meros-hero .homepage-banner-carousel,
     #homepage-slider.meros-hero .owl-stage-outer,
     #homepage-slider.meros-hero .owl-stage,
+    #homepage-slider.meros-hero .owl-wrapper,
     #homepage-slider.meros-hero .owl-item,
     .meros-hero .homepage-banner-image { min-height: 0; height: 620px; }
     .meros-hero-card { text-align: center; }
@@ -933,7 +935,67 @@ body p,
 }
 
 #homepage-slider.meros-hero .owl-wrapper {
-    width: auto !important;
+    display: block !important;
+}
+
+#homepage-slider.meros-hero .owl-item {
+    float: left;
+}
+
+#homepage-slider.meros-hero .owl-controls {
+    margin: 0;
+}
+
+#homepage-slider.meros-hero .owl-buttons {
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+#homepage-slider.meros-hero .owl-buttons .owl-prev,
+#homepage-slider.meros-hero .owl-buttons .owl-next,
+#homepage-slider.meros-hero .owl-nav .owl-prev,
+#homepage-slider.meros-hero .owl-nav .owl-next {
+    align-items: center;
+    background: rgba(4, 54, 63, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    font-size: 42px;
+    height: 54px;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto;
+    position: absolute;
+    top: 0;
+    width: 54px;
+}
+
+#homepage-slider.meros-hero .owl-buttons .owl-prev,
+#homepage-slider.meros-hero .owl-nav .owl-prev { left: clamp(14px, 3vw, 42px); }
+
+#homepage-slider.meros-hero .owl-buttons .owl-next,
+#homepage-slider.meros-hero .owl-nav .owl-next { right: clamp(14px, 3vw, 42px); }
+
+#homepage-slider.meros-hero .owl-buttons .owl-prev:hover,
+#homepage-slider.meros-hero .owl-buttons .owl-next:hover,
+#homepage-slider.meros-hero .owl-nav .owl-prev:hover,
+#homepage-slider.meros-hero .owl-nav .owl-next:hover {
+    background: var(--meros-primary);
+}
+
+#homepage-slider.meros-hero .owl-pagination,
+#homepage-slider.meros-hero .owl-dots {
+    bottom: 22px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 5;
 }
 
 #homepage-slider.meros-hero .homepage-banner-caption {

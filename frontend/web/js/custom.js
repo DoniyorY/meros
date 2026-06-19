@@ -126,7 +126,7 @@ $(document).ready(function($) {
         $('.flexslider').css('height', $(window).height());
     }
 
-//  Homepage Banner Slider (Owl Carousel 2.x with legacy Owl 1.x fallbacks)
+//  Homepage Banner Slider (bundled Owl Carousel 1.x with Owl 2.x-compatible options)
 
     if ($('.homepage-banner-carousel').length > 0) {
         $('.homepage-banner-carousel').owlCarousel({
@@ -142,7 +142,7 @@ $(document).ready(function($) {
             navText: ['‹', '›'],
             // Owl Carousel 1.x fallbacks kept for older bundled assets.
             singleItem: true,
-            autoPlay: true,
+            autoPlay: 6000,
             stopOnHover: true,
             navigation: true,
             pagination: true,
