@@ -80,7 +80,7 @@ return [
              'login' => 'site/login',
              'logout' => 'site/logout',
              'contact' => 'site/contact',
-             
+             'POST payment/click-pay/<id>'=> 'payment/click-pay',
              /*
               * Events ставим выше динамических правил курсов,
               * чтобы /events и /events/123 не попадали в CourseUrlRule.

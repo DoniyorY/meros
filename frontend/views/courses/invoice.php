@@ -13,6 +13,16 @@ $this->title = "Invoice";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
+
+
+$merchantID = 20;
+$merchantUserID = 4;
+$serviceID = 31;
+$transID = "user23151";
+$transAmount = number_format(1000, 2, '.', '');
+$cardType = "uzcard";
+$returnURL = "сайт поставщика";
+
 ?>
 
 <div id="page-content" class="meros-modern-page meros-invoice-page">
@@ -31,7 +41,7 @@ $params = Yii::$app->params;
                         <span class="meros-kicker">Secure checkout</span>
                             <h1 class="h3 mb-1">Invoice</h1>
                         <small class="text-muted">
-                            Invoice #12345
+                            Invoice #<?=$billing->id?>
                         </small>
                     </div>
 
@@ -189,10 +199,20 @@ $params = Yii::$app->params;
                                 </span>
                                 </div>
                                 <?php if (!Yii::$app->user->isGuest):?>
-                                <button id="btn-confirm" class="btn w-100 mt-2 meros-primary-btn">Подтвердить</button>
-                                <button id="btn-click" class="btn w-100 mt-2 meros-payment-btn meros-payment-click">
-                                    <!-- Место для логотипа Click -->
-                                    <img src="https://click.uz/click/images/logo.svg" alt="Click" height="20"></button>
+                                <button id="btn-confirm" class="btn w-100 mt-2 meros-primary-btn d-none">Подтвердить</button>
+                                    <form action="<?=Url::to(['payment/click-pay','id'=>$billing->id])?>" id="click_form" method="post" target="_blank">
+                                        <?=Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->csrfToken)?>
+                                        <input type="hidden" name="amount" value="<?=$billing->amount?>" />
+                                        <input type="hidden" name="merchant_id" value="<?=$params['click']['merchant_id']?>" />
+                                        <input type="hidden" name="merchant_user_id" value="<?=$params['click']['merchant_user_id']?>" />
+                                        <input type="hidden" name="service_id" value="<?=$params['click']['service_id']?>" />
+                                        <input type="hidden" name="transaction_param" value="<?=$billing->id?>" />
+                                        <input type="hidden" name="return_url" value="<?=Url::to(['payments/click-webhook','id'=>$billing->id])?>" />
+                                        <input type="hidden" name="card_type" value="uzcard" />
+                                        <button type="submit" class="btn w-100 mt-2 meros-payment-btn meros-primary-btn">
+                                            <img src="https://click.uz/click/images/logo.svg" alt="Click" style="height: 30px;">
+                                        </button>
+                                    </form>
                                 <button id="btn-payme" class="btn w-100 mt-2 meros-payment-btn meros-payment-payme">
                                     <!-- Место для логотипа Payme -->
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"

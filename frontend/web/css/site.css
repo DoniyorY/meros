@@ -1533,3 +1533,25 @@ body p,
     .meros-consultation-card { border-radius: 24px; }
     .meros-consultation-btn { width: 100%; }
 }
+
+.click_logo {
+    padding: 4px 10px;
+    cursor: pointer;
+    color: #fff;
+    line-height: 190%;
+    font-size: 13px;
+    font-family: Arial;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #037bc8;
+    border-radius: 4px;
+    background: linear-gradient(#27a8e0 0%, #1c8ed7 100%);
+}
+
+.click_logo i {
+    background: url(https://m.click.uz/static/img/logo.png) no-repeat top left;
+    width: 30px;
+    height: 25px;
+    display: block;
+    float: left;
+}

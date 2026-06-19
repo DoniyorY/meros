@@ -23,7 +23,17 @@ use Yii;
  */
 class Billing extends \yii\db\ActiveRecord
 {
+   /**
+    * 0 => 'Pending',
+    * 1 => 'Success',
+    * 2 => 'Failed',
+    * 3 => 'Cancelled'
+    */
    
+   const STATUS_PENDING = 0;
+   const STATUS_SUCCESS = 1;
+   const STATUS_FAILED = 2;
+   const STATUS_CANCELLED = 3;
    
    /**
     * {@inheritdoc}
