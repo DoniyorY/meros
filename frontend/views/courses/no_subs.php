@@ -25,7 +25,7 @@ $base = Yii::$app->request->baseUrl;
                         </div>
                         <div>
                             <span class="meros-kicker">Medical English Course</span>
-                            <h1 class="course-banner-subtitle mb-3"><?= $courses->{"name_$lang"} ?></h1>
+                            <h1 class="course-banner-subtitle mb-3" style="text-transform: uppercase"><?= $courses->{"name_$lang"} ?></h1>
                         </div>
                         <div>
                             <h2>Advanced Communication Skills</h2>
@@ -57,7 +57,7 @@ $base = Yii::$app->request->baseUrl;
             <div class="container">
                 <div class="row g-4">
                     <div class="col-12 about_course_text meros-about-card">
-                        <h1><?=translate('about_the_course')?></h1>
+                       
                        <?= $courses->{"desc_$lang"} ?>
                     </div>
                 </div>

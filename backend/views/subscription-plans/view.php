@@ -19,57 +19,67 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="col-md-4 text-end">
-            <?php
-            if ($model->status === 0) {
-                echo Html::a('Inactive',
-                    ['status', 'id' => $model->id, 'status' => 1],
-                    ['class' => 'btn btn-warning', 'data-confirm' => 'Are you sure you want to activate this subscription?']);
-            } else {
-                echo Html::a('Active',
-                    ['status', 'id' => $model->id, 'status' => 0],
-                    ['class' => 'btn btn-success', 'data-confirm' => 'Are you sure you want to inactive this subscription?']);
-            }
-            ?>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ]) ?>
+           <?php
+           if ($model->status === 0) {
+              echo Html::a('Inactive',
+                 ['status', 'id' => $model->id, 'status' => 1],
+                 ['class' => 'btn btn-warning', 'data-confirm' => 'Are you sure you want to activate this subscription?']);
+           } else {
+              echo Html::a('Active',
+                 ['status', 'id' => $model->id, 'status' => 0],
+                 ['class' => 'btn btn-success', 'data-confirm' => 'Are you sure you want to inactive this subscription?']);
+           }
+           ?>
+           <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+           <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+              'class' => 'btn btn-danger',
+              'data' => [
+                 'confirm' => 'Are you sure you want to delete this item?',
+                 'method' => 'post',
+              ],
+           ]) ?>
         </div>
         <hr>
         <div class="col-md-4">
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'id',
-                    'name_ru',
-                    'name_en',
-                    'name_uz',
-                    [
-                        'attribute' => 'price',
-                        'value' => function ($data) {
-                            return Yii::$app->formatter->asDecimal($data->price);
-                        }
-                    ],
-                    'duration_days',
-                    'status',
-                    [
-                        'attribute' => 'created_at',
-                        'value' => function ($data) {
-                            return date('d.m.Y H:i:s', $data->created_at);
-                        }
-                    ],
-                    [
-                        'attribute' => 'updated_at',
-                        'value' => function ($data) {
-                            return date('d.m.Y H:i:s', $data->updated_at);
-                        }
-                    ],
-                ],
-            ]) ?>
+           <?= DetailView::widget([
+              'model' => $model,
+              'attributes' => [
+                 'id',
+                 [
+                    'attribute' => 'course_id',
+                    'value' => function ($data) {
+                       if ($data->course) {
+                          return $data->course->name_en;
+                       } else {
+                          return "Not Set!!!";
+                       }
+                    }
+                 ],
+                 'name_ru',
+                 'name_en',
+                 'name_uz',
+                 [
+                    'attribute' => 'price',
+                    'value' => function ($data) {
+                       return Yii::$app->formatter->asDecimal($data->price);
+                    }
+                 ],
+                 'duration_days',
+                 'status',
+                 [
+                    'attribute' => 'created_at',
+                    'value' => function ($data) {
+                       return date('d.m.Y H:i:s', $data->created_at);
+                    }
+                 ],
+                 [
+                    'attribute' => 'updated_at',
+                    'value' => function ($data) {
+                       return date('d.m.Y H:i:s', $data->updated_at);
+                    }
+                 ],
+              ],
+           ]) ?>
         </div>
         <div class="col-md-8">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -102,12 +112,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-md-12 mt-3">
                             <div class="collapse" id="new-facility">
                                 <div class="card card-body">
-                                    <?= $this->render('_form_item',
-                                        [
-                                            'model' => new SubscriptionPlanItems(),
-                                            'plan_id' => $model->id,
-                                            'url' => \yii\helpers\Url::to(['add-items', 'plan_id' => $model->id])
-                                        ]) ?>
+                                   <?= $this->render('_form_item',
+                                      [
+                                         'model' => new SubscriptionPlanItems(),
+                                         'plan_id' => $model->id,
+                                         'url' => \yii\helpers\Url::to(['add-items', 'plan_id' => $model->id])
+                                      ]) ?>
                                 </div>
                             </div>
                         </div>
@@ -138,21 +148,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= $item->desc_en ?></td>
                                         <td><?= $item->desc_uz ?></td>
                                         <td class="text-center">
-                                            <?= Html::button('<i class="bi bi-pencil"></i>',
-                                                [
-                                                    'class' => 'btn btn-primary btn-sm modalUpdateBtn',
-                                                    'data-url' => \yii\helpers\Url::to(['update-item-modal', 'id' => $item->id]),
-                                                ]) ?>
-                                            <?= Html::a('<i class="bi bi-trash"></i>',
-                                                ['delete-item', 'id' => $item->id],
-                                                [
-                                                    'class' => 'btn btn-sm btn-danger',
-                                                    'data' => [
-                                                        'confirm' => 'Are you sure you want to delete this item?',
-                                                        'method' => 'post',
-                                                    ]
-                                                ]
-                                            ) ?>
+                                           <?= Html::button('<i class="bi bi-pencil"></i>',
+                                              [
+                                                 'class' => 'btn btn-primary btn-sm modalUpdateBtn',
+                                                 'data-url' => \yii\helpers\Url::to(['update-item-modal', 'id' => $item->id]),
+                                              ]) ?>
+                                           <?= Html::a('<i class="bi bi-trash"></i>',
+                                              ['delete-item', 'id' => $item->id],
+                                              [
+                                                 'class' => 'btn btn-sm btn-danger',
+                                                 'data' => [
+                                                    'confirm' => 'Are you sure you want to delete this item?',
+                                                    'method' => 'post',
+                                                 ]
+                                              ]
+                                           ) ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -171,10 +181,10 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 Modal::begin([
-    'id' => 'updateModal',
-    'title' => 'Редактировать',
-    'size' => Modal::SIZE_LARGE,
-    'options' => ['tabindex' => false],
+   'id' => 'updateModal',
+   'title' => 'Редактировать',
+   'size' => Modal::SIZE_LARGE,
+   'options' => ['tabindex' => false],
 ]);
 echo '<div class="modal-body p-0"></div>';
 Modal::end(); ?>

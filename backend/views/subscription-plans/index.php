@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
          [
             'attribute' => 'course_id',
             'value' => function ($data) {
-               return $data->course->name_en;
+               if ($data->course) {
+                  return $data->course->name_en;
+               }else{
+                   return "Not Set!!!";
+               }
             },
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_en'),
             'format' => 'raw',

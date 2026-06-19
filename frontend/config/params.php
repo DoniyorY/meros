@@ -5,21 +5,16 @@ return [
    'about_content_index' => [
       'ru' => '
         <p style="text-align: justify; font-size: 20px;">
-            Meros International Institute — Образовательный институт в сфере здравоохранения и профессионального развития, созданная для того, чтобы медицинские специалисты получали знания, навыки и языковые компетенции, необходимые в современной глобальной системе здравоохранения. <br>
-            Благодаря стратегическим международным партнёрствам и инновационным образовательным технологиям мы предлагаем качественные учебные программы, курсы медицинского английского языка и возможности профессионального развития для врачей, медсестёр, фармацевтов, студентов и организаций здравоохранения.
-        </p>',
+            Meros International Institute — первый в Узбекистане международный образовательный институт, специализирующийся на медицинском английском языке, подготовке к OET и профессиональном развитии специалистов здравоохранения. Благодаря стратегическим международным партнерствам и инновационным образовательным технологиям мы помогаем врачам, медицинским сёстрам, фармацевтам, студентам и организациям здравоохранения развивать знания, навыки и языковые компетенции, необходимые для успешной работы в современной глобальной системе здравоохранения.
+            </p>',
       'en' => '
         <p style="text-align: justify; font-size: 20px;">
-       Meros International Institute is a healthcare-focused education and professional development institute dedicated
-       to empowering medical professionals with the knowledge, skills, and language competencies required in today’s global healthcare environment. <br>
-       Through strategic international partnerships and innovative learning technologies, we provide high-quality training programs,
-       Medical English courses, and professional development opportunities for doctors, nurses, pharmacists, students, and healthcare organizations.
+       Meros International Institute is the first healthcare-focused international education institute in Uzbekistan, dedicated to Medical English, OET preparation, and professional development for healthcare professionals. Through strategic international partnerships and innovative learning technologies, we empower doctors, nurses, pharmacists, students, and healthcare organizations with the knowledge, skills, and language competencies required in today’s global healthcare environment.
         </p>',
       'uz' => '
         <p style="text-align: justify; font-size: 20px;">
-            Meros International Institute — bugungi global sog‘liqni saqlash muhitida zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan tibbiyot mutaxassislarini qo‘llab-quvvatlashga qaratilgan, sog‘liqni saqlash sohasidagi ta’lim va kasbiy rivojlanish institutidir. <br>
-            Strategik xalqaro hamkorlik va innovatsion ta’lim texnologiyalari orqali biz shifokorlar, hamshiralar, farmatsevtlar, talabalar va sog‘liqni saqlash tashkilotlari uchun yuqori sifatli o‘quv dasturlari, tibbiy ingliz tili kurslari va kasbiy rivojlanish imkoniyatlarini taqdim etamiz.
-        </p>',
+            Meros International Institute — O‘zbekistondagi tibbiyot sohasi mutaxassislari uchun Medical English, OET tayyorgarligi va professional rivojlanishga ixtisoslashgan birinchi xalqaro ta’lim institutidir. Strategik xalqaro hamkorliklar va innovatsion ta’lim texnologiyalari orqali biz shifokorlar, hamshiralar, farmatsevtlar, talabalar hamda sog‘liqni saqlash tashkilotlarini zamonaviy global sog‘liqni saqlash tizimida muvaffaqiyatli faoliyat yuritish uchun zarur bo‘lgan bilim, ko‘nikma va til kompetensiyalari bilan ta’minlaymiz.
+            </p>',
    ],
    'about_content' => [
       'ru' => '
