@@ -17,6 +17,14 @@ function translate($key)
    $lang = Yii::$app->language;
    return Yii::$app->params[$key][$lang];
 }
+$homeT = static function ($key) use ($params, $lang) {
+   return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
+$homeTList = static function ($key) use ($params, $lang) {
+   return $params[$key][$lang] ?? $params[$key]['en'] ?? [];
+};
+$b2bHomeCourses = array_slice($homeTList('b2b_library_courses'), 0, 3);
+$b2bHomeUrl = Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']);
 
 ?>
 <!-- Homepage Slider -->
@@ -85,6 +93,38 @@ function translate($key)
             </div>
             <div class="meros-about-card">
                <?= translate('about_content_index') ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="meros-section meros-b2b-home reveal-section">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5">
+                    <span class="meros-kicker"><?= Html::encode($homeT('b2b_home_kicker')) ?></span>
+                    <h2><?= Html::encode($homeT('b2b_home_title')) ?></h2>
+                    <p><?= Html::encode($homeT('b2b_home_text')) ?></p>
+                    <a href="<?= Html::encode($b2bHomeUrl) ?>" class="btn btn-primary btn-lg meros-primary-btn"><?= Html::encode($homeT('b2b_home_button')) ?></a>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <?php foreach ($b2bHomeCourses as $item): ?>
+                            <?php $courseImage = $base . '/' . ltrim($item['image'] ?? 'images/meros_hospital.jpg', '/'); ?>
+                            <div class="col-md-4">
+                                <article class="meros-news-card h-100">
+                                    <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
+                                        <img src="<?= Html::encode($courseImage) ?>" alt="<?= Html::encode($item['title']) ?>" loading="lazy">
+                                        <span><?= Html::encode($item['level']) ?></span>
+                                    </a>
+                                    <div class="meros-news-body">
+                                        <h3><a href="<?= Html::encode($b2bHomeUrl) ?>"><?= Html::encode($item['title']) ?></a></h3>
+                                        <p><?= Html::encode($item['hours']) ?></p>
+                                    </div>
+                                </article>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

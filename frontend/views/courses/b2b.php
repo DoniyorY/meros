@@ -34,6 +34,7 @@ $challengeCards = $tList('b2b_challenge_cards');
 $solutionCards = $tList('b2b_solution_cards');
 $roleItems = $tList('b2b_roles');
 $faqItems = $tList('b2b_faq_items');
+$caseSteps = $tList('b2b_case_steps');
 
 $this->registerJs(<<<JS
 const exploreProgrammeButton = document.querySelector('[data-b2b-scroll="programme"]');
@@ -77,6 +78,11 @@ JS, \yii\web\View::POS_READY);
    .meros-b2b-table td:last-child, .meros-b2b-table th:last-child { border-right:1px solid var(--meros-border); border-radius:0 18px 18px 0; }
    .meros-b2b-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
    .meros-b2b-cta h2, .meros-b2b-cta p, .meros-b2b-cta .meros-kicker { color:#fff; }
+   .meros-b2b-case { background:linear-gradient(135deg,rgba(236,252,253,.95),#fff); border:1px solid var(--meros-border); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(28px,5vw,58px); position:relative; }
+   .meros-b2b-case:before { background:radial-gradient(circle, rgba(75,192,202,.22), transparent 65%); content:''; height:360px; position:absolute; right:-130px; top:-150px; width:360px; }
+   .meros-b2b-case > * { position:relative; z-index:1; }
+   .meros-b2b-case-step { background:#fff; border:1px solid var(--meros-border); border-radius:24px; height:100%; padding:24px; }
+   .meros-b2b-case-step h3 { color:var(--meros-primary-dark); font-size:22px; }
 </style>
 
 <section id="course-banner" class="meros-course-hero meros-b2b-hero reveal-section" aria-label="<?= Html::encode($t('b2b_hero_aria')) ?>">
@@ -139,6 +145,27 @@ JS, \yii\web\View::POS_READY);
             <?php foreach ($solutionCards as $card): ?>
                <div class="col-lg-3 col-md-6"><div class="meros-b2b-card"><h3><?= Html::encode($card['title']) ?></h3><p><?= Html::encode($card['text']) ?></p></div></div>
             <?php endforeach; ?>
+         </div>
+      </div>
+   </section>
+
+   <section class="meros-section reveal-section">
+      <div class="container">
+         <div class="meros-b2b-case">
+            <div class="row g-4 align-items-center mb-4">
+               <div class="col-lg-7">
+                  <span class="meros-kicker"><?= Html::encode($t('b2b_case_kicker')) ?></span>
+                  <h2><?= Html::encode($t('b2b_case_title')) ?></h2>
+               </div>
+               <div class="col-lg-5">
+                  <p><?= Html::encode($t('b2b_case_text')) ?></p>
+               </div>
+            </div>
+            <div class="row g-4">
+               <?php foreach ($caseSteps as $step): ?>
+                  <div class="col-lg-4"><div class="meros-b2b-case-step"><h3><?= Html::encode($step['title']) ?></h3><p class="mb-0"><?= Html::encode($step['text']) ?></p></div></div>
+               <?php endforeach; ?>
+            </div>
          </div>
       </div>
    </section>

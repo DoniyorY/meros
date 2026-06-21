@@ -635,19 +635,19 @@ return [
    ],
    
    'b2b_meta_description' => [
-      'ru' => 'Институциональные программы медицинского английского Meros для университетов, медицинских вузов и организаций здравоохранения',
-      'en' => 'Meros institutional Medical English programmes for universities, medical schools and healthcare organisations',
-      'uz' => 'Universitetlar, tibbiyot oliygohlari va sog‘liqni saqlash tashkilotlari uchun Meros institutsional tibbiy ingliz tili dasturlari',
+      'ru' => 'Материалы и курсы медицинского английского Meros для медицинских университетов и школ на примере Самаркандского государственного медицинского университета',
+      'en' => 'Meros Medical English materials and courses for medical universities and schools, modelled for institutions such as Samarkand State Medical University',
+      'uz' => 'Samarqand davlat tibbiyot universiteti kabi muassasalar uchun Meros tibbiy ingliz tili materiallari va kurslari',
    ],
    'b2b_meta_keywords' => [
-      'ru' => 'Meros, медицинский английский, B2B, университеты, английский для здравоохранения',
-      'en' => 'Meros, Medical English, B2B, universities, healthcare English',
-      'uz' => 'Meros, tibbiy ingliz tili, B2B, universitetlar, sog‘liqni saqlash ingliz tili',
+      'ru' => 'Meros, медицинский английский, медицинские университеты, Самаркандский медицинский университет, английский для медицины',
+      'en' => 'Meros, Medical English, medical universities, Samarkand State Medical University, healthcare English',
+      'uz' => 'Meros, tibbiy ingliz tili, tibbiyot universitetlari, Samarqand davlat tibbiyot universiteti',
    ],
    'b2b_page_title' => [
-      'ru' => 'Медицинский английский для организаций',
-      'en' => 'Medical English for Institutions',
-      'uz' => 'Tashkilotlar uchun tibbiy ingliz tili',
+      'ru' => 'Медицинский английский для университетов и школ',
+      'en' => 'Medical English for Universities and Schools',
+      'uz' => 'Universitetlar va maktablar uchun tibbiy ingliz tili',
    ],
    'b2b_hero_aria' => [
       'ru' => 'Баннер институционального курса',
@@ -660,24 +660,24 @@ return [
       'uz' => 'Meros',
    ],
    'b2b_hero_kicker' => [
-      'ru' => 'Для университетов, медицинских вузов и команд здравоохранения',
-      'en' => 'For universities, medical schools and healthcare teams',
-      'uz' => 'Universitetlar, tibbiyot oliygohlari va sog‘liqni saqlash jamoalari uchun',
+      'ru' => 'University materials для медицинских вузов и школ',
+      'en' => 'University materials for medical universities and schools',
+      'uz' => 'Tibbiyot universitetlari va maktablari uchun university materials',
    ],
    'b2b_hero_title' => [
-      'ru' => 'Институциональный медицинский английский, который масштабируется вместе с вашими студентами',
-      'en' => 'Institutional Medical English that scales with your learners',
-      'uz' => 'Talabalaringiz bilan birga kengayadigan institutsional tibbiy ingliz tili',
+      'ru' => 'Медицинский английский для учебных программ медицинских университетов',
+      'en' => 'Medical English for medical university curricula',
+      'uz' => 'Tibbiyot universitetlari o‘quv dasturlari uchun tibbiy ingliz tili',
    ],
    'b2b_hero_text' => [
-      'ru' => 'Предоставьте каждой группе структурированный доступ к медицинскому английскому, практическим заданиям по коммуникации, прозрачному прогрессу и брендированной учебной среде.',
-      'en' => 'Give every cohort structured access to healthcare-focused English, practical communication tasks, progress visibility, and a branded learning environment.',
-      'uz' => 'Har bir guruhga sog‘liqni saqlashga yo‘naltirilgan ingliz tili, amaliy muloqot topshiriqlari, progress ko‘rinishi va brendlangan o‘quv muhitidan tartibli foydalanish imkonini bering.',
+      'ru' => 'Для таких учреждений, как Самаркандский государственный медицинский университет, страница объединяет готовые курсы, клинические сценарии, академический английский и понятную модель внедрения для факультетов.',
+      'en' => 'For institutions such as Samarkand State Medical University, this page brings together ready-made courses, clinical scenarios, academic English, and a clear rollout model for faculties.',
+      'uz' => 'Samarqand davlat tibbiyot universiteti kabi muassasalar uchun tayyor kurslar, klinik vaziyatlar, akademik ingliz tili va fakultetlar bo‘yicha joriy etish modeli.',
    ],
    'b2b_email_subject' => [
-      'ru' => 'Демо институционального медицинского английского',
-      'en' => 'Institutional Medical English Demo',
-      'uz' => 'Institutsional tibbiy ingliz tili demosi',
+      'ru' => 'Демо Medical English для медицинского университета',
+      'en' => 'Medical University English Demo',
+      'uz' => 'Tibbiyot universiteti uchun ingliz tili demosi',
    ],
    'b2b_book_consultation' => [
       'ru' => 'Записаться на консультацию',
@@ -690,19 +690,19 @@ return [
       'uz' => 'Dasturni ko‘rish',
    ],
    'b2b_platform_kicker' => [
-      'ru' => 'Одна платформа',
-      'en' => 'One platform',
-      'uz' => 'Yagona platforma',
+      'ru' => 'Модель для вуза',
+      'en' => 'University model',
+      'uz' => 'Universitet modeli',
    ],
    'b2b_platform_title' => [
-      'ru' => 'Создано для руководителей программ, преподавателей и студентов',
-      'en' => 'Designed for programme directors, teachers and students',
-      'uz' => 'Dastur rahbarlari, o‘qituvchilar va talabalar uchun yaratilgan',
+      'ru' => 'Подходит для деканатов, кафедр и студенческих групп',
+      'en' => 'Designed for dean’s offices, departments and student cohorts',
+      'uz' => 'Dekanliklar, kafedralar va talabalar guruhlari uchun',
    ],
    'b2b_platform_text' => [
-      'ru' => 'Управляйте группами, назначайте специализированные материалы, поддерживайте аудиторное обучение и отслеживайте результаты в едином онлайн-пространстве.',
-      'en' => 'Manage cohorts, assign specialist materials, support classroom delivery, and track outcomes from a single online learning space.',
-      'uz' => 'Guruhlarni boshqaring, maxsus materiallarni biriktiring, dars jarayonini qo‘llab-quvvatlang va natijalarni yagona onlayn o‘quv maydonida kuzating.',
+      'ru' => 'Назначайте материалы по факультетам — лечебное дело, сестринское дело, фармация, радиология — и поддерживайте аудиторную, смешанную и самостоятельную работу студентов.',
+      'en' => 'Assign materials by faculty — medicine, nursing, pharmacy, radiology — and support classroom, blended and self-study pathways for students.',
+      'uz' => 'Davolash ishi, hamshiralik, farmatsiya va radiologiya yo‘nalishlari bo‘yicha materiallarni biriktiring.',
    ],
    'b2b_stat_hours' => [
       'ru' => 'часов',
@@ -904,6 +904,60 @@ return [
          ['q' => 'Bu turli darajadagi guruhlar uchun mosmi?', 'a' => 'Ha. Kontent tuzilmasi tibbiyotning turli ixtisosliklarida boshlang‘ich, o‘rta va yuqori darajadagi o‘quvchilarni qo‘llab-quvvatlaydi.'],
          ['q' => 'Qanday boshlaymiz?', 'a' => 'Konsultatsiyaga yoziling, kirish modelini tanlang va jamoamiz platformani sozlash hamda birinchi guruhni ulashga yordam beradi.'],
       ],
+   ],
+
+
+   'b2b_case_kicker' => [
+      'ru' => 'Пример внедрения',
+      'en' => 'Implementation example',
+      'uz' => 'Joriy etish namunasi',
+   ],
+   'b2b_case_title' => [
+      'ru' => 'Как это может работать для Самаркандского государственного медицинского университета',
+      'en' => 'How it can work for Samarkand State Medical University',
+      'uz' => 'Samarqand davlat tibbiyot universitetida bu qanday ishlashi mumkin',
+   ],
+   'b2b_case_text' => [
+      'ru' => 'Страница university-materials/medical-english-courses-for-universities-and-schools может презентовать готовую учебную витрину для медицинского вуза: от диагностирования уровня до модулей по клинической коммуникации, терминологии и академическому письму.',
+      'en' => 'The university-materials/medical-english-courses-for-universities-and-schools page can present a ready learning showcase for a medical university: from level diagnostics to modules in clinical communication, terminology and academic writing.',
+      'uz' => 'university-materials/medical-english-courses-for-universities-and-schools sahifasi tibbiyot universiteti uchun tayyor o‘quv vitrinasi bo‘lib xizmat qiladi: daraja diagnostikasidan klinik muloqot, terminologiya va akademik yozuv modullarigacha.',
+   ],
+   'b2b_case_steps' => [
+      'ru' => [
+         ['title' => '1. Карта факультетов', 'text' => 'Выбираем траектории для лечебного дела, педиатрии, стоматологии, сестринского дела, фармации и радиологии.'],
+         ['title' => '2. Учебные группы', 'text' => 'Разделяем студентов по уровню A2-C1 и выдаём материалы для семестров, элективов или интенсивов.'],
+         ['title' => '3. Практика и контроль', 'text' => 'Добавляем клинические диалоги, задания преподавателя, отчётность и рекомендации для следующего этапа.'],
+      ],
+      'en' => [
+         ['title' => '1. Faculty map', 'text' => 'Select pathways for medicine, paediatrics, dentistry, nursing, pharmacy and radiology.'],
+         ['title' => '2. Student cohorts', 'text' => 'Group learners by A2-C1 level and assign materials for semesters, electives or intensive courses.'],
+         ['title' => '3. Practice and control', 'text' => 'Add clinical dialogues, teacher tasks, reporting and recommendations for the next stage.'],
+      ],
+      'uz' => [
+         ['title' => '1. Fakultet xaritasi', 'text' => 'Davolash ishi, pediatriya, stomatologiya, hamshiralik, farmatsiya va radiologiya yo‘nalishlarini tanlaymiz.'],
+         ['title' => '2. Talaba guruhlari', 'text' => 'Talabalarni A2-C1 darajalariga ajratib, semestr, elektiv yoki intensiv kurs materiallarini beramiz.'],
+         ['title' => '3. Amaliyot va nazorat', 'text' => 'Klinik dialoglar, o‘qituvchi topshiriqlari, hisobot va keyingi bosqich tavsiyalarini qo‘shamiz.'],
+      ],
+   ],
+   'b2b_home_kicker' => [
+      'ru' => 'University materials',
+      'en' => 'University materials',
+      'uz' => 'University materials',
+   ],
+   'b2b_home_title' => [
+      'ru' => 'Медицинский английский для университетов и школ',
+      'en' => 'Medical English courses for universities and schools',
+      'uz' => 'Universitetlar va maktablar uchun tibbiy ingliz tili kurslari',
+   ],
+   'b2b_home_text' => [
+      'ru' => 'Отдельный блок для главной страницы ведёт к B2B-странице и показывает ценность для медицинских вузов: готовая библиотека курсов, сценарии для клинической практики и модель запуска на примере Самаркандского государственного медицинского университета.',
+      'en' => 'A homepage block points to the B2B page and highlights value for medical universities: a ready course library, clinical-practice scenarios and a rollout model inspired by Samarkand State Medical University.',
+      'uz' => 'Bosh sahifadagi blok B2B sahifaga olib boradi va tibbiyot universitetlari uchun qiymatni ko‘rsatadi: tayyor kurslar kutubxonasi, klinik amaliyot ssenariylari va Samarqand davlat tibbiyot universiteti misolidagi joriy etish modeli.',
+   ],
+   'b2b_home_button' => [
+      'ru' => 'Открыть страницу для вузов',
+      'en' => 'Open university page',
+      'uz' => 'Universitetlar sahifasini ochish',
    ],
 
 ];

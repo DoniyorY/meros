@@ -10,22 +10,42 @@ use common\models\SubscriptionPlans;
 use common\models\User;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class CoursesController extends Controller
 {
    
    public function actionIndex($category, $slug)
    {
+      if ($category === 'healthcare-employers' && $slug === 'hospitals') {
+         return $this->actionHospitals($category, $slug);
+      }
+
       $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
-      if ($courses === null) {
-         throw new \yii\web\NotFoundHttpException('Курс не найден.');
+      if ($category === null || $courses === null) {
+         throw new NotFoundHttpException('Курс не найден.');
       }
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       $view = (int)$courses->page_type === 0 ? 'b2b' : 'no_subs';
       return $this->render($view, [
          'courses' => $courses,
          'subs' => $subs
+      ]);
+   }
+
+   public function actionHospitals($category, $course)
+   {
+      $category = CourseCategory::findOne(['slug' => $category]);
+      $courses = Courses::findOne(['slug' => $course]);
+      if ($category === null || $courses === null) {
+         throw new NotFoundHttpException('Курс не найден.');
+      }
+
+      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      return $this->render('hospitals', [
+         'courses' => $courses,
+         'subs' => $subs,
       ]);
    }
    
