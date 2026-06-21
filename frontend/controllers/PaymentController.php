@@ -395,6 +395,11 @@ final class PaymentController extends Controller
 
             $transaction->commit();
 
+            $billing = Billing::findOne((int)$data['merchant_trans_id']);
+            if ($billing !== null) {
+                ApiController::sendZapierOrderPaidWebhook($billing);
+            }
+
             return $this->clickResponse($data, 0, 'Success', [
                 'merchant_confirm_id' => (int)$payment->id,
             ]);
