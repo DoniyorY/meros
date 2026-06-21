@@ -25,6 +25,32 @@ $homeTList = static function ($key) use ($params, $lang) {
 };
 $b2bHomeCourses = array_slice($homeTList('b2b_library_courses'), 0, 3);
 $b2bHomeUrl = Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']);
+$hospitalHomeUrl = Url::to(['courses/index', 'category' => 'healthcare-employers', 'slug' => 'hospitals']);
+$hospitalHomeCopy = [
+   'kicker' => [
+      'ru' => 'Healthcare employers',
+      'en' => 'Healthcare employers',
+      'uz' => 'Healthcare employers',
+   ],
+   'title' => [
+      'ru' => 'Медицинский английский для больниц и клиник',
+      'en' => 'Medical English for hospitals and clinics',
+      'uz' => 'Shifoxonalar va klinikalar uchun tibbiy ingliz tili',
+   ],
+   'text' => [
+      'ru' => 'Готовая B2B-программа помогает врачам, медсёстрам, регистратуре и сервисным командам увереннее работать с международными пациентами: консультации, процедуры, запись, навигация и aftercare.',
+      'en' => 'A ready B2B programme helps doctors, nurses, reception and service teams work more confidently with international patients: consultations, procedures, booking, navigation and aftercare.',
+      'uz' => 'Tayyor B2B dastur shifokorlar, hamshiralar, registratura va servis jamoalariga xalqaro bemorlar bilan ishonchli ishlashda yordam beradi: konsultatsiya, protsedura, yozilish, yo‘naltirish va aftercare.',
+   ],
+   'button' => [
+      'ru' => 'Подробнее',
+      'en' => 'Learn more',
+      'uz' => 'Batafsil',
+   ],
+];
+$hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
+   return $hospitalHomeCopy[$key][$lang] ?? $hospitalHomeCopy[$key]['en'] ?? $key;
+};
 
 ?>
 <!-- Homepage Slider -->
@@ -123,6 +149,24 @@ $b2bHomeUrl = Url::to(['courses/index', 'category' => 'university-materials', 's
                                 </article>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="meros-section meros-hospital-home reveal-section">
+        <div class="container">
+            <div class="meros-about-card">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-8">
+                        <span class="meros-kicker"><?= Html::encode($hospitalHomeT('kicker')) ?></span>
+                        <h2><?= Html::encode($hospitalHomeT('title')) ?></h2>
+                        <p class="mb-lg-0"><?= Html::encode($hospitalHomeT('text')) ?></p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="<?= Html::encode($hospitalHomeUrl) ?>" class="btn btn-primary btn-lg meros-primary-btn"><?= Html::encode($hospitalHomeT('button')) ?></a>
                     </div>
                 </div>
             </div>
