@@ -416,6 +416,8 @@ final class PaymeController extends Controller
          
          $dbTransaction->commit();
          
+         ApiController::sendZapierOrderPaidWebhook($billing);
+
          return $this->performResponse($transaction);
       } catch (Throwable $e) {
          if ($dbTransaction->isActive) {
