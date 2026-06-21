@@ -940,24 +940,24 @@ return [
       ],
    ],
    'b2b_home_kicker' => [
-      'ru' => 'University materials',
-      'en' => 'University materials',
-      'uz' => 'University materials',
+      'ru' => 'Для студентов медицинских вузов',
+      'en' => 'For medical university students',
+      'uz' => 'Tibbiyot universiteti talabalari uchun',
    ],
    'b2b_home_title' => [
-      'ru' => 'Медицинский английский для университетов и школ',
-      'en' => 'Medical English courses for universities and schools',
-      'uz' => 'Universitetlar va maktablar uchun tibbiy ingliz tili kurslari',
+      'ru' => 'Прокачайте медицинский английский до практики, экзаменов и международной карьеры',
+      'en' => 'Build Medical English for practice, exams and an international career',
+      'uz' => 'Amaliyot, imtihonlar va xalqaro karyera uchun tibbiy ingliz tilini rivojlantiring',
    ],
    'b2b_home_text' => [
-      'ru' => 'Отдельный блок для главной страницы ведёт к B2B-странице и показывает ценность для медицинских вузов: готовая библиотека курсов, сценарии для клинической практики и модель запуска на примере Самаркандского государственного медицинского университета.',
-      'en' => 'A homepage block points to the B2B page and highlights value for medical universities: a ready course library, clinical-practice scenarios and a rollout model inspired by Samarkand State Medical University.',
-      'uz' => 'Bosh sahifadagi blok B2B sahifaga olib boradi va tibbiyot universitetlari uchun qiymatni ko‘rsatadi: tayyor kurslar kutubxonasi, klinik amaliyot ssenariylari va Samarqand davlat tibbiyot universiteti misolidagi joriy etish modeli.',
+      'ru' => 'Курсы для студентов-медиков помогают говорить с пациентами, разбирать клинические случаи, читать научные статьи и готовиться к IELTS/OET без отрыва от учёбы в вузе.',
+      'en' => 'Courses for medical students help you speak with patients, discuss clinical cases, read research articles and prepare for IELTS/OET while studying at university.',
+      'uz' => 'Tibbiyot talabalari uchun kurslar bemorlar bilan gaplashish, klinik holatlarni muhokama qilish, ilmiy maqolalarni o‘qish va IELTS/OETga tayyorlanishga yordam beradi.',
    ],
    'b2b_home_button' => [
-      'ru' => 'Открыть страницу для вузов',
-      'en' => 'Open university page',
-      'uz' => 'Universitetlar sahifasini ochish',
+      'ru' => 'Выбрать курс',
+      'en' => 'Choose a course',
+      'uz' => 'Kurs tanlash',
    ],
 
 ];

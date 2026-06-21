@@ -20,10 +20,11 @@ function translate($key)
 $homeT = static function ($key) use ($params, $lang) {
    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
 };
-$homeTList = static function ($key) use ($params, $lang) {
-   return $params[$key][$lang] ?? $params[$key]['en'] ?? [];
-};
-$b2bHomeCourses = array_slice($homeTList('b2b_library_courses'), 0, 3);
+$b2bStudentBenefits = [
+   ['icon' => 'fa-stethoscope', 'text' => ['ru' => 'Диалоги с пациентами и клиническая терминология', 'en' => 'Patient dialogues and clinical terminology', 'uz' => 'Bemorlar bilan dialoglar va klinik terminologiya']],
+   ['icon' => 'fa-graduation-cap', 'text' => ['ru' => 'Академическое чтение, презентации и статьи', 'en' => 'Academic reading, presentations and articles', 'uz' => 'Akademik o‘qish, taqdimotlar va maqolalar']],
+   ['icon' => 'fa-certificate', 'text' => ['ru' => 'Подготовка к IELTS/OET и международной учёбе', 'en' => 'IELTS/OET and international study preparation', 'uz' => 'IELTS/OET va xalqaro o‘qishga tayyorgarlik']],
+];
 $b2bHomeUrl = Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']);
 $hospitalHomeUrl = Url::to(['courses/index', 'category' => 'healthcare-employers', 'slug' => 'hospitals']);
 $hospitalHomeCopy = [
@@ -133,22 +134,20 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
                     <a href="<?= Html::encode($b2bHomeUrl) ?>" class="btn btn-primary btn-lg meros-primary-btn"><?= Html::encode($homeT('b2b_home_button')) ?></a>
                 </div>
                 <div class="col-lg-7">
-                    <div class="row g-4">
-                        <?php foreach ($b2bHomeCourses as $item): ?>
-                            <?php $courseImage = $base . '/' . ltrim($item['image'] ?? 'images/meros_hospital.jpg', '/'); ?>
-                            <div class="col-md-4">
-                                <article class="meros-news-card h-100">
-                                    <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
-                                        <img src="<?= Html::encode($courseImage) ?>" alt="<?= Html::encode($item['title']) ?>" loading="lazy">
-                                        <span><?= Html::encode($item['level']) ?></span>
-                                    </a>
-                                    <div class="meros-news-body">
-                                        <h3><a href="<?= Html::encode($b2bHomeUrl) ?>"><?= Html::encode($item['title']) ?></a></h3>
-                                        <p><?= Html::encode($item['hours']) ?></p>
+                    <div class="meros-news-card overflow-hidden">
+                        <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
+                            <img src="<?= Html::encode($base . '/img/students.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
+                            <span>Medical English</span>
+                        </a>
+                        <div class="meros-news-body">
+                            <div class="row g-3">
+                                <?php foreach ($b2bStudentBenefits as $benefit): ?>
+                                    <div class="col-md-4">
+                                        <p class="mb-0"><span class="fa <?= Html::encode($benefit['icon']) ?> text-primary me-2"></span><?= Html::encode($benefit['text'][$lang] ?? $benefit['text']['en']) ?></p>
                                     </div>
-                                </article>
+                                <?php endforeach; ?>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
