@@ -6,21 +6,13 @@ return [
    'senderName' => 'Meros Edu mailer',
    'user.passwordResetTokenExpire' => 3600,
    'user.passwordMinLength' => 6,
-   'click' => [
-      // Храните эти значения только в локальном конфиге или переменных окружения.
-      'merchant_id' => 'YOUR_MERCHANT_ID',
-      'service_id' => 'YOUR_SERVICE_ID',
-      'secret_key' => 'YOUR_SECRET_KEY',
-      'merchant_user_id'=>'123',
-   ],
    'payme' => [
       'merchantId' => getenv('PAYME_MERCHANT_ID') ?: '',
       'login' => getenv('PAYME_LOGIN') ?: '',
-      'key' => getenv('PAYME_KEY') ?: '',
+      'key' => getenv('oEQzmq&8@iNy20jv6amMsswd&mAHspBv#mUZ') ?: '',
       
-      'checkoutUrl' => YII_ENV_PROD
-         ? 'https://checkout.paycom.uz'
-         : 'https://test.paycom.uz',
+      'checkoutUrl' => 'https://test.paycom.uz', //'https://checkout.paycom.uz'
+      
       
       // false: billing.amount хранится в сумах.
       // true: billing.amount уже хранится в тийинах.

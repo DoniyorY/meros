@@ -35,7 +35,8 @@ trait PaymePaymentActions
             ->where([
                 'id' => $id,
                 'user_id' => Yii::$app->user->id,
-            ])
+               
+            ])->orderBy(['id' => SORT_DESC])
             ->one();
 
         if ($billing === null) {
@@ -44,9 +45,7 @@ trait PaymePaymentActions
             );
         }
 
-        if (
-            (int) $billing->payment_status
-            === Billing::STATUS_SUCCESS
+        if ((int) $billing->payment_status === Billing::STATUS_SUCCESS
         ) {
             return $this->redirect([
                 'payme-result',

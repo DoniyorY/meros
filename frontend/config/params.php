@@ -1,6 +1,6 @@
 <?php
 return [
-   'zapierOrderPaidWebhookUrl' => '',
+   'zapierOrderPaidWebhookUrl' => 'https://hooks.zapier.com/hooks/catch/18066877/43p3esw/',
    'campus_id' => '',
    
    'phone' => '+998 (55) 705 08 08',
