@@ -52,7 +52,13 @@ class CoursesController extends Controller
    public function actionGetPlan($id)
    {
       $subs = SubscriptionPlans::findOne($id);
-      
+      $cleaning = Billing::find()->where(['user_id'=>null])->andWhere(['status'=>0])->all();
+      $now = time();
+      foreach ($cleaning as $item) {
+         if ($now > $item->created_at + 86400) {
+            $item->delete();
+         }
+      }
       if (!$subs) {
          throw new \yii\web\NotFoundHttpException();
       }
