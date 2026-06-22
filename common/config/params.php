@@ -7,9 +7,9 @@ return [
    'user.passwordResetTokenExpire' => 3600,
    'user.passwordMinLength' => 6,
    'payme' => [
-      'merchantId' => getenv('PAYME_MERCHANT_ID') ?: '',
-      'login' => getenv('PAYME_LOGIN') ?: '',
-      'key' => getenv('oEQzmq&8@iNy20jv6amMsswd&mAHspBv#mUZ') ?: '',
+      'merchantId' => '6a353561395419e77320e0dd',
+      //'login' => getenv('PAYME_LOGIN') ?: '',
+      'key' => 'oEQzmq&8@iNy20jv6amMsswd&mAHspBv#mUZ',
       
       'checkoutUrl' => 'https://test.paycom.uz', //'https://checkout.paycom.uz'
       
