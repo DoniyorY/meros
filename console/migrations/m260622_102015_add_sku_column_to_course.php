@@ -13,7 +13,6 @@ class m260622_102015_add_sku_column_to_course extends Migration
       $this->addColumn('courses', 'sku_id', $this->string());
       $courses = Courses::find()->where(['page_type' => 1])->orderBy(['id' => SORT_ASC])->all();
       $i = 001;
-      
       foreach ($courses as $item) {
          $item->sku_id = sprintf('SKU-%03d', $i);
          $item->save(false);

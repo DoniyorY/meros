@@ -136,7 +136,7 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
                 <div class="col-lg-7">
                     <div class="meros-news-card overflow-hidden">
                         <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
-                            <img src="<?= Html::encode($base . '/img/students.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
+                            <img src="<?= Html::encode($base . '/images/med_institute.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
                             <span>Medical English</span>
                         </a>
                         <div class="meros-news-body">
