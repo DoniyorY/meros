@@ -25,6 +25,7 @@ use yii\helpers\Inflector;
  * @property int $created_at
  * @property int $updated_at
  * @property int|null $status
+ * @property string|null $sku_id
  * @property int $user_id
  * @property int|null $mentor_id
  * @property string|null $preview_video_link
