@@ -223,9 +223,8 @@ final class PaymeController extends Controller
       $paymeId = $this->requiredPaymeId($params, 'id');
       $paymeTime = $this->requiredPositiveInt($params, 'time');
       $amount = $this->requiredPositiveInt($params, 'amount');
-      $amount *= 100;
       $account = $this->requiredArray($params, 'account');
-      $billingId = $account['order_id'];//$this->extractBillingId($account);
+      $billingId = $this->extractBillingId($account);
       
       $db = Yii::$app->db;
       $dbTransaction = $db->beginTransaction();
@@ -245,7 +244,7 @@ final class PaymeController extends Controller
             
             if (
                $billing === null
-               || (int) $existing['billing_id'] !== (int) $billing->id
+               || (string) $existing['billing_id'] !== (string) $billing->id
                || (int) $existing['amount'] !== $amount
                || (int) $existing['payme_time'] !== $paymeTime
             ) {
@@ -264,7 +263,7 @@ final class PaymeController extends Controller
             return $this->createResponse($existing);
          }
          
-         $billing = $this->lockBillingById((int)$billingId);
+         $billing = $this->lockBillingById($billingId);
          $this->assertBillingCanBePaid($billing, $amount);
          
          $activeTransaction = $db->createCommand(
@@ -330,6 +329,7 @@ final class PaymeController extends Controller
       }
    }
    
+   
    private function performTransaction(array $params): array
    {
       $paymeId = $this->requiredPaymeId($params, 'id');
@@ -375,7 +375,7 @@ final class PaymeController extends Controller
             >= self::TRANSACTION_TIMEOUT_MS
          ) {
             $billing = $this->lockBillingById(
-               (int) $transaction['billing_id']
+               $transaction['billing_id']
             );
             
             $db->createCommand()->update('{{%payme_transaction}}', [
@@ -402,7 +402,7 @@ final class PaymeController extends Controller
          }
          
          $billing = $this->lockBillingById(
-            (int) $transaction['billing_id']
+            $transaction['billing_id']
          );
          
          if ($billing === null) {
@@ -507,7 +507,7 @@ final class PaymeController extends Controller
          $cancelTime = $this->nowMs();
          
          $billing = $this->lockBillingById(
-            (int) $transaction['billing_id']
+            $transaction['billing_id']
          );
          
          $db->createCommand()->update('{{%payme_transaction}}', [
@@ -940,7 +940,7 @@ final class PaymeController extends Controller
       );
    }
    
-   private function lockBillingById(int $billingId): ?Billing
+   private function lockBillingById(int|string $billingId): ?Billing
    {
       $row = Yii::$app->db->createCommand(
          'SELECT [[id]]
@@ -1010,17 +1010,14 @@ final class PaymeController extends Controller
       ];
    }
    
-   private function extractBillingId(array $account): int
+   private function extractBillingId(array $account): int|string
    {
       $billingId = $account['billing_id'] ?? null;
       
-      if (
-         !is_int($billingId)
-         && !(
-            is_string($billingId)
-            && ctype_digit($billingId)
-         )
-      ) {
+      // Payme может вернуть account-поле как JSON number или string.
+      // Значение не приводим принудительно к int: Yii/PDO нормально
+      // работают и с 123, и с "123".
+      if (!is_int($billingId) && !is_string($billingId)) {
          throw new PaymeRpcException(
             -31050,
             $this->message(
@@ -1032,9 +1029,16 @@ final class PaymeController extends Controller
          );
       }
       
-      $billingId = (int) $billingId;
+      if (is_string($billingId)) {
+         $billingId = trim($billingId);
+      }
       
-      if ($billingId <= 0) {
+      // Разрешаем только положительный целочисленный ID,
+      // сохраняя исходный тип значения.
+      if (
+         $billingId === ''
+         || preg_match('/^[1-9]\\d*$/', (string) $billingId) !== 1
+      ) {
          throw new PaymeRpcException(
             -31050,
             $this->message(
