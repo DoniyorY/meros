@@ -5,26 +5,23 @@ declare(strict_types=1);
 namespace frontend\controllers;
 
 use common\models\Billing;
+use common\models\PaymeLog;
+use common\models\PaymeTransaction;
 use common\models\UserSubscriptions;
 use JsonException;
 use RuntimeException;
 use Throwable;
 use Yii;
+use yii\db\IntegrityException;
 use yii\web\Controller;
 use yii\web\Response;
 
 /**
- * Endpoint Merchant API Payme:
+ * Merchant API Payme endpoint:
  * POST https://example.uz/payme/webhook
  */
 final class PaymeController extends Controller
 {
-   private const STATE_CREATED = 1;
-   private const STATE_PERFORMED = 2;
-   private const STATE_CANCELLED = -1;
-   private const STATE_CANCELLED_AFTER_PERFORM = -2;
-   
-   private const CANCEL_REASON_TIMEOUT = 4;
    private const TRANSACTION_TIMEOUT_MS = 43_200_000; // 12 часов
    
    public function beforeAction($action): bool
@@ -34,14 +31,6 @@ final class PaymeController extends Controller
       }
       
       return parent::beforeAction($action);
-   }
-   
-   public function actionGetInfo()
-   {
-      $log = Yii::$app->db->createCommand('Select * from {{%payme_log}} order by id desc')->queryAll();
-      echo "<pre>";
-      print_r($log);
-      die();
    }
    
    public function actionWebhook(): array
@@ -71,7 +60,12 @@ final class PaymeController extends Controller
          }
          
          try {
-            $payload = json_decode($rawBody, true, 512, JSON_THROW_ON_ERROR);
+            $payload = json_decode(
+               $rawBody,
+               true,
+               512,
+               JSON_THROW_ON_ERROR
+            );
          } catch (JsonException) {
             throw new PaymeRpcException(
                -32700,
@@ -99,7 +93,8 @@ final class PaymeController extends Controller
             ? $payload['method']
             : null;
          
-        /* $authorized = $this->isAllowedIp() && $this->isAuthorized();
+         /*$authorized = $this->isAllowedIp()
+            && $this->isAuthorized();
          
          if (!$authorized) {
             throw new PaymeRpcException(
@@ -128,13 +123,11 @@ final class PaymeController extends Controller
             );
          }
          
-         $result = $this->dispatch(
-            $payload['method'],
-            $payload['params']
-         );
-         
          $response = [
-            'result' => $result,
+            'result' => $this->dispatch(
+               $payload['method'],
+               $payload['params']
+            ),
             'id' => $rpcId,
          ];
       } catch (PaymeRpcException $e) {
@@ -152,7 +145,6 @@ final class PaymeController extends Controller
             'id' => $rpcId,
          ];
       } catch (Throwable $e) {
-         
          Yii::error([
             'message' => $e->getMessage(),
             'trace' => $e->getTraceAsString(),
@@ -177,7 +169,9 @@ final class PaymeController extends Controller
          requestBody: $rawBody,
          response: $response,
          authorized: $authorized,
-         durationMs: (int) round((microtime(true) - $startedAt) * 1000)
+         durationMs: (int) round(
+            (microtime(true) - $startedAt) * 1000
+         )
       );
       
       return $response;
@@ -209,11 +203,10 @@ final class PaymeController extends Controller
    {
       $amount = $this->requiredPositiveInt($params, 'amount');
       $account = $this->requiredArray($params, 'account');
-      $billingId = $account['order_id']; //$this->extractBillingId($account);
+      $billingId = $this->extractBillingId($account);
       
       $billing = Billing::findOne($billingId);
-      
-      $this->assertBillingCanBePaid($billing, $amount*100);
+      $this->assertBillingCanBePaid($billing, $amount *100);
       
       return ['allow' => true];
    }
@@ -226,61 +219,53 @@ final class PaymeController extends Controller
       $account = $this->requiredArray($params, 'account');
       $billingId = $this->extractBillingId($account);
       
-      $db = Yii::$app->db;
-      $dbTransaction = $db->beginTransaction();
+      $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
-         $existing = $db->createCommand(
-            'SELECT *
-                   FROM {{%payme_transaction}}
-                  WHERE [[payme_id]] = :payme_id
-                  FOR UPDATE',
-            [':payme_id' => $paymeId]
-         )->queryOne();
+         $existing = PaymeTransaction::findByPaymeId($paymeId);
          
-         // Повторный CreateTransaction обязан вернуть тот же результат.
-         if ($existing !== false) {
-            $billing = $this->lockBillingById($billingId);
-            
-            if (
-               $billing === null
-               || (string) $existing['billing_id'] !== (string) $billing->id
-               || (int) $existing['amount'] !== $amount
-               || (int) $existing['payme_time'] !== $paymeTime
-            ) {
-               throw new PaymeRpcException(
-                  -31008,
-                  $this->message(
-                     'Невозможно выполнить операцию',
-                     'Amalni bajarib bo‘lmaydi',
-                     'Unable to perform operation'
-                  )
-               );
-            }
+         if ($existing !== null) {
+            $billing = Billing::findOne($billingId);
+            $this->assertStoredPaymeToken($billing, $paymeId);
+            $this->assertSameTransaction(
+               $existing,
+               $billing,
+               $paymeTime,
+               $amount
+            );
             
             $dbTransaction->commit();
             
             return $this->createResponse($existing);
          }
          
-         $billing = $this->lockBillingById($billingId);
-         $this->assertBillingCanBePaid($billing, $amount);
+         $billing = Billing::findOne($billingId);
+         $this->assertBillingCanBePaid($billing, $amount *100);
          
-         $activeTransaction = $db->createCommand(
-            'SELECT [[id]]
-                   FROM {{%payme_transaction}}
-                  WHERE [[billing_id]] = :billing_id
-                    AND [[state]] IN (:created, :performed)
-                  LIMIT 1
-                  FOR UPDATE',
-            [
-               ':billing_id' => $billing->id,
-               ':created' => self::STATE_CREATED,
-               ':performed' => self::STATE_PERFORMED,
-            ]
-         )->queryOne();
+         $isRecovery = $this->isCreateRecovery(
+            $billing,
+            $paymeId
+         );
          
-         if ($activeTransaction !== false) {
+         $this->claimBillingForTransaction(
+            $billing,
+            $paymeId
+         );
+         
+         $activeTransaction = PaymeTransaction::find()
+            ->where(['billing_id' => $billing->id])
+            ->andWhere([
+               'state' => [
+                  PaymeTransaction::STATE_CREATED,
+                  PaymeTransaction::STATE_PERFORMED,
+               ],
+            ])
+            ->one();
+         
+         if (
+            $activeTransaction !== null
+            && $activeTransaction->payme_id !== $paymeId
+         ) {
             throw new PaymeRpcException(
                -31008,
                $this->message(
@@ -291,35 +276,39 @@ final class PaymeController extends Controller
             );
          }
          
-         $nowMs = $this->nowMs();
-         $now = time();
+         $transaction = new PaymeTransaction();
+         $transaction->payme_id = $paymeId;
+         $transaction->billing_id = $billing->id;
+         $transaction->payme_time = $paymeTime;
+         $transaction->amount = $amount;
+         $transaction->setAccountData($account);
+         $transaction->create_time = $this->nowMs();
+         $transaction->perform_time = 0;
+         $transaction->cancel_time = 0;
+         $transaction->state = PaymeTransaction::STATE_CREATED;
+         $transaction->reason = null;
+         $transaction->is_recovered = $isRecovery ? 1 : 0;
+         $transaction->created_at = time();
+         $transaction->updated_at = time();
          
-         $db->createCommand()->insert('{{%payme_transaction}}', [
-            'payme_id' => $paymeId,
-            'billing_id' => $billing->id,
-            'payme_time' => $paymeTime,
-            'amount' => $amount,
-            'account' => $this->jsonEncode($account),
-            'create_time' => $nowMs,
-            'perform_time' => 0,
-            'cancel_time' => 0,
-            'state' => self::STATE_CREATED,
-            'reason' => null,
-            'created_at' => $now,
-            'updated_at' => $now,
-         ])->execute();
-         
-         $localTransactionId = (string) $db->getLastInsertID();
+         try {
+            $this->saveTransaction($transaction);
+         } catch (IntegrityException) {
+            // Параллельный повторный запрос мог уже создать запись.
+            $transaction = PaymeTransaction::findByPaymeId($paymeId);
+            
+            if ($transaction === null) {
+               throw new RuntimeException(
+                  'Payme transaction was not saved after duplicate key error.'
+               );
+            }
+         }
          
          $this->markBillingPending($billing, $paymeId);
          
          $dbTransaction->commit();
          
-         return [
-            'create_time' => $nowMs,
-            'transaction' => $localTransactionId,
-            'state' => self::STATE_CREATED,
-         ];
+         return $this->createResponse($transaction);
       } catch (Throwable $e) {
          if ($dbTransaction->isActive) {
             $dbTransaction->rollBack();
@@ -329,35 +318,27 @@ final class PaymeController extends Controller
       }
    }
    
-   
    private function performTransaction(array $params): array
    {
       $paymeId = $this->requiredPaymeId($params, 'id');
-      
-      $db = Yii::$app->db;
-      $dbTransaction = $db->beginTransaction();
+      $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
-         $transaction = $this->lockTransaction($paymeId);
+         $transaction = $this->findOrRecoverTransaction($paymeId);
          
-         if ($transaction === null) {
-            throw new PaymeRpcException(
-               -31003,
-               $this->message(
-                  'Транзакция не найдена',
-                  'Tranzaksiya topilmadi',
-                  'Transaction not found'
-               )
-            );
-         }
-         
-         if ((int) $transaction['state'] === self::STATE_PERFORMED) {
+         if (
+            (int) $transaction->state
+            === PaymeTransaction::STATE_PERFORMED
+         ) {
             $dbTransaction->commit();
             
             return $this->performResponse($transaction);
          }
          
-         if ((int) $transaction['state'] !== self::STATE_CREATED) {
+         if (
+            (int) $transaction->state
+            !== PaymeTransaction::STATE_CREATED
+         ) {
             throw new PaymeRpcException(
                -31008,
                $this->message(
@@ -368,27 +349,23 @@ final class PaymeController extends Controller
             );
          }
          
+         $billing = Billing::findOne($transaction->billing_id);
+         $this->assertStoredPaymeToken($billing, $paymeId);
+         
          $nowMs = $this->nowMs();
          
          if (
-            ($nowMs - (int) $transaction['payme_time'])
+            (int) $transaction->payme_time > 0
+            && ($nowMs - (int) $transaction->payme_time)
             >= self::TRANSACTION_TIMEOUT_MS
          ) {
-            $billing = $this->lockBillingById(
-               $transaction['billing_id']
-            );
+            $transaction->state = PaymeTransaction::STATE_CANCELLED;
+            $transaction->reason = PaymeTransaction::CANCEL_REASON_TIMEOUT;
+            $transaction->cancel_time = $nowMs;
+            $transaction->updated_at = time();
+            $this->saveTransaction($transaction);
             
-            $db->createCommand()->update('{{%payme_transaction}}', [
-               'state' => self::STATE_CANCELLED,
-               'reason' => self::CANCEL_REASON_TIMEOUT,
-               'cancel_time' => $nowMs,
-               'updated_at' => time(),
-            ], ['id' => $transaction['id']])->execute();
-            
-            if ($billing !== null) {
-               $this->markBillingCancelled($billing, false);
-            }
-            
+            $this->markBillingCancelled($billing, false);
             $dbTransaction->commit();
             
             throw new PaymeRpcException(
@@ -401,26 +378,12 @@ final class PaymeController extends Controller
             );
          }
          
-         $billing = $this->lockBillingById(
-            $transaction['billing_id']
-         );
-         
-         if ($billing === null) {
-            throw new RuntimeException(
-               'Billing not found during PerformTransaction.'
-            );
-         }
-         
          $this->markBillingSuccess($billing, $paymeId);
          
-         $db->createCommand()->update('{{%payme_transaction}}', [
-            'state' => self::STATE_PERFORMED,
-            'perform_time' => $nowMs,
-            'updated_at' => time(),
-         ], ['id' => $transaction['id']])->execute();
-         
-         $transaction['state'] = self::STATE_PERFORMED;
-         $transaction['perform_time'] = $nowMs;
+         $transaction->state = PaymeTransaction::STATE_PERFORMED;
+         $transaction->perform_time = $nowMs;
+         $transaction->updated_at = time();
+         $this->saveTransaction($transaction);
          
          $dbTransaction->commit();
          
@@ -438,31 +401,17 @@ final class PaymeController extends Controller
    {
       $paymeId = $this->requiredPaymeId($params, 'id');
       $reason = $this->requiredPositiveInt($params, 'reason');
-      
-      $db = Yii::$app->db;
-      $dbTransaction = $db->beginTransaction();
+      $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
-         $transaction = $this->lockTransaction($paymeId);
-         
-         if ($transaction === null) {
-            throw new PaymeRpcException(
-               -31003,
-               $this->message(
-                  'Транзакция не найдена',
-                  'Tranzaksiya topilmadi',
-                  'Transaction not found'
-               )
-            );
-         }
-         
-         $state = (int) $transaction['state'];
+         $transaction = $this->findOrRecoverTransaction($paymeId);
+         $state = (int) $transaction->state;
          
          if (in_array(
             $state,
             [
-               self::STATE_CANCELLED,
-               self::STATE_CANCELLED_AFTER_PERFORM,
+               PaymeTransaction::STATE_CANCELLED,
+               PaymeTransaction::STATE_CANCELLED_AFTER_PERFORM,
             ],
             true
          )) {
@@ -473,7 +422,10 @@ final class PaymeController extends Controller
          
          if (!in_array(
             $state,
-            [self::STATE_CREATED, self::STATE_PERFORMED],
+            [
+               PaymeTransaction::STATE_CREATED,
+               PaymeTransaction::STATE_PERFORMED,
+            ],
             true
          )) {
             throw new PaymeRpcException(
@@ -487,7 +439,7 @@ final class PaymeController extends Controller
          }
          
          if (
-            $state === self::STATE_PERFORMED
+            $state === PaymeTransaction::STATE_PERFORMED
             && !$this->canCancelPerformedBilling()
          ) {
             throw new PaymeRpcException(
@@ -500,33 +452,22 @@ final class PaymeController extends Controller
             );
          }
          
-         $newState = $state === self::STATE_PERFORMED
-            ? self::STATE_CANCELLED_AFTER_PERFORM
-            : self::STATE_CANCELLED;
+         $billing = Billing::findOne($transaction->billing_id);
+         $this->assertStoredPaymeToken($billing, $paymeId);
          
-         $cancelTime = $this->nowMs();
+         $transaction->state =
+            $state === PaymeTransaction::STATE_PERFORMED
+               ? PaymeTransaction::STATE_CANCELLED_AFTER_PERFORM
+               : PaymeTransaction::STATE_CANCELLED;
+         $transaction->reason = $reason;
+         $transaction->cancel_time = $this->nowMs();
+         $transaction->updated_at = time();
+         $this->saveTransaction($transaction);
          
-         $billing = $this->lockBillingById(
-            $transaction['billing_id']
+         $this->markBillingCancelled(
+            $billing,
+            $state === PaymeTransaction::STATE_PERFORMED
          );
-         
-         $db->createCommand()->update('{{%payme_transaction}}', [
-            'state' => $newState,
-            'reason' => $reason,
-            'cancel_time' => $cancelTime,
-            'updated_at' => time(),
-         ], ['id' => $transaction['id']])->execute();
-         
-         if ($billing !== null) {
-            $this->markBillingCancelled(
-               $billing,
-               $state === self::STATE_PERFORMED
-            );
-         }
-         
-         $transaction['state'] = $newState;
-         $transaction['reason'] = $reason;
-         $transaction['cancel_time'] = $cancelTime;
          
          $dbTransaction->commit();
          
@@ -543,24 +484,7 @@ final class PaymeController extends Controller
    private function checkTransaction(array $params): array
    {
       $paymeId = $this->requiredPaymeId($params, 'id');
-      
-      $transaction = Yii::$app->db->createCommand(
-         'SELECT *
-               FROM {{%payme_transaction}}
-              WHERE [[payme_id]] = :payme_id',
-         [':payme_id' => $paymeId]
-      )->queryOne();
-      
-      if ($transaction === false) {
-         throw new PaymeRpcException(
-            -31003,
-            $this->message(
-               'Транзакция не найдена',
-               'Tranzaksiya topilmadi',
-               'Transaction not found'
-            )
-         );
-      }
+      $transaction = $this->findOrRecoverTransaction($paymeId);
       
       return $this->checkResponse($transaction);
    }
@@ -581,46 +505,24 @@ final class PaymeController extends Controller
          );
       }
       
-      $rows = Yii::$app->db->createCommand(
-         'SELECT *
-               FROM {{%payme_transaction}}
-              WHERE [[payme_time]] BETWEEN :from_time AND :to_time
-              ORDER BY [[payme_time]] ASC',
-         [
-            ':from_time' => $from,
-            ':to_time' => $to,
-         ]
-      )->queryAll();
+      /** @var PaymeTransaction[] $rows */
+      $rows = PaymeTransaction::find()
+         ->where(['between', 'payme_time', $from, $to])
+         ->orderBy(['payme_time' => SORT_ASC])
+         ->all();
       
-      $transactions = array_map(
-         function (array $row): array {
-            return [
-               'id' => $row['payme_id'],
-               'time' => (int) $row['payme_time'],
-               'amount' => (int) $row['amount'],
-               'account' => $this->jsonDecode($row['account']),
-               'create_time' => (int) $row['create_time'],
-               'perform_time' => (int) $row['perform_time'],
-               'cancel_time' => (int) $row['cancel_time'],
-               'transaction' => (string) $row['id'],
-               'state' => (int) $row['state'],
-               'reason' => $row['reason'] !== null
-                  ? (int) $row['reason']
-                  : null,
-            ];
-         },
-         $rows
-      );
-      
-      return ['transactions' => $transactions];
+      return [
+         'transactions' => array_map(
+            fn (PaymeTransaction $transaction): array =>
+            $this->statementResponse($transaction),
+            $rows
+         ),
+      ];
    }
    
-   /**
-    * Необязательный метод для получения данных фискального чека.
-    */
    private function setFiscalData(array $params): array
    {
-      $receiptId = $this->requiredPaymeId($params, 'id');
+      $paymeId = $this->requiredPaymeId($params, 'id');
       $type = $params['type'] ?? null;
       $fiscalData = $params['fiscal_data'] ?? null;
       
@@ -634,35 +536,302 @@ final class PaymeController extends Controller
          );
       }
       
-      $transaction = Yii::$app->db->createCommand(
-         'SELECT [[id]]
-               FROM {{%payme_transaction}}
-              WHERE [[payme_id]] = :payme_id',
-         [':payme_id' => $receiptId]
-      )->queryOne();
+      $transaction = $this->findOrRecoverTransaction($paymeId);
+      $encoded = $this->jsonEncode($fiscalData);
       
-      if ($transaction === false) {
-         throw new PaymeRpcException(
-            -32001,
-            'Receipt not found'
-         );
+      if ($type === 'PERFORM') {
+         $transaction->fiscal_perform = $encoded;
+      } else {
+         $transaction->fiscal_cancel = $encoded;
       }
       
-      $column = $type === 'PERFORM'
-         ? 'fiscal_perform'
-         : 'fiscal_cancel';
-      
-      Yii::$app->db->createCommand()
-         ->update('{{%payme_transaction}}', [
-            $column => $this->jsonEncode($fiscalData),
-            'updated_at' => time(),
-         ], ['id' => $transaction['id']])
-         ->execute();
+      $transaction->updated_at = time();
+      $this->saveTransaction($transaction);
       
       return ['success' => true];
    }
    
-   private function assertBillingCanBePaid(Billing $billing, int $amountTiyin): void {
+   /**
+    * Восстанавливает AR-запись, если CreateTransaction успел сохранить
+    * Payme ID в Billing, но payme_transaction по какой-то причине отсутствует.
+    */
+   private function findOrRecoverTransaction(
+      string $paymeId
+   ): PaymeTransaction {
+      $transaction = PaymeTransaction::findByPaymeId($paymeId);
+      
+      if ($transaction !== null) {
+         return $transaction;
+      }
+      
+      /** @var Billing|null $billing */
+      $billing = Billing::find()
+         ->where(['payment_transaction_id' => $paymeId])
+         ->one();
+      
+      if ($billing === null) {
+         throw $this->transactionNotFoundError();
+      }
+      
+      $this->assertStoredPaymeToken($billing, $paymeId);
+      
+      $timestampMs = $this->billingTimestampMs($billing);
+      $transaction = new PaymeTransaction();
+      $transaction->payme_id = $paymeId;
+      $transaction->billing_id = $billing->id;
+      $transaction->payme_time = $timestampMs;
+      $transaction->amount = $this->billingAmountTiyin($billing);
+      $transaction->setAccountData([
+         'billing_id' => $billing->id,
+      ]);
+      $transaction->create_time = $timestampMs;
+      $transaction->perform_time = 0;
+      $transaction->cancel_time = 0;
+      $transaction->reason = null;
+      $transaction->state = PaymeTransaction::STATE_CREATED;
+      $transaction->is_recovered = 1;
+      $transaction->created_at = time();
+      $transaction->updated_at = time();
+      
+      if (
+         (int) $billing->payment_status
+         === Billing::STATUS_SUCCESS
+      ) {
+         $transaction->state = PaymeTransaction::STATE_PERFORMED;
+         $transaction->perform_time = $timestampMs;
+      } elseif (
+         (int) $billing->payment_status
+         === Billing::STATUS_CANCELLED
+      ) {
+         $transaction->state = $this->hasSubscriptionHistory($paymeId)
+            ? PaymeTransaction::STATE_CANCELLED_AFTER_PERFORM
+            : PaymeTransaction::STATE_CANCELLED;
+         $transaction->cancel_time = $timestampMs;
+         $transaction->reason =
+            PaymeTransaction::CANCEL_REASON_SYSTEM_ERROR;
+      }
+      
+      try {
+         $this->saveTransaction($transaction);
+      } catch (IntegrityException) {
+         $existing = PaymeTransaction::findByPaymeId($paymeId);
+         
+         if ($existing !== null) {
+            return $existing;
+         }
+         
+         throw new RuntimeException(
+            'Failed to recover Payme transaction.'
+         );
+      }
+      
+      return $transaction;
+   }
+   
+   private function isCreateRecovery(
+      Billing $billing,
+      string $paymeId
+   ): bool {
+      if (
+         (int) $billing->payment_status
+         !== Billing::STATUS_PENDING
+      ) {
+         return false;
+      }
+      
+      $storedToken = trim(
+         (string) $billing->payment_transaction_id
+      );
+      
+      if ($storedToken === '') {
+         // Обычный первый CreateTransaction: Billing уже может быть
+         // STATUS_PENDING, но Payme ID ещё не был получен.
+         return false;
+      }
+      
+      if (!hash_equals($storedToken, $paymeId)) {
+         throw new PaymeRpcException(
+            -31008,
+            $this->message(
+               'Этот счёт ожидает другую транзакцию Payme',
+               'Bu hisob boshqa Payme tranzaksiyasini kutmoqda',
+               'This billing is waiting for another Payme transaction'
+            )
+         );
+      }
+      
+      return true;
+   }
+   
+   private function claimBillingForTransaction(
+      Billing $billing,
+      string $paymeId
+   ): void {
+      $currentToken = trim(
+         (string) $billing->payment_transaction_id
+      );
+      
+      if (
+         (int) $billing->payment_status
+         === Billing::STATUS_PENDING
+         && $currentToken !== ''
+      ) {
+         if (!hash_equals($currentToken, $paymeId)) {
+            throw new PaymeRpcException(
+               -31008,
+               $this->message(
+                  'Этот счёт уже занят другой транзакцией Payme',
+                  'Bu hisob boshqa Payme tranzaksiyasi bilan band',
+                  'This billing is already claimed by another Payme transaction'
+               )
+            );
+         }
+         
+         return;
+      }
+      
+      $updated = Billing::updateAll([
+         'payment_status' => Billing::STATUS_PENDING,
+         'payment_transaction_id' => $paymeId,
+         'payment_provider' => (int) $this->config(
+            'providerCode',
+            2
+         ),
+         'updated_at' => time(),
+      ], [
+         'and',
+         ['id' => $billing->id],
+         [
+            'or',
+            ['payment_status' => null],
+            [
+               'payment_status' => [
+                  Billing::STATUS_FAILED,
+                  Billing::STATUS_CANCELLED,
+               ],
+            ],
+            [
+               'and',
+               ['payment_status' => Billing::STATUS_PENDING],
+               [
+                  'or',
+                  ['payment_transaction_id' => null],
+                  ['payment_transaction_id' => ''],
+               ],
+            ],
+         ],
+      ]);
+      
+      if ($updated !== 1) {
+         $freshBilling = Billing::findOne($billing->id);
+         
+         if (
+            $freshBilling === null
+            || trim((string) $freshBilling->payment_transaction_id)
+            !== $paymeId
+         ) {
+            throw new PaymeRpcException(
+               -31008,
+               $this->message(
+                  'Не удалось закрепить счёт за транзакцией Payme',
+                  'Hisobni Payme tranzaksiyasiga biriktirib bo‘lmadi',
+                  'Unable to claim billing for Payme transaction'
+               )
+            );
+         }
+      }
+      
+      $billing->refresh();
+   }
+   
+   private function assertSameTransaction(
+      PaymeTransaction $transaction,
+      ?Billing $billing,
+      int $paymeTime,
+      int $amount
+   ): void {
+      if (
+         $billing === null
+         || (string) $transaction->billing_id
+         !== (string) $billing->id
+         || (int) $transaction->amount !== $amount
+         || (int) $transaction->payme_time !== $paymeTime
+      ) {
+         throw new PaymeRpcException(
+            -31008,
+            $this->message(
+               'Параметры повторного запроса не совпадают с транзакцией',
+               'Takroriy so‘rov parametrlari tranzaksiyaga mos emas',
+               'Repeated request parameters do not match the transaction'
+            )
+         );
+      }
+   }
+   
+   private function assertStoredPaymeToken(
+      ?Billing $billing,
+      string $paymeId
+   ): void {
+      if ($billing === null) {
+         throw new PaymeRpcException(
+            -31003,
+            $this->message(
+               'Транзакция Payme не связана со счётом',
+               'Payme tranzaksiyasi hisob bilan bog‘lanmagan',
+               'Payme transaction is not linked to billing'
+            )
+         );
+      }
+      
+      $storedToken = trim(
+         (string) $billing->payment_transaction_id
+      );
+      
+      if ($storedToken === '') {
+         throw $this->missingStoredPaymeTokenError();
+      }
+      
+      if (!hash_equals($storedToken, $paymeId)) {
+         throw new PaymeRpcException(
+            -31008,
+            $this->message(
+               'Токен Payme не совпадает с транзакцией счёта',
+               'Payme tokeni hisob tranzaksiyasiga mos emas',
+               'Payme token does not match the billing transaction'
+            )
+         );
+      }
+   }
+   
+   private function transactionNotFoundError(): PaymeRpcException
+   {
+      return new PaymeRpcException(
+         -31003,
+         $this->message(
+            'Транзакция не найдена',
+            'Tranzaksiya topilmadi',
+            'Transaction not found'
+         )
+      );
+   }
+   
+   private function missingStoredPaymeTokenError(): PaymeRpcException
+   {
+      return new PaymeRpcException(
+         -32400,
+         $this->message(
+            'В Billing отсутствует идентификатор транзакции Payme',
+            'Billing ichida Payme tranzaksiya identifikatori yo‘q',
+            'Payme transaction identifier is missing in Billing'
+         ),
+         'payment_transaction_id'
+      );
+   }
+   
+   private function assertBillingCanBePaid(
+      ?Billing $billing,
+      int $amountTiyin
+   ): void {
       if ($billing === null) {
          throw new PaymeRpcException(
             -31050,
@@ -675,7 +844,9 @@ final class PaymeController extends Controller
          );
       }
       
-      $paymentStatus = $billing->payment_status;
+      $paymentStatus = $billing->payment_status === null
+         ? null
+         : (int) $billing->payment_status;
       
       $allowedStatuses = [
          null,
@@ -684,7 +855,11 @@ final class PaymeController extends Controller
          Billing::STATUS_CANCELLED,
       ];
       
-      if (!in_array($paymentStatus, $allowedStatuses, true)) {
+      if (!in_array(
+         $paymentStatus,
+         $allowedStatuses,
+         true
+      )) {
          throw new PaymeRpcException(
             -31050,
             $this->message(
@@ -712,9 +887,21 @@ final class PaymeController extends Controller
    {
       $amount = (int) $billing->amount;
       
-      return (bool) $this->config('amountAlreadyInTiyin', false)
+      return (bool) $this->config(
+         'amountAlreadyInTiyin',
+         false
+      )
          ? $amount
          : $amount * 100;
+   }
+   
+   private function billingTimestampMs(Billing $billing): int
+   {
+      $timestamp = (int) ($billing->updated_at
+         ?: $billing->created_at
+            ?: time());
+      
+      return $timestamp * 1000;
    }
    
    private function markBillingPending(
@@ -772,14 +959,6 @@ final class PaymeController extends Controller
          );
       }
       
-      /*
-       * Billing остаётся финансовым документом, а отдельная запись
-       * UserSubscriptions используется для доступа и истории подписок.
-       *
-       * Метод вызывается внутри той же DB-транзакции, что и
-       * PerformTransaction. Если создание подписки упадёт, успешный
-       * платёж также не будет частично зафиксирован в локальной БД.
-       */
       $this->createOrUpdateUserSubscription(
          $billing,
          $paymeId
@@ -796,12 +975,10 @@ final class PaymeController extends Controller
          2
       );
       
-      /*
-       * При возврате уже проведённого платежа оставляем запись
-       * UserSubscriptions для истории, но закрываем доступ.
-       */
       if ($wasPerformed) {
-         $this->deactivateUserSubscription($paymeId);
+         $this->deactivateUserSubscription(
+            (string) $billing->payment_transaction_id
+         );
       }
       
       if (
@@ -822,12 +999,6 @@ final class PaymeController extends Controller
       }
    }
    
-   /**
-    * Создаёт подписку после успешного PerformTransaction.
-    *
-    * Идемпотентность обеспечивается поиском по паре:
-    * payment_provider + payment_transaction_id.
-    */
    private function createOrUpdateUserSubscription(
       Billing $billing,
       string $paymeId
@@ -844,8 +1015,6 @@ final class PaymeController extends Controller
             'payment_transaction_id' => $paymeId,
          ])
          ->one();
-      
-      $isNewRecord = $subscription === null;
       
       if ($subscription === null) {
          $subscription = new UserSubscriptions();
@@ -870,20 +1039,18 @@ final class PaymeController extends Controller
       
       if (!$subscription->save(false)) {
          throw new RuntimeException(
-            $isNewRecord
-               ? 'Failed to create UserSubscriptions record.'
-               : 'Failed to update UserSubscriptions record.'
+            'Failed to save UserSubscriptions record.'
          );
       }
    }
    
-   /**
-    * После возврата успешного платежа подписка не удаляется:
-    * это сохраняет историю, но status=INACTIVE закрывает доступ.
-    */
    private function deactivateUserSubscription(
       string $paymeId
    ): void {
+      if ($paymeId === '') {
+         throw $this->missingStoredPaymeTokenError();
+      }
+      
       $provider = (string) $this->config(
          'subscriptionPaymentProvider',
          'payme'
@@ -912,17 +1079,23 @@ final class PaymeController extends Controller
       }
    }
    
+   private function hasSubscriptionHistory(string $paymeId): bool
+   {
+      return UserSubscriptions::find()
+         ->where(['payment_transaction_id' => $paymeId])
+         ->exists();
+   }
+   
    private function generateSubscriptionKey(): string
    {
       for ($attempt = 0; $attempt < 10; $attempt++) {
          $key = Yii::$app->security
             ->generateRandomString(32);
          
-         $exists = UserSubscriptions::find()
+         if (!UserSubscriptions::find()
             ->where(['subscription_key' => $key])
-            ->exists();
-         
-         if (!$exists) {
+            ->exists()
+         ) {
             return $key;
          }
       }
@@ -940,117 +1113,113 @@ final class PaymeController extends Controller
       );
    }
    
-   private function lockBillingById(int|string $billingId): ?Billing
-   {
-      $row = Yii::$app->db->createCommand(
-         'SELECT [[id]]
-               FROM {{%billing}}
-              WHERE [[id]] = :id
-              FOR UPDATE',
-         [':id' => $billingId]
-      )->queryOne();
-      
-      return $row === false
-         ? null
-         : Billing::findOne($billingId);
+   private function saveTransaction(
+      PaymeTransaction $transaction
+   ): void {
+      if (!$transaction->save(false)) {
+         throw new RuntimeException(
+            'Failed to save PaymeTransaction.'
+         );
+      }
    }
    
-   private function lockTransaction(
-      string $paymeId
-   ): ?array {
-      $row = Yii::$app->db->createCommand(
-         'SELECT *
-               FROM {{%payme_transaction}}
-              WHERE [[payme_id]] = :payme_id
-              FOR UPDATE',
-         [':payme_id' => $paymeId]
-      )->queryOne();
-      
-      return $row === false ? null : $row;
-   }
-   
-   private function createResponse(array $transaction): array
-   {
+   private function createResponse(
+      PaymeTransaction $transaction
+   ): array {
       return [
-         'create_time' => (int) $transaction['create_time'],
-         'transaction' => (string) $transaction['id'],
-         'state' => (int) $transaction['state'],
+         'create_time' => (int) $transaction->create_time,
+         'transaction' => (string) $transaction->id,
+         'state' => (int) $transaction->state,
       ];
    }
    
-   private function performResponse(array $transaction): array
-   {
+   private function performResponse(
+      PaymeTransaction $transaction
+   ): array {
       return [
-         'transaction' => (string) $transaction['id'],
-         'perform_time' => (int) $transaction['perform_time'],
-         'state' => (int) $transaction['state'],
+         'transaction' => (string) $transaction->id,
+         'perform_time' => (int) $transaction->perform_time,
+         'state' => (int) $transaction->state,
       ];
    }
    
-   private function cancelResponse(array $transaction): array
-   {
+   private function cancelResponse(
+      PaymeTransaction $transaction
+   ): array {
       return [
-         'transaction' => (string) $transaction['id'],
-         'cancel_time' => (int) $transaction['cancel_time'],
-         'state' => (int) $transaction['state'],
+         'transaction' => (string) $transaction->id,
+         'cancel_time' => (int) $transaction->cancel_time,
+         'state' => (int) $transaction->state,
       ];
    }
    
-   private function checkResponse(array $transaction): array
-   {
+   private function checkResponse(
+      PaymeTransaction $transaction
+   ): array {
       return [
-         'create_time' => (int) $transaction['create_time'],
-         'perform_time' => (int) $transaction['perform_time'],
-         'cancel_time' => (int) $transaction['cancel_time'],
-         'transaction' => (string) $transaction['id'],
-         'state' => (int) $transaction['state'],
-         'reason' => $transaction['reason'] !== null
-            ? (int) $transaction['reason']
+         'create_time' => (int) $transaction->create_time,
+         'perform_time' => (int) $transaction->perform_time,
+         'cancel_time' => (int) $transaction->cancel_time,
+         'transaction' => (string) $transaction->id,
+         'state' => (int) $transaction->state,
+         'reason' => $transaction->reason !== null
+            ? (int) $transaction->reason
+            : null,
+      ];
+   }
+   
+   private function statementResponse(
+      PaymeTransaction $transaction
+   ): array {
+      return [
+         'id' => $transaction->payme_id,
+         'time' => (int) $transaction->payme_time,
+         'amount' => (int) $transaction->amount,
+         'account' => $transaction->getAccountData(),
+         'create_time' => (int) $transaction->create_time,
+         'perform_time' => (int) $transaction->perform_time,
+         'cancel_time' => (int) $transaction->cancel_time,
+         'transaction' => (string) $transaction->id,
+         'state' => (int) $transaction->state,
+         'reason' => $transaction->reason !== null
+            ? (int) $transaction->reason
             : null,
       ];
    }
    
    private function extractBillingId(array $account): int|string
    {
-      $billingId = $account['billing_id'] ?? null;
+      $billingId = $account['order_id'] ?? null;
       
-      // Payme может вернуть account-поле как JSON number или string.
-      // Значение не приводим принудительно к int: Yii/PDO нормально
-      // работают и с 123, и с "123".
       if (!is_int($billingId) && !is_string($billingId)) {
-         throw new PaymeRpcException(
-            -31050,
-            $this->message(
-               'Неверный ID счёта',
-               'Hisob ID noto‘g‘ri',
-               'Invalid billing ID'
-            ),
-            'billing_id'
-         );
+         throw $this->invalidBillingIdError();
       }
       
       if (is_string($billingId)) {
          $billingId = trim($billingId);
       }
       
-      // Разрешаем только положительный целочисленный ID,
-      // сохраняя исходный тип значения.
       if (
          $billingId === ''
-         || preg_match('/^[1-9]\\d*$/', (string) $billingId) !== 1
+         || preg_match('/^[1-9]\d*$/', (string) $billingId) !== 1
       ) {
-         throw new PaymeRpcException(
-            -31050,
-            $this->message(
-               'Неверный ID счёта',
-               'Hisob ID noto‘g‘ri',
-               'Invalid billing ID'
-            ),
-            'billing_id'
-         );
+         throw $this->invalidBillingIdError();
       }
       
       return $billingId;
+   }
+   
+   private function invalidBillingIdError(): PaymeRpcException
+   {
+      return new PaymeRpcException(
+         -31050,
+         $this->message(
+            'Неверный ID счёта',
+            'Hisob ID noto‘g‘ri',
+            'Invalid billing ID'
+         ),
+         'billing_id'
+      );
    }
    
    private function requiredPaymeId(
@@ -1225,26 +1394,6 @@ final class PaymeController extends Controller
       );
    }
    
-   private function jsonDecode(?string $value): array
-   {
-      if ($value === null || $value === '') {
-         return [];
-      }
-      
-      try {
-         $decoded = json_decode(
-            $value,
-            true,
-            512,
-            JSON_THROW_ON_ERROR
-         );
-         
-         return is_array($decoded) ? $decoded : [];
-      } catch (JsonException) {
-         return [];
-      }
-   }
-   
    private function message(
       string $ru,
       string $uz,
@@ -1262,26 +1411,27 @@ final class PaymeController extends Controller
       int $durationMs
    ): void {
       try {
-         Yii::$app->db->createCommand()
-            ->insert('{{%payme_log}}', [
-               'rpc_id' => is_int($rpcId)
-                  ? $rpcId
-                  : null,
-               'method' => $method,
-               'request_body' => $requestBody,
-               'response_body' => json_encode(
-                  $response,
-                  JSON_UNESCAPED_UNICODE
-                  | JSON_UNESCAPED_SLASHES
-               ),
-               'authorization_ok' => $authorized ? 1 : 0,
-               'ip' => Yii::$app->request->userIP,
-               'duration_ms' => $durationMs,
-               'created_at' => time(),
-            ])
-            ->execute();
+         $log = new PaymeLog();
+         $log->rpc_id = is_int($rpcId) ? $rpcId : null;
+         $log->method = $method;
+         $log->request_body = $requestBody;
+         $log->response_body = json_encode(
+            $response,
+            JSON_UNESCAPED_UNICODE
+            | JSON_UNESCAPED_SLASHES
+            | JSON_THROW_ON_ERROR
+         );
+         $log->authorization_ok = $authorized ? 1 : 0;
+         $log->ip = Yii::$app->request->userIP;
+         $log->duration_ms = $durationMs;
+         $log->created_at = time();
+         
+         if (!$log->save(false)) {
+            throw new RuntimeException(
+               'Failed to save PaymeLog.'
+            );
+         }
       } catch (Throwable $e) {
-         // Ошибка логирования не должна ломать оплату.
          Yii::error(
             $e->getMessage(),
             'payme-log'
