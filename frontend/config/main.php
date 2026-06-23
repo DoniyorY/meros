@@ -81,7 +81,7 @@ return [
              'logout' => 'site/logout',
              'contact' => 'site/contact',
              'POST payme/webhook' => 'payme/webhook',
-             'payment/click-return/<id:\d+>/' => 'payment/click-return',
+             'payment/click-return/<id:\d+>/<payment_status>/<payment_id>' => 'payment/click-return',
              'POST payment/payme/<id:\d+>' => 'payment/payme',
              
              'GET payment/payme-result/<token:[A-Za-z0-9_-]+>'
