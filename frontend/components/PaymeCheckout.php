@@ -11,7 +11,7 @@ use Yii;
 /**
  * Формирует безопасный URL перехода на стандартную форму Payme.
  *
- * Сумма и billing_token берутся только из БД.
+ * Сумма и billing_id берутся только из БД.
  */
 final class PaymeCheckout
 {
@@ -35,12 +35,6 @@ final class PaymeCheckout
          );
       }
       
-      if ($billing->billing_token === '') {
-         throw new InvalidArgumentException(
-            'Billing token is empty.'
-         );
-      }
-      
       $lang = strtolower(substr($lang, 0, 2));
       
       if (!in_array($lang, ['ru', 'uz', 'en'], true)) {
@@ -61,7 +55,7 @@ final class PaymeCheckout
       
       $params = [
          'm=' . $merchantId,
-         'ac.billing_token=' . $billing->billing_token,
+         'ac.billing_id=' . (int) $billing->id,
          'a=' . $amount,
          'l=' . $lang,
       ];

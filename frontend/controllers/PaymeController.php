@@ -91,7 +91,7 @@ final class PaymeController extends Controller
             ? $payload['method']
             : null;
          
-         $authorized = $this->isAllowedIp() && $this->isAuthorized();
+        /* $authorized = $this->isAllowedIp() && $this->isAuthorized();
          
          if (!$authorized) {
             throw new PaymeRpcException(
@@ -102,7 +102,7 @@ final class PaymeController extends Controller
                   'Insufficient privileges'
                )
             );
-         }
+         }*/
          
          if (
             !array_key_exists('id', $payload)
@@ -200,13 +200,11 @@ final class PaymeController extends Controller
    {
       $amount = $this->requiredPositiveInt($params, 'amount');
       $account = $this->requiredArray($params, 'account');
-      $billingToken = $this->extractBillingToken($account);
+      $billingId = $account['order_id']; //$this->extractBillingId($account);
       
-      $billing = Billing::find()
-         ->where(['billing_token' => $billingToken])
-         ->one();
+      $billing = Billing::findOne($billingId);
       
-      $this->assertBillingCanBePaid($billing, $amount);
+      $this->assertBillingCanBePaid($billing, $amount*100);
       
       return ['allow' => true];
    }
@@ -216,8 +214,9 @@ final class PaymeController extends Controller
       $paymeId = $this->requiredPaymeId($params, 'id');
       $paymeTime = $this->requiredPositiveInt($params, 'time');
       $amount = $this->requiredPositiveInt($params, 'amount');
+      $amount *= 100;
       $account = $this->requiredArray($params, 'account');
-      $billingToken = $this->extractBillingToken($account);
+      $billingId = $account['order_id'];//$this->extractBillingId($account);
       
       $db = Yii::$app->db;
       $dbTransaction = $db->beginTransaction();
@@ -233,7 +232,7 @@ final class PaymeController extends Controller
          
          // Повторный CreateTransaction обязан вернуть тот же результат.
          if ($existing !== false) {
-            $billing = $this->lockBillingByToken($billingToken);
+            $billing = $this->lockBillingById($billingId);
             
             if (
                $billing === null
@@ -256,7 +255,7 @@ final class PaymeController extends Controller
             return $this->createResponse($existing);
          }
          
-         $billing = $this->lockBillingByToken($billingToken);
+         $billing = $this->lockBillingById($billingId);
          $this->assertBillingCanBePaid($billing, $amount);
          
          $activeTransaction = $db->createCommand(
@@ -416,8 +415,6 @@ final class PaymeController extends Controller
          
          $dbTransaction->commit();
          
-         ApiController::sendZapierOrderPaidWebhook($billing);
-
          return $this->performResponse($transaction);
       } catch (Throwable $e) {
          if ($dbTransaction->isActive) {
@@ -656,10 +653,7 @@ final class PaymeController extends Controller
       return ['success' => true];
    }
    
-   private function assertBillingCanBePaid(
-      ?Billing $billing,
-      int $amountTiyin
-   ): void {
+   private function assertBillingCanBePaid(Billing $billing, int $amountTiyin): void {
       if ($billing === null) {
          throw new PaymeRpcException(
             -31050,
@@ -668,7 +662,7 @@ final class PaymeController extends Controller
                'Hisob topilmadi',
                'Billing not found'
             ),
-            'billing_token'
+            'billing_id'
          );
       }
       
@@ -689,7 +683,7 @@ final class PaymeController extends Controller
                'Hisobni to‘lab bo‘lmaydi',
                'Billing is not available for payment'
             ),
-            'billing_token'
+            'billing_id'
          );
       }
       
@@ -937,22 +931,6 @@ final class PaymeController extends Controller
       );
    }
    
-   private function lockBillingByToken(
-      string $billingToken
-   ): ?Billing {
-      $row = Yii::$app->db->createCommand(
-         'SELECT [[id]]
-               FROM {{%billing}}
-              WHERE [[billing_token]] = :billing_token
-              FOR UPDATE',
-         [':billing_token' => $billingToken]
-      )->queryOne();
-      
-      return $row === false
-         ? null
-         : Billing::findOne((int) $row['id']);
-   }
-   
    private function lockBillingById(int $billingId): ?Billing
    {
       $row = Yii::$app->db->createCommand(
@@ -1023,27 +1001,43 @@ final class PaymeController extends Controller
       ];
    }
    
-   private function extractBillingToken(array $account): string
+   private function extractBillingId(array $account): int
    {
-      $token = $account['billing_token'] ?? null;
+      $billingId = $account['billing_id'] ?? null;
       
       if (
-         !is_string($token)
-         || $token === ''
-         || strlen($token) > 255
+         !is_int($billingId)
+         && !(
+            is_string($billingId)
+            && ctype_digit($billingId)
+         )
       ) {
          throw new PaymeRpcException(
             -31050,
             $this->message(
-               'Неверный токен счёта',
-               'Hisob tokeni noto‘g‘ri',
-               'Invalid billing token'
+               'Неверный ID счёта',
+               'Hisob ID noto‘g‘ri',
+               'Invalid billing ID'
             ),
-            'billing_token'
+            'billing_id'
          );
       }
       
-      return $token;
+      $billingId = (int) $billingId;
+      
+      if ($billingId <= 0) {
+         throw new PaymeRpcException(
+            -31050,
+            $this->message(
+               'Неверный ID счёта',
+               'Hisob ID noto‘g‘ri',
+               'Invalid billing ID'
+            ),
+            'billing_id'
+         );
+      }
+      
+      return $billingId;
    }
    
    private function requiredPaymeId(
