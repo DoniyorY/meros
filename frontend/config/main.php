@@ -1,6 +1,7 @@
 <?php
 
 use frontend\components\CourseUrlRule;
+use yii\log\FileTarget;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -18,6 +19,63 @@ return [
    'language' => 'ru',
    'sourceLanguage' => 'en',
     'components' => [
+       
+       'log' => [
+          'traceLevel' => YII_DEBUG ? 3 : 0,
+          
+          // Сбрасывать сообщения чаще в диспетчер логов
+          'flushInterval' => 1,
+          
+          'targets' => [
+             /*
+              * Обычный лог приложения.
+              * Если он у тебя уже есть — второй раз не добавляй.
+              */
+             [
+                'class' => FileTarget::class,
+                'levels' => [
+                   'error',
+                   'warning',
+                ],
+                'logFile' => '@runtime/logs/app.log',
+             ],
+             
+             /*
+              * Отдельный лог Payme.
+              */
+             [
+                'class' => FileTarget::class,
+                
+                'levels' => [
+                   'error',
+                   'warning',
+                   'info',
+                ],
+                
+                'categories' => [
+                   'payme',
+                   'payme-log',
+                ],
+                
+                'logFile' => '@runtime/logs/payme.log',
+                
+                // Не записывать GET, POST, COOKIE, SESSION и SERVER
+                'logVars' => [],
+                
+                // Записывать каждое сообщение сразу
+                'exportInterval' => 1,
+                
+                // Размер одного файла примерно 10 MB
+                'maxFileSize' => 10240,
+                
+                // Хранить до 10 старых файлов
+                'maxLogFiles' => 10,
+                
+                'enableRotation' => true,
+             ],
+          ],
+       ],
+       
         'assetManager' => [
             'bundles' => [
                 'kartik\form\ActiveFormAsset' => [
@@ -39,15 +97,7 @@ return [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+       
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

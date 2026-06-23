@@ -36,6 +36,14 @@ final class PaymeController extends Controller
       return parent::beforeAction($action);
    }
    
+   public function actionGetInfo()
+   {
+      $log = Yii::$app->db->createCommand('Select * from {{%payme_log}} order by id desc')->queryAll();
+      echo "<pre>";
+      print_r($log);
+      die();
+   }
+   
    public function actionWebhook(): array
    {
       Yii::$app->response->format = Response::FORMAT_JSON;
@@ -144,6 +152,7 @@ final class PaymeController extends Controller
             'id' => $rpcId,
          ];
       } catch (Throwable $e) {
+         
          Yii::error([
             'message' => $e->getMessage(),
             'trace' => $e->getTraceAsString(),
@@ -255,7 +264,7 @@ final class PaymeController extends Controller
             return $this->createResponse($existing);
          }
          
-         $billing = $this->lockBillingById($billingId);
+         $billing = $this->lockBillingById((int)$billingId);
          $this->assertBillingCanBePaid($billing, $amount);
          
          $activeTransaction = $db->createCommand(
