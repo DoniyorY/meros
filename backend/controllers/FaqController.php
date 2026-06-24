@@ -70,8 +70,12 @@ class FaqController extends Controller
         $model = new Faq();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->created_at=time();
+                $model->updated_at=time();
+                $model->user_id=\Yii::$app->user->id;
+                $model->save();
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();

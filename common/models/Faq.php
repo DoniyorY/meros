@@ -39,10 +39,11 @@ class Faq extends \yii\db\ActiveRecord
     {
         return [
             [['page_id'], 'default', 'value' => null],
-            [['course_id', 'question_ru', 'question_en', 'question_uz', 'answer_ru', 'answer_en', 'answer_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
+            [['course_id',  'question_en', 'answer_en', 'created_at', 'updated_at', 'user_id'], 'required'],
             [['course_id', 'page_id', 'created_at', 'updated_at', 'user_id'], 'integer'],
             [['answer_ru', 'answer_en', 'answer_uz'], 'string'],
             [['question_ru', 'question_en', 'question_uz'], 'string', 'max' => 255],
+            [['question_ru','question_en','answer_ru','answer_uz'], 'default', 'value' => '-'],
         ];
     }
 
@@ -65,6 +66,16 @@ class Faq extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'user_id' => 'User ID',
         ];
+    }
+
+    public function getCourse()
+    {
+        return $this->hasOne(Courses::class,['id' => 'course_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class,['id' => 'user_id']);
     }
 
 }

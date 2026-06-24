@@ -14,12 +14,14 @@ $this->title = 'Faqs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="faq-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Faq', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="row">
+        <div class="col-md">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="col-md text-end">
+            <?= Html::a('Create Faq', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+    </div>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -29,23 +31,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'course_id',
+            //'id',
+            [
+                'attribute' => 'course_id',
+                'value' => function ($data) {
+                    return $data->course->name_en;
+                }
+            ],
             'page_id',
-            'question_ru',
+            //'question_ru',
             'question_en',
             //'question_uz',
             //'answer_ru:ntext',
-            //'answer_en:ntext',
+            'answer_en:ntext',
             //'answer_uz:ntext',
-            //'created_at',
-            //'updated_at',
-            //'user_id',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($data) {
+                    return date('d.m.Y', $data->created_at);
+                }
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($data) {
+                    return date('d.m.Y', $data->updated_at);
+                }
+            ],
+            [
+                'attribute' => 'user_id',
+                'value' => function ($data) {
+                    return $data->user->username;
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Faq $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
