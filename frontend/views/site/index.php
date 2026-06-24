@@ -116,7 +116,7 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
     <section id="right-sidebar" class="meros-section meros-about reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <h2>Medical English Institute</h2>
+                <h2><?=Yii::$app->name?></h2>
             </div>
             <div class="meros-about-card">
                <?= translate('about_content_index') ?>
@@ -176,7 +176,7 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
         <div class="container">
             <div class="meros-section-heading text-center">
                 <span class="meros-kicker">Academic calendar</span>
-                <h2>Events</h2>
+                <h2><?=translate('events')?></h2>
             </div>
             <div class="row g-4">
                <?php foreach ($events as $event): ?>

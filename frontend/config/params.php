@@ -605,10 +605,10 @@ return [
       'en' => 'Medical English Institute has completely changed the way I communicate in a professional healthcare environment. The lessons are practical, well-structured, and focused on real situations that medical professionals face every day. The teachers are supportive, experienced, and truly understand the needs of international healthcare workers. I feel much more confident speaking with patients and colleagues now.',
       'uz' => 'Medical English Institute tibbiyot sohasidagi professional muloqotga bo‘lgan yondashuvimni butunlay o‘zgartirdi. Darslar amaliy, yaxshi tuzilgan va tibbiyot mutaxassislari har kuni duch keladigan haqiqiy vaziyatlarga asoslangan. O‘qituvchilar tajribali, e’tiborli va xalqaro muhitda ishlaydigan tibbiyot xodimlarining ehtiyojlarini yaxshi tushunadilar. Endi bemorlar va hamkasblar bilan muloqot qilishda o‘zimni ancha ishonchli his qilaman.',
    ],
-   '' => [
-      'ru' => '',
-      'en' => '',
-      'uz' => '',
+   'events' => [
+      'ru' => 'События',
+      'en' => 'Events',
+      'uz' => 'Tadbirlar',
    ],
    '' => [
       'ru' => '',

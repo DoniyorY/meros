@@ -252,9 +252,9 @@ JS;
                                     <br>
                                     <?=$params['address_footer'][$lang]?>
                                     <br>
-                                    <abbr title="Telephone"><?=$params['label_phone'][$lang]?>:</abbr> <?= $params['phone'] ?>
+                                    <abbr style="text-decoration: none; cursor: default;" title="Telephone"><?=$params['label_phone'][$lang]?>:</abbr> <?= $params['phone'] ?>
                                     <br>
-                                    <abbr title="Email"><?=$params['label_email'][$lang]?>:</abbr> <a
+                                    <abbr style="text-decoration: none; cursor: default;" title="Email"><?=$params['label_email'][$lang]?>:</abbr> <a
                                             href="mailto:<?= $params['adminEmail'] ?>"><?= $params['adminEmail'] ?></a>
                                 </address>
                             </aside>

@@ -28,7 +28,7 @@ address {
 }
 
 abbr {
-    border-bottom: 1px dotted;
+    /*border-bottom: 1px dotted;*/
     color: #000;
 }
 
