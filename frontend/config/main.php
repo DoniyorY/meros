@@ -73,6 +73,17 @@ return [
                 
                 'enableRotation' => true,
              ],
+             // Отдельный лог для Zapier
+             [
+                'class' => \yii\log\FileTarget::class,
+                'categories' => ['zapier'],
+                'levels' => ['info', 'warning', 'error'],
+                'logFile' => '@runtime/logs/zapier.log',
+                'logVars' => [],
+                'exportInterval' => 1,
+                'maxFileSize' => 10240, // 10 MB
+                'maxLogFiles' => 10,
+             ],
           ],
        ],
        
