@@ -5,6 +5,8 @@ namespace frontend\models;
 use common\models\User;
 use Yii;
 use yii\base\Model;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 class ProfileForm extends Model
 {
@@ -13,6 +15,7 @@ class ProfileForm extends Model
     public $email;
     public $phone;
     public $address;
+    public $imageFile;
 
     private $_user;
 
@@ -35,6 +38,13 @@ class ProfileForm extends Model
             [['address'], 'trim'],
             [['fullname', 'username', 'email', 'phone'], 'required'],
             [['fullname', 'username', 'email', 'phone', 'address'], 'string', 'max' => 255],
+            [
+                'imageFile',
+                'file',
+                'skipOnEmpty' => true,
+                'extensions' => ['jpg', 'jpeg', 'png', 'webp'],
+                'maxSize' => 1024 * 1024 * 5,
+            ],
             ['email', 'email'],
             ['username', 'validateUniqueUsername'],
             ['email', 'validateUniqueEmail'],
@@ -49,6 +59,7 @@ class ProfileForm extends Model
             'email' => $this->t('profile_email'),
             'phone' => $this->t('profile_phone'),
             'address' => $this->t('profile_address'),
+            'imageFile' => $this->t('profile_photo'),
         ];
     }
 
@@ -78,18 +89,62 @@ class ProfileForm extends Model
 
     public function save()
     {
+        $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
+
         if (!$this->validate()) {
             return false;
         }
 
         $user = $this->_user;
+        $oldImage = $user->image;
         $user->fullname = $this->fullname;
         $user->username = $this->username;
         $user->email = $this->email;
         $user->phone = $this->phone;
         $user->address = $this->address;
 
-        return $user->save(false);
+        if ($this->imageFile) {
+            $fileName = $this->saveImageFile();
+            if ($fileName === null) {
+                return false;
+            }
+            $user->image = $fileName;
+        }
+
+        if (!$user->save(false)) {
+            return false;
+        }
+
+        if ($this->imageFile && $oldImage && $oldImage !== $user->image) {
+            $this->deleteOldImage($oldImage);
+        }
+
+        return true;
+    }
+
+    private function saveImageFile()
+    {
+        $uploadDir = Yii::getAlias('@frontend/web/uploads/users');
+        FileHelper::createDirectory($uploadDir);
+
+        $baseName = preg_replace('/[^a-z0-9_-]+/i', '-', pathinfo($this->imageFile->baseName, PATHINFO_FILENAME));
+        $baseName = trim($baseName, '-') ?: 'profile-photo';
+        $fileName = 'user_' . $this->_user->id . '_' . $baseName . '_' . date('YmdHis') . '.' . strtolower($this->imageFile->extension);
+
+        if (!$this->imageFile->saveAs($uploadDir . DIRECTORY_SEPARATOR . $fileName)) {
+            $this->addError('imageFile', $this->t('profile_photo_upload_error'));
+            return null;
+        }
+
+        return $fileName;
+    }
+
+    private function deleteOldImage($fileName)
+    {
+        $path = Yii::getAlias('@frontend/web/uploads/users/' . basename($fileName));
+        if (is_file($path)) {
+            @unlink($path);
+        }
     }
 
     private function t($key)

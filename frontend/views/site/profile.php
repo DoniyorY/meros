@@ -39,7 +39,7 @@ $subscriptionStatus = static function ($status) use ($t) {
 
 $this->title = $t('profile_page_title');
 $statusText = $user->status == User::STATUS_ACTIVE ? $t('profile_active') : $t('profile_inactive');
-$avatar = $user->image ? "$base/uploads/user/$user->image" : "$base/img/profile-avatar.jpg";
+$avatar = $user->image ? "$base/uploads/users/$user->image" : "$base/img/profile-avatar.jpg";
 $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
 ?>
 
@@ -112,7 +112,7 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                             <div class="col-lg-9">
                                 <span class="meros-kicker"><?= Html::encode($t('profile_settings_title')) ?></span>
                                 <h2 class="h4 mb-4"><?= Html::encode($t('profile_settings_title')) ?></h2>
-                                <?php $form = ActiveForm::begin(['id' => 'profile-form']); ?>
+                                <?php $form = ActiveForm::begin(['id' => 'profile-form', 'options' => ['enctype' => 'multipart/form-data']]); ?>
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <?= $form->field($profileModel, 'fullname')->textInput(['class' => 'form-control form-control-lg']) ?>
@@ -128,6 +128,18 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                     </div>
                                     <div class="col-12">
                                         <?= $form->field($profileModel, 'address')->textInput(['class' => 'form-control form-control-lg']) ?>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="meros-profile-upload">
+                                            <img src="<?= Html::encode($avatar) ?>" alt="<?= Html::encode($profileModel->fullname) ?>">
+                                            <div class="flex-grow-1">
+                                                <?= $form->field($profileModel, 'imageFile')->fileInput([
+                                                    'class' => 'form-control form-control-lg',
+                                                    'accept' => 'image/jpeg,image/png,image/webp',
+                                                ]) ?>
+                                                <p class="mb-0"><?= Html::encode($t('profile_photo_hint')) ?></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4">

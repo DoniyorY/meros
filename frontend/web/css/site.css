@@ -1888,3 +1888,36 @@ body p,
         width: 100%;
     }
 }
+
+.meros-profile-upload {
+    align-items: center;
+    background: var(--meros-primary-soft);
+    border: 1px dashed rgba(7, 113, 123, 0.32);
+    border-radius: 22px;
+    display: flex;
+    gap: 18px;
+    padding: 18px;
+}
+
+.meros-profile-upload img {
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 12px 28px rgba(4, 54, 63, 0.14);
+    flex: 0 0 auto;
+    height: 76px;
+    object-fit: cover;
+    width: 76px;
+}
+
+.meros-profile-upload p {
+    color: var(--meros-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@media (max-width: 575px) {
+    .meros-profile-upload {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

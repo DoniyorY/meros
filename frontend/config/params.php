@@ -248,6 +248,21 @@ return [
       'en' => 'Address',
       'uz' => 'Manzil',
    ],
+   'profile_photo' => [
+      'ru' => 'Фото профиля',
+      'en' => 'Profile Photo',
+      'uz' => 'Profil rasmi',
+   ],
+   'profile_photo_hint' => [
+      'ru' => 'Загрузите JPG, PNG или WEBP до 5 МБ.',
+      'en' => 'Upload JPG, PNG or WEBP up to 5 MB.',
+      'uz' => '5 MB gacha JPG, PNG yoki WEBP yuklang.',
+   ],
+   'profile_photo_upload_error' => [
+      'ru' => 'Не удалось загрузить фото профиля.',
+      'en' => 'Could not upload the profile photo.',
+      'uz' => 'Profil rasmini yuklab bo‘lmadi.',
+   ],
    'profile_member_since' => [
       'ru' => 'Дата регистрации',
       'en' => 'Member Since',
