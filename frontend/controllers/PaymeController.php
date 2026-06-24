@@ -93,8 +93,7 @@ final class PaymeController extends Controller
             ? $payload['method']
             : null;
          
-         /*$authorized = $this->isAllowedIp()
-            && $this->isAuthorized();
+         $authorized = $this->isAuthorized();
          
          if (!$authorized) {
             throw new PaymeRpcException(
@@ -105,7 +104,7 @@ final class PaymeController extends Controller
                   'Insufficient privileges'
                )
             );
-         }*/
+         }
          
          if (
             !array_key_exists('id', $payload)
