@@ -29,19 +29,19 @@ $returnURL = "сайт поставщика";
     <section class="meros-section reveal-section">
         <div class="container">
             <div class="meros-invoice-card">
-                <?php if (Yii::$app->user->isGuest):?>
-                <div class="alert alert-warning meros-invoice-alert">
-                    You are not registered yet. Please
-                    <a href="<?= Url::to(['site/login']) ?>">log in</a> or fill the fields to create an account.
-                </div>
-                <?php endif;?>
+               <?php if (Yii::$app->user->isGuest): ?>
+                   <div class="alert alert-warning meros-invoice-alert">
+                       You are not registered yet. Please
+                       <a href="<?= Url::to(['site/login']) ?>">log in</a> or fill the fields to create an account.
+                   </div>
+               <?php endif; ?>
                 <!-- Header -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 meros-invoice-header">
                     <div>
                         <span class="meros-kicker">Secure checkout</span>
-                            <h1 class="h3 mb-1">Invoice</h1>
+                        <h1 class="h3 mb-1">Invoice</h1>
                         <small class="text-muted">
-                            Invoice #<?=$billing->id?>
+                            Invoice #<?= $billing->id ?>
                         </small>
                     </div>
 
@@ -63,101 +63,107 @@ $returnURL = "сайт поставщика";
                     <div class="col-lg-7">
                         <div class="meros-invoice-panel">
 
-                        <h5 class="mb-3">Customer Information</h5>
-                       <?php if (Yii::$app->user->isGuest): ?>
-                          <?php $form = ActiveForm::begin(['action'=>Url::to(['guest-register'])]); ?>
+                            <h5 class="mb-3">Customer Information</h5>
+                           <?php if (Yii::$app->user->isGuest): ?>
+                              <?php $form = ActiveForm::begin(['action' => Url::to(['guest-register'])]); ?>
 
-                           <div class="row">
-                               <div class="col-md-12 mb-3">
-                                   <div class="form-group">
-                                       <label>Email</label>
-                                       <input name="User[email]" type="email" class="form-control">
+                               <div class="row">
+                                   <div class="col-md-12 mb-3">
+                                       <div class="form-group">
+                                           <label>Email</label>
+                                           <input name="User[email]" type="email" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>First Name</label>
-                                       <input name="User[first_name]" type="text" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>First Name</label>
+                                           <input name="User[first_name]" type="text" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
 
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Last Name</label>
-                                       <input name="User[last_name]" type="text" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Last Name</label>
+                                           <input name="User[last_name]" type="text" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
 
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Username</label>
-                                       <input name="User[username]" type="text" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Username</label>
+                                           <input name="User[username]" type="text" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Phone</label>
-                                       <input type="text" name="User[phone]" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Phone</label>
+                                           <input type="text" name="User[phone]" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Password</label>
-                                       <input name="User[password]" type="password" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Password</label>
+                                           <input name="User[password]" type="password" class="form-control">
+                                       </div>
                                    </div>
-                               </div>
 
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Confirm Password</label>
-                                       <input name="User[password_confirm]" type="password" class="form-control">
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Confirm Password</label>
+                                           <input name="User[password_confirm]" type="password" class="form-control">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-12">
+                                       <div class="form-group">
+                                           <button type="submit" class="btn btn-primary meros-primary-btn w-100">
+                                               Submit
+                                           </button>
+                                       </div>
                                    </div>
                                </div>
-                               <div class="col-md-12">
-                                   <div class="form-group">
-                                       <button type="submit" class="btn btn-primary meros-primary-btn w-100">Submit</button>
-                                   </div>
-                               </div>
-                           </div>
-                       
-                          <?php ActiveForm::end(); ?>
-                       <?php else: ?>
-                          <?php $form = ActiveForm::begin();
-                          $user = Yii::$app->user->identity;
-                          $nameParts = preg_split('/\s+/', trim((string) $user->fullname), 2);
-                          $first_name = $nameParts[0] ?? '';
-                          $last_name = $nameParts[1] ?? ''; ?>
+                              
+                              <?php ActiveForm::end(); ?>
+                           <?php else: ?>
+                              <?php $form = ActiveForm::begin();
+                              $user = Yii::$app->user->identity;
+                              $nameParts = preg_split('/\s+/', trim((string)$user->fullname), 2);
+                              $first_name = $nameParts[0] ?? '';
+                              $last_name = $nameParts[1] ?? ''; ?>
 
-                           <div class="row">
-                               <div class="col-md-12 mb-3">
-                                   <div class="form-group">
-                                       <label>Email</label>
-                                       <input name="User[email]" type="email" class="form-control" value="<?= Html::encode($user->email) ?>" readonly>
+                               <div class="row">
+                                   <div class="col-md-12 mb-3">
+                                       <div class="form-group">
+                                           <label>Email</label>
+                                           <input name="User[email]" type="email" class="form-control"
+                                                  value="<?= Html::encode($user->email) ?>" readonly>
+                                       </div>
                                    </div>
-                               </div>
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>First Name</label>
-                                       <input name="User[first_name]" type="text" class="form-control" value="<?= Html::encode($first_name) ?>" readonly>
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>First Name</label>
+                                           <input name="User[first_name]" type="text" class="form-control"
+                                                  value="<?= Html::encode($first_name) ?>" readonly>
+                                       </div>
                                    </div>
-                               </div>
 
-                               <div class="col-md-6 mb-3">
-                                   <div class="form-group">
-                                       <label>Last Name</label>
-                                       <input name="User[last_name]" type="text" class="form-control" value="<?= Html::encode($last_name) ?>" readonly>
+                                   <div class="col-md-6 mb-3">
+                                       <div class="form-group">
+                                           <label>Last Name</label>
+                                           <input name="User[last_name]" type="text" class="form-control"
+                                                  value="<?= Html::encode($last_name) ?>" readonly>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-12 mb-3">
+                                       <div class="form-group">
+                                           <label>Phone</label>
+                                           <input type="text" name="User[phone]" class="form-control"
+                                                  value="<?= Html::encode($user->phone) ?>" readonly>
+                                       </div>
                                    </div>
                                </div>
-                               <div class="col-md-12 mb-3">
-                                   <div class="form-group">
-                                       <label>Phone</label>
-                                       <input type="text" name="User[phone]" class="form-control" value="<?= Html::encode($user->phone) ?>" readonly>
-                                   </div>
-                               </div>
-                           </div>
-                          
-                          <?php ActiveForm::end(); ?>
-                       <?php endif; ?>
+                              
+                              <?php ActiveForm::end(); ?>
+                           <?php endif; ?>
                         </div>
                     </div>
 
@@ -166,38 +172,42 @@ $returnURL = "сайт поставщика";
 
                         <div class="meros-order-summary">
 
-                                <h5 class="mb-4">
-                                    Order Summary
-                                </h5>
+                            <h5 class="mb-4">
+                                Order Summary
+                            </h5>
 
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Product</span>
-                                    <strong>
-                                       <?= Html::encode($model->{"name_$lang"}) ?>
-                                    </strong>
-                                </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Product</span>
+                                <strong>
+                                   <?= Html::encode($model->{"name_$lang"}) ?>
+                                </strong>
+                            </div>
 
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Duration</span>
-                                    <strong>3 Months</strong>
-                                </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Duration</span>
+                                <strong><?php
+                                   (int)$duration = $billing->subscription->duration_days / 30;
+                                       echo "$duration months";
+                                       ?>
+                                </strong>
+                            </div>
 
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Price</span>
-                                    <strong>
-                                       <?= Yii::$app->formatter->asDecimal($model->price) ?>
-                                        UZS
-                                    </strong>
-                                </div>
-                                <hr>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Price</span>
+                                <strong>
+                                   <?= Yii::$app->formatter->asDecimal($model->price) ?>
+                                    UZS
+                                </strong>
+                            </div>
+                            <hr>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="h5 mb-0">Total</span>
-                                    <span class="h4 text-primary mb-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5 mb-0">Total</span>
+                                <span class="h4 text-primary mb-0">
                                     <?= Yii::$app->formatter->asDecimal($model->price) ?>
                                     UZS
                                 </span>
-                                </div>
+                            </div>
                            <?php if (!Yii::$app->user->isGuest): ?>
 
                                <button
@@ -225,7 +235,7 @@ $returnURL = "сайт поставщика";
                                    <input
                                            type="hidden"
                                            name="amount"
-                                           value="<?= (int) $billing->amount ?>"
+                                           value="<?= (int)$billing->amount ?>"
                                    >
 
                                    <input
@@ -255,7 +265,7 @@ $returnURL = "сайт поставщика";
                                    <input
                                            type="hidden"
                                            name="transaction_param"
-                                           value="<?= (int) $billing->id ?>"
+                                           value="<?= (int)$billing->id ?>"
                                    >
 
                                    <input
