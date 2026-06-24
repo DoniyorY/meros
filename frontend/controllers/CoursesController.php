@@ -15,11 +15,14 @@ use yii\web\NotFoundHttpException;
 
 class CoursesController extends Controller
 {
-   
+
    public function actionIndex($category, $slug)
    {
       if ($category === 'healthcare-employers' && $slug === 'hospitals') {
          return $this->actionHospitals($category, $slug);
+      }
+      if ($category === 'healthcare-employers' && in_array($slug, ['recruit', 'international-healthcare-recruitment-projects', 'healthcare-recruitment-companies'], true)) {
+         return $this->actionRecruit($category, $slug);
       }
 
       $category = CourseCategory::findOne(['slug' => $category]);
@@ -51,7 +54,22 @@ class CoursesController extends Controller
          'subs' => $subs,
       ]);
    }
-   
+
+   public function actionRecruit($category, $course)
+   {
+      $category = CourseCategory::findOne(['slug' => $category]);
+      $courses = Courses::findOne(['slug' => $course]);
+      if ($category === null || $courses === null) {
+         throw new NotFoundHttpException('Курс не найден.');
+      }
+
+      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      return $this->render('recruit', [
+         'courses' => $courses,
+         'subs' => $subs,
+      ]);
+   }
+
    public function actionGetPlan($id)
    {
       $subs = SubscriptionPlans::findOne($id);
@@ -65,16 +83,16 @@ class CoursesController extends Controller
       if (!$subs) {
          throw new \yii\web\NotFoundHttpException();
       }
-      
+
       $cookies = Yii::$app->request->cookies;
-      
+
       $billing = null;
-      
+
       // Ищем существующий billing по токену из cookie
       if ($cookies->has('billing_token')) {
-         
+
          $billingToken = $cookies->getValue('billing_token');
-         
+
          $billing = Billing::find()
             ->where([
                'billing_token' => $billingToken,
@@ -85,16 +103,16 @@ class CoursesController extends Controller
             $billing->user_id = Yii::$app->user->id;
             $billing->save(false);
          }
-         
+
          // если пользователь открыл другой тариф
          if ($billing && $billing->subscription_id != $subs->id) {
             $billing = null;
          }
       }
-      
+
       // если не нашли - создаем новый
       if (!$billing) {
-         
+
          $billing = new Billing([
             'billing_token' => Yii::$app->security->generateRandomString(32),
             'user_id' => Yii::$app->user->id ?? null,
@@ -104,9 +122,9 @@ class CoursesController extends Controller
             'created_at' => time(),
             'updated_at' => time(),
          ]);
-         
+
          $billing->save(false);
-         
+
          Yii::$app->response->cookies->add(
             new \yii\web\Cookie([
                'name' => 'billing_token',
@@ -116,14 +134,14 @@ class CoursesController extends Controller
             ])
          );
       }
-      
-      
+
+
       return $this->render('invoice', [
          'model' => $subs,
          'billing' => $billing,
       ]);
    }
-   
+
    public function actionGuestRegister()
    {
       if (Yii::$app->request->isPost) {
@@ -157,11 +175,11 @@ class CoursesController extends Controller
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', $e->getMessage());
          }
-         
+
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
-   
+
    public function actionConfirm($id)
    {
       $user = User::findOne(['id'=>$id]);
@@ -185,7 +203,7 @@ class CoursesController extends Controller
       print_r($user->sendEmail($user));
       die();
    }
-   
+
    private static function getClient()
    {
       return new \yii\httpclient\Client();
