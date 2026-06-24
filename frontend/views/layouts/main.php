@@ -104,9 +104,6 @@ $params = Yii::$app->params;
                                             <a href="<?= Url::to(['site/team']) ?>"> <?=$params['meet_the_team'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/partners']) ?>"> <?=$params['our_partners'][$lang]?></a>
-                                        </li>
-                                        <li>
                                             <a href="<?= Url::to(['site/policy']) ?>"> <?=$params['policy'][$lang]?></a>
                                         </li>
                                         <li>

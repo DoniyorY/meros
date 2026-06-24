@@ -477,17 +477,17 @@ return [
       'ru' => '
       <span>Узбекистан, Самарканд</span>
                                     <br>
-                                    <span>улица Беруни, 1/5</span>
+                                    <span>улица Али Кушчи, 35</span>
       ',
       'en' => '
       <span>Uzbekistan Samarkand</span>
                                     <br>
-                                    <span>Beruniy street, 1/5</span>
+                                    <span>Ali Kushchi street, 35</span>
       ',
       'uz' => '
       <span>O‘zbekiston, Samarqand</span>
                                     <br>
-                                    <span>Beruniy ko‘chasi, 1/5</span>
+                                    <span>Ali Qushchi ko‘chasi, 35</span>
       ',
    ],
    'important_links' => [

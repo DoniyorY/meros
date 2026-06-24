@@ -152,7 +152,7 @@ class SiteController extends Controller
             ->with(['plan'])
             ->orderBy(['expires_date' => SORT_DESC, 'id' => SORT_DESC])
             ->one();
-
+        
         $subscriptionHistory = UserSubscriptions::find()
             ->where(['user_id' => $user->id])
             ->with(['plan'])

@@ -13,7 +13,7 @@ function translate($key)
 $this->title = translate('about_meros_international_institute');
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
-$galleryImages = range(1, 14);
+$galleryImages = range(1, 4);
 
 ?>
 <!-- Breadcrumb -->

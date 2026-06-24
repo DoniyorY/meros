@@ -6,6 +6,7 @@ use common\models\AuthAssignment;
 use common\models\Billing;
 use common\models\CourseCategory;
 use common\models\Courses;
+use common\models\Faq;
 use common\models\SubscriptionPlans;
 use common\models\User;
 use Yii;
@@ -26,11 +27,13 @@ class CoursesController extends Controller
       if ($category === null || $courses === null) {
          throw new NotFoundHttpException('Курс не найден.');
       }
-      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      $faqs = Faq::find()->where(['course_id'=>$courses->id])->asArray()->all();
       $view = (int)$courses->page_type === 0 ? 'b2b' : 'no_subs';
+      $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       return $this->render($view, [
          'courses' => $courses,
-         'subs' => $subs
+         'subs' => $subs,
+         'faqItems' => $faqs,
       ]);
    }
 
