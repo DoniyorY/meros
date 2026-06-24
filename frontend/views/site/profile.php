@@ -43,26 +43,39 @@ $avatar = $user->image ? "$base/uploads/user/$user->image" : "$base/img/profile-
 $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
 ?>
 
-<div class="container">
+<div class="container profile-breadcrumb">
     <ol class="breadcrumb flex-wrap">
         <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
 
-<div id="page-content">
-    <div class="container profile-page pb-5">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-            <div>
-                <h1 class="mb-1"><?= Html::encode($this->title) ?></h1>
-                <div class="text-muted"><?= Html::encode($profileModel->email) ?></div>
+<div id="page-content" class="meros-modern-page meros-profile-page">
+    <section class="meros-profile-hero">
+        <div class="container">
+            <div class="meros-profile-hero-card reveal-section">
+                <div class="meros-profile-hero-copy">
+                    <span class="meros-kicker"><?= Html::encode($t('profile_tab_profile')) ?></span>
+                    <h1><?= Html::encode($this->title) ?></h1>
+                    <p><?= Html::encode($profileModel->email) ?></p>
+                </div>
+                <div class="meros-profile-user-card">
+                    <img class="meros-profile-avatar" src="<?= Html::encode($avatar) ?>" alt="<?= Html::encode($profileModel->fullname) ?>">
+                    <div>
+                        <strong><?= Html::encode($profileModel->fullname) ?></strong>
+                        <span>@<?= Html::encode($profileModel->username) ?></span>
+                    </div>
+                    <span class="meros-status-pill">
+                        <i class="fa fa-check-circle"></i><?= Html::encode($statusText) ?>
+                    </span>
+                </div>
             </div>
-            <span class="badge bg-success-subtle text-success border border-success-subtle align-self-start align-self-md-center">
-                <?= Html::encode($statusText) ?>
-            </span>
         </div>
+    </section>
 
-        <ul class="nav nav-tabs profile-tabs" id="profile-tabs" role="tablist">
+    <div class="container profile-page pb-5">
+
+        <ul class="nav profile-tabs meros-profile-tabs" id="profile-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tab-profile-link" data-bs-toggle="tab" data-bs-target="#tab-profile" type="button" role="tab">
                     <?= Html::encode($t('profile_tab_profile')) ?>
@@ -82,12 +95,12 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
 
         <div class="tab-content profile-tab-content">
             <div class="tab-pane fade show active" id="tab-profile" role="tabpanel">
-                <div class="card border-0 shadow-sm profile-card">
-                    <div class="card-body p-4 p-lg-5">
+                <div class="profile-card meros-profile-card">
+                    <div class="profile-card-body p-4 p-lg-5">
                         <div class="row g-4">
                             <div class="col-lg-3">
-                                <div class="d-flex flex-column align-items-start">
-                                    <img class="profile-avatar-fixed mb-3" src="<?= Html::encode($avatar) ?>" alt="<?= Html::encode($profileModel->fullname) ?>">
+                                <div class="meros-profile-side">
+                                    <img class="profile-avatar-fixed meros-profile-avatar-lg mb-3" src="<?= Html::encode($avatar) ?>" alt="<?= Html::encode($profileModel->fullname) ?>">
                                     <h3 class="h5 mb-1"><?= Html::encode($profileModel->fullname) ?></h3>
                                     <div class="text-muted">@<?= Html::encode($profileModel->username) ?></div>
                                     <div class="small text-muted mt-3">
@@ -97,6 +110,7 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                 </div>
                             </div>
                             <div class="col-lg-9">
+                                <span class="meros-kicker"><?= Html::encode($t('profile_settings_title')) ?></span>
                                 <h2 class="h4 mb-4"><?= Html::encode($t('profile_settings_title')) ?></h2>
                                 <?php $form = ActiveForm::begin(['id' => 'profile-form']); ?>
                                 <div class="row g-3">
@@ -117,7 +131,7 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4">
-                                    <?= Html::submitButton($t('profile_save_button'), ['class' => 'btn btn-color-primary']) ?>
+                                    <?= Html::submitButton($t('profile_save_button'), ['class' => 'btn btn-primary meros-primary-btn']) ?>
                                 </div>
                                 <?php ActiveForm::end(); ?>
                             </div>
@@ -127,8 +141,9 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
             </div>
 
             <div class="tab-pane fade" id="tab-subscription" role="tabpanel">
-                <div class="card border-0 shadow-sm profile-card mb-4">
-                    <div class="card-body p-4 p-lg-5">
+                <div class="profile-card meros-profile-card mb-4">
+                    <div class="profile-card-body p-4 p-lg-5">
+                        <span class="meros-kicker"><?= Html::encode($t('profile_tab_subscription')) ?></span>
                         <h2 class="h4 mb-4"><?= Html::encode($t('profile_subscription_title')) ?></h2>
 
                         <?php if ($currentSubscription): ?>
@@ -171,7 +186,7 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                 </div>
                             </div>
                         <?php else: ?>
-                            <div class="alert alert-light border d-flex align-items-center gap-3 mb-0">
+                            <div class="profile-empty-state meros-profile-empty mb-0">
                                 <i class="fa fa-credit-card text-primary"></i>
                                 <span><?= Html::encode($t('profile_no_subscription')) ?></span>
                             </div>
@@ -179,8 +194,9 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                     </div>
                 </div>
 
-                <div class="card border-0 shadow-sm profile-card">
-                    <div class="card-body p-4 p-lg-5">
+                <div class="profile-card meros-profile-card">
+                    <div class="profile-card-body p-4 p-lg-5">
+                        <span class="meros-kicker"><?= Html::encode($t('profile_subscription_history')) ?></span>
                         <h2 class="h4 mb-4"><?= Html::encode($t('profile_subscription_history')) ?></h2>
 
                         <?php if ($subscriptionHistory): ?>
@@ -217,15 +233,16 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                 </table>
                             </div>
                         <?php else: ?>
-                            <div class="alert alert-light border mb-0"><?= Html::encode($t('profile_no_history')) ?></div>
+                            <div class="profile-empty-state meros-profile-empty mb-0"><i class="fa fa-list-alt"></i><span><?= Html::encode($t('profile_no_history')) ?></span></div>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-change-password" role="tabpanel">
-                <div class="card border-0 shadow-sm profile-card">
-                    <div class="card-body p-4 p-lg-5">
+                <div class="profile-card meros-profile-card">
+                    <div class="profile-card-body p-4 p-lg-5">
+                        <span class="meros-kicker"><?= Html::encode($t('profile_tab_password')) ?></span>
                         <h2 class="h4 mb-4"><?= Html::encode($t('profile_security_title')) ?></h2>
                         <div class="row g-4">
                             <div class="col-lg-6">
@@ -233,14 +250,14 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                 <?= $form->field($passwordModel, 'currentPassword')->passwordInput(['class' => 'form-control form-control-lg']) ?>
                                 <?= $form->field($passwordModel, 'newPassword')->passwordInput(['class' => 'form-control form-control-lg']) ?>
                                 <?= $form->field($passwordModel, 'repeatPassword')->passwordInput(['class' => 'form-control form-control-lg']) ?>
-                                <?= Html::submitButton($t('profile_change_password_button'), ['class' => 'btn btn-color-primary']) ?>
+                                <?= Html::submitButton($t('profile_change_password_button'), ['class' => 'btn btn-primary meros-primary-btn']) ?>
                                 <?php ActiveForm::end(); ?>
                             </div>
                             <div class="col-lg-6">
-                                <div class="profile-reset-box h-100">
+                                <div class="profile-reset-box meros-profile-reset h-100">
                                     <h3 class="h5"><?= Html::encode($t('profile_reset_password_button')) ?></h3>
                                     <p><?= Html::encode($t('profile_reset_password_text')) ?></p>
-                                    <a class="btn btn-framed btn-color-grey" href="<?= Url::to(['site/request-password-reset']) ?>">
+                                    <a class="btn btn-outline-primary meros-secondary-btn" href="<?= Url::to(['site/request-password-reset']) ?>">
                                         <?= Html::encode($t('profile_reset_password_button')) ?>
                                     </a>
                                 </div>

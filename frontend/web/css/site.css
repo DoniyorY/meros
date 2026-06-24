@@ -1624,3 +1624,267 @@ body p,
     display: block;
     float: left;
 }
+
+/* Profile page aligned with the Meros redesign */
+.profile-breadcrumb {
+    margin-top: 24px;
+}
+
+.profile-breadcrumb .breadcrumb {
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.meros-profile-page {
+    background: linear-gradient(135deg, #f7fbfb 0%, #eef8f9 100%);
+    margin-top: -10px;
+    min-height: 70vh;
+}
+
+.meros-profile-hero {
+    overflow: hidden;
+    padding: 42px 0 26px;
+    position: relative;
+}
+
+.meros-profile-hero:before,
+.meros-profile-hero:after {
+    background: rgba(75, 192, 202, 0.20);
+    border-radius: 50%;
+    content: "";
+    filter: blur(2px);
+    height: 190px;
+    position: absolute;
+    width: 190px;
+}
+
+.meros-profile-hero:before {
+    left: 5%;
+    top: -70px;
+}
+
+.meros-profile-hero:after {
+    bottom: -80px;
+    right: 9%;
+}
+
+.meros-profile-hero-card {
+    align-items: center;
+    background: radial-gradient(circle at top left, rgba(75, 192, 202, 0.28), transparent 34%), linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 34px;
+    box-shadow: var(--meros-shadow);
+    display: grid;
+    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    overflow: hidden;
+    padding: clamp(28px, 5vw, 54px);
+    position: relative;
+    z-index: 1;
+}
+
+.meros-profile-hero-card .meros-kicker,
+.meros-profile-hero-card h1,
+.meros-profile-hero-card p {
+    color: #fff;
+}
+
+.meros-profile-hero-card h1 {
+    font-size: clamp(34px, 5vw, 58px);
+    margin: 0 0 10px;
+}
+
+.meros-profile-hero-card p {
+    margin: 0;
+    opacity: 0.86;
+}
+
+.meros-profile-user-card {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 28px;
+    color: #fff;
+    display: grid;
+    gap: 14px;
+    justify-items: center;
+    min-width: 250px;
+    padding: 24px;
+    text-align: center;
+    backdrop-filter: blur(14px);
+}
+
+.meros-profile-user-card strong,
+.meros-profile-user-card span {
+    display: block;
+}
+
+.meros-profile-user-card strong {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.meros-profile-user-card span {
+    opacity: 0.84;
+}
+
+.meros-profile-avatar,
+.meros-profile-avatar-lg {
+    border: 4px solid rgba(255, 255, 255, 0.88);
+    box-shadow: 0 18px 42px rgba(4, 54, 63, 0.22);
+}
+
+.meros-profile-avatar {
+    border-radius: 50%;
+    height: 92px;
+    object-fit: cover;
+    width: 92px;
+}
+
+.meros-status-pill {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    display: inline-flex !important;
+    font-weight: 800;
+    gap: 8px;
+    opacity: 1 !important;
+    padding: 9px 14px;
+}
+
+.meros-profile-tabs {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 999px;
+    box-shadow: 0 16px 44px rgba(4, 54, 63, 0.08);
+    display: inline-flex;
+    gap: 6px;
+    margin: 6px 0 24px;
+    padding: 8px;
+}
+
+.meros-profile-tabs .nav-link {
+    border: 0;
+    border-radius: 999px;
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+    padding: 12px 20px;
+}
+
+.meros-profile-tabs .nav-link.active,
+.meros-profile-tabs .nav-link:hover {
+    background: linear-gradient(135deg, var(--meros-primary), var(--meros-accent));
+    color: #fff;
+}
+
+.meros-profile-card {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 30px;
+    box-shadow: var(--meros-shadow);
+    overflow: hidden;
+}
+
+.meros-profile-side {
+    background: linear-gradient(180deg, #ffffff 0%, var(--meros-primary-soft) 100%);
+    border: 1px solid var(--meros-border);
+    border-radius: 24px;
+    height: 100%;
+    padding: 24px;
+}
+
+.meros-profile-page .form-control {
+    border: 1px solid var(--meros-border);
+    border-radius: 16px;
+    min-height: 50px;
+}
+
+.meros-profile-page label {
+    color: var(--meros-primary-dark);
+    font-weight: 800;
+}
+
+.meros-profile-page .profile-info-tile,
+.meros-profile-reset,
+.meros-profile-empty {
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbfb 100%);
+    border: 1px solid var(--meros-border);
+    border-radius: 22px;
+    box-shadow: 0 12px 34px rgba(4, 54, 63, 0.07);
+}
+
+.meros-profile-page .profile-info-tile span,
+.meros-profile-page .profile-history-table th {
+    color: var(--meros-primary);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.meros-profile-page .profile-info-tile strong,
+.meros-profile-page h2,
+.meros-profile-page h3 {
+    color: var(--meros-primary-dark);
+    font-weight: 900;
+}
+
+.meros-profile-page .profile-history-table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.meros-profile-page .profile-history-table tbody tr {
+    box-shadow: 0 10px 26px rgba(4, 54, 63, 0.06);
+}
+
+.meros-profile-page .profile-history-table td {
+    background: #fff;
+    border-bottom: 1px solid var(--meros-border);
+    border-top: 1px solid var(--meros-border);
+}
+
+.meros-profile-page .profile-history-table td:first-child {
+    border-left: 1px solid var(--meros-border);
+    border-radius: 16px 0 0 16px;
+}
+
+.meros-profile-page .profile-history-table td:last-child {
+    border-radius: 0 16px 16px 0;
+    border-right: 1px solid var(--meros-border);
+}
+
+.meros-secondary-btn {
+    border-color: var(--meros-primary);
+    border-radius: 999px;
+    color: var(--meros-primary);
+    font-weight: 800;
+    padding: 12px 24px;
+}
+
+.meros-secondary-btn:hover {
+    background: var(--meros-primary);
+    border-color: var(--meros-primary);
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .meros-profile-hero-card {
+        grid-template-columns: 1fr;
+    }
+
+    .meros-profile-user-card {
+        min-width: 0;
+    }
+
+    .meros-profile-tabs {
+        align-items: stretch;
+        border-radius: 24px;
+        display: grid;
+        width: 100%;
+    }
+
+    .meros-profile-tabs .nav-link {
+        width: 100%;
+    }
+}
