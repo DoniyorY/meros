@@ -389,7 +389,9 @@ final class PaymeController extends Controller
          $transaction->perform_time = $nowMs;
          $transaction->updated_at = time();
          $this->saveTransaction($transaction);
-         
+         if ($billing !== null) {
+            ApiController::sendZapierOrderPaidWebhook($billing);
+         }
          $dbTransaction->commit();
          
          return $this->performResponse($transaction);
