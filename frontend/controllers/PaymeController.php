@@ -651,7 +651,7 @@ final class PaymeController extends Controller
       
       if (!hash_equals($storedToken, $paymeId)) {
          throw new PaymeRpcException(
-            -31008,
+            -31050,
             $this->message(
                'Этот счёт ожидает другую транзакцию Payme',
                'Bu hisob boshqa Payme tranzaksiyasini kutmoqda',
@@ -1304,45 +1304,28 @@ final class PaymeController extends Controller
       
       return $value;
    }
-   
-   private function isAuthorized(): bool
-   {
-      $authorization = (string) Yii::$app->request
-         ->headers
-         ->get('Authorization', '');
-      
-      if (!str_starts_with($authorization, 'Basic ')) {
-         return false;
-      }
-      
-      $decoded = base64_decode(
-         substr($authorization, 6),
-         true
-      );
-      
-      if (
-         $decoded === false
-         || !str_contains($decoded, ':')
-      ) {
-         return false;
-      }
-      
-      [$login, $password] = explode(':', $decoded, 2);
-      
-      $expectedLogin = (string) $this->config(
-         'login',
-         ''
-      );
-      $expectedPassword = (string) $this->config(
-         'key',
-         ''
-      );
-      
-      return $expectedLogin !== ''
-         && $expectedPassword !== ''
-         && hash_equals($expectedLogin, $login)
-         && hash_equals($expectedPassword, $password);
-   }
+
+    private function isAuthorized(): bool
+    {
+        $authorization = trim((string) Yii::$app->request
+            ->headers
+            ->get('Authorization', ''));
+
+        $key = (string) (
+            Yii::$app->params['payme']['key'] ?? ''
+        );
+
+        if ($authorization === '' || $key === '') {
+            return false;
+        }
+
+        $expectedAuthorization = 'Basic ' . base64_encode($key);
+
+        return hash_equals(
+            $expectedAuthorization,
+            $authorization
+        );
+    }
    
    private function isAllowedIp(): bool
    {

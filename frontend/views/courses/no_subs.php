@@ -115,8 +115,8 @@ $base = Yii::$app->request->baseUrl;
                            <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <img src="<?= "$base/images/English-for-Doctors-1-300x231.png" ?>" alt="English for Doctors"
+                    <div class="col-md-6 mt-5">
+                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="English for Doctors"
                              class="package-image">
                     </div>
                 </div>
@@ -202,7 +202,7 @@ $base = Yii::$app->request->baseUrl;
                                <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card meros-plan-card reveal-section">
                                    <header><h3><?= $item->{"name_$lang"} ?></h3></header>
                                    <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?> uzs</div>
-                                   <figure><?php
+                                   <figure style="height: 27px;"><?php
                                       if ($item->duration_days == 30) {
                                          $month = floor($item->duration_days / 30);
                                          switch ($lang) {
