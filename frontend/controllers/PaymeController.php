@@ -33,11 +33,17 @@ final class PaymeController extends Controller
       return parent::beforeAction($action);
    }
    
+   public function actionTest()
+   {
+      echo "<pre>";
+      print_r(base64_decode('UGF5Y29tOm9FUXptcSY4QGlOeTIwanY2YW1Nc3N3ZCZtQUhzcEJ2I21VWg=='));
+      die();
+   }
+   
    public function actionWebhook(): array
    {
       Yii::$app->response->format = Response::FORMAT_JSON;
       Yii::$app->response->statusCode = 200;
-      
       $request = Yii::$app->request;
       $rawBody = $request->getRawBody();
       $startedAt = microtime(true);
@@ -1309,11 +1315,10 @@ final class PaymeController extends Controller
         $authorization = trim((string) Yii::$app->request
             ->headers
             ->get('Authorization', ''));
-
-        $key = (string) (
-            Yii::$app->params['payme']['key'] ?? ''
-        );
-
+         $login = Yii::$app->params['payme']['login'];
+         $pass = Yii::$app->params['payme']['key'];
+        $key = (string) "$login:$pass";
+        
         if ($authorization === '' || $key === '') {
             return false;
         }

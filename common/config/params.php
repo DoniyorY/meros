@@ -8,7 +8,7 @@ return [
    'user.passwordMinLength' => 6,
    'payme' => [
       'merchantId' => '6a353561395419e77320e0dd',
-      //'login' => getenv('PAYME_LOGIN') ?: '',
+      'login' => 'Paycom',
       'key' => 'oEQzmq&8@iNy20jv6amMsswd&mAHspBv#mUZ',
       
       'checkoutUrl' => 'https://test.paycom.uz', //'https://checkout.paycom.uz'
