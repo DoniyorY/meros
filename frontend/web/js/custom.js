@@ -169,6 +169,38 @@ $(document).ready(function($) {
         //responsiveBaseWidth: ".author"
     });
 
+//  Subscription Plans Carousel
+
+    if ($('.subscription-plans-carousel').length > 0) {
+        $('.subscription-plans-carousel').owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 24,
+            autoplay: true,
+            autoplayTimeout: 4500,
+            autoplayHoverPause: true,
+            smartSpeed: 650,
+            nav: true,
+            dots: true,
+            navText: ['‹', '›'],
+            responsive: {
+                0: { items: 1 },
+                768: { items: 2 },
+                992: { items: 3 }
+            },
+            // Owl Carousel 1.x fallbacks kept for older bundled assets.
+            autoPlay: 4500,
+            stopOnHover: true,
+            navigation: true,
+            pagination: true,
+            navigationText: ['‹', '›'],
+            itemsDesktop: [1199, 3],
+            itemsDesktopSmall: [991, 2],
+            itemsTablet: [767, 1],
+            itemsMobile: [479, 1]
+        });
+    }
+
 //  Smooth Scroll
 
     $('.navigation-wrapper .nav a[href^="#"], a[href^="#"].roll').on('click',function (e) {

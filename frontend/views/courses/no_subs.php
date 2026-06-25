@@ -196,9 +196,17 @@ $base = Yii::$app->request->baseUrl;
                                 </div>
                             </div>
                         </div>
+                       <?php
+                       $subscriptionPlanCount = (is_array($subs) || $subs instanceof Countable) ? count($subs) : 0;
+                       $useSubscriptionCarousel = $subscriptionPlanCount > 3;
+                       ?>
+                       <?php if ($useSubscriptionCarousel): ?>
+                           <div class="col-12 subscription-plans-carousel-wrap">
+                               <div class="subscription-plans-carousel owl-carousel owl-theme">
+                       <?php endif; ?>
                        <?php $i = 1;
                        foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
-                           <div class="col-lg-4 col-md-6 col-12">
+                           <div class="<?= $useSubscriptionCarousel ? 'subscription-plan-carousel-item' : 'col-lg-4 col-md-6 col-12' ?>">
                                <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card meros-plan-card reveal-section">
                                    <header><h3><?= $item->{"name_$lang"} ?></h3></header>
                                    <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?> uzs</div>
@@ -259,8 +267,12 @@ $base = Yii::$app->request->baseUrl;
                                        </div>
                                    </div>
                                </div><!-- /.price-box -->
-                           </div><!-- /.col-md-3 -->
+                           </div><!-- /.subscription plan item -->
                           <?php $i++; endforeach; ?>
+                       <?php if ($useSubscriptionCarousel): ?>
+                               </div>
+                           </div>
+                       <?php endif; ?>
 
                         <div class="col-12">
                             <div class="meros-faq-card reveal-section">
