@@ -641,12 +641,24 @@ body p,
 .meros-quote-card p { font-size: 23px; line-height: 1.25; }
 .meros-quote-card footer { font-weight: 800; opacity: 0.82; }
 
-.meros-comments-carousel .meros-comment-slide {
-    padding: 0 18px;
+.meros-comments-carousel .owl-wrapper-outer {
+    overflow: hidden;
 }
 
 .meros-comments-carousel .owl-item {
-    width: 100% !important;
+    overflow: hidden;
+}
+
+.meros-comments-carousel .meros-comment-slide {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0 18px;
+    white-space: normal;
+    width: 100%;
+}
+
+.meros-comments-carousel .meros-comment-slide p {
+    overflow-wrap: break-word;
 }
 
 .meros-comments-carousel .owl-controls {
