@@ -6,13 +6,16 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var Billing $billing */
 
-$this->title = 'Результат оплаты CLICK';
+$params = Yii::$app->params;
+$lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) { return $params[$key][$lang] ?? $params[$key]['en'] ?? $key; };
+$this->title = $t('payment_click_result_title');
 
 $statusText = match ((int) $billing->payment_status) {
-   Billing::STATUS_SUCCESS => 'Оплата успешно выполнена.',
-   Billing::STATUS_FAILED => 'Оплата завершилась ошибкой.',
-   Billing::STATUS_CANCELLED => 'Оплата отменена.',
-   default => 'Платёж ещё обрабатывается.',
+   Billing::STATUS_SUCCESS => $t('payment_success'),
+   Billing::STATUS_FAILED => $t('payment_failed'),
+   Billing::STATUS_CANCELLED => $t('payment_cancelled'),
+   default => $t('payment_pending'),
 };
 
 $statusClass = match ((int) $billing->payment_status) {
@@ -30,12 +33,12 @@ $statusClass = match ((int) $billing->payment_status) {
         </h4>
 
         <div>
-            Счёт:
+            <?= Html::encode($t('invoice_number')) ?>:
             <strong>#<?= (int) $billing->id ?></strong>
         </div>
 
         <div>
-            Сумма:
+            <?= Html::encode($t('amount')) ?>:
             <strong>
                <?= Yii::$app->formatter->asDecimal($billing->amount) ?>
                 UZS
@@ -48,12 +51,11 @@ $statusClass = match ((int) $billing->payment_status) {
       === Billing::STATUS_PENDING
    ): ?>
        <p class="text-muted">
-           Если оплата только что завершилась, обновите страницу
-           через несколько секунд.
+           <?= Html::encode($t('payment_refresh_hint')) ?>
        </p>
       
       <?= Html::a(
-         'Обновить статус',
+         $t('refresh_status'),
          ['payment/click-return', 'id' => $billing->id],
          ['class' => 'btn btn-primary']
       ) ?>

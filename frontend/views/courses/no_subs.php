@@ -10,12 +10,12 @@ function translate($key)
    return Yii::$app->params[$key][$lang];
 }
 
-$this->title = "Courses";
+$this->title = translate('courses_page_title');
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 ?>
 <!-- course banner -->
-<section id="course-banner" class="meros-course-hero reveal-section" aria-label="Course banner">
+<section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
     <div class="position-relative meros-course-hero-bg"
          style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
         <div class="container h-100">
@@ -27,13 +27,13 @@ $base = Yii::$app->request->baseUrl;
                         </div>
                         <div>
                            <?php if ($courses->preview_video_link): ?>
-                               <span class="meros-kicker">Medical English Course</span>
+                               <span class="meros-kicker"><?= Html::encode(translate('medical_english_course')) ?></span>
                            <?php endif; ?>
                             <h1 class="course-banner-subtitle mb-3"
                                 style="text-transform: uppercase"><?= $courses->{"name_$lang"} ?></h1>
                         </div>
                         <div>
-                            <h2>Advanced Communication Skills</h2>
+                            <h2><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ $base = Yii::$app->request->baseUrl;
                    <div class="col-md col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
-                                   title="YouTube video player" class="course-preview-video"
+                                   title="<?= Html::encode(translate('youtube_video_player')) ?>" class="course-preview-video"
                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                        </div>
@@ -116,7 +116,7 @@ $base = Yii::$app->request->baseUrl;
                         </div>
                     </div>
                     <div class="col-md-6 mt-5">
-                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="English for Doctors"
+                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="<?= Html::encode(translate('english_for_doctors')) ?>"
                              class="package-image">
                     </div>
                 </div>
@@ -134,15 +134,11 @@ $base = Yii::$app->request->baseUrl;
                             <blockquote>
                                 <article class="paragraph-wrapper">
                                     <div class="inner">
-                                        <header>Dr Amarylis Cooper</header>
+                                        <header><?= Html::encode(translate('testimonial_doctor_name')) ?></header>
                                         <p>
-                                            I would recommended this course to anyone who wants work in England. It is
-                                            an easier way to introduce everyone in the difficult pathway to work in the
-                                            environment where your language is not English. And, it is necessary to
-                                            recognize how to interact with the patient, or how to show empathy and
-                                            respect for their beliefs.
+                                            <?= Html::encode(translate('testimonial_course_text')) ?>
                                         </p>
-                                        <figure>Doctor</figure>
+                                        <figure><?= Html::encode(translate('doctor')) ?></figure>
                                     </div>
                                 </article>
                             </blockquote>
@@ -243,7 +239,7 @@ $base = Yii::$app->request->baseUrl;
                                       }
                                       ?></figure>
                                    <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
-                                      class="btn btn-primary btn-lg w-100 meros-primary-btn">Buy Now</a>
+                                      class="btn btn-primary btn-lg w-100 meros-primary-btn"><?= Html::encode(translate('buy_now')) ?></a>
                                    <div class="features">
                                        <div class="accordion meros-accordion meros-plan-accordion"
                                             id="<?= "plan-accordion-$item->id" ?>">
@@ -283,8 +279,8 @@ $base = Yii::$app->request->baseUrl;
                         <div class="col-12">
                             <div class="meros-faq-card reveal-section">
                                 <div class="meros-section-heading text-center">
-                                    <span class="meros-kicker">FAQ</span>
-                                    <h2>Frequently Asked Questions</h2>
+                                    <span class="meros-kicker"><?= Html::encode(translate('faq')) ?></span>
+                                    <h2><?= Html::encode(translate('frequently_asked_questions')) ?></h2>
                                 </div>
                                 <div class="row g-3" id="course-faq-accordion">
                                    <?php foreach ($faqItems as $faq): ?>

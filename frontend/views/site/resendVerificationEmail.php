@@ -7,13 +7,18 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Resend verification email';
+$params = Yii::$app->params;
+$lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
+$this->title = $t('resend_verification_title');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container py-5"><div class="site-resend-verification-email">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A verification email will be sent there.</p>
+    <p><?= Html::encode($t('resend_verification_text')) ?></p>
 
     <div class="row g-4">
         <div class="col-lg-5">
@@ -22,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
             <div class="mb-3">
-                <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton($t('send'), ['class' => 'btn btn-primary']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

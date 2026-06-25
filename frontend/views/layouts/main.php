@@ -40,7 +40,7 @@ $params = Yii::$app->params;
     <div class="wrapper">
         <div class="secondary-navigation-wrapper">
             <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
-                <div class="navigation-contact text-white">Call Us: <span><?= $params['phone'] ?></span></div>
+                <div class="navigation-contact text-white"><?= $params['call_us'][$lang] ?? $params['call_us']['en'] ?>: <span><?= $params['phone'] ?></span></div>
                 <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
                    <?php if (!Yii::$app->user->isGuest): ?>
                        <li><a href="<?= Url::to(['site/profile']) ?>"><i class="fa fa-user"></i><?=$params['my_profile'][$lang]?></a></li>
@@ -63,8 +63,8 @@ $params = Yii::$app->params;
                         <div class="navbar-header d-flex align-items-center justify-content-between">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#primary-navigation" aria-controls="primary-navigation"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="visually-hidden">Toggle navigation</span>
+                                    aria-expanded="false" aria-label="<?= $params['toggle_navigation'][$lang] ?? $params['toggle_navigation']['en'] ?>">
+                                <span class="visually-hidden"><?= $params['toggle_navigation'][$lang] ?? $params['toggle_navigation']['en'] ?></span>
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-brand nav" id="brand">
@@ -281,7 +281,7 @@ JS;
             <section id="footer-bottom">
                 <div class="container">
                     <div class="footer-inner">
-                        <div class="copyright">© Meros inc, All rights reserved</div><!-- /.copyright -->
+                        <div class="copyright"><?= $params['copyright'][$lang] ?? $params['copyright']['en'] ?></div><!-- /.copyright -->
                     </div><!-- /.footer-inner -->
                 </div><!-- /.container -->
             </section><!-- /#footer-bottom -->

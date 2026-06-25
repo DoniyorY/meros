@@ -7,7 +7,11 @@ use yii\helpers\Url;
 /** @var common\models\Events $model */
 /** @var common\models\Events[] $related */
 
+$params = Yii::$app->params;
 $lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
 $base = Yii::$app->request->baseUrl;
 $title = $model->{"name_$lang"} ?: $model->name_en;
 $image = $model->image ? "$base/uploads/events/$model->image" : "$base/img/event-img-01.jpg";
@@ -29,8 +33,8 @@ if ($model->video_link) {
 
 <div class="container">
     <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="<?= Url::to(['index']) ?>">Events</a></li>
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= Url::to(['index']) ?>"><?= Html::encode($t('events_page_title')) ?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
@@ -46,7 +50,7 @@ if ($model->video_link) {
                             <span><?= date('d.m.Y', $model->created_at) ?></span>
                         </div>
                         <div class="meros-detail-body">
-                            <span class="meros-kicker">Event</span>
+                            <span class="meros-kicker"><?= Html::encode($t('event_kicker')) ?></span>
                             <h1><?= Html::encode($title) ?></h1>
                             <p class="meros-muted"><span class="fa fa-calendar"></span> <?= date('d.m.Y', $model->created_at) ?></p>
                             <div class="meros-detail-content">
@@ -58,7 +62,7 @@ if ($model->video_link) {
                     <?php if ($model->video_link): ?>
                         <section class="meros-related-section reveal-section">
                             <div class="meros-section-heading">
-                                <span class="meros-kicker">Video</span>
+                                <span class="meros-kicker"><?= Html::encode($t('video')) ?></span>
                                 <h2>YouTube</h2>
                             </div>
                             <div class="meros-detail-card">
@@ -66,7 +70,7 @@ if ($model->video_link) {
                                     <?php if ($videoUrl): ?>
                                         <iframe src="<?= Html::encode($videoUrl) ?>" title="<?= Html::encode($title) ?>" allowfullscreen loading="lazy"></iframe>
                                     <?php else: ?>
-                                        <a href="<?= Html::encode($model->video_link) ?>" target="_blank" rel="noopener" class="meros-link">Open video on YouTube</a>
+                                        <a href="<?= Html::encode($model->video_link) ?>" target="_blank" rel="noopener" class="meros-link"><?= Html::encode($t('open_video_youtube')) ?></a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -76,8 +80,8 @@ if ($model->video_link) {
                     <?php if (!empty($related)): ?>
                         <section class="meros-related-section reveal-section">
                             <div class="meros-section-heading">
-                                <span class="meros-kicker">Continue exploring</span>
-                                <h2>Related Events</h2>
+                                <span class="meros-kicker"><?= Html::encode($t('continue_exploring')) ?></span>
+                                <h2><?= Html::encode($t('related_events')) ?></h2>
                             </div>
                             <div class="row g-4">
                                 <?php foreach ($related as $event): ?>
@@ -90,7 +94,7 @@ if ($model->video_link) {
                                             </a>
                                             <div class="meros-news-body">
                                                 <h3><a href="<?= Url::to(['view', 'id' => $event->id]) ?>"><?= Html::encode($eventTitle) ?></a></h3>
-                                                <a href="<?= Url::to(['view', 'id' => $event->id]) ?>" class="meros-link">View Details</a>
+                                                <a href="<?= Url::to(['view', 'id' => $event->id]) ?>" class="meros-link"><?= Html::encode($t('view_details')) ?></a>
                                             </div>
                                         </article>
                                     </div>
@@ -102,8 +106,8 @@ if ($model->video_link) {
 
                 <div class="col-lg-4 col-12">
                     <aside class="meros-news-sidebar-card reveal-section">
-                        <span class="meros-kicker">Events</span>
-                        <h2>Latest Events</h2>
+                        <span class="meros-kicker"><?= Html::encode($t('events_page_title')) ?></span>
+                        <h2><?= Html::encode($t('latest_events')) ?></h2>
                         <div class="meros-mini-news-list">
                             <?php foreach ($related as $event): ?>
                                 <?php $eventTitle = $event->{"name_$lang"} ?: $event->name_en; ?>
@@ -113,7 +117,7 @@ if ($model->video_link) {
                                 </article>
                             <?php endforeach; ?>
                         </div>
-                        <a href="<?= Url::to(['index']) ?>" class="meros-link">All Events</a>
+                        <a href="<?= Url::to(['index']) ?>" class="meros-link"><?= Html::encode($t('all_events')) ?></a>
                     </aside>
                 </div>
             </div>

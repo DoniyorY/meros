@@ -3,14 +3,18 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$params = Yii::$app->params;
 $lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
 $base = Yii::$app->request->baseUrl;
-$this->title = 'News';
+$this->title = $t('news_page_title');
 ?>
 
 <div class="container">
     <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
@@ -19,7 +23,7 @@ $this->title = 'News';
     <section class="meros-section meros-news-hero reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Meros updates</span>
+                <span class="meros-kicker"><?= Html::encode($t('news_kicker')) ?></span>
                 <h1><?= Html::encode($this->title) ?></h1>
             </div>
         </div>
@@ -46,7 +50,7 @@ $this->title = 'News';
                                             </a>
                                         </h3>
                                         <p><?= Html::encode(strip_tags($post->{"desc_$lang"})) ?></p>
-                                        <a href="<?= Url::to(['view', 'id' => $post->id]) ?>" class="meros-link">Read More</a>
+                                        <a href="<?= Url::to(['view', 'id' => $post->id]) ?>" class="meros-link"><?= Html::encode($t('read_more')) ?></a>
                                     </div>
                                 </article>
                             </div>
@@ -56,20 +60,20 @@ $this->title = 'News';
 
                 <div class="col-lg-4 col-12">
                     <aside class="meros-news-sidebar-card reveal-section">
-                        <span class="meros-kicker">Search</span>
-                        <h2>Search News</h2>
+                        <span class="meros-kicker"><?= Html::encode($t('search')) ?></span>
+                        <h2><?= Html::encode($t('search_news')) ?></h2>
                         <div class="input-group meros-search-box">
-                            <input type="text" class="form-control" placeholder="Search news">
+                            <input type="text" class="form-control" placeholder="<?= Html::encode($t('search_news_placeholder')) ?>">
                             <button type="submit" class="btn meros-primary-btn"><i class="fa fa-angle-right"></i></button>
                         </div>
-                        <p>Fill the field to search news.</p>
+                        <p><?= Html::encode($t('search_news_hint')) ?></p>
                     </aside>
 
                     <aside class="meros-news-sidebar-card reveal-section mt-4">
-                        <span class="meros-kicker">Categories</span>
-                        <h2>Categories</h2>
+                        <span class="meros-kicker"><?= Html::encode($t('categories')) ?></span>
+                        <h2><?= Html::encode($t('categories')) ?></h2>
                         <ul class="list-unstyled meros-sidebar-links">
-                            <li><a href="#">University News</a></li>
+                            <li><a href="#"><?= Html::encode($t('university_news')) ?></a></li>
                         </ul>
                     </aside>
                 </div>

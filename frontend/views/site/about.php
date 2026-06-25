@@ -30,7 +30,7 @@ $galleryImages = range(1, 4);
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <span class="meros-kicker">Medical English Institute</span>
+                    <span class="meros-kicker"><?= Html::encode(translate('medical_english_institute')) ?></span>
                     <h1><?= Html::encode($this->title) ?></h1>
                     <div class="meros-hero-copy">
                         <?= translate('about_short') ?>
@@ -41,7 +41,7 @@ $galleryImages = range(1, 4);
                         <img src="<?= "$base/images/meros_hospital.jpg" ?>" alt="Meros International Hospital" loading="eager">
                         <div class="meros-floating-badge">
                             <strong>Meros</strong>
-                            <span>International Institute</span>
+                            <span><?= Html::encode(translate('international_institute')) ?></span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ $galleryImages = range(1, 4);
             <div class="row g-4 align-items-start">
                 <div class="col-lg-8">
                     <div class="meros-about-card meros-story-card">
-                        <span class="meros-kicker">About Meros</span>
+                        <span class="meros-kicker"><?= Html::encode(translate('about_meros')) ?></span>
                         <h2><?= translate('about_meros') ?></h2>
                         <?= translate('about_content') ?>
                     </div>
@@ -83,14 +83,14 @@ $galleryImages = range(1, 4);
     <section class="meros-section reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Campus life</span>
+                <span class="meros-kicker"><?= Html::encode(translate('campus_life')) ?></span>
                 <h2><?= translate('gallery') ?></h2>
             </div>
             <div class="meros-gallery-grid">
                 <?php foreach ($galleryImages as $imageNumber): ?>
                     <?php $image = sprintf('image-%02d.jpg', $imageNumber); ?>
                     <a href="<?= "$base/img/gallery-big-image.jpg" ?>" class="image-popup meros-gallery-item">
-                        <img src="<?= "$base/img/$image" ?>" alt="Meros gallery image <?= $imageNumber ?>" loading="lazy">
+                        <img src="<?= "$base/img/$image" ?>" alt="<?= Html::encode(translate('meros_gallery_image')) ?> <?= $imageNumber ?>" loading="lazy">
                     </a>
                 <?php endforeach; ?>
             </div>

@@ -9,11 +9,13 @@ use yii\helpers\Url;
  * @var common\models\SubscriptionPlans $model
  */
 
-$this->title = "Invoice";
+$this->title = Yii::$app->params['invoice_title'][Yii::$app->language] ?? 'Invoice';
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
-
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
 
 $merchantID = 20;
 $merchantUserID = 4;
@@ -31,23 +33,23 @@ $returnURL = "сайт поставщика";
             <div class="meros-invoice-card">
                <?php if (Yii::$app->user->isGuest): ?>
                    <div class="alert alert-warning meros-invoice-alert">
-                       You are not registered yet. Please
-                       <a href="<?= Url::to(['site/login']) ?>">log in</a> or fill the fields to create an account.
+                       <?= Html::encode($t('invoice_guest_warning_prefix')) ?>
+                       <a href="<?= Url::to(['site/login']) ?>"><?= Html::encode($t('login')) ?></a> <?= Html::encode($t('invoice_guest_warning_suffix')) ?>
                    </div>
                <?php endif; ?>
                 <!-- Header -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 meros-invoice-header">
                     <div>
-                        <span class="meros-kicker">Secure checkout</span>
-                        <h1 class="h3 mb-1">Invoice</h1>
+                        <span class="meros-kicker"><?= Html::encode($t('secure_checkout')) ?></span>
+                        <h1 class="h3 mb-1"><?= Html::encode($t('invoice_title')) ?></h1>
                         <small class="text-muted">
-                            Invoice #<?= $billing->id ?>
+                            <?= Html::encode($t('invoice_number')) ?> #<?= $billing->id ?>
                         </small>
                     </div>
 
                     <div class="text-end">
-                        <div><strong>Date:</strong> <?= date('d.m.Y', $billing->created_at) ?></div>
-                        <div><strong>Status:</strong>
+                        <div><strong><?= Html::encode($t('date')) ?>:</strong> <?= date('d.m.Y', $billing->created_at) ?></div>
+                        <div><strong><?= Html::encode($t('status')) ?>:</strong>
                             <span class="<?= $params['billing_status_class'][$billing->status] ?>">
                             <?= $params['billing_status'][$lang][$billing->status] ?>
                         </span>
@@ -63,60 +65,60 @@ $returnURL = "сайт поставщика";
                     <div class="col-lg-7">
                         <div class="meros-invoice-panel">
 
-                            <h5 class="mb-3">Customer Information</h5>
+                            <h5 class="mb-3"><?= Html::encode($t('customer_information')) ?></h5>
                            <?php if (Yii::$app->user->isGuest): ?>
                               <?php $form = ActiveForm::begin(['action' => Url::to(['guest-register'])]); ?>
 
                                <div class="row">
                                    <div class="col-md-12 mb-3">
                                        <div class="form-group">
-                                           <label>Email</label>
+                                           <label><?= Html::encode($t('profile_email')) ?></label>
                                            <input name="User[email]" type="email" class="form-control">
                                        </div>
                                    </div>
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>First Name</label>
+                                           <label><?= Html::encode($t('first_name')) ?></label>
                                            <input name="User[first_name]" type="text" class="form-control">
                                        </div>
                                    </div>
 
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Last Name</label>
+                                           <label><?= Html::encode($t('last_name')) ?></label>
                                            <input name="User[last_name]" type="text" class="form-control">
                                        </div>
                                    </div>
 
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Username</label>
+                                           <label><?= Html::encode($t('profile_username')) ?></label>
                                            <input name="User[username]" type="text" class="form-control">
                                        </div>
                                    </div>
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Phone</label>
+                                           <label><?= Html::encode($t('profile_phone')) ?></label>
                                            <input type="text" name="User[phone]" class="form-control">
                                        </div>
                                    </div>
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Password</label>
+                                           <label><?= Html::encode($t('login_password')) ?></label>
                                            <input name="User[password]" type="password" class="form-control">
                                        </div>
                                    </div>
 
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Confirm Password</label>
+                                           <label><?= Html::encode($t('confirm_password')) ?></label>
                                            <input name="User[password_confirm]" type="password" class="form-control">
                                        </div>
                                    </div>
                                    <div class="col-md-12">
                                        <div class="form-group">
                                            <button type="submit" class="btn btn-primary meros-primary-btn w-100">
-                                               Submit
+                                               <?= Html::encode($t('submit')) ?>
                                            </button>
                                        </div>
                                    </div>
@@ -133,14 +135,14 @@ $returnURL = "сайт поставщика";
                                <div class="row">
                                    <div class="col-md-12 mb-3">
                                        <div class="form-group">
-                                           <label>Email</label>
+                                           <label><?= Html::encode($t('profile_email')) ?></label>
                                            <input name="User[email]" type="email" class="form-control"
                                                   value="<?= Html::encode($user->email) ?>" readonly>
                                        </div>
                                    </div>
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>First Name</label>
+                                           <label><?= Html::encode($t('first_name')) ?></label>
                                            <input name="User[first_name]" type="text" class="form-control"
                                                   value="<?= Html::encode($first_name) ?>" readonly>
                                        </div>
@@ -148,14 +150,14 @@ $returnURL = "сайт поставщика";
 
                                    <div class="col-md-6 mb-3">
                                        <div class="form-group">
-                                           <label>Last Name</label>
+                                           <label><?= Html::encode($t('last_name')) ?></label>
                                            <input name="User[last_name]" type="text" class="form-control"
                                                   value="<?= Html::encode($last_name) ?>" readonly>
                                        </div>
                                    </div>
                                    <div class="col-md-12 mb-3">
                                        <div class="form-group">
-                                           <label>Phone</label>
+                                           <label><?= Html::encode($t('profile_phone')) ?></label>
                                            <input type="text" name="User[phone]" class="form-control"
                                                   value="<?= Html::encode($user->phone) ?>" readonly>
                                        </div>
@@ -167,33 +169,33 @@ $returnURL = "сайт поставщика";
                         </div>
                     </div>
 
-                    <!-- Order Summary -->
+                    <!-- <?= Html::encode($t('order_summary')) ?> -->
                     <div class="col-lg-5">
 
                         <div class="meros-order-summary">
 
                             <h5 class="mb-4">
-                                Order Summary
+                                <?= Html::encode($t('order_summary')) ?>
                             </h5>
 
                             <div class="d-flex justify-content-between mb-3">
-                                <span>Product</span>
+                                <span><?= Html::encode($t('product')) ?></span>
                                 <strong>
                                    <?= Html::encode($model->{"name_$lang"}) ?>
                                 </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-3">
-                                <span>Duration</span>
+                                <span><?= Html::encode($t('duration')) ?></span>
                                 <strong><?php
                                    (int)$duration = $billing->subscription->duration_days / 30;
-                                       echo "$duration months";
+                                       echo Html::encode(strtr($t('duration_months'), ['{count}' => $duration]));
                                        ?>
                                 </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-3">
-                                <span>Price</span>
+                                <span><?= Html::encode($t('price')) ?></span>
                                 <strong>
                                    <?= Yii::$app->formatter->asDecimal($model->price) ?>
                                     UZS
@@ -202,7 +204,7 @@ $returnURL = "сайт поставщика";
                             <hr>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="h5 mb-0">Total</span>
+                                <span class="h5 mb-0"><?= Html::encode($t('total')) ?></span>
                                 <span class="h4 text-primary mb-0">
                                     <?= Yii::$app->formatter->asDecimal($model->price) ?>
                                     UZS
@@ -215,7 +217,7 @@ $returnURL = "сайт поставщика";
                                        class="btn w-100 mt-2 meros-primary-btn d-none"
                                        type="button"
                                >
-                                   Подтвердить
+                                   <?= Html::encode($t('confirm')) ?>
                                </button>
 
                                <form
