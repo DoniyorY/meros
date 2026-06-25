@@ -189,10 +189,20 @@ $hospitalHomeT = static function ($key) use ($params, $lang) {
         <div class="container">
             <div class="meros-quote-card">
                 <span class="meros-kicker"><?= Html::encode($homeT('student_outcomes')) ?></span>
-                <blockquote>
-                    <p><?=translate('comments')?></p>
-                    <footer><?= Html::encode($homeT('testimonial_sofia_name')) ?></footer>
-                </blockquote>
+               <?php if (!empty($comments)): ?>
+                   <div class="meros-comments-carousel owl-carousel owl-theme">
+                      <?php foreach ($comments as $comment): ?>
+                          <blockquote class="meros-comment-slide">
+                              <p><?= Html::encode($comment['comment'] ?? '') ?></p>
+                              <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
+                          </blockquote>
+                      <?php endforeach; ?>
+                   </div>
+               <?php else: ?>
+                   <blockquote>
+                       <p><?= translate('comments') ?></p>
+                   </blockquote>
+               <?php endif; ?>
             </div>
         </div>
     </section>

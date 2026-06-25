@@ -10,9 +10,15 @@ function translate($key)
    return Yii::$app->params[$key][$lang];
 }
 
-$this->title = translate('courses_page_title');
+$this->title = "Courses";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
+$params = Yii::$app->params;
+$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
+if (!empty($comments)) {
+   shuffle($comments);
+   $comments = array_slice($comments, 0, 3);
+}
 ?>
 <!-- course banner -->
 <section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
