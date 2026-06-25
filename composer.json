@@ -27,7 +27,8 @@
     "cinghie/yii2-multilanguage": "*",
     "kartik-v/yii2-editors": "dev-master",
     "yiisoft/yii2-httpclient": "2.0.x-dev",
-    "kartik-v/yii2-editable": "dev-master"
+    "kartik-v/yii2-editable": "dev-master",
+    "kartik-v/yii2-grid": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
