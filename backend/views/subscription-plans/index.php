@@ -1,10 +1,11 @@
 <?php
 
 use common\models\SubscriptionPlans;
+use kartik\grid\EditableColumn;
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\search\SubscriptionPlansSearch $searchModel */
@@ -70,7 +71,21 @@ $this->params['breadcrumbs'][] = $this->title;
                return date('d.m.Y H:i:s', $data->updated_at);
             }
          ],
-         'price',
+         [
+            'class' => EditableColumn::class,
+            'attribute' => 'price',
+            'editableOptions' => [
+               'formOptions' => [
+                  'action' => Url::to(['editable-price']),
+               ],
+               'inputType' => \kartik\editable\Editable::INPUT_TEXT,
+               'options' => [
+                  'type' => 'number',
+                  'step' => '0.01',
+                  'min' => 0,
+               ],
+            ],
+         ],
          'duration_days',
          [
             'attribute' => 'status',
