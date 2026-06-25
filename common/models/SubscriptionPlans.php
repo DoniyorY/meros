@@ -12,6 +12,7 @@ use Yii;
  * @property string $name_ru
  * @property string $name_en
  * @property string $name_uz
+ * @property string $sku_id
  * @property float $price
  * @property int $duration_days
  * @property int $status

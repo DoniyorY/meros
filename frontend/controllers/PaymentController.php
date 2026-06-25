@@ -680,7 +680,9 @@ final class PaymentController extends Controller
             $billing,
             $clickTransId
          );
-         
+         if ($billing !== null) {
+            ApiController::sendZapierOrderPaidWebhook($billing);
+         }
          $dbTransaction->commit();
          
          $this->sendPaidWebhookSafely($billing);
