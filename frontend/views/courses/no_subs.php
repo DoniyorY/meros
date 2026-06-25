@@ -13,6 +13,12 @@ function translate($key)
 $this->title = "Courses";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
+$params = Yii::$app->params;
+$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
+if (!empty($comments)) {
+   shuffle($comments);
+   $comments = array_slice($comments, 0, 3);
+}
 ?>
 <!-- course banner -->
 <section id="course-banner" class="meros-course-hero reveal-section" aria-label="Course banner">
@@ -126,31 +132,24 @@ $base = Yii::$app->request->baseUrl;
     </section>
 
     <section id="instructors" class="instructors-section meros-section meros-testimonial reveal-section">
-        <div class="block">
-            <div class="container">
-                <div class="instructors">
-                    <div class="author-carousel">
-                        <div class="author">
-                            <blockquote>
-                                <article class="paragraph-wrapper">
-                                    <div class="inner">
-                                        <header>Dr Amarylis Cooper</header>
-                                        <p>
-                                            I would recommended this course to anyone who wants work in England. It is
-                                            an easier way to introduce everyone in the difficult pathway to work in the
-                                            environment where your language is not English. And, it is necessary to
-                                            recognize how to interact with the patient, or how to show empathy and
-                                            respect for their beliefs.
-                                        </p>
-                                        <figure>Doctor</figure>
-                                    </div>
-                                </article>
+        <div class="container">
+            <div class="meros-quote-card">
+                <span class="meros-kicker">Student outcomes</span>
+                <?php if (!empty($comments)): ?>
+                    <div class="meros-comments-carousel owl-carousel owl-theme">
+                        <?php foreach ($comments as $comment): ?>
+                            <blockquote class="meros-comment-slide">
+                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
+                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
                             </blockquote>
-                        </div><!-- /.author -->
-                    </div><!-- /.author-carousel -->
-                </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <blockquote>
+                        <p><?= translate('comments') ?></p>
+                    </blockquote>
+                <?php endif; ?>
             </div>
-            <div class="background"></div><!-- /.background -->
         </div>
     </section><!-- /#instructors -->
 
