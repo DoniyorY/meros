@@ -203,6 +203,9 @@ $base = Yii::$app->request->baseUrl;
                        <?php if ($useSubscriptionCarousel): ?>
                            <div class="col-12 subscription-plans-carousel-wrap">
                                <div class="subscription-plans-carousel owl-carousel owl-theme">
+                       <?php else: ?>
+                           <div class="col-12">
+                               <div class="row g-4 subscription-plans-row <?= ($subscriptionPlanCount === 2) ? 'justify-content-between' : '' ?>">
                        <?php endif; ?>
                        <?php $i = 1;
                        foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
@@ -270,6 +273,9 @@ $base = Yii::$app->request->baseUrl;
                            </div><!-- /.subscription plan item -->
                           <?php $i++; endforeach; ?>
                        <?php if ($useSubscriptionCarousel): ?>
+                               </div>
+                           </div>
+                       <?php else: ?>
                                </div>
                            </div>
                        <?php endif; ?>
