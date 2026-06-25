@@ -20,47 +20,16 @@ function translate($key)
 $homeT = static function ($key) use ($params, $lang) {
    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
 };
-$b2bStudentBenefits = [
-   ['icon' => 'fa-stethoscope', 'text' => ['ru' => 'Диалоги с пациентами и клиническая терминология', 'en' => 'Patient dialogues and clinical terminology', 'uz' => 'Bemorlar bilan dialoglar va klinik terminologiya']],
-   ['icon' => 'fa-graduation-cap', 'text' => ['ru' => 'Академическое чтение, презентации и статьи', 'en' => 'Academic reading, presentations and articles', 'uz' => 'Akademik o‘qish, taqdimotlar va maqolalar']],
-   ['icon' => 'fa-certificate', 'text' => ['ru' => 'Подготовка к IELTS/OET и международной учёбе', 'en' => 'IELTS/OET and international study preparation', 'uz' => 'IELTS/OET va xalqaro o‘qishga tayyorgarlik']],
-];
+$b2bStudentBenefits = $params['b2b_student_benefits'] ?? [];
 $b2bHomeUrl = Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']);
 $hospitalHomeUrl = Url::to(['courses/index', 'category' => 'healthcare-employers', 'slug' => 'hospitals']);
-$hospitalHomeCopy = [
-   'kicker' => [
-      'ru' => 'Healthcare employers',
-      'en' => 'Healthcare employers',
-      'uz' => 'Healthcare employers',
-   ],
-   'title' => [
-      'ru' => 'Медицинский английский для больниц и клиник',
-      'en' => 'Medical English for hospitals and clinics',
-      'uz' => 'Shifoxonalar va klinikalar uchun tibbiy ingliz tili',
-   ],
-   'text' => [
-      'ru' => 'Готовая B2B-программа помогает врачам, медсёстрам, регистратуре и сервисным командам увереннее работать с международными пациентами: консультации, процедуры, запись, навигация и aftercare.',
-      'en' => 'A ready B2B programme helps doctors, nurses, reception and service teams work more confidently with international patients: consultations, procedures, booking, navigation and aftercare.',
-      'uz' => 'Tayyor B2B dastur shifokorlar, hamshiralar, registratura va servis jamoalariga xalqaro bemorlar bilan ishonchli ishlashda yordam beradi: konsultatsiya, protsedura, yozilish, yo‘naltirish va aftercare.',
-   ],
-   'button' => [
-      'ru' => 'Подробнее',
-      'en' => 'Learn more',
-      'uz' => 'Batafsil',
-   ],
-];
-$hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
-   return $hospitalHomeCopy[$key][$lang] ?? $hospitalHomeCopy[$key]['en'] ?? $key;
+$hospitalHomeT = static function ($key) use ($params, $lang) {
+   return $params['hospital_home'][$key][$lang] ?? $params['hospital_home'][$key]['en'] ?? $key;
 };
-$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
-if (!empty($comments)) {
-   shuffle($comments);
-   $comments = array_slice($comments, 0, 3);
-}
 
 ?>
 <!-- Homepage Slider -->
-<section id="homepage-slider" class="homepage-slider meros-hero" aria-label="Homepage banner slider">
+<section id="homepage-slider" class="homepage-slider meros-hero" aria-label="<?= Html::encode($homeT('homepage_slider_aria')) ?>">
    <?php if (!empty($banner)): ?>
        <div class="homepage-banner-carousel owl-carousel owl-theme">
           <?php foreach ($banner as $item): ?>
@@ -142,13 +111,13 @@ if (!empty($comments)) {
                     <div class="meros-news-card overflow-hidden">
                         <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
                             <img src="<?= Html::encode($base . '/images/med_institute.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
-                            <span>Medical English</span>
+                            <span><?= Html::encode($homeT('medical_english')) ?></span>
                         </a>
                         <div class="meros-news-body">
                             <div class="row g-3">
                                 <?php foreach ($b2bStudentBenefits as $benefit): ?>
                                     <div class="col-md-4">
-                                        <p class="mb-0"><span class="fa <?= Html::encode($benefit['icon']) ?> text-primary me-2"></span><?= Html::encode($benefit['text'][$lang] ?? $benefit['text']['en']) ?></p>
+                                        <p class="mb-0"><span class="fa <?= Html::encode($benefit['icon']) ?> text-primary me-2"></span><?= Html::encode($benefit['text'][$lang] ?? $benefit['text']['en'] ?? '') ?></p>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -180,7 +149,7 @@ if (!empty($comments)) {
     <section class="meros-section meros-events reveal-section" id="events">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Academic calendar</span>
+                <span class="meros-kicker"><?= Html::encode($homeT('events_kicker')) ?></span>
                 <h2><?=translate('events')?></h2>
             </div>
             <div class="row g-4">
@@ -202,15 +171,15 @@ if (!empty($comments)) {
                                <p class="meros-muted"><span class="fa fa-calendar"></span> <?= date('d.m.Y', $event->created_at) ?></p>
                                <p><?= Html::encode(strip_tags($description)) ?></p>
                                <?php if ($event->video_link): ?>
-                                   <p class="meros-muted"><span class="fa fa-youtube-play"></span> YouTube video available</p>
+                                   <p class="meros-muted"><span class="fa fa-youtube-play"></span> <?= Html::encode($homeT('events_youtube_available')) ?></p>
                                <?php endif; ?>
-                               <a href="<?= Url::to(['events/view', 'id' => $event->id]) ?>" class="meros-link">View Details</a>
+                               <a href="<?= Url::to(['events/view', 'id' => $event->id]) ?>" class="meros-link"><?= Html::encode($homeT('view_details')) ?></a>
                            </div>
                        </article>
                    </div>
                <?php endforeach; ?>
                <?php if (empty($events)): ?>
-                   <div class="col-12 text-center"><p class="meros-muted">Events will be announced soon.</p></div>
+                   <div class="col-12 text-center"><p class="meros-muted"><?= Html::encode($homeT('events_empty_title')) ?></p></div>
                <?php endif; ?>
             </div>
         </div>
@@ -219,21 +188,11 @@ if (!empty($comments)) {
     <section id="testimonials" class="meros-section meros-testimonial reveal-section">
         <div class="container">
             <div class="meros-quote-card">
-                <span class="meros-kicker">Student outcomes</span>
-                <?php if (!empty($comments)): ?>
-                    <div class="meros-comments-carousel owl-carousel owl-theme">
-                        <?php foreach ($comments as $comment): ?>
-                            <blockquote class="meros-comment-slide">
-                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
-                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
-                            </blockquote>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <blockquote>
-                        <p><?= translate('comments') ?></p>
-                    </blockquote>
-                <?php endif; ?>
+                <span class="meros-kicker"><?= Html::encode($homeT('student_outcomes')) ?></span>
+                <blockquote>
+                    <p><?=translate('comments')?></p>
+                    <footer><?= Html::encode($homeT('testimonial_sofia_name')) ?></footer>
+                </blockquote>
             </div>
         </div>
     </section>
@@ -241,7 +200,7 @@ if (!empty($comments)) {
     <section id="course-list" class="meros-section meros-news reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Institute updates</span>
+                <span class="meros-kicker"><?= Html::encode($homeT('institute_updates')) ?></span>
                 <h2><?= translate('news') ?></h2>
             </div>
             <div class="row g-4">
@@ -314,7 +273,7 @@ if (!empty($comments)) {
                             <img src="<?= "$base/logo-white.png" ?>" alt="Meros Hospital" loading="lazy">
                             <span><?= Yii::$app->name ?></span>
                         </div>
-                        <h2>Персональная консультация в<br> <?= Yii::$app->name ?></h2>
+                        <h2><?= Html::encode($homeT('personal_consultation')) ?><br> <?= Yii::$app->name ?></h2>
                        <?php $form = ActiveForm::begin([
                           'id' => 'homepage-consultation-form',
                           'options' => ['class' => 'meros-consultation-form'],
@@ -326,13 +285,12 @@ if (!empty($comments)) {
                              'errorOptions' => ['class' => 'invalid-feedback d-block'],
                           ],
                        ]); ?>
-                       <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label('Как мы можем к вам обращаться') ?>
-                       <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label('Телефон (обязательно)') ?>
-                       <?= $form->field($contactModel, 'direction')->textInput()->label('Направление') ?>
-                       <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label('Сообщение') ?>
-                       <?= Html::submitButton('Отправить сообщение', ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
-                        <p class="meros-consultation-note">Ваши персональные данные находятся под защитой и используются
-                            только для связи с вами.</p>
+                       <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label($homeT('contact_label_name')) ?>
+                       <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label($homeT('contact_label_phone_required')) ?>
+                       <?= $form->field($contactModel, 'direction')->textInput()->label($homeT('contact_label_direction')) ?>
+                       <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label($homeT('contact_label_message')) ?>
+                       <?= Html::submitButton($homeT('send_message_button'), ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
+                        <p class="meros-consultation-note"><?= Html::encode($homeT('consultation_privacy_note')) ?></p>
                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>

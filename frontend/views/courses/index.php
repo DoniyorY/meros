@@ -1,8 +1,12 @@
 <?php
-$this->registerMetaTag(['name' => 'description', 'content' => "Meros English Courses"]);
-$this->registerMetaTag(['name' => 'keywords', 'content' => "Meros English Courses"]);
-$this->title = 'Meros English Courses';
+$params = Yii::$app->params;
 $lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
+$this->registerMetaTag(['name' => 'description', 'content' => $t('meros_english_courses')]);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $t('meros_english_courses')]);
+$this->title = $t('meros_english_courses');
 $base = Yii::$app->request->baseUrl;
 ?>
 
@@ -14,7 +18,7 @@ $base = Yii::$app->request->baseUrl;
             <div class="col-lg-9 col-md-12">
                 <div id="page-main">
                     <section class="course-listing" id="courses">
-                        <header><h1>Courses Lessons</h1></header>
+                        <header><h1><?= $t('course_lessons') ?></h1></header>
                         <div class="row g-4">
                             <div class="col-md-6 col-12">
                                 <article class="course-thumbnail">
@@ -23,18 +27,16 @@ $base = Yii::$app->request->baseUrl;
                                                         src="<?= "$base/" ?>img/course-01.jpg"></a></div>
                                     </figure>
                                     <div class="description">
-                                        <a href="course-detail-v1.html"><h3>Character Drawing: Basic and Advanced
-                                                Principles</h3></a>
-                                        <a href="#" class="course-category">Art and Design</a>
+                                        <a href="course-detail-v1.html"><h3><?= $t('demo_course_character_drawing') ?></h3></a>
+                                        <a href="#" class="course-category"><?= $t('art_and_design') ?></a>
                                         <hr>
                                         <div class="course-meta">
                                                 <span class="course-date"><i
                                                             class="fa fa-calendar-o"></i>01-03-2014</span>
-                                            <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
+                                            <span class="course-length"><i class="fa fa-clock-o"></i><?= $t('three_months') ?></span>
                                         </div>
                                         <div class="stick-to-bottom"><a href="course-detail-v1.html"
-                                                                        class="btn btn-framed btn-color-grey btn-small">View
-                                                Details</a></div>
+                                                                        class="btn btn-framed btn-color-grey btn-small"><?= $t('view_details') ?></a></div>
                                     </div>
                                 </article><!-- /.featured-course -->
                             </div><!-- /.col-md-3 -->
@@ -45,18 +47,16 @@ $base = Yii::$app->request->baseUrl;
                                                         src="<?= "$base/" ?>img/course-02.jpg"></a></div>
                                     </figure>
                                     <div class="description">
-                                        <a href="course-detail-v1.html"><h3>Architecture Photography: Power of Light
-                                                and Shadows</h3></a>
-                                        <a href="#" class="course-category">Photography</a>
+                                        <a href="course-detail-v1.html"><h3><?= $t('demo_course_architecture_photography') ?></h3></a>
+                                        <a href="#" class="course-category"><?= $t('photography') ?></a>
                                         <hr>
                                         <div class="course-meta">
                                                 <span class="course-date"><i
                                                             class="fa fa-calendar-o"></i>01-03-2014</span>
-                                            <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
+                                            <span class="course-length"><i class="fa fa-clock-o"></i><?= $t('three_months') ?></span>
                                         </div>
                                         <div class="stick-to-bottom"><a href="course-detail-v1.html"
-                                                                        class="btn btn-framed btn-color-grey btn-small">View
-                                                Details</a></div>
+                                                                        class="btn btn-framed btn-color-grey btn-small"><?= $t('view_details') ?></a></div>
                                     </div>
                                 </article><!-- /.featured-course -->
                             </div><!-- /.col-md-3 -->
@@ -67,17 +67,16 @@ $base = Yii::$app->request->baseUrl;
                                                         src="<?= "$base/" ?>img/course-03.jpg"></a></div>
                                     </figure>
                                     <div class="description">
-                                        <a href="course-detail-v1.html"><h3>How to find long term customers</h3></a>
-                                        <a href="#" class="course-category">Marketing</a>
+                                        <a href="course-detail-v1.html"><h3><?= $t('demo_course_marketing') ?></h3></a>
+                                        <a href="#" class="course-category"><?= $t('marketing') ?></a>
                                         <hr>
                                         <div class="course-meta">
                                                 <span class="course-date"><i
                                                             class="fa fa-calendar-o"></i>01-03-2014</span>
-                                            <span class="course-length"><i class="fa fa-clock-o"></i>3 months</span>
+                                            <span class="course-length"><i class="fa fa-clock-o"></i><?= $t('three_months') ?></span>
                                         </div>
                                         <div class="stick-to-bottom"><a href="course-detail-v1.html"
-                                                                        class="btn btn-framed btn-color-grey btn-small">View
-                                                Details</a></div>
+                                                                        class="btn btn-framed btn-color-grey btn-small"><?= $t('view_details') ?></a></div>
                                     </div>
                                 </article><!-- /.featured-course -->
                             </div><!-- /.col-md-3 -->
@@ -98,39 +97,37 @@ $base = Yii::$app->request->baseUrl;
                 <div id="page-sidebar" class="sidebar">
                     <aside class="news-small" id="news-small">
                         <header>
-                            <h2>Related News</h2>
+                            <h2><?= $t('related_news') ?></h2>
                         </header>
                         <div class="section-content">
                             <article>
                                 <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">U-M School of Public Health, Detroit partners aim to improve air
-                                        quality in the city</a></header>
+                                <header><a href="#"><?= $t('demo_news_public_health') ?></a></header>
                             </article><!-- /article -->
                             <article>
                                 <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">At 50, Center for the Education of Women celebrates a wider
-                                        mission</a></header>
+                                <header><a href="#"><?= $t('demo_news_education_women') ?></a></header>
                             </article><!-- /article -->
                             <article>
                                 <figure class="date"><i class="fa fa-file-o"></i>08-24-2014</figure>
-                                <header><a href="#">Three U-Michigan scientists receive Sloan fellowships</a>
+                                <header><a href="#"><?= $t('demo_news_scientists') ?></a>
                                 </header>
                             </article><!-- /article -->
                         </div><!-- /.section-content -->
-                        <a href="" class="read-more">All News</a>
+                        <a href="" class="read-more"><?= $t('all_news') ?></a>
                     </aside><!-- /.news-small -->
                     <aside id="archive">
                         <header>
-                            <h2>Course Archive</h2>
+                            <h2><?= $t('course_archive') ?></h2>
                             <ul class="list-links">
-                                <li><a href="#">February 2014</a></li>
-                                <li><a href="#">January 2014</a></li>
-                                <li><a href="#">November 2013</a></li>
-                                <li><a href="#">October 2013</a></li>
-                                <li><a href="#">August 2013</a></li>
-                                <li><a href="#">July 2013</a></li>
-                                <li><a href="#">June 2013</a></li>
-                                <li><a href="#">May 2013</a></li>
+                                <li><a href="#"><?= $t('month_february') ?> 2014</a></li>
+                                <li><a href="#"><?= $t('month_january') ?> 2014</a></li>
+                                <li><a href="#"><?= $t('month_november') ?> 2013</a></li>
+                                <li><a href="#"><?= $t('month_october') ?> 2013</a></li>
+                                <li><a href="#"><?= $t('month_august') ?> 2013</a></li>
+                                <li><a href="#"><?= $t('month_july') ?> 2013</a></li>
+                                <li><a href="#"><?= $t('month_june') ?> 2013</a></li>
+                                <li><a href="#"><?= $t('month_may') ?> 2013</a></li>
                             </ul>
                         </header>
                     </aside><!-- /archive -->

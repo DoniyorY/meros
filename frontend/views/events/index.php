@@ -6,14 +6,18 @@ use yii\helpers\Url;
 /** @var yii\web\View $this */
 /** @var common\models\Events[] $events */
 
+$params = Yii::$app->params;
 $lang = Yii::$app->language;
+$t = static function ($key) use ($params, $lang) {
+    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+};
 $base = Yii::$app->request->baseUrl;
-$this->title = 'Events';
+$this->title = $t('events_page_title');
 ?>
 
 <div class="container">
     <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
     </ol>
 </div>
@@ -22,7 +26,7 @@ $this->title = 'Events';
     <section class="meros-section meros-news-hero reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Academic calendar</span>
+                <span class="meros-kicker"><?= Html::encode($t('events_kicker')) ?></span>
                 <h1><?= Html::encode($this->title) ?></h1>
             </div>
         </div>
@@ -48,9 +52,9 @@ $this->title = 'Events';
                                 <p class="meros-muted"><span class="fa fa-calendar"></span> <?= date('d.m.Y', $event->created_at) ?></p>
                                 <p><?= Html::encode(strip_tags($description)) ?></p>
                                 <?php if ($event->video_link): ?>
-                                    <p class="meros-muted"><span class="fa fa-youtube-play"></span> YouTube video available</p>
+                                    <p class="meros-muted"><span class="fa fa-youtube-play"></span> <?= Html::encode($t('events_youtube_available')) ?></p>
                                 <?php endif; ?>
-                                <a href="<?= Url::to(['view', 'id' => $event->id]) ?>" class="meros-link">View Details</a>
+                                <a href="<?= Url::to(['view', 'id' => $event->id]) ?>" class="meros-link"><?= Html::encode($t('view_details')) ?></a>
                             </div>
                         </article>
                     </div>
@@ -59,9 +63,9 @@ $this->title = 'Events';
                 <?php if (empty($events)): ?>
                     <div class="col-12">
                         <article class="meros-news-sidebar-card text-center">
-                            <span class="meros-kicker">Coming soon</span>
-                            <h2>Events will be announced soon</h2>
-                            <p>Check this page later for upcoming Meros events and video materials.</p>
+                            <span class="meros-kicker"><?= Html::encode($t('coming_soon')) ?></span>
+                            <h2><?= Html::encode($t('events_empty_title')) ?></h2>
+                            <p><?= Html::encode($t('events_empty_text')) ?></p>
                         </article>
                     </div>
                 <?php endif; ?>

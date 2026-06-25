@@ -10,18 +10,12 @@ function translate($key)
    return Yii::$app->params[$key][$lang];
 }
 
-$this->title = "Courses";
+$this->title = translate('courses_page_title');
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
-$params = Yii::$app->params;
-$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
-if (!empty($comments)) {
-   shuffle($comments);
-   $comments = array_slice($comments, 0, 3);
-}
 ?>
 <!-- course banner -->
-<section id="course-banner" class="meros-course-hero reveal-section" aria-label="Course banner">
+<section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
     <div class="position-relative meros-course-hero-bg"
          style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
         <div class="container h-100">
@@ -33,13 +27,13 @@ if (!empty($comments)) {
                         </div>
                         <div>
                            <?php if ($courses->preview_video_link): ?>
-                               <span class="meros-kicker">Medical English Course</span>
+                               <span class="meros-kicker"><?= Html::encode(translate('medical_english_course')) ?></span>
                            <?php endif; ?>
                             <h1 class="course-banner-subtitle mb-3"
                                 style="text-transform: uppercase"><?= $courses->{"name_$lang"} ?></h1>
                         </div>
                         <div>
-                            <h2>Advanced Communication Skills</h2>
+                            <h2><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
                         </div>
                     </div>
                 </div>
@@ -47,7 +41,7 @@ if (!empty($comments)) {
                    <div class="col-md col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
-                                   title="YouTube video player" class="course-preview-video"
+                                   title="<?= Html::encode(translate('youtube_video_player')) ?>" class="course-preview-video"
                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                        </div>
@@ -122,7 +116,7 @@ if (!empty($comments)) {
                         </div>
                     </div>
                     <div class="col-md-6 mt-5">
-                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="English for Doctors"
+                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="<?= Html::encode(translate('english_for_doctors')) ?>"
                              class="package-image">
                     </div>
                 </div>
@@ -132,24 +126,27 @@ if (!empty($comments)) {
     </section>
 
     <section id="instructors" class="instructors-section meros-section meros-testimonial reveal-section">
-        <div class="container">
-            <div class="meros-quote-card">
-                <span class="meros-kicker">Student outcomes</span>
-                <?php if (!empty($comments)): ?>
-                    <div class="meros-comments-carousel owl-carousel owl-theme">
-                        <?php foreach ($comments as $comment): ?>
-                            <blockquote class="meros-comment-slide">
-                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
-                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
+        <div class="block">
+            <div class="container">
+                <div class="instructors">
+                    <div class="author-carousel">
+                        <div class="author">
+                            <blockquote>
+                                <article class="paragraph-wrapper">
+                                    <div class="inner">
+                                        <header><?= Html::encode(translate('testimonial_doctor_name')) ?></header>
+                                        <p>
+                                            <?= Html::encode(translate('testimonial_course_text')) ?>
+                                        </p>
+                                        <figure><?= Html::encode(translate('doctor')) ?></figure>
+                                    </div>
+                                </article>
                             </blockquote>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <blockquote>
-                        <p><?= translate('comments') ?></p>
-                    </blockquote>
-                <?php endif; ?>
+                        </div><!-- /.author -->
+                    </div><!-- /.author-carousel -->
+                </div>
             </div>
+            <div class="background"></div><!-- /.background -->
         </div>
     </section><!-- /#instructors -->
 
@@ -242,7 +239,7 @@ if (!empty($comments)) {
                                       }
                                       ?></figure>
                                    <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
-                                      class="btn btn-primary btn-lg w-100 meros-primary-btn">Buy Now</a>
+                                      class="btn btn-primary btn-lg w-100 meros-primary-btn"><?= Html::encode(translate('buy_now')) ?></a>
                                    <div class="features">
                                        <div class="accordion meros-accordion meros-plan-accordion"
                                             id="<?= "plan-accordion-$item->id" ?>">
@@ -282,8 +279,8 @@ if (!empty($comments)) {
                         <div class="col-12">
                             <div class="meros-faq-card reveal-section">
                                 <div class="meros-section-heading text-center">
-                                    <span class="meros-kicker">FAQ</span>
-                                    <h2>Frequently Asked Questions</h2>
+                                    <span class="meros-kicker"><?= Html::encode(translate('faq')) ?></span>
+                                    <h2><?= Html::encode(translate('frequently_asked_questions')) ?></h2>
                                 </div>
                                 <div class="row g-3" id="course-faq-accordion">
                                    <?php foreach ($faqItems as $faq): ?>

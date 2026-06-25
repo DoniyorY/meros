@@ -30,7 +30,7 @@ function translate($key)
     <section class="meros-section meros-page-hero reveal-section">
         <div class="container">
             <div class="meros-section-heading text-center">
-                <span class="meros-kicker">Get in touch</span>
+                <span class="meros-kicker"><?= Html::encode($params['get_in_touch'][$lang] ?? $params['get_in_touch']['en']) ?></span>
                 <h1><?= Html::encode($this->title) ?></h1>
             </div>
             <div class="row g-4">
@@ -44,14 +44,14 @@ function translate($key)
                 <div class="col-lg-4">
                     <div class="meros-contact-card h-100">
                         <i class="fa fa-phone"></i>
-                        <h3>Phone</h3>
+                        <h3><?= Html::encode($params['label_phone'][$lang] ?? $params['label_phone']['en']) ?></h3>
                         <p><a href="tel:<?= Html::encode($params['phone']) ?>"><?= Html::encode($params['phone']) ?></a></p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="meros-contact-card h-100">
                         <i class="fa fa-envelope"></i>
-                        <h3>Email</h3>
+                        <h3><?= Html::encode($params['label_email'][$lang] ?? $params['label_email']['en']) ?></h3>
                         <p><a href="mailto:<?= Html::encode($params['adminEmail']) ?>"><?= Html::encode($params['adminEmail']) ?></a></p>
                     </div>
                 </div>
@@ -70,9 +70,9 @@ function translate($key)
                 </div>
                 <div class="col-lg-6">
                     <div class="meros-contact-form-card h-100">
-                        <span class="meros-kicker">Message us</span>
-                        <h2>Send Us a Message</h2>
-                        <p>If you have an enquiry about an existing course or want to discuss your specific requirements, please send us a message.</p>
+                        <span class="meros-kicker"><?= Html::encode($params['message_us'][$lang] ?? $params['message_us']['en']) ?></span>
+                        <h2><?= Html::encode($params['send_us_message'][$lang] ?? $params['send_us_message']['en']) ?></h2>
+                        <p><?= Html::encode($params['contact_form_intro'][$lang] ?? $params['contact_form_intro']['en']) ?></p>
                         <?php $form = ActiveForm::begin(['id' => 'contact-form', 'options' => ['class' => 'meros-form']]); ?>
                             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
                             <?= $form->field($model, 'email')->input('email') ?>
@@ -82,7 +82,7 @@ function translate($key)
                                 'template' => '<div class="row g-3 align-items-center"><div class="col-sm-5">{image}</div><div class="col-sm-7">{input}</div></div>',
                             ]) ?>
                             <div class="form-group mb-0">
-                                <?= Html::submitButton('Send a Message', ['class' => 'btn btn-primary meros-primary-btn', 'name' => 'contact-button']) ?>
+                                <?= Html::submitButton($params['send_message_button'][$lang] ?? $params['send_message_button']['en'], ['class' => 'btn btn-primary meros-primary-btn', 'name' => 'contact-button']) ?>
                             </div>
                         <?php ActiveForm::end(); ?>
                     </div>
