@@ -153,18 +153,18 @@ $(document).ready(function($) {
     if ($('.meros-comments-carousel').length > 0) {
         $('.meros-comments-carousel').each(function () {
             var $carousel = $(this);
-            var hasMultiplePages = $carousel.children('.meros-comment-slide').length > 3;
+            var hasMultipleSlides = $carousel.children('.meros-comment-slide').length > 1;
 
             $carousel.owlCarousel({
-                items: 3,
-                autoPlay: hasMultiplePages ? 7000 : false,
+                items: 1,
+                singleItem: true,
+                autoPlay: hasMultipleSlides ? 7000 : false,
                 stopOnHover: true,
                 navigation: false,
-                pagination: hasMultiplePages,
+                pagination: hasMultipleSlides,
                 rewindNav: true,
-                scrollPerPage: true,
-                itemsDesktop: [1199, 3],
-                itemsDesktopSmall: [991, 2],
+                itemsDesktop: [1199, 1],
+                itemsDesktopSmall: [991, 1],
                 itemsTablet: [767, 1],
                 itemsMobile: [479, 1]
             });

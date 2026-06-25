@@ -645,6 +645,10 @@ body p,
     padding: 0 18px;
 }
 
+.meros-comments-carousel .owl-item {
+    width: 100% !important;
+}
+
 .meros-comments-carousel .owl-controls {
     margin-top: 26px;
 }

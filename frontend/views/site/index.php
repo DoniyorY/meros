@@ -55,6 +55,7 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
 $comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
 if (!empty($comments)) {
    shuffle($comments);
+   $comments = array_slice($comments, 0, 3);
 }
 
 ?>
