@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * @property int $id
- * @property int $subscription_id
+ * @property int $billing_id
  * @property string $click_trans_id
  * @property string|null $click_paydoc_id
  * @property int $service_id
@@ -23,17 +24,26 @@ use yii\db\ActiveRecord;
  * @property int|null $cancelled_at
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property-read Billing $billing
  */
 final class ClickPayment extends ActiveRecord
 {
-    public const STATUS_NEW = 0;
-    public const STATUS_PREPARED = 1;
-    public const STATUS_PAID = 2;
-    public const STATUS_CANCELLED = 3;
-    public const STATUS_FAILED = 4;
-
-    public static function tableName(): string
-    {
-        return '{{%click_payments}}';
-    }
+   public const STATUS_NEW = 0;
+   public const STATUS_PREPARED = 1;
+   public const STATUS_PAID = 2;
+   public const STATUS_CANCELLED = 3;
+   public const STATUS_FAILED = 4;
+   
+   public static function tableName(): string
+   {
+      return '{{%click_payments}}';
+   }
+   
+   public function getBilling(): ActiveQuery
+   {
+      return $this->hasOne(Billing::class, [
+         'id' => 'billing_id',
+      ]);
+   }
 }
