@@ -1921,3 +1921,81 @@ body p,
         flex-direction: column;
     }
 }
+
+.subscription-plans-carousel-wrap {
+    position: relative;
+}
+
+.subscription-plans-carousel .subscription-plan-carousel-item {
+    padding: 14px 8px 4px;
+}
+
+.subscription-plans-carousel .owl-wrapper,
+.subscription-plans-carousel .owl-stage {
+    display: flex;
+    align-items: stretch;
+}
+
+.subscription-plans-carousel .owl-item {
+    display: flex;
+}
+
+.subscription-plans-carousel .owl-item > .subscription-plan-carousel-item {
+    display: flex;
+    width: 100%;
+}
+
+.subscription-plans-carousel .owl-controls .owl-buttons div,
+.subscription-plans-carousel .owl-nav .owl-prev,
+.subscription-plans-carousel .owl-nav .owl-next {
+    align-items: center;
+    background: var(--meros-primary);
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    font-size: 30px;
+    height: 46px;
+    justify-content: center;
+    opacity: 0.92;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.25s ease;
+    width: 46px;
+    z-index: 5;
+}
+
+.subscription-plans-carousel .owl-controls .owl-buttons div:hover,
+.subscription-plans-carousel .owl-nav .owl-prev:hover,
+.subscription-plans-carousel .owl-nav .owl-next:hover {
+    background: var(--meros-accent);
+    color: var(--meros-primary-dark);
+}
+
+.subscription-plans-carousel .owl-controls .owl-buttons .owl-prev,
+.subscription-plans-carousel .owl-nav .owl-prev {
+    left: -18px;
+}
+
+.subscription-plans-carousel .owl-controls .owl-buttons .owl-next,
+.subscription-plans-carousel .owl-nav .owl-next {
+    right: -18px;
+}
+
+.subscription-plans-carousel .owl-controls .owl-pagination,
+.subscription-plans-carousel .owl-dots {
+    margin-top: 18px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .subscription-plans-carousel .owl-controls .owl-buttons .owl-prev,
+    .subscription-plans-carousel .owl-nav .owl-prev {
+        left: 0;
+    }
+
+    .subscription-plans-carousel .owl-controls .owl-buttons .owl-next,
+    .subscription-plans-carousel .owl-nav .owl-next {
+        right: 0;
+    }
+}
