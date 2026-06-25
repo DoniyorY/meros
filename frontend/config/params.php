@@ -616,19 +616,144 @@ return [
       'uz' => 'Ishonchli hamkorlar',
    ],
    'comments' => [
-      'ru' => 'Medical English Institute полностью изменил мой подход к профессиональному общению в сфере здравоохранения. Занятия практичные, хорошо структурированные и основаны на реальных ситуациях, с которыми медицинские специалисты сталкиваются каждый день. Преподаватели опытные, внимательные и действительно понимают потребности медицинских работников, работающих в международной среде. Теперь я чувствую себя намного увереннее при общении с пациентами и коллегами',
-      'en' => 'Medical English Institute has completely changed the way I communicate in a professional healthcare environment. The lessons are practical, well-structured, and focused on real situations that medical professionals face every day. The teachers are supportive, experienced, and truly understand the needs of international healthcare workers. I feel much more confident speaking with patients and colleagues now.',
-      'uz' => 'Medical English Institute tibbiyot sohasidagi professional muloqotga bo‘lgan yondashuvimni butunlay o‘zgartirdi. Darslar amaliy, yaxshi tuzilgan va tibbiyot mutaxassislari har kuni duch keladigan haqiqiy vaziyatlarga asoslangan. O‘qituvchilar tajribali, e’tiborli va xalqaro muhitda ishlaydigan tibbiyot xodimlarining ehtiyojlarini yaxshi tushunadilar. Endi bemorlar va hamkasblar bilan muloqot qilishda o‘zimni ancha ishonchli his qilaman.',
+      'ru' => 'Meros International Institute полностью изменил мой подход к профессиональному общению в сфере здравоохранения. Занятия практичные, хорошо структурированные и основаны на реальных ситуациях, с которыми медицинские специалисты сталкиваются каждый день. Преподаватели опытные, внимательные и действительно понимают потребности медицинских работников, работающих в международной среде. Теперь я чувствую себя намного увереннее при общении с пациентами и коллегами',
+      'en' => 'Meros International Institute has completely changed the way I communicate in a professional healthcare environment. The lessons are practical, well-structured, and focused on real situations that medical professionals face every day. The teachers are supportive, experienced, and truly understand the needs of international healthcare workers. I feel much more confident speaking with patients and colleagues now.',
+      'uz' => 'Meros International Institute tibbiyot sohasidagi professional muloqotga bo‘lgan yondashuvimni butunlay o‘zgartirdi. Darslar amaliy, yaxshi tuzilgan va tibbiyot mutaxassislari har kuni duch keladigan haqiqiy vaziyatlarga asoslangan. O‘qituvchilar tajribali, e’tiborli va xalqaro muhitda ishlaydigan tibbiyot xodimlarining ehtiyojlarini yaxshi tushunadilar. Endi bemorlar va hamkasblar bilan muloqot qilishda o‘zimni ancha ishonchli his qilaman.',
    ],
    'events' => [
       'ru' => 'События',
       'en' => 'Events',
       'uz' => 'Tadbirlar',
    ],
-   '' => [
-      'ru' => '',
-      'en' => '',
-      'uz' => '',
+   'comments_arr' => [
+      'ru' => [
+         [
+            'author' => 'Dr. Anna Petrova',
+            'comment' => 'Обучение в Meros International Institute помогло мне значительно улучшить профессиональный английский. Теперь я гораздо увереннее общаюсь с иностранными пациентами, обсуждаю клинические случаи с коллегами и понимаю медицинскую документацию.',
+         ],
+         [
+            'author' => 'Dr. Michael Brown',
+            'comment' => 'Мне особенно понравилось, что занятия основаны на реальных ситуациях из медицинской практики. Мы изучали не просто грамматику, а учились правильно собирать анамнез, объяснять диагноз и общаться с пациентами.',
+         ],
+         [
+            'author' => 'Nurse Sofia Karimova',
+            'comment' => 'До начала курса мне было сложно разговаривать с пациентами на английском языке. Благодаря понятным урокам и постоянной разговорной практике я стала чувствовать себя намного спокойнее и увереннее на работе.',
+         ],
+         [
+            'author' => 'Dr. Daniel Lee',
+            'comment' => 'Преподаватели Meros International Institute отлично понимают специфику работы медицинских специалистов. Они подробно объясняют сложные термины и помогают использовать их в реальных профессиональных ситуациях.',
+         ],
+         [
+            'author' => 'Dr. Maria Gonzalez',
+            'comment' => 'Этот курс оказался именно тем, что мне было нужно для профессионального роста. Я улучшила произношение, расширила медицинский словарный запас и научилась более чётко объяснять информацию пациентам.',
+         ],
+         [
+            'author' => 'Pharmacist Alex Morgan',
+            'comment' => 'Программа хорошо организована и охватывает все важные темы. Особенно полезными для меня были уроки по общению с пациентами, объяснению правил приёма лекарств и обсуждению возможных побочных эффектов.',
+         ],
+         [
+            'author' => 'Dr. Layla Hassan',
+            'comment' => 'После прохождения курса я стала увереннее участвовать в международных конференциях и профессиональных обсуждениях. Практические задания помогли мне преодолеть языковой барьер и начать говорить более свободно.',
+         ],
+         [
+            'author' => 'Nurse Emily Wilson',
+            'comment' => 'На каждом занятии мы разбирали полезные фразы, которые действительно используются в больницах и клиниках. Я смогла сразу применять полученные знания в работе, и это заметно улучшило моё общение с пациентами.',
+         ],
+         [
+            'author' => 'Dr. Timur Akhmedov',
+            'comment' => 'Meros International Institute помог мне подготовиться к работе в международной медицинской среде. Курс развивает не только знание языка, но и навыки профессионального общения с пациентами и коллегами.',
+         ],
+         [
+            'author' => 'Medical Student Olivia Clark',
+            'comment' => 'Этот курс стал отличным дополнением к моему медицинскому образованию. Теперь мне легче читать научные статьи, понимать лекции на английском языке и обсуждать медицинские темы с преподавателями и студентами.',
+         ],
+      ],
+      
+      'en' => [
+         [
+            'author' => 'Dr. Anna Petrova',
+            'comment' => 'Studying at Meros International Institute helped me improve my professional English significantly. I now feel much more confident communicating with international patients, discussing clinical cases with colleagues, and understanding medical documentation.',
+         ],
+         [
+            'author' => 'Dr. Michael Brown',
+            'comment' => 'What I appreciated most was that the lessons were based on real situations from medical practice. We did not simply study grammar; we learned how to take a patient history, explain a diagnosis, and communicate professionally with patients.',
+         ],
+         [
+            'author' => 'Nurse Sofia Karimova',
+            'comment' => 'Before starting the course, I found it difficult to speak with patients in English. Thanks to the clear lessons and regular speaking practice, I now feel much calmer and more confident at work.',
+         ],
+         [
+            'author' => 'Dr. Daniel Lee',
+            'comment' => 'The teachers at Meros International Institute clearly understand the specific needs of healthcare professionals. They explain complex terminology carefully and show us how to use it in real professional situations.',
+         ],
+         [
+            'author' => 'Dr. Maria Gonzalez',
+            'comment' => 'This course was exactly what I needed for my professional development. I improved my pronunciation, expanded my medical vocabulary, and learned how to explain information to patients more clearly.',
+         ],
+         [
+            'author' => 'Pharmacist Alex Morgan',
+            'comment' => 'The programme is well organised and covers all the essential topics. The lessons on patient communication, explaining medication instructions, and discussing possible side effects were especially useful for me.',
+         ],
+         [
+            'author' => 'Dr. Layla Hassan',
+            'comment' => 'After completing the course, I became more confident participating in international conferences and professional discussions. The practical exercises helped me overcome the language barrier and speak more naturally.',
+         ],
+         [
+            'author' => 'Nurse Emily Wilson',
+            'comment' => 'Every lesson included useful expressions that are genuinely used in hospitals and clinics. I was able to apply what I learned immediately at work, and it noticeably improved my communication with patients.',
+         ],
+         [
+            'author' => 'Dr. Timur Akhmedov',
+            'comment' => 'Meros International Institute helped me prepare for working in an international healthcare environment. The course develops not only language knowledge but also professional communication skills with patients and colleagues.',
+         ],
+         [
+            'author' => 'Medical Student Olivia Clark',
+            'comment' => 'This course has been an excellent addition to my medical education. It is now easier for me to read scientific articles, understand lectures in English, and discuss medical topics with teachers and other students.',
+         ],
+      ],
+      
+      'uz' => [
+         [
+            'author' => 'Dr. Anna Petrova',
+            'comment' => 'Meros International Institute’da o‘qish professional ingliz tilimni sezilarli darajada yaxshilashimga yordam berdi. Endi xorijiy bemorlar bilan muloqot qilishda, hamkasblar bilan klinik holatlarni muhokama qilishda va tibbiy hujjatlarni tushunishda ancha ishonchliman.',
+         ],
+         [
+            'author' => 'Dr. Michael Brown',
+            'comment' => 'Menga eng ko‘p yoqqan jihati darslarning tibbiy amaliyotdagi haqiqiy vaziyatlarga asoslanganidir. Biz faqat grammatikani o‘rganmadik, balki anamnez yig‘ish, tashxisni tushuntirish va bemorlar bilan professional muloqot qilishni ham mashq qildik.',
+         ],
+         [
+            'author' => 'Nurse Sofia Karimova',
+            'comment' => 'Kursni boshlashdan oldin bemorlar bilan ingliz tilida gaplashish men uchun qiyin edi. Tushunarli darslar va muntazam suhbat amaliyoti tufayli hozir ishda o‘zimni ancha xotirjam va ishonchli his qilaman.',
+         ],
+         [
+            'author' => 'Dr. Daniel Lee',
+            'comment' => 'Meros International Institute o‘qituvchilari tibbiyot mutaxassislarining ehtiyojlarini juda yaxshi tushunadilar. Ular murakkab atamalarni batafsil tushuntiradilar va ularni haqiqiy professional vaziyatlarda qanday qo‘llashni o‘rgatadilar.',
+         ],
+         [
+            'author' => 'Dr. Maria Gonzalez',
+            'comment' => 'Bu kurs professional rivojlanishim uchun aynan kerakli dastur bo‘ldi. Men talaffuzimni yaxshiladim, tibbiy lug‘at boyligimni kengaytirdim va bemorlarga ma’lumotni yanada aniq tushuntirishni o‘rgandim.',
+         ],
+         [
+            'author' => 'Pharmacist Alex Morgan',
+            'comment' => 'Dastur yaxshi tashkil etilgan va barcha muhim mavzularni qamrab oladi. Bemorlar bilan muloqot qilish, dori vositalarini qabul qilish tartibini tushuntirish va ehtimoliy nojo‘ya ta’sirlarni muhokama qilish bo‘yicha darslar men uchun ayniqsa foydali bo‘ldi.',
+         ],
+         [
+            'author' => 'Dr. Layla Hassan',
+            'comment' => 'Kursni tugatganimdan so‘ng xalqaro konferensiyalar va professional muhokamalarda ancha ishonchli qatnasha boshladim. Amaliy mashqlar til to‘sig‘ini yengib, erkinroq gapirishimga yordam berdi.',
+         ],
+         [
+            'author' => 'Nurse Emily Wilson',
+            'comment' => 'Har bir darsda shifoxona va klinikalarda haqiqatan ham ishlatiladigan foydali iboralarni o‘rgandik. Olingan bilimlarni darhol ish jarayonida qo‘llay oldim va bu bemorlar bilan muloqotimni sezilarli darajada yaxshiladi.',
+         ],
+         [
+            'author' => 'Dr. Timur Akhmedov',
+            'comment' => 'Meros International Institute meni xalqaro tibbiy muhitda ishlashga tayyorladi. Kurs nafaqat til bilimlarini, balki bemorlar va hamkasblar bilan professional muloqot qilish ko‘nikmalarini ham rivojlantiradi.',
+         ],
+         [
+            'author' => 'Medical Student Olivia Clark',
+            'comment' => 'Bu kurs tibbiy ta’limimga ajoyib qo‘shimcha bo‘ldi. Endi ilmiy maqolalarni o‘qish, ingliz tilidagi ma’ruzalarni tushunish hamda o‘qituvchilar va talabalar bilan tibbiy mavzularni muhokama qilish men uchun ancha oson.',
+         ],
+      ],
    ],
    '' => [
       'ru' => '',
