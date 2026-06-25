@@ -638,8 +638,16 @@ body p,
 .meros-quote-card footer,
 .meros-quote-card .meros-kicker { color: #fff; }
 .meros-quote-card blockquote { display: block; padding: 0; }
-.meros-quote-card p { font-size: clamp(21px, 3vw, 34px); line-height: 1.45; }
+.meros-quote-card p { font-size: 23px; line-height: 1.25; }
 .meros-quote-card footer { font-weight: 800; opacity: 0.82; }
+
+.meros-comments-carousel .meros-comment-slide {
+    padding: 0 18px;
+}
+
+.meros-comments-carousel .owl-controls {
+    margin-top: 26px;
+}
 
 .meros-partner-card { align-items: center; display: flex; justify-content: center; padding: 42px; }
 .meros-partner-card img { max-height: 86px; max-width: 100%; }

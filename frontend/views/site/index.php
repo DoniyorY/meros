@@ -52,6 +52,11 @@ $hospitalHomeCopy = [
 $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
    return $hospitalHomeCopy[$key][$lang] ?? $hospitalHomeCopy[$key]['en'] ?? $key;
 };
+$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
+if (count($comments) > 3) {
+   shuffle($comments);
+   $comments = array_slice($comments, 0, 3);
+}
 
 ?>
 <!-- Homepage Slider -->
@@ -215,10 +220,20 @@ $hospitalHomeT = static function ($key) use ($hospitalHomeCopy, $lang) {
         <div class="container">
             <div class="meros-quote-card">
                 <span class="meros-kicker">Student outcomes</span>
-                <blockquote>
-                    <p><?=translate('comments')?></p>
-                    <footer>Dr Sofia Karimova</footer>
-                </blockquote>
+                <?php if (!empty($comments)): ?>
+                    <div class="meros-comments-carousel owl-carousel owl-theme">
+                        <?php foreach ($comments as $comment): ?>
+                            <blockquote class="meros-comment-slide">
+                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
+                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
+                            </blockquote>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <blockquote>
+                        <p><?= translate('comments') ?></p>
+                    </blockquote>
+                <?php endif; ?>
             </div>
         </div>
     </section>
