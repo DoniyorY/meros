@@ -151,25 +151,23 @@ $(document).ready(function($) {
     }
 
     if ($('.meros-comments-carousel').length > 0) {
-        $('.meros-comments-carousel').owlCarousel({
-            items: 3,
-            loop: $('.meros-comments-carousel .meros-comment-slide').length > 3,
-            margin: 24,
-            autoplay: true,
-            autoplayTimeout: 7000,
-            autoplayHoverPause: true,
-            smartSpeed: 700,
-            nav: false,
-            dots: true,
-            // Owl Carousel 1.x fallbacks kept for older bundled assets.
-            autoPlay: 7000,
-            stopOnHover: true,
-            navigation: false,
-            pagination: true,
-            itemsDesktop: [1199, 3],
-            itemsDesktopSmall: [991, 2],
-            itemsTablet: [767, 1],
-            itemsMobile: [479, 1]
+        $('.meros-comments-carousel').each(function () {
+            var $carousel = $(this);
+            var hasMultiplePages = $carousel.children('.meros-comment-slide').length > 3;
+
+            $carousel.owlCarousel({
+                items: 3,
+                autoPlay: hasMultiplePages ? 7000 : false,
+                stopOnHover: true,
+                navigation: false,
+                pagination: hasMultiplePages,
+                rewindNav: true,
+                scrollPerPage: true,
+                itemsDesktop: [1199, 3],
+                itemsDesktopSmall: [991, 2],
+                itemsTablet: [767, 1],
+                itemsMobile: [479, 1]
+            });
         });
     }
 
