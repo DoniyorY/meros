@@ -5,9 +5,12 @@ namespace backend\controllers;
 use common\models\SubscriptionPlans;
 use common\models\SubscriptionPlanItems;
 use common\models\search\SubscriptionPlansSearch;
+use Yii;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 
 /**
@@ -118,6 +121,33 @@ class SubscriptionPlansController extends Controller
         \Yii::$app->session->setFlash('success','Status Changed Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
     }
+
+    public function actionEditablePrice()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $post = Yii::$app->request->post();
+        if (!Yii::$app->request->isPost || !isset($post['hasEditable'], $post['editableKey'])) {
+            return ['output' => '', 'message' => 'Invalid request'];
+        }
+
+        $model = $this->findModel($post['editableKey']);
+        $posted = current($post[SubscriptionPlans::formName()] ?? []);
+
+        if ($posted === false || !array_key_exists('price', $posted)) {
+            return ['output' => $model->price, 'message' => 'Price is required'];
+        }
+
+        $model->price = $posted['price'];
+        $model->updated_at = time();
+
+        if (!$model->save()) {
+            return ['output' => $model->price, 'message' => Json::encode($model->getFirstErrors())];
+        }
+
+        return ['output' => $model->price, 'message' => ''];
+    }
+
     /**
      * Updates an existing SubscriptionPlans model.
      * If update is successful, the browser will be redirected to the 'view' page.
