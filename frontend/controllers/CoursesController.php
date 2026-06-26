@@ -200,7 +200,7 @@ class CoursesController extends Controller
       ];
    }
    public function actionTest(){
-      $user = User::findOne(['id'=>4]);
+      $user = User::findOne(['id'=>6]);
       echo "<pre>";
       print_r($user->sendEmail($user));
       die();
