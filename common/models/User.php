@@ -239,7 +239,21 @@ class User extends ActiveRecord implements IdentityInterface
          ->setSubject($subjects[$lang] ?? $subjects['en'])
          ->send();
    }
-
+   
+   public function sendCongratsEmail($user, $billing)
+   {
+      $lang = Yii::$app->language;
+      return Yii::$app
+         ->mailer
+         ->compose(
+            ['html' => 'congrats-html', 'text' => 'congrats-text'],
+            ['user' => $user, 'billing' => $billing]
+         )
+         ->setFrom([Yii::$app->params['adminEmail'] => 'Meros International Institute'])
+         ->setTo($this->email)
+         ->setSubject('Congratulations! You have successfully subscribed to Meros International Institute')
+         ->send();
+   }
     public function getSubscriptions()
     {
         return $this->hasMany(UserSubscriptions::className(), ['user_id' => 'id']);
