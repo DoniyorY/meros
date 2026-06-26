@@ -62,6 +62,13 @@ class PasswordResetRequestForm extends Model
             }
         }
 
+        $lang = substr((string) Yii::$app->language, 0, 2);
+        $subjects = [
+            'ru' => 'Сброс пароля для Meros International Institute',
+            'uz' => 'Meros International Institute uchun parolni tiklash',
+            'en' => 'Password reset for Meros International Institute',
+        ];
+
         return Yii::$app
             ->mailer
             ->compose(
@@ -70,7 +77,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($this->email)
-            ->setSubject('Password reset for ' . Yii::$app->name)
+            ->setSubject($subjects[$lang] ?? $subjects['en'])
             ->send();
     }
 
