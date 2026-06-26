@@ -55,7 +55,7 @@ final class PaymeCheckout
       
       $params = [
          'm=' . $merchantId,
-         'ac.billing_id=' . (int) $billing->id,
+         'ac.order_id=' . (int) $billing->id,
          'a=' . $amount,
          'l=' . $lang,
       ];
