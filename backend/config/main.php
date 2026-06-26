@@ -12,9 +12,13 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'timeZone' => 'Asia/Tashkent',
-    'modules' => [],
+   'modules' => [
+      'gridview' => ['class' => 'kartik\grid\Module']
+   ],
     'name'=>'MEROS Admin Panel',
+   
     'components' => [
+       
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
