@@ -88,16 +88,13 @@ class ApiController extends Controller
       $course = $subscription ? $subscription->course : null;
       [$firstName, $lastName] = self::splitFullName($user ? (string) $user->fullname : '');
       $durationDays = $subscription->duration_days;
-
+   
       return [
-         //'event' => 'order_paid',
-         'order_ref' => $subscription->sku_id,
-         'first_name' => $firstName,
-         'last_name' => $lastName,
-         'email' => $user->email,
-         'telegram_id' => $user ? (string) self::modelAttribute($user, 'telegram_id', '') : '',
-         'course_sku' => (string) (Yii::$app->params['campus_id'] ?? ''),
-         'duration_days' => (int)$durationDays,
+         'email'=>$user->email,
+         'first_name'=>$firstName,
+         'last_name'=>$lastName,
+         'sku'=>$subscription->sku_id,
+         'duration_days'=>$durationDays,
       ];
    }
 
