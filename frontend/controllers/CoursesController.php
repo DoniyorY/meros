@@ -99,11 +99,13 @@ class CoursesController extends Controller
                'status' => 0, // только неоплаченные
             ])
             ->one();
-         if (!Yii::$app->user->isGuest && $billing->user_id == null) {
-            $billing->user_id = Yii::$app->user->id;
-            $billing->save(false);
+         if($billing){
+            if (!Yii::$app->user->isGuest && $billing->user_id == null) {
+               $billing->user_id = Yii::$app->user->id;
+               $billing->save(false);
+            }
          }
-
+         
          // если пользователь открыл другой тариф
          if ($billing && $billing->subscription_id != $subs->id) {
             $billing = null;
