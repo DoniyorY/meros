@@ -48,7 +48,7 @@ $messages = [
 $t = $messages[$lang] ?? $messages['en'];
 $name = trim((string) $user->fullname) ?: ($user->username ?: $user->email);
 $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'token' => $user->verification_token, 'rer' => Yii::$app->request->referrer]);
-$logoUrl = Url::to('/logo.png', true);
+$logoUrl = Url::to('/logo-white.png', true);
 ?>
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;line-height:1px;">
     <?= Html::encode($t['preheader']) ?>
