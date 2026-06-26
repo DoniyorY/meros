@@ -75,6 +75,7 @@ class ApiController extends Controller
          'message' => 'Zapier order paid webhook request sent.',
          'billing_id' => (int) $billing->id,
          'status_code' => $statusCode,
+         'response' => $response,
       ], 'zapier');
 
       return true;
