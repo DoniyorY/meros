@@ -883,7 +883,7 @@ final class PaymeController extends Controller
          );
       }
       
-      if ($this->billingAmountTiyin($billing) !== $amountTiyin) {
+      if ($this->billingAmountTiyin($billing) !== $amountTiyin /100) {
          throw new PaymeRpcException(
             -31001,
             $this->message(
@@ -899,12 +899,7 @@ final class PaymeController extends Controller
    {
       $amount = (int) $billing->amount;
       
-      return (bool) $this->config(
-         'amountAlreadyInTiyin',
-         false
-      )
-         ? $amount
-         : $amount * 100;
+      return $amount * 100;
    }
    
    private function billingTimestampMs(Billing $billing): int
