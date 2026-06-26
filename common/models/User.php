@@ -227,7 +227,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
             ['user' => $user]
          )
-         ->setFrom([Yii::$app->params['adminEmail'] => 'Meros EDU'])
+         ->setFrom([Yii::$app->params['adminEmail'] => 'Meros International Institute'])
          ->setTo($this->email)
          ->setSubject('Account registration at ' . Yii::$app->name)
          ->send();

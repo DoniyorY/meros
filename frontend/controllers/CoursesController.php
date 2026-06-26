@@ -181,45 +181,10 @@ class CoursesController extends Controller
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
-
-   public function actionConfirm($id)
-   {
-      $user = User::findOne(['id'=>$id]);
-      $billing = Billing::find()->where(['user_id'=>$user->id,'status'=>0])->orderBy(['id'=>SORT_DESC])->one();
-      [$first_name, $last_name]= explode(' ',$user->fullname);
-      $monthCount = $billing->subscription->duration_days / 30;
-      $data = [
-         'event'=>'order_paid',
-         'order_ref'=>$billing->billing_token,
-         'first_name'=>$first_name,
-         'last_name'=>$last_name,
-         'email'=>$user->email,
-         'telegram_id'=>00,
-         'course_sku'=>'11',
-         'duration_month'=>intval($monthCount)
-      ];
-   }
    public function actionTest(){
       $user = User::findOne(['id'=>4]);
       echo "<pre>";
       print_r($user->sendEmail($user));
       die();
-   }
-
-   private static function getClient()
-   {
-      return new \yii\httpclient\Client();
-   }
-   private function actionWebhook($url, $data)
-   {
-      $url = "url";
-      $response = self::getClient()->post($url, json_encode($data), [
-         'Content-Type' => 'application/json',
-         'Accept' => 'application/json',
-         'Authorization' => "Basic {123}"
-      ])->send();
-      if ($response) {
-         return $response->data;
-      }
    }
 }

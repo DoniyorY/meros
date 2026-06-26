@@ -755,10 +755,12 @@ return [
          ],
       ],
    ],
-   '' => [
-      'ru' => '',
-      'en' => '',
-      'uz' => '',
+   'avallain_text' => [
+      'ru' => 'Чтобы получить доступ к приобретённым курсам, перейдите на платформу <a href="https://slc-campus.avallainmagnet.com/merosinternationalinstitute" class="alert-link">Avallain</a>.',
+      
+      'en' => 'To access your purchased courses, please visit the <a href="https://slc-campus.avallainmagnet.com/merosinternationalinstitute" class="alert-link">Avallain</a> platform.',
+      
+      'uz' => 'Xarid qilingan kurslaringizga kirish uchun <a href="https://slc-campus.avallainmagnet.com/merosinternationalinstitute" class="alert-link">Avallain</a> platformasiga o‘ting.',
    ],
    '' => [
       'ru' => '',
