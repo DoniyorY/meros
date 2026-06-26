@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Billing;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -14,7 +15,7 @@ $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
 $t = static function ($key) use ($params, $lang) {
-    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
+   return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
 };
 
 $merchantID = 20;
@@ -33,7 +34,7 @@ $returnURL = "сайт поставщика";
             <div class="meros-invoice-card">
                <?php if (Yii::$app->user->isGuest): ?>
                    <div class="alert alert-warning meros-invoice-alert">
-                       <?= Html::encode($t('invoice_guest_warning_prefix')) ?>
+                      <?= Html::encode($t('invoice_guest_warning_prefix')) ?>
                        <a href="<?= Url::to(['site/login']) ?>"><?= Html::encode($t('login')) ?></a> <?= Html::encode($t('invoice_guest_warning_suffix')) ?>
                    </div>
                <?php endif; ?>
@@ -43,12 +44,13 @@ $returnURL = "сайт поставщика";
                         <span class="meros-kicker"><?= Html::encode($t('secure_checkout')) ?></span>
                         <h1 class="h3 mb-1"><?= Html::encode($t('invoice_title')) ?></h1>
                         <small class="text-muted">
-                            <?= Html::encode($t('invoice_number')) ?> #<?= $billing->id ?>
+                           <?= Html::encode($t('invoice_number')) ?> #<?= $billing->id ?>
                         </small>
                     </div>
 
                     <div class="text-end">
-                        <div><strong><?= Html::encode($t('date')) ?>:</strong> <?= date('d.m.Y', $billing->created_at) ?></div>
+                        <div><strong><?= Html::encode($t('date')) ?>
+                                :</strong> <?= date('d.m.Y', $billing->created_at) ?></div>
                         <div><strong><?= Html::encode($t('status')) ?>:</strong>
                             <span class="<?= $params['billing_status_class'][$billing->status] ?>">
                             <?= $params['billing_status'][$lang][$billing->status] ?>
@@ -118,7 +120,7 @@ $returnURL = "сайт поставщика";
                                    <div class="col-md-12">
                                        <div class="form-group">
                                            <button type="submit" class="btn btn-primary meros-primary-btn w-100">
-                                               <?= Html::encode($t('submit')) ?>
+                                              <?= Html::encode($t('submit')) ?>
                                            </button>
                                        </div>
                                    </div>
@@ -175,7 +177,7 @@ $returnURL = "сайт поставщика";
                         <div class="meros-order-summary">
 
                             <h5 class="mb-4">
-                                <?= Html::encode($t('order_summary')) ?>
+                               <?= Html::encode($t('order_summary')) ?>
                             </h5>
 
                             <div class="d-flex justify-content-between mb-3">
@@ -189,8 +191,8 @@ $returnURL = "сайт поставщика";
                                 <span><?= Html::encode($t('duration')) ?></span>
                                 <strong><?php
                                    (int)$duration = $billing->subscription->duration_days / 30;
-                                       echo Html::encode(strtr($t('duration_months'), ['{count}' => $duration]));
-                                       ?>
+                                   echo Html::encode(strtr($t('duration_months'), ['{count}' => $duration]));
+                                   ?>
                                 </strong>
                             </div>
 
@@ -211,123 +213,125 @@ $returnURL = "сайт поставщика";
                                 </span>
                             </div>
                            <?php if (!Yii::$app->user->isGuest): ?>
-
-                               <button
-                                       id="btn-confirm"
-                                       class="btn w-100 mt-2 meros-primary-btn d-none"
-                                       type="button"
-                               >
-                                   <?= Html::encode($t('confirm')) ?>
-                               </button>
-
-                               <form
-                                       action="<?= Url::to([
-                                          'payment/click-pay',
-                                          'id' => $billing->id,
-                                       ]) ?>"
-                                       id="click_form"
-                                       method="post"
-                                       target="_blank"
-                               >
-                                  <?= Html::hiddenInput(
-                                     Yii::$app->request->csrfParam,
-                                     Yii::$app->request->csrfToken
-                                  ) ?>
-
-                                   <input
-                                           type="hidden"
-                                           name="amount"
-                                           value="<?= (int)$billing->amount ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="merchant_id"
-                                           value="<?= Html::encode(
-                                              $params['click']['merchant_id']
-                                           ) ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="merchant_user_id"
-                                           value="<?= Html::encode(
-                                              $params['click']['merchant_user_id']
-                                           ) ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="service_id"
-                                           value="<?= Html::encode(
-                                              $params['click']['service_id']
-                                           ) ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="transaction_param"
-                                           value="<?= (int)$billing->id ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="return_url"
-                                           value="<?= Url::to(
-                                              [
-                                                 'payments/click-webhook',
-                                                 'id' => $billing->id,
-                                              ],
-                                              true
-                                           ) ?>"
-                                   >
-
-                                   <input
-                                           type="hidden"
-                                           name="card_type"
-                                           value="uzcard"
-                                   >
+                              <?php if ($billing->status === Billing::STATUS_PENDING): ?>
 
                                    <button
+                                           id="btn-confirm"
+                                           class="btn w-100 mt-2 meros-primary-btn d-none"
+                                           type="button"
+                                   >
+                                      <?= Html::encode($t('confirm')) ?>
+                                   </button>
+
+                                   <form
+                                           action="<?= Url::to([
+                                              'payment/click-pay',
+                                              'id' => $billing->id,
+                                           ]) ?>"
+                                           id="click_form"
+                                           method="post"
+                                           target="_blank"
+                                   >
+                                      <?= Html::hiddenInput(
+                                         Yii::$app->request->csrfParam,
+                                         Yii::$app->request->csrfToken
+                                      ) ?>
+
+                                       <input
+                                               type="hidden"
+                                               name="amount"
+                                               value="<?= (int)$billing->amount ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="merchant_id"
+                                               value="<?= Html::encode(
+                                                  $params['click']['merchant_id']
+                                               ) ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="merchant_user_id"
+                                               value="<?= Html::encode(
+                                                  $params['click']['merchant_user_id']
+                                               ) ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="service_id"
+                                               value="<?= Html::encode(
+                                                  $params['click']['service_id']
+                                               ) ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="transaction_param"
+                                               value="<?= (int)$billing->id ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="return_url"
+                                               value="<?= Url::to(
+                                                  [
+                                                     'payments/click-webhook',
+                                                     'id' => $billing->id,
+                                                  ],
+                                                  true
+                                               ) ?>"
+                                       >
+
+                                       <input
+                                               type="hidden"
+                                               name="card_type"
+                                               value="uzcard"
+                                       >
+
+                                       <button
+                                               type="submit"
+                                               class="btn w-100 mt-2 meros-payment-btn meros-primary-btn"
+                                       >
+                                           <img
+                                                   src="https://click.uz/click/images/logo.svg"
+                                                   alt="Click"
+                                                   style="height: 30px;"
+                                           >
+                                       </button>
+                                   </form>
+
+                                   <!--
+                                       В Payme-форму не передаём amount и merchant_id из браузера.
+                                       Сервер заново загружает Billing по ID и сам формирует checkout URL.
+                                   -->
+                                 <?= Html::beginForm(
+                                 ['payment/payme', 'id' => $billing->id],
+                                 'post',
+                                 [
+                                    'id' => 'payme-form',
+                                    'target' => '_blank',
+                                 ]
+                              ) ?>
+
+                                   <button
+                                           id="btn-payme"
                                            type="submit"
-                                           class="btn w-100 mt-2 meros-payment-btn meros-primary-btn"
+                                           class="btn w-100 mt-2 meros-payment-btn meros-payment-payme"
                                    >
                                        <img
-                                               src="https://click.uz/click/images/logo.svg"
-                                               alt="Click"
-                                               style="height: 30px;"
+                                               src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
+                                               alt="Payme"
+                                               style="height: 70px; object-fit: contain;"
                                        >
                                    </button>
-                               </form>
-
-                               <!--
-                                   В Payme-форму не передаём amount и merchant_id из браузера.
-                                   Сервер заново загружает Billing по ID и сам формирует checkout URL.
-                               -->
-                              <?= Html::beginForm(
-                              ['payment/payme', 'id' => $billing->id],
-                              'post',
-                              [
-                                 'id' => 'payme-form',
-                                 'target' => '_blank',
-                              ]
-                           ) ?>
-
-                               <button
-                                       id="btn-payme"
-                                       type="submit"
-                                       class="btn w-100 mt-2 meros-payment-btn meros-payment-payme"
-                               >
-                                   <img
-                                           src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
-                                           alt="Payme"
-                                           style="height: 70px; object-fit: contain;"
-                                   >
-                               </button>
+                                 
+                                 <?= Html::endForm() ?>
                               
-                              <?= Html::endForm() ?>
-                           
-                           <?php endif; ?>
+                              <?php endif;
+                           endif; ?>
                         </div>
 
                     </div>
