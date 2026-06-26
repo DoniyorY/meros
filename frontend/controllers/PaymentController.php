@@ -680,6 +680,7 @@ final class PaymentController extends Controller
             $billing,
             $clickTransId
          );
+         
          if ($billing !== null) {
             ApiController::sendZapierOrderPaidWebhook($billing);
          }
@@ -731,9 +732,11 @@ final class PaymentController extends Controller
       $billing->payment_status = Billing::STATUS_SUCCESS;
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
-      
+      $billing->status = Billing::STATUS_SUCCESS;
+      $billing->updated_at = time();
       $startDate = (int) ($billing->start_date ?: time());
       $billing->start_date = $startDate;
+      $billing->save(false);
       
       if (empty($billing->expires_date)) {
          $plan = $billing->subscription;
@@ -794,7 +797,6 @@ final class PaymentController extends Controller
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
       $billing->updated_at = time();
-      
       if (!$billing->save(false)) {
          throw new RuntimeException(
             'Failed to mark Billing as cancelled.'

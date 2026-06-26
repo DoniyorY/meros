@@ -389,6 +389,9 @@ final class PaymeController extends Controller
          $transaction->perform_time = $nowMs;
          $transaction->updated_at = time();
          $this->saveTransaction($transaction);
+         $billing->status = Billing::STATUS_SUCCESS;
+         $billing->updated_at = time();
+         $billing->save(false);
          if ($billing !== null) {
             ApiController::sendZapierOrderPaidWebhook($billing);
          }
@@ -475,7 +478,9 @@ final class PaymeController extends Controller
             $billing,
             $state === PaymeTransaction::STATE_PERFORMED
          );
-         
+         $billing->status = Billing::STATUS_CANCELLED;
+         $billing->updated_at = time();
+         $billing->save(false);
          $dbTransaction->commit();
          
          return $this->cancelResponse($transaction);
