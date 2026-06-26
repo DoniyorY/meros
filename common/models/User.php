@@ -221,6 +221,13 @@ class User extends ActiveRecord implements IdentityInterface
    
    public function sendEmail($user)
    {
+      $lang = substr((string) Yii::$app->language, 0, 2);
+      $subjects = [
+         'ru' => 'Подтвердите email для Meros International Institute',
+         'uz' => 'Meros International Institute uchun emailingizni tasdiqlang',
+         'en' => 'Verify your email for Meros International Institute',
+      ];
+
       return Yii::$app
          ->mailer
          ->compose(
@@ -229,7 +236,7 @@ class User extends ActiveRecord implements IdentityInterface
          )
          ->setFrom([Yii::$app->params['adminEmail'] => 'Meros International Institute'])
          ->setTo($this->email)
-         ->setSubject('Account registration at ' . Yii::$app->name)
+         ->setSubject($subjects[$lang] ?? $subjects['en'])
          ->send();
    }
 
