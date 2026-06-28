@@ -19,33 +19,34 @@ if (!empty($comments)) {
    shuffle($comments);
    $comments = array_slice($comments, 0, 3);
 }
+$courseName = $courses->{"name_$lang"};
+$courseSubtitle = translate('advanced_communication_skills');
+$courseAnchorNavItems = [
+   ['label' => 'Pricing', 'href' => '#tickets'],
+   ['label' => 'Organisational Purchases', 'href' => '#organisational-purchases'],
+   ['label' => 'FAQ', 'href' => '#faq'],
+   ['label' => 'More about ' . $courseName, 'href' => '#more-about-english-for-nurses'],
+   ['label' => 'Contact us', 'href' => '#contact-us'],
+];
 ?>
 <!-- course banner -->
-<section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
+<section id="course-banner" class="meros-course-hero meros-no-subs-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
     <div class="position-relative meros-course-hero-bg"
          style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
         <div class="container h-100">
             <div class="row h-100 align-items-center g-4">
-                <div class="col-md col-12">
-                    <div class="course-banner-caption meros-course-caption text-center w-100 px-3 mt-4">
-                        <div class="mb-3">
-                            <img src="<?= "$base/uploads/course_icons/$courses->course_icons" ?>" alt="">
+                <div class="col-lg-6 col-12">
+                    <div class="course-banner-caption meros-course-caption text-center w-100 px-3">
+                        <div class="mb-3 meros-course-icons">
+                            <img src="<?= Html::encode("$base/uploads/course_icons/$courses->course_icons") ?>" alt="" loading="eager">
                         </div>
-                        <div>
-                           <?php if ($courses->preview_video_link): ?>
-                               <span class="meros-kicker"><?= Html::encode(translate('medical_english_course')) ?></span>
-                           <?php endif; ?>
-                            <h1 class="course-banner-subtitle mb-3"
-                                style="text-transform: uppercase"><?= $courses->{"name_$lang"} ?></h1>
-                        </div>
-                        <div>
-                            <h2><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
-                        </div>
-                        <a href="#tickets" class="btn btn-outline-light btn-lg rounded-pill px-4" data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
+                        <h1 class="course-banner-subtitle mb-3"><?= Html::encode($courseName) ?></h1>
+                        <h2><?= Html::encode($courseSubtitle) ?></h2>
+                        <a href="#tickets" class="btn btn-lg rounded-pill px-5 meros-hero-subscribe-btn" data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
-                   <div class="col-md col-12">
+                   <div class="col-lg-6 col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
                                    title="<?= Html::encode(translate('youtube_video_player')) ?>" class="course-preview-video"
@@ -56,9 +57,17 @@ if (!empty($comments)) {
                <?php endif; ?>
             </div>
         </div>
-
     </div>
 </section>
+<nav class="meros-course-anchor-nav" aria-label="Course sections">
+    <div class="container">
+        <ul>
+           <?php foreach ($courseAnchorNavItems as $navItem): ?>
+               <li><a href="<?= Html::encode($navItem['href']) ?>"><?= Html::encode($navItem['label']) ?></a></li>
+           <?php endforeach; ?>
+        </ul>
+    </div>
+</nav>
 <!-- end course banner -->
 
 <!-- Page Content -->
@@ -281,7 +290,7 @@ if (!empty($comments)) {
                        <?php endif; ?>
 
                         <div class="col-12">
-                            <div class="meros-faq-card reveal-section">
+                            <div id="faq" class="meros-faq-card reveal-section">
                                 <div class="meros-section-heading text-center">
                                     <span class="meros-kicker"><?= Html::encode(translate('faq')) ?></span>
                                     <h2><?= Html::encode(translate('frequently_asked_questions')) ?></h2>

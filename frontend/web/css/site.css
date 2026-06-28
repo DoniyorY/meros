@@ -2023,3 +2023,101 @@ body p,
         right: 0;
     }
 }
+
+/* no_subs screenshot-aligned hero and in-page navigation */
+.meros-no-subs-hero .meros-course-hero-bg {
+    min-height: 525px;
+    padding: 44px 0;
+}
+
+.meros-no-subs-hero .meros-course-hero-bg:after {
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.meros-no-subs-hero .meros-course-caption .course-banner-subtitle {
+    color: #213f91;
+    font-size: clamp(42px, 5.5vw, 62px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    line-height: 1.05;
+    text-transform: uppercase;
+}
+
+.meros-no-subs-hero .meros-course-caption h2 {
+    color: #777;
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 800;
+    margin-bottom: 62px;
+}
+
+.meros-no-subs-hero .meros-course-icons img {
+    max-height: 82px;
+    max-width: min(430px, 92%);
+    object-fit: contain;
+}
+
+.meros-no-subs-hero .meros-hero-subscribe-btn {
+    background: #12b8d0;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 24px rgba(18, 184, 208, 0.18);
+    color: #fff;
+    font-weight: 900;
+    min-width: 285px;
+}
+
+.meros-no-subs-hero .meros-hero-subscribe-btn:hover,
+.meros-no-subs-hero .meros-hero-subscribe-btn:focus {
+    background: #0da9bf;
+    color: #fff;
+}
+
+.meros-no-subs-hero .meros-video-frame {
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 18px 42px rgba(33, 63, 145, 0.18);
+}
+
+.meros-course-anchor-nav {
+    background: #f0f0f0;
+}
+
+.meros-course-anchor-nav ul {
+    align-items: stretch;
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.meros-course-anchor-nav a {
+    align-items: center;
+    color: #082c84;
+    display: flex;
+    font-size: 20px;
+    font-weight: 900;
+    justify-content: center;
+    line-height: 1.05;
+    min-height: 100px;
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.meros-course-anchor-nav a:hover,
+.meros-course-anchor-nav a:focus {
+    background: #e5e5e5;
+    color: #082c84;
+    text-decoration: none;
+}
+
+@media (max-width: 991px) {
+    .meros-course-anchor-nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .meros-course-anchor-nav li:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 575px) {
+    .meros-course-anchor-nav ul { grid-template-columns: 1fr; }
+    .meros-course-anchor-nav a { min-height: 68px; }
+    .meros-course-anchor-nav li:last-child { grid-column: auto; }
+}
