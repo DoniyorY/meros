@@ -3,7 +3,7 @@ return [
    'zapierOrderPaidWebhookUrl' => 'https://hooks.zapier.com/hooks/catch/18066877/43p3esw/',
    'campus_id' => '60b6f599-0c0f-4f20-9d82-0a3e8cc29c19',
    
-   'phone' => '+998 (55) 705 08 08',
+   'phone' => '+998 93 330 97 79',
    'about_content_index' => [
       'ru' => '
         <p style="text-align: justify; font-size: 20px;">
@@ -762,10 +762,10 @@ return [
       
       'uz' => 'Xarid qilingan kurslaringizga kirish uchun <a href="https://slc-campus.avallainmagnet.com/merosinternationalinstitute" class="alert-link">Avallain</a> platformasiga o‘ting.',
    ],
-   '' => [
-      'ru' => '',
-      'en' => '',
-      'uz' => '',
+   'view_plans' => [
+      'ru' => 'Подписаться сейчас',
+      'en' => 'Subscribe Now',
+      'uz' => 'Sotib Olish',
    ],
    '' => [
       'ru' => '',

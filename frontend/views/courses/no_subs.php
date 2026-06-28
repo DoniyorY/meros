@@ -41,6 +41,7 @@ if (!empty($comments)) {
                         <div>
                             <h2><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
                         </div>
+                        <a href="#tickets" class="btn btn-outline-light btn-lg rounded-pill px-4" data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
