@@ -2026,37 +2026,47 @@ body p,
 
 /* no_subs in-page navigation */
 .meros-course-anchor-nav {
-    background: #f0f0f0;
+    background: linear-gradient(135deg, rgba(231, 246, 247, 0.96), #fff);
+    border-bottom: 1px solid var(--meros-border);
+    border-top: 1px solid var(--meros-border);
+    box-shadow: 0 18px 45px rgba(4, 54, 63, 0.08);
 }
 
 .meros-course-anchor-nav ul {
     align-items: stretch;
     display: grid;
-    gap: 0;
+    gap: 12px;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 18px 0;
 }
 
 .meros-course-anchor-nav a {
     align-items: center;
-    color: #082c84;
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(4, 54, 63, 0.08);
+    color: var(--meros-primary-dark);
     display: flex;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 900;
     justify-content: center;
-    line-height: 1.05;
-    min-height: 100px;
-    padding: 20px 16px;
+    line-height: 1.12;
+    min-height: 78px;
+    padding: 18px 14px;
     text-align: center;
+    transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
 .meros-course-anchor-nav a:hover,
 .meros-course-anchor-nav a:focus {
-    background: #e5e5e5;
-    color: #082c84;
+    background: linear-gradient(135deg, var(--meros-primary), var(--meros-accent));
+    box-shadow: 0 18px 38px rgba(7, 113, 123, 0.22);
+    color: #fff;
     text-decoration: none;
+    transform: translateY(-3px);
 }
 
 @media (max-width: 991px) {
@@ -2066,7 +2076,7 @@ body p,
 
 @media (max-width: 575px) {
     .meros-course-anchor-nav ul { grid-template-columns: 1fr; }
-    .meros-course-anchor-nav a { min-height: 68px; }
+    .meros-course-anchor-nav a { min-height: 64px; }
     .meros-course-anchor-nav li:last-child { grid-column: auto; }
 }
 
