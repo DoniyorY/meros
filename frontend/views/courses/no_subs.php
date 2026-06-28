@@ -54,6 +54,23 @@ $readMoreCards = [
    ],
 ];
 
+$organisationalCards = [
+   [
+      'title' => 'Medical English courses for my university or college',
+      'description' => 'Give medical, nursing, pharmacy and radiology students structured Medical English materials that can be mapped to semesters, electives or intensive programmes. The platform supports level-based cohorts, clinical communication practice, terminology, academic skills, assignments and progress visibility for teachers.',
+      'image' => "$base/images/med_institute.jpg",
+      'url' => Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']),
+      'button' => 'Read more',
+   ],
+   [
+      'title' => 'Medical English courses for my hospital or clinic staff',
+      'description' => 'Train doctors, nurses, reception and service teams to communicate more safely with international patients. The programme focuses on consultations, patient instructions, consent, procedures, handovers, aftercare and practical language for a stronger patient experience.',
+      'image' => "$base/images/meros_hospital.jpg",
+      'url' => Url::to(['courses/index', 'category' => 'healthcare-employers', 'slug' => 'hospitals']),
+      'button' => 'Learn more',
+   ],
+];
+
 $this->registerJs(<<<JS
 const courseAnchorLinks = document.querySelectorAll('.meros-course-anchor-nav a[href^="#"]');
 courseAnchorLinks.forEach(function (link) {
@@ -387,6 +404,31 @@ JS, \yii\web\View::POS_READY);
                                            <article class="meros-read-more-card" tabindex="0">
                                                <span class="meros-read-more-card-title"><?= Html::encode($card['title']) ?></span>
                                                <span class="meros-read-more-card-description"><?= Html::encode($card['description']) ?></span>
+                                           </article>
+                                       </div>
+                                   <?php endforeach; ?>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-12">
+                            <section id="organisational-purchases" class="meros-organisational-section reveal-section" aria-labelledby="organisational-purchases-title">
+                                <div class="meros-section-heading text-center">
+                                    <span class="meros-kicker">Organisational purchases</span>
+                                    <h2 id="organisational-purchases-title">Medical English for institutions and employers</h2>
+                                </div>
+                                <div class="row g-4">
+                                   <?php foreach ($organisationalCards as $card): ?>
+                                       <div class="col-lg-6 col-12">
+                                           <article class="meros-organisational-card h-100">
+                                               <a class="meros-organisational-image" href="<?= Html::encode($card['url']) ?>">
+                                                   <img src="<?= Html::encode($card['image']) ?>" alt="<?= Html::encode($card['title']) ?>" loading="lazy">
+                                               </a>
+                                               <div class="meros-organisational-body">
+                                                   <h3><?= Html::encode($card['title']) ?></h3>
+                                                   <p><?= Html::encode($card['description']) ?></p>
+                                                   <a class="btn btn-lg rounded-pill meros-organisational-btn" href="<?= Html::encode($card['url']) ?>"><?= Html::encode($card['button']) ?></a>
+                                               </div>
                                            </article>
                                        </div>
                                    <?php endforeach; ?>

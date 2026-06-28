@@ -2161,3 +2161,98 @@ body p,
     .meros-read-more-card { min-height: 210px; }
     .meros-read-more-card-title { font-size: 20px; }
 }
+
+/* Organisational purchases cards */
+.meros-organisational-section {
+    padding-top: 42px;
+}
+
+.meros-organisational-section .meros-section-heading h2 {
+    color: var(--meros-primary-dark);
+    font-weight: 900;
+}
+
+.meros-organisational-card {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.meros-organisational-image {
+    background: var(--meros-primary-soft);
+    display: block;
+    min-height: 330px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meros-organisational-image:after {
+    background: linear-gradient(135deg, rgba(4, 54, 63, 0.1), rgba(7, 113, 123, 0.18));
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.meros-organisational-image img {
+    filter: grayscale(1) contrast(0.92) brightness(1.12);
+    height: 100%;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    transition: filter 0.35s ease, transform 0.45s ease;
+    width: 100%;
+}
+
+.meros-organisational-card:hover .meros-organisational-image img,
+.meros-organisational-card:focus-within .meros-organisational-image img {
+    filter: grayscale(0.25) contrast(0.98) brightness(1.02);
+    transform: scale(1.05);
+}
+
+.meros-organisational-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 28px;
+}
+
+.meros-organisational-body h3 {
+    color: #123a92;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.meros-organisational-body p {
+    color: var(--meros-muted);
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+.meros-organisational-btn {
+    align-self: center;
+    background: var(--meros-accent);
+    color: #fff;
+    font-weight: 900;
+    margin-top: auto;
+    min-width: 160px;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.meros-organisational-btn:hover,
+.meros-organisational-btn:focus {
+    background: var(--meros-primary);
+    color: #fff;
+}
+
+@media (max-width: 575px) {
+    .meros-organisational-image { min-height: 240px; }
+    .meros-organisational-body { padding: 22px; }
+}
