@@ -53,6 +53,23 @@ $readMoreCards = [
       'description' => 'Vital signs are easier to explain when you use short phrases: what was measured, whether it is normal, and what happens next. Clear explanations reduce anxiety and help patients understand their current condition.',
    ],
 ];
+
+$this->registerJs(<<<JS
+const courseAnchorLinks = document.querySelectorAll('.meros-course-anchor-nav a[href^="#"]');
+courseAnchorLinks.forEach(function (link) {
+   link.addEventListener('click', function (event) {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) {
+         return;
+      }
+      event.preventDefault();
+      target.scrollIntoView({
+         behavior: 'smooth',
+         block: 'start'
+      });
+   });
+});
+JS, \yii\web\View::POS_READY);
 ?>
 <!-- course banner -->
 <section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
