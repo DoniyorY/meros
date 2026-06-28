@@ -242,7 +242,13 @@ class User extends ActiveRecord implements IdentityInterface
    
    public function sendCongratsEmail($user, $billing)
    {
-      $lang = Yii::$app->language;
+      $lang = substr((string) Yii::$app->language, 0, 2);
+      $subjects = [
+         'ru' => 'Поздравляем с покупкой в Meros International Institute',
+         'uz' => 'Meros International Institute xaridingiz bilan tabriklaymiz',
+         'en' => 'Congratulations on your Meros International Institute purchase',
+      ];
+
       return Yii::$app
          ->mailer
          ->compose(
@@ -251,7 +257,7 @@ class User extends ActiveRecord implements IdentityInterface
          )
          ->setFrom([Yii::$app->params['adminEmail'] => 'Meros International Institute'])
          ->setTo($this->email)
-         ->setSubject('Congratulations! You have successfully subscribed to Meros International Institute')
+         ->setSubject($subjects[$lang] ?? $subjects['en'])
          ->send();
    }
     public function getSubscriptions()
