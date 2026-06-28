@@ -2069,3 +2069,85 @@ body p,
     .meros-course-anchor-nav a { min-height: 68px; }
     .meros-course-anchor-nav li:last-child { grid-column: auto; }
 }
+
+/* Course read-more cards */
+.meros-read-more-course {
+    padding-top: 34px;
+}
+
+.meros-read-more-course .meros-section-heading h2 {
+    color: #123a92;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 900;
+    margin-bottom: 28px;
+}
+
+.meros-read-more-card {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(18, 58, 146, 0.96), rgba(18, 184, 208, 0.9)), radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.22), transparent 32%);
+    color: #fff;
+    display: flex;
+    isolation: isolate;
+    justify-content: center;
+    min-height: 250px;
+    overflow: hidden;
+    padding: 32px;
+    position: relative;
+    text-align: center;
+}
+
+.meros-read-more-card:before {
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.04));
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.meros-read-more-card-title,
+.meros-read-more-card-description {
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.meros-read-more-card-title {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+}
+
+.meros-read-more-card-description {
+    font-size: 16px;
+    font-weight: 600;
+    left: 0;
+    line-height: 1.45;
+    opacity: 0;
+    padding: 32px;
+    position: absolute;
+    text-align: left;
+    transform: translateX(34%);
+    width: 100%;
+}
+
+.meros-read-more-card:hover,
+.meros-read-more-card:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.meros-read-more-card:hover .meros-read-more-card-title,
+.meros-read-more-card:focus .meros-read-more-card-title {
+    opacity: 0;
+    transform: translateX(-34%);
+}
+
+.meros-read-more-card:hover .meros-read-more-card-description,
+.meros-read-more-card:focus .meros-read-more-card-description {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+@media (max-width: 575px) {
+    .meros-read-more-card { min-height: 210px; }
+    .meros-read-more-card-title { font-size: 20px; }
+}

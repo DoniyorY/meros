@@ -7,6 +7,7 @@ use common\models\Billing;
 use common\models\CourseCategory;
 use common\models\Courses;
 use common\models\Faq;
+use common\models\Posts;
 use common\models\SubscriptionPlans;
 use common\models\User;
 use Yii;
@@ -33,10 +34,16 @@ class CoursesController extends Controller
       $faqs = Faq::find()->where(['course_id'=>$courses->id])->asArray()->all();
       $view = (int)$courses->page_type === 0 ? 'b2b' : 'no_subs';
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
+      $relatedPosts = Posts::find()
+         ->where(['status' => Posts::STATUS_ACTIVE])
+         ->orderBy(['id' => SORT_DESC])
+         ->limit(6)
+         ->all();
       return $this->render($view, [
          'courses' => $courses,
          'subs' => $subs,
          'faqItems' => $faqs,
+         'relatedPosts' => $relatedPosts,
       ]);
    }
 

@@ -332,6 +332,31 @@ $courseAnchorNavItems = [
                                 </div>
                             </div>
                         </div>
+
+                        <?php if (!empty($relatedPosts)): ?>
+                            <div class="col-12">
+                                <section id="more-about-english-for-nurses" class="meros-read-more-course reveal-section" aria-labelledby="read-more-course-title">
+                                    <div class="meros-section-heading text-center">
+                                        <h2 id="read-more-course-title">Read More About <?= Html::encode($courseName) ?></h2>
+                                    </div>
+                                    <div class="row g-4">
+                                       <?php foreach (array_slice($relatedPosts, 0, 6) as $post): ?>
+                                           <?php
+                                           $postTitle = $post->{"name_$lang"};
+                                           $postDescription = trim(strip_tags((string)$post->{"desc_$lang"}));
+                                           $postUrl = Url::to(['post/view', 'id' => $post->id]);
+                                           ?>
+                                           <div class="col-lg-4 col-md-6 col-12">
+                                               <a class="meros-read-more-card" href="<?= Html::encode($postUrl) ?>" aria-label="<?= Html::encode($postTitle) ?>">
+                                                   <span class="meros-read-more-card-title"><?= Html::encode($postTitle) ?></span>
+                                                   <span class="meros-read-more-card-description"><?= Html::encode($postDescription) ?></span>
+                                               </a>
+                                           </div>
+                                       <?php endforeach; ?>
+                                    </div>
+                                </section>
+                            </div>
+                        <?php endif; ?>
                     </div><!-- /.row -->
                 </div><!-- /.pricing -->
             </div><!-- /.container -->
