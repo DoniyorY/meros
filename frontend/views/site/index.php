@@ -26,7 +26,11 @@ $hospitalHomeUrl = Url::to(['courses/index', 'category' => 'healthcare-employers
 $hospitalHomeT = static function ($key) use ($params, $lang) {
    return $params['hospital_home'][$key][$lang] ?? $params['hospital_home'][$key]['en'] ?? $key;
 };
-
+$comments = $params['comments_arr'][$lang] ?? $params['comments_arr']['en'] ?? [];
+if (!empty($comments)) {
+    shuffle($comments);
+    $comments = array_slice($comments, 0, 3);
+}
 ?>
 <!-- Homepage Slider -->
 <section id="homepage-slider" class="homepage-slider meros-hero" aria-label="<?= Html::encode($homeT('homepage_slider_aria')) ?>">
@@ -188,21 +192,21 @@ $hospitalHomeT = static function ($key) use ($params, $lang) {
     <section id="testimonials" class="meros-section meros-testimonial reveal-section">
         <div class="container">
             <div class="meros-quote-card">
-                <span class="meros-kicker"><?= Html::encode($homeT('student_outcomes')) ?></span>
-               <?php if (!empty($comments)): ?>
-                   <div class="meros-comments-carousel owl-carousel owl-theme">
-                      <?php foreach ($comments as $comment): ?>
-                          <blockquote class="meros-comment-slide">
-                              <p><?= Html::encode($comment['comment'] ?? '') ?></p>
-                              <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
-                          </blockquote>
-                      <?php endforeach; ?>
-                   </div>
-               <?php else: ?>
-                   <blockquote>
-                       <p><?= translate('comments') ?></p>
-                   </blockquote>
-               <?php endif; ?>
+                <span class="meros-kicker"><?=translate('student_outcomes')?></span>
+                <?php if (!empty($comments)): ?>
+                    <div class="meros-comments-carousel owl-carousel owl-theme">
+                        <?php foreach ($comments as $comment): ?>
+                            <blockquote class="meros-comment-slide">
+                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
+                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
+                            </blockquote>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <blockquote>
+                        <p><?= translate('comments') ?></p>
+                    </blockquote>
+                <?php endif; ?>
             </div>
         </div>
     </section>
