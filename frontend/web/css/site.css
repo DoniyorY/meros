@@ -2024,59 +2024,7 @@ body p,
     }
 }
 
-/* no_subs screenshot-aligned hero and in-page navigation */
-.meros-no-subs-hero .meros-course-hero-bg {
-    min-height: 525px;
-    padding: 44px 0;
-}
-
-.meros-no-subs-hero .meros-course-hero-bg:after {
-    background: rgba(255, 255, 255, 0.78);
-}
-
-.meros-no-subs-hero .meros-course-caption .course-banner-subtitle {
-    color: #213f91;
-    font-size: clamp(42px, 5.5vw, 62px);
-    font-weight: 900;
-    letter-spacing: 4px;
-    line-height: 1.05;
-    text-transform: uppercase;
-}
-
-.meros-no-subs-hero .meros-course-caption h2 {
-    color: #777;
-    font-size: clamp(20px, 2vw, 26px);
-    font-weight: 800;
-    margin-bottom: 62px;
-}
-
-.meros-no-subs-hero .meros-course-icons img {
-    max-height: 82px;
-    max-width: min(430px, 92%);
-    object-fit: contain;
-}
-
-.meros-no-subs-hero .meros-hero-subscribe-btn {
-    background: #12b8d0;
-    border: 5px solid #fff;
-    box-shadow: 0 10px 24px rgba(18, 184, 208, 0.18);
-    color: #fff;
-    font-weight: 900;
-    min-width: 285px;
-}
-
-.meros-no-subs-hero .meros-hero-subscribe-btn:hover,
-.meros-no-subs-hero .meros-hero-subscribe-btn:focus {
-    background: #0da9bf;
-    color: #fff;
-}
-
-.meros-no-subs-hero .meros-video-frame {
-    border: 0;
-    border-radius: 0;
-    box-shadow: 0 18px 42px rgba(33, 63, 145, 0.18);
-}
-
+/* no_subs in-page navigation */
 .meros-course-anchor-nav {
     background: #f0f0f0;
 }
