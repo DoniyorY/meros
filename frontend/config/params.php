@@ -1232,6 +1232,45 @@ return [
    'contact_label_direction' => ['ru' => 'Направление', 'en' => 'Direction', 'uz' => 'Yo‘nalish'],
    'contact_label_message' => ['ru' => 'Сообщение', 'en' => 'Message', 'uz' => 'Xabar'],
    'consultation_privacy_note' => ['ru' => 'Ваши персональные данные находятся под защитой и используются только для связи с вами.', 'en' => 'Your personal data is protected and used only to contact you.', 'uz' => 'Shaxsiy ma’lumotlaringiz himoyalangan va faqat siz bilan bog‘lanish uchun ishlatiladi.'],
+   'course_organisational_cards' => [
+      'ru' => [
+         'university' => [
+            'title' => 'Курсы медицинского английского для моего университета или колледжа',
+            'description' => 'Дайте студентам медицины, сестринского дела, фармации и радиологии структурированные материалы по медицинскому английскому, которые можно встроить в семестр, электив или интенсив. Платформа поддерживает группы по уровню, практику клинической коммуникации, терминологию, академические навыки, задания и отслеживание прогресса для преподавателей.',
+            'button' => 'Читать далее',
+         ],
+         'hospital' => [
+            'title' => 'Курсы медицинского английского для персонала моей больницы или клиники',
+            'description' => 'Обучайте врачей, медсестёр, регистратуру и сервисные команды более безопасной коммуникации с международными пациентами. Программа фокусируется на консультациях, инструкциях пациенту, согласии, процедурах, передаче смены, последующем уходе и практическом языке для лучшего пациентского опыта.',
+            'button' => 'Узнать больше',
+         ],
+      ],
+      'en' => [
+         'university' => [
+            'title' => 'Medical English courses for my university or college',
+            'description' => 'Give medical, nursing, pharmacy and radiology students structured Medical English materials that can be mapped to semesters, electives or intensive programmes. The platform supports level-based cohorts, clinical communication practice, terminology, academic skills, assignments and progress visibility for teachers.',
+            'button' => 'Read more',
+         ],
+         'hospital' => [
+            'title' => 'Medical English courses for my hospital or clinic staff',
+            'description' => 'Train doctors, nurses, reception and service teams to communicate more safely with international patients. The programme focuses on consultations, patient instructions, consent, procedures, handovers, aftercare and practical language for a stronger patient experience.',
+            'button' => 'Learn more',
+         ],
+      ],
+      'uz' => [
+         'university' => [
+            'title' => 'Universitetim yoki kollejim uchun tibbiy ingliz tili kurslari',
+            'description' => 'Tibbiyot, hamshiralik, farmatsiya va radiologiya talabalariga semestrlar, tanlov fanlari yoki intensiv dasturlarga moslashtiriladigan tizimli tibbiy ingliz tili materiallarini bering. Platforma daraja bo‘yicha guruhlar, klinik muloqot amaliyoti, terminologiya, akademik ko‘nikmalar, topshiriqlar va o‘qituvchilar uchun progress nazoratini qo‘llab-quvvatlaydi.',
+            'button' => 'Batafsil o‘qish',
+         ],
+         'hospital' => [
+            'title' => 'Shifoxonam yoki klinikam xodimlari uchun tibbiy ingliz tili kurslari',
+            'description' => 'Shifokorlar, hamshiralar, registratura va servis jamoalarini xalqaro bemorlar bilan xavfsizroq muloqot qilishga o‘rgating. Dastur konsultatsiyalar, bemorga ko‘rsatmalar, rozilik, protseduralar, smena topshirish, keyingi parvarish va bemor tajribasini yaxshilaydigan amaliy tilga qaratilgan.',
+            'button' => 'Batafsil',
+         ],
+      ],
+   ],
+
    'month_january' => ['ru' => 'Январь', 'en' => 'January', 'uz' => 'Yanvar'],
    'month_february' => ['ru' => 'Февраль', 'en' => 'February', 'uz' => 'Fevral'],
    'month_may' => ['ru' => 'Май', 'en' => 'May', 'uz' => 'May'],

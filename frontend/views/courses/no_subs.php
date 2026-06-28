@@ -54,21 +54,16 @@ $readMoreCards = [
    ],
 ];
 
+$organisationalCardCopy = $params['course_organisational_cards'][$lang] ?? $params['course_organisational_cards']['en'];
 $organisationalCards = [
-   [
-      'title' => 'Medical English courses for my university or college',
-      'description' => 'Give medical, nursing, pharmacy and radiology students structured Medical English materials that can be mapped to semesters, electives or intensive programmes. The platform supports level-based cohorts, clinical communication practice, terminology, academic skills, assignments and progress visibility for teachers.',
+   array_merge($organisationalCardCopy['university'], [
       'image' => "$base/images/med_institute.jpg",
       'url' => Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']),
-      'button' => 'Read more',
-   ],
-   [
-      'title' => 'Medical English courses for my hospital or clinic staff',
-      'description' => 'Train doctors, nurses, reception and service teams to communicate more safely with international patients. The programme focuses on consultations, patient instructions, consent, procedures, handovers, aftercare and practical language for a stronger patient experience.',
+   ]),
+   array_merge($organisationalCardCopy['hospital'], [
       'image' => "$base/images/meros_hospital.jpg",
       'url' => Url::to(['courses/index', 'category' => 'healthcare-employers', 'slug' => 'hospitals']),
-      'button' => 'Learn more',
-   ],
+   ]),
 ];
 
 $this->registerJs(<<<JS
