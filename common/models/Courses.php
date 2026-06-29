@@ -160,4 +160,9 @@ class Courses extends \yii\db\ActiveRecord
    {
       $this->hasMany(Faq::class, ['course_id' => 'id']);
    }
+   
+   public function getReads()
+   {
+      return $this->hasMany(ReadMore::class, ['course_id' => 'id']);
+   }
 }
