@@ -289,6 +289,7 @@ JS;
         </footer>
         <!-- end Footer -->
     </div>
+    <script src="//code.jivosite.com/widget/sAIAhsY8qj" async></script>
     <!--<script src="/js/jquery-2.1.0.min.js"></script>-->
     <?php $this->endBody() ?>
     </body>
