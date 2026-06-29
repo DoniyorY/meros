@@ -316,16 +316,11 @@ $returnURL = "сайт поставщика";
                                  ]
                               ) ?>
 
-                                   <button
-                                           id="btn-payme"
-                                           type="submit"
-                                           class="btn w-100 mt-2 meros-payment-btn meros-payment-payme"
-                                   >
-                                       <img
-                                               src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
-                                               alt="Payme"
-                                               style="height: 70px; object-fit: contain;"
-                                       >
+                                   <button id="btn-payme" type="submit"
+                                           class="btn w-100 mt-2 meros-payment-btn meros-payment-payme">
+                                       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Paymeuz_logo.png"
+                                            alt="Payme"
+                                            style="height: 70px; object-fit: contain;">
                                    </button>
                                  
                                  <?= Html::endForm() ?>

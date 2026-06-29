@@ -57,7 +57,7 @@ if (!empty($comments)) {
                              <div class="row align-items-center">
                                  <div class="col-xl-7 col-lg-8 col-md-10">
                                      <div class="meros-hero-card reveal-section">
-                                         <span class="meros-kicker"><?= Html::encode(Yii::$app->name) ?></span>
+                                         <span class="meros-kicker w-100"><?= Html::encode(Yii::$app->name) ?></span>
                                         <?php if ($title): ?>
                                             <h2 class="homepage-banner-subtitle mb-3"><?= Html::encode($title) ?></h2>
                                         <?php endif; ?>
