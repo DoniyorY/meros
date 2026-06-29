@@ -6,6 +6,7 @@ use common\models\CourseFeatures;
 use common\models\CourseLessons;
 use common\models\Courses;
 use common\models\Faq;
+use common\models\ReadMore;
 use common\models\search\CoursesSearch;
 use common\models\SubscriptionPlanItems;
 use common\models\SubscriptionPlans;
@@ -37,7 +38,8 @@ class CoursesController extends Controller
                   'delete' => ['POST'],
                   'add-lesson' => ['post'],
                   'delete-video' => ['post'],
-                  'update-lesson' => ['post']
+                  'update-lesson' => ['post'],
+                  'delete-read-more' => ['post']
                ],
             ],
          ]
@@ -97,6 +99,65 @@ class CoursesController extends Controller
       return $this->renderAjax('_form_faq', [
          'model' => $model,
          'url' => Url::to(['update-faq', 'id' => $model->id]),
+      ]);
+   }
+
+   public function actionUpdateReadMoreModal($id)
+   {
+      $model = ReadMore::findOne($id);
+      if (!$model) {
+         throw new NotFoundHttpException('The requested page does not exist.');
+      }
+
+      return $this->renderAjax('_form_read_more', [
+         'models' => [$model],
+         'url' => Url::to(['update-read-more', 'id' => $model->id]),
+         'isUpdate' => true,
+      ]);
+   }
+
+   public function actionUpdateReadMore($id)
+   {
+      $model = ReadMore::findOne($id);
+      if (!$model) {
+         throw new NotFoundHttpException('The requested page does not exist.');
+      }
+
+      $post = $this->request->post('ReadMore', []);
+      $data = reset($post);
+      if ($this->request->isPost && $data && $model->load(['ReadMore' => $data])) {
+         $model->save();
+      }
+
+      return $this->redirect(Yii::$app->request->referrer);
+   }
+
+   public function actionAddReadMore($course_id)
+   {
+      $models = [new ReadMore(['course_id' => $course_id])];
+
+      if ($this->request->isPost) {
+         $rows = $this->request->post('ReadMore', []);
+         $saved = false;
+
+         foreach ($rows as $row) {
+            $readMore = new ReadMore(['course_id' => $course_id]);
+            if ($readMore->load(['ReadMore' => $row]) && $readMore->save()) {
+               $saved = true;
+            }
+         }
+
+         if ($saved) {
+            Yii::$app->session->setFlash('success', 'More info added successfully');
+         }
+
+         return $this->redirect(Yii::$app->request->referrer);
+      }
+
+      return $this->renderAjax('_form_read_more', [
+         'models' => $models,
+         'url' => Url::to(['add-read-more', 'course_id' => $course_id]),
+         'isUpdate' => false,
       ]);
    }
    public function actionUpdateFaq($id)
@@ -168,9 +229,11 @@ class CoursesController extends Controller
    {
       $model = $this->findModel($id);
       $faq = Faq::find()->where(['course_id' => $id])->all();
+      $readMore = ReadMore::find()->where(['course_id' => $id])->all();
       return $this->render('view', [
          'model' => $model,
          'faq'=>$faq,
+         'readMore' => $readMore,
       ]);
    }
    
@@ -440,6 +503,18 @@ class CoursesController extends Controller
       $model = CourseFeatures::findOne(['id' => $id]);
       $model->delete();
       \Yii::$app->session->setFlash('success', 'Feature Deleted Successfully');
+      return $this->redirect(\Yii::$app->request->referrer);
+   }
+
+   public function actionDeleteReadMore($id)
+   {
+      $model = ReadMore::findOne(['id' => $id]);
+      if (!$model) {
+         throw new NotFoundHttpException('The requested page does not exist.');
+      }
+
+      $model->delete();
+      \Yii::$app->session->setFlash('success', 'More info deleted successfully');
       return $this->redirect(\Yii::$app->request->referrer);
    }
    

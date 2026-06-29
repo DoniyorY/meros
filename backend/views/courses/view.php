@@ -154,6 +154,12 @@ $params = Yii::$app->params;
                                 aria-controls="faq-tab-pane" aria-selected="true">FAQ
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="read-more-tab" data-bs-toggle="tab"
+                                data-bs-target="#read-more-tab-pane" type="button" role="tab"
+                                aria-controls="read-more-tab-pane" aria-selected="false">More Info
+                        </button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane p-3 fade show active" id="subs-tab-pane" role="tabpanel"
@@ -320,6 +326,85 @@ $params = Yii::$app->params;
                                                    href="<?= Url::to(['delete-faq', 'id' => $item->id]) ?>"
                                                    data-method="post"
                                                    data-confirm="Are you sure you want to delete this video?">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane p-3 fade" id="read-more-tab-pane" role="tabpanel"
+                         aria-labelledby="read-more-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>More Info</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                        data-bs-target="#ReadMoreModal">
+                                    Create Info
+                                </button>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <div class="modal fade" id="ReadMoreModal" tabindex="-1"
+                                     aria-labelledby="ReadMoreModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="ReadMoreModalLabel">Create Info</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <?= $this->render('_form_read_more', [
+                                                  'models' => [new \common\models\ReadMore()],
+                                                  'url' => Url::to(['add-read-more', 'course_id' => $model->id]),
+                                                  'isUpdate' => false,
+                                               ]) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <table class="table table-sm table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title Ru</th>
+                                        <th>Title En</th>
+                                        <th>Title Uz</th>
+                                        <th>Content Ru</th>
+                                        <th>Content En</th>
+                                        <th>Content Uz</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i = 1;
+                                    foreach ($readMore as $item): ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= Html::encode($item->title_ru) ?></td>
+                                            <td><?= Html::encode($item->title_en) ?></td>
+                                            <td><?= Html::encode($item->title_uz) ?></td>
+                                            <td><?= Html::encode($item->content_ru) ?></td>
+                                            <td><?= Html::encode($item->content_en) ?></td>
+                                            <td><?= Html::encode($item->content_uz) ?></td>
+                                            <td class="text-nowrap">
+                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                        data-url="<?= Url::to(['update-read-more-modal', 'id' => $item->id]) ?>">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="<?= Url::to(['delete-read-more', 'id' => $item->id]) ?>"
+                                                   data-method="post"
+                                                   data-confirm="Are you sure you want to delete this info?">
                                                     <i class="bi bi-trash"></i>
                                                 </a>
                                             </td>
