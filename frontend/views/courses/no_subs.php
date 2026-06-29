@@ -27,32 +27,6 @@ $courseAnchorNavItems = [
    ['label' => 'More about ' . $courseName, 'href' => '#more-about-english-for-nurses'],
    ['label' => 'Contact us', 'href' => Url::to(['site/contact'])],
 ];
-$readMoreCards = [
-   [
-      'title' => 'How Long Does It Take To Learn English?',
-      'description' => 'Most learners make steady progress when they study regularly, practise speaking, and use English in real situations. The timeline depends on your starting level, weekly study time, and how often you review vocabulary and communication patterns.',
-   ],
-   [
-      'title' => 'What Is Clinical Communication?',
-      'description' => 'Clinical communication is the clear, safe exchange of information between healthcare professionals, patients, and families. It includes asking focused questions, explaining care plans, checking understanding, and using professional empathy.',
-   ],
-   [
-      'title' => 'How Do Nurses Use English?',
-      'description' => 'Nurses use English to admit patients, explain procedures, describe symptoms, document observations, hand over cases, and reassure patients. Strong language skills help make care safer, clearer, and more patient-centred.',
-   ],
-   [
-      'title' => 'Medical Terminology Vs Everyday Terms',
-      'description' => 'Medical terminology is precise and useful with colleagues, while everyday language helps patients understand their condition. Effective professionals can switch between both styles depending on who they are speaking to.',
-   ],
-   [
-      'title' => 'How To Explain Medications In English',
-      'description' => 'Medication explanations should cover the name, purpose, dose, timing, route, side effects, and what to do if a dose is missed. Simple language and confirmation questions help patients follow instructions correctly.',
-   ],
-   [
-      'title' => 'Medical English: Explaining Vital Signs',
-      'description' => 'Vital signs are easier to explain when you use short phrases: what was measured, whether it is normal, and what happens next. Clear explanations reduce anxiety and help patients understand their current condition.',
-   ],
-];
 
 $organisationalCardCopy = $params['course_organisational_cards'][$lang] ?? $params['course_organisational_cards']['en'];
 $organisationalCards = [
@@ -393,11 +367,11 @@ JS, \yii\web\View::POS_READY);
                                     <h2 id="read-more-course-title">Read More About <?= Html::encode($courseName) ?></h2>
                                 </div>
                                 <div class="row g-4">
-                                   <?php foreach ($readMoreCards as $card): ?>
+                                   <?php foreach ($courses->reads as $card): ?>
                                        <div class="col-lg-4 col-md-6 col-12">
                                            <article class="meros-read-more-card" tabindex="0">
-                                               <span class="meros-read-more-card-title"><?= Html::encode($card['title']) ?></span>
-                                               <span class="meros-read-more-card-description"><?= Html::encode($card['description']) ?></span>
+                                               <span class="meros-read-more-card-title"><?= Html::encode($card->{"title_$lang"}) ?></span>
+                                               <span class="meros-read-more-card-description"><?= Html::encode($card->{"content_$lang"}) ?></span>
                                            </article>
                                        </div>
                                    <?php endforeach; ?>
