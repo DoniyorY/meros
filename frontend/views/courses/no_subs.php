@@ -227,10 +227,10 @@ JS, \yii\web\View::POS_READY);
                                     <span><?= translate('secure_payment') ?></span>
                                 </div>
                                 <div class="subscription-benefit click-icon">
-                                    <img src="<?= "$base/images/click_logo.png" ?>" alt="" style="height: 40px; width: 100% ;">
+                                    <img src="<?= "$base/images/click_logo.png" ?>" alt="" style="height: 40px; width: 100%; object-fit: contain">
                                 </div>
                                 <div class="subscription-benefit payme-icon">
-                                    <img src="<?= "$base/images/payme_logo.png" ?>" alt="" style="height: 40px; width: 100% ;">
+                                    <img src="<?= "$base/images/payme_logo.png" ?>" alt="" style="height: 40px; width: 100%; object-fit: contain">
                                 </div>
                                 <div class="subscription-benefit online-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
