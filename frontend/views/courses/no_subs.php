@@ -20,7 +20,7 @@ if (!empty($comments)) {
 }
 $courseName = $courses->{"name_$lang"} ?: $courses->name_en;
 $this->title = $courseName;
-$this->params['breadcrumbs'][] = $courseName;
+$this->params['hideBreadcrumbs'] = true;
 $courseAnchorNavItems = [
    ['label' => 'Pricing', 'href' => '#tickets'],
    ['label' => 'Organisational Purchases', 'href' => '#organisational-purchases'],

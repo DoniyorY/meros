@@ -212,7 +212,7 @@ JS;
        
        <?php
        $route = Yii::$app->controller ? Yii::$app->controller->route : '';
-       $showBreadcrumbs = $route !== 'site/index';
+       $showBreadcrumbs = $route !== 'site/index' && empty($this->params['hideBreadcrumbs']);
        $breadcrumbs = $this->params['breadcrumbs'] ?? [];
        if ($showBreadcrumbs && empty($breadcrumbs) && !empty($this->title)) {
           $breadcrumbs[] = $this->title;
@@ -244,6 +244,10 @@ JS;
                         <?php if (!$isLast && $url): ?>
                             <li class="breadcrumb-item meros-breadcrumb__item">
                                 <a href="<?= Html::encode(Url::to($url)) ?>"><?= Html::encode($label) ?></a>
+                            </li>
+                        <?php elseif (!$isLast): ?>
+                            <li class="breadcrumb-item meros-breadcrumb__item">
+                                <span><?= Html::encode($label) ?></span>
                             </li>
                         <?php else: ?>
                             <li class="breadcrumb-item meros-breadcrumb__item active" aria-current="page">

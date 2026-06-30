@@ -189,7 +189,7 @@ $this->title = $t('page_title');
 
 $base = Yii::$app->request->baseUrl;
 $courseName = $courses->{"name_$lang"} ?: $courses->name_en;
-$this->params['breadcrumbs'][] = $courseName;
+$this->params['hideBreadcrumbs'] = true;
 $courseDescription = $courses->{"desc_$lang"} ?: $courses->desc_en;
 $heroImage = $courses->image ? "$base/uploads/courses/$courses->image" : "$base/images/meros_hospital.jpg";
 $courseIcon = $courses->course_icons ? "$base/uploads/course_icons/$courses->course_icons" : "$base/slc_logo_white.png";

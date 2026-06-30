@@ -17,6 +17,20 @@ $params = Yii::$app->params;
 $t = static function ($key) use ($params, $lang) {
    return $params[$key][$lang] ?? $params[$key]['en'] ?? $key;
 };
+$course = $model->course;
+$courseName = $course ? ($course->{"name_$lang"} ?: $course->name_en) : null;
+if ($courseName) {
+   $courseBreadcrumb = ['label' => $courseName];
+   if ($course->category) {
+      $courseBreadcrumb['url'] = [
+         'courses/index',
+         'category' => $course->category->slug,
+         'slug' => $course->slug,
+      ];
+   }
+   $this->params['breadcrumbs'][] = $courseBreadcrumb;
+}
+$this->params['breadcrumbs'][] = $this->title;
 
 $merchantID = 20;
 $merchantUserID = 4;
