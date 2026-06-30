@@ -768,9 +768,9 @@ return [
       'uz' => 'Sotib Olish',
    ],
    'recommended_lvl' => [
-      'ru' => 'Рекомендовано',
-      'en' => 'Recomended',
-      'uz' => '',
+      'ru' => 'Уровень английского',
+      'en' => 'English Level',
+      'uz' => 'Inglis tili darajasi',
    ],
    '' => [
       'ru' => '',
