@@ -64,7 +64,7 @@ $this->title = $t('login_title');
                     ]) ?>
 
                     <?= Html::a($t('signup_button'), ['site/signup'], [
-                        'class' => 'btn btn-outline-primary auth-submit mt-3 w-100',
+                        'class' => 'btn btn-outline-primary auth-submit meros-primary-btn mt-3 w-100',
                     ]) ?>
 
                     <?php ActiveForm::end(); ?>
