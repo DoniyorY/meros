@@ -13,7 +13,11 @@ class SignupForm extends Model
 {
     public $username;
     public $email;
+    public $first_name;
+    public $last_name;
+    public $phone;
     public $password;
+    public $password_confirm;
 
 
     /**
@@ -33,9 +37,34 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
+            [['first_name', 'last_name', 'phone'], 'trim'],
+            [['first_name', 'last_name', 'phone'], 'required'],
+            [['first_name', 'last_name', 'phone'], 'string', 'max' => 255],
+
+            [['password', 'password_confirm'], 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password_confirm', 'compare', 'compareAttribute' => 'password'],
         ];
+    }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => $this->t('profile_username'),
+            'email' => $this->t('profile_email'),
+            'first_name' => $this->t('first_name'),
+            'last_name' => $this->t('last_name'),
+            'phone' => $this->t('profile_phone'),
+            'password' => $this->t('login_password'),
+            'password_confirm' => $this->t('confirm_password'),
+        ];
+    }
+
+    private function t($key)
+    {
+        $lang = Yii::$app->language;
+        return Yii::$app->params[$key][$lang] ?? Yii::$app->params[$key]['en'] ?? $key;
     }
 
     /**
@@ -52,6 +81,8 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->fullname = trim($this->first_name . ' ' . $this->last_name);
+        $user->phone = $this->phone;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
