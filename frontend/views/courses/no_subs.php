@@ -77,8 +77,13 @@ JS, \yii\web\View::POS_READY);
                                 style="text-transform: uppercase"><?= $courses->{"name_$lang"} ?></h1>
                         </div>
                         <div>
-                            <h2><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
+                            <h2 style="margin-bottom: 10px;"><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
                         </div>
+                        <?php if ($courses->lvl):?>
+                        <div>
+                            <h2><?=translate('recommended_lvl')?> <?=Html::encode($courses->lvl)?></h2>
+                        </div>
+                        <?php endif;?>
                         <a href="#tickets" class="btn btn-outline-light btn-lg rounded-pill px-4" data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
                     </div>
                 </div>

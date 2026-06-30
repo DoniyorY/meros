@@ -767,9 +767,9 @@ return [
       'en' => 'Subscribe Now',
       'uz' => 'Sotib Olish',
    ],
-   '' => [
-      'ru' => '',
-      'en' => '',
+   'recommended_lvl' => [
+      'ru' => 'Рекомендовано',
+      'en' => 'Recomended',
       'uz' => '',
    ],
    '' => [
