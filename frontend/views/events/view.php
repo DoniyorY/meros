@@ -16,6 +16,11 @@ $base = Yii::$app->request->baseUrl;
 $title = $model->{"name_$lang"} ?: $model->name_en;
 $image = $model->image ? "$base/uploads/events/$model->image" : "$base/img/event-img-01.jpg";
 $this->title = $title;
+$this->params['breadcrumbs'][] = [
+    'label' => $t('events_page_title'),
+    'url' => ['events/index'],
+];
+$this->params['breadcrumbs'][] = $this->title;
 
 $videoUrl = null;
 if ($model->video_link) {
@@ -31,13 +36,6 @@ if ($model->video_link) {
 }
 ?>
 
-<div class="container">
-    <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
-        <li class="breadcrumb-item"><a href="<?= Url::to(['index']) ?>"><?= Html::encode($t('events_page_title')) ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
-    </ol>
-</div>
 
 <div id="page-content" class="meros-modern-page meros-events-page">
     <section class="meros-section reveal-section">

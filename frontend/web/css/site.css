@@ -102,6 +102,117 @@ a.desc:after {
     text-decoration: none;
 }
 
+.meros-breadcrumb-shell {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 28%),
+        linear-gradient(135deg, rgba(0, 120, 174, 0.12), rgba(4, 54, 63, 0.04));
+    border-bottom: 1px solid rgba(0, 120, 174, 0.12);
+    padding: 18px 0 0;
+}
+
+.meros-breadcrumb {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 120, 174, 0.14);
+    border-radius: 999px;
+    box-shadow: 0 14px 35px rgba(4, 54, 63, 0.08);
+    gap: 8px;
+    margin: 0;
+    padding: 10px 14px;
+}
+
+.meros-breadcrumb .breadcrumb-item {
+    color: #5f7183;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    max-width: min(52vw, 420px);
+}
+
+.meros-breadcrumb .breadcrumb-item + .breadcrumb-item {
+    padding-left: 0;
+}
+
+.meros-breadcrumb .breadcrumb-item + .breadcrumb-item:before {
+    background: rgba(0, 120, 174, 0.12);
+    border-radius: 50%;
+    color: #0078ae;
+    content: "›";
+    display: inline-flex;
+    font-size: 18px;
+    font-weight: 900;
+    height: 24px;
+    justify-content: center;
+    line-height: 1;
+    margin: 0 8px 0 0;
+    padding: 0;
+    width: 24px;
+}
+
+.meros-breadcrumb .breadcrumb-item a,
+.meros-breadcrumb .breadcrumb-item span {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    gap: 7px;
+    min-height: 32px;
+    overflow: hidden;
+    padding: 6px 10px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.meros-breadcrumb .breadcrumb-item a {
+    color: #0078ae;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.meros-breadcrumb .breadcrumb-item a:hover,
+.meros-breadcrumb .breadcrumb-item a:focus {
+    background: rgba(0, 120, 174, 0.1);
+    color: #04363f;
+    transform: translateY(-1px);
+}
+
+.meros-breadcrumb .breadcrumb-item.active span {
+    background: rgba(4, 54, 63, 0.06);
+    color: #04363f;
+}
+
+.meros-breadcrumb__home a {
+    background: linear-gradient(135deg, #0078ae, #04363f);
+    color: #fff !important;
+}
+
+.meros-breadcrumb__home a:hover,
+.meros-breadcrumb__home a:focus {
+    background: linear-gradient(135deg, #04363f, #0078ae) !important;
+    color: #fff !important;
+}
+
+@media (max-width: 575px) {
+    .meros-breadcrumb-shell {
+        padding-top: 12px;
+    }
+
+    .meros-breadcrumb {
+        border-radius: 22px;
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .meros-breadcrumb .breadcrumb-item {
+        font-size: 12px;
+        max-width: 100%;
+    }
+
+    .meros-breadcrumb .breadcrumb-item a,
+    .meros-breadcrumb .breadcrumb-item span {
+        max-width: 74vw;
+    }
+}
+
 .auth-page {
     padding: 35px 0 70px;
 }
@@ -1647,17 +1758,6 @@ body p,
     height: 25px;
     display: block;
     float: left;
-}
-
-/* Profile page aligned with the Meros redesign */
-.profile-breadcrumb {
-    margin-top: 24px;
-}
-
-.profile-breadcrumb .breadcrumb {
-    background: transparent;
-    padding-left: 0;
-    padding-right: 0;
 }
 
 .meros-profile-page {

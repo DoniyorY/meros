@@ -16,14 +16,6 @@ $lang = Yii::$app->language;
 $galleryImages = range(1, 4);
 
 ?>
-<!-- Breadcrumb -->
-<div class="container">
-    <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= translate('home') ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
-    </ol>
-</div>
-<!-- end Breadcrumb -->
 
 <div id="page-content" class="meros-modern-page meros-content-page meros-about-page">
     <section class="meros-section meros-page-hero reveal-section">

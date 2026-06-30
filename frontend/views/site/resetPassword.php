@@ -14,12 +14,6 @@ $t = static function ($key) use ($params, $lang) {
 };
 $this->title = $t('password_reset_title');
 ?>
-<div class="container">
-    <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
-    </ol>
-</div>
 
 <div id="page-content">
 <div class="container py-5"><div class="site-reset-password auth-narrow">

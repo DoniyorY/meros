@@ -12,12 +12,6 @@ $base = Yii::$app->request->baseUrl;
 $this->title = $t('news_page_title');
 ?>
 
-<div class="container">
-    <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
-    </ol>
-</div>
 
 <div id="page-content" class="meros-modern-page meros-news-page">
     <section class="meros-section meros-news-hero reveal-section">

@@ -10,15 +10,13 @@ $t = static function ($key) use ($params, $lang) {
 };
 $base = Yii::$app->request->baseUrl;
 $this->title = $model->{"name_$lang"} ?: $model->name_en;
+$this->params['breadcrumbs'][] = [
+    'label' => $t('news_page_title'),
+    'url' => ['post/index'],
+];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="container">
-    <ol class="breadcrumb flex-wrap">
-        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode($t('home')) ?></a></li>
-        <li class="breadcrumb-item"><a href="<?= Url::to(['index']) ?>"><?= Html::encode($t('news_page_title')) ?></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= Html::encode($this->title) ?></li>
-    </ol>
-</div>
 
 <div id="page-content" class="meros-modern-page meros-news-page">
     <section class="meros-section reveal-section">
