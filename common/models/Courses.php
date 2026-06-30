@@ -22,6 +22,7 @@ use yii\helpers\Inflector;
  * @property string $desc_ru
  * @property string $desc_en
  * @property string $desc_uz
+ * @property string $lvl
  * @property int $created_at
  * @property int $updated_at
  * @property int|null $status
@@ -74,7 +75,7 @@ class Courses extends \yii\db\ActiveRecord
          [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id', 'page_type'], 'required'],
          [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
          [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
-         [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image', 'title_ru', 'title_en', 'title_uz'], 'string', 'max' => 255],
+         [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image', 'title_ru', 'title_en', 'title_uz','lvl'], 'string', 'max' => 255],
          [['imageFile', 'icon'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
          [['syllabus', 'flyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, doc, docx'],
       ];

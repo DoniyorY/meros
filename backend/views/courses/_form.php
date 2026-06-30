@@ -40,6 +40,9 @@ use common\models\Mentors;
             <?= $form->field($model, 'title_uz')->textInput() ?>
             <?= $form->field($model, 'desc_uz')->textarea(['rows' => 6]) ?>
         </div>
+        <div class="col-md-12">
+            <?=$form->field($model,'lvl')->textInput(['maxlength' => true,'placeholder' => 'Enter the recommended level'])?>
+        </div>
         <div class="col-md-6">
             <?= $form->field($model, 'preview_video_link')->textInput(['maxlength' => true]) ?>
         </div>

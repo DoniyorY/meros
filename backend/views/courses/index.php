@@ -72,6 +72,12 @@ $params = Yii::$app->params;
             }
          ],
          [
+            'attribute' => 'lvl',
+            'value' => function ($data) {
+               return $data->lvl;
+            }
+         ],
+         [
             'attribute' => 'status',
             'value' => function ($data) {
                if ($data->status == 0) {
