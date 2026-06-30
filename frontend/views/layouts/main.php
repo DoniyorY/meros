@@ -217,45 +217,67 @@ JS;
        if ($showBreadcrumbs && empty($breadcrumbs) && !empty($this->title)) {
           $breadcrumbs[] = $this->title;
        }
+       $breadcrumbsHtml = '';
+       if ($showBreadcrumbs && !empty($breadcrumbs)) {
+          ob_start();
+          ?>
+          <nav class="meros-breadcrumb-shell" aria-label="Breadcrumb">
+              <div class="container">
+                  <ol class="breadcrumb meros-breadcrumb flex-wrap">
+                      <li class="breadcrumb-item meros-breadcrumb__item meros-breadcrumb__home">
+                          <a href="<?= Yii::$app->homeUrl ?>">
+                              <span class="fa fa-home" aria-hidden="true"></span>
+                              <span><?= Html::encode($homeLabel) ?></span>
+                          </a>
+                      </li>
+                     <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
+                        <?php
+                        $isLast = $index === array_key_last($breadcrumbs);
+                        if (is_array($breadcrumb)) {
+                           $label = $breadcrumb['label'] ?? '';
+                           $url = $breadcrumb['url'] ?? null;
+                        } else {
+                           $label = $breadcrumb;
+                           $url = null;
+                        }
+                        ?>
+                        <?php if (!$isLast && $url): ?>
+                            <li class="breadcrumb-item meros-breadcrumb__item">
+                                <a href="<?= Html::encode(Url::to($url)) ?>"><?= Html::encode($label) ?></a>
+                            </li>
+                        <?php else: ?>
+                            <li class="breadcrumb-item meros-breadcrumb__item active" aria-current="page">
+                                <span><?= Html::encode($label) ?></span>
+                            </li>
+                        <?php endif; ?>
+                     <?php endforeach; ?>
+                  </ol>
+              </div>
+          </nav>
+          <?php
+          $breadcrumbsHtml = ob_get_clean();
+       }
+       if ($breadcrumbsHtml !== '') {
+          $breadcrumbInsertions = 0;
+          $contentWithBreadcrumbs = preg_replace_callback(
+             '/(<div\b[^>]*\bid=(["\'])page-content\2[^>]*>)/i',
+             static function ($matches) use ($breadcrumbsHtml) {
+                return $matches[1] . $breadcrumbsHtml;
+             },
+             $content,
+             1,
+             $breadcrumbInsertions
+          );
+          if (empty($breadcrumbInsertions)) {
+             $contentWithBreadcrumbs = $breadcrumbsHtml . $content;
+          }
+       } else {
+          $contentWithBreadcrumbs = $content;
+       }
        ?>
 
        <?= Alert::widget() ?>
-       <?php if ($showBreadcrumbs && !empty($breadcrumbs)): ?>
-           <nav class="meros-breadcrumb-shell" aria-label="Breadcrumb">
-               <div class="container">
-                   <ol class="breadcrumb meros-breadcrumb flex-wrap">
-                       <li class="breadcrumb-item meros-breadcrumb__item meros-breadcrumb__home">
-                           <a href="<?= Yii::$app->homeUrl ?>">
-                               <span class="fa fa-home" aria-hidden="true"></span>
-                               <span><?= Html::encode($homeLabel) ?></span>
-                           </a>
-                       </li>
-                      <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
-                         <?php
-                         $isLast = $index === array_key_last($breadcrumbs);
-                         if (is_array($breadcrumb)) {
-                            $label = $breadcrumb['label'] ?? '';
-                            $url = $breadcrumb['url'] ?? null;
-                         } else {
-                            $label = $breadcrumb;
-                            $url = null;
-                         }
-                         ?>
-                         <?php if (!$isLast && $url): ?>
-                             <li class="breadcrumb-item meros-breadcrumb__item">
-                                 <a href="<?= Html::encode(Url::to($url)) ?>"><?= Html::encode($label) ?></a>
-                             </li>
-                         <?php else: ?>
-                             <li class="breadcrumb-item meros-breadcrumb__item active" aria-current="page">
-                                 <span><?= Html::encode($label) ?></span>
-                             </li>
-                         <?php endif; ?>
-                      <?php endforeach; ?>
-                   </ol>
-               </div>
-           </nav>
-       <?php endif; ?>
-       <?= $content ?>
+       <?= $contentWithBreadcrumbs ?>
 
         <!-- Footer -->
         <footer id="page-footer">

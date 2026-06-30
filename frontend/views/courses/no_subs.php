@@ -10,7 +10,6 @@ function translate($key)
    return Yii::$app->params[$key][$lang];
 }
 
-$this->title = "Courses";
 $lang = Yii::$app->language;
 $base = Yii::$app->request->baseUrl;
 $params = Yii::$app->params;
@@ -19,7 +18,9 @@ if (!empty($comments)) {
    shuffle($comments);
    $comments = array_slice($comments, 0, 3);
 }
-$courseName = $courses->{"name_$lang"};
+$courseName = $courses->{"name_$lang"} ?: $courses->name_en;
+$this->title = $courseName;
+$this->params['breadcrumbs'][] = $courseName;
 $courseAnchorNavItems = [
    ['label' => 'Pricing', 'href' => '#tickets'],
    ['label' => 'Organisational Purchases', 'href' => '#organisational-purchases'],
