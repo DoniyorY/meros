@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\AuthAssignment;
 use common\models\User;
 
 /**
@@ -78,16 +79,48 @@ class SignupForm extends Model
             return null;
         }
         
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->fullname = trim($this->first_name . ' ' . $this->last_name);
-        $user->phone = $this->phone;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
+        $transaction = Yii::$app->db->beginTransaction();
 
-        return $user->save() && $this->sendEmail($user);
+        try {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->fullname = trim($this->first_name . ' ' . $this->last_name);
+            $user->phone = $this->phone;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+
+            if (!$user->save()) {
+                $this->addErrors($user->getErrors());
+                $transaction->rollBack();
+                return false;
+            }
+
+            $authAssignment = new AuthAssignment([
+                'item_name' => 'guest',
+                'user_id' => (string)$user->id,
+                'created_at' => time(),
+            ]);
+
+            if (!$authAssignment->save()) {
+                $this->addErrors($authAssignment->getErrors());
+                $transaction->rollBack();
+                return false;
+            }
+
+            if (!$this->sendEmail($user)) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            Yii::error($e->getMessage(), __METHOD__);
+            return false;
+        }
     }
 
     /**

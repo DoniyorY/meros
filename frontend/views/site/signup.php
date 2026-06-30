@@ -40,45 +40,35 @@ $this->title = $t('signup_title');
                 <div class="auth-form-panel meros-auth-panel">
                     <?php $form = ActiveForm::begin(['id' => 'form-signup', 'options' => ['class' => 'auth-form']]); ?>
 
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <?= $form->field($model, 'email')->textInput([
-                                'autofocus' => true,
-                                'type' => 'email',
-                                'placeholder' => $t('profile_email'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'first_name')->textInput([
-                                'placeholder' => $t('first_name'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'last_name')->textInput([
-                                'placeholder' => $t('last_name'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'username')->textInput([
-                                'placeholder' => $t('profile_username'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'phone')->textInput([
-                                'placeholder' => $t('profile_phone'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'password')->passwordInput([
-                                'placeholder' => $t('login_password'),
-                            ]) ?>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <?= $form->field($model, 'password_confirm')->passwordInput([
-                                'placeholder' => $t('confirm_password'),
-                            ]) ?>
-                        </div>
-                    </div>
+                    <?= $form->field($model, 'email')->textInput([
+                        'autofocus' => true,
+                        'type' => 'email',
+                        'placeholder' => $t('profile_email'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'first_name')->textInput([
+                        'placeholder' => $t('first_name'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'last_name')->textInput([
+                        'placeholder' => $t('last_name'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'username')->textInput([
+                        'placeholder' => $t('profile_username'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'phone')->textInput([
+                        'placeholder' => $t('profile_phone'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'password')->passwordInput([
+                        'placeholder' => $t('login_password'),
+                    ]) ?>
+
+                    <?= $form->field($model, 'password_confirm')->passwordInput([
+                        'placeholder' => $t('confirm_password'),
+                    ]) ?>
 
                     <div class="auth-links">
                         <span><?= Html::encode($t('signup_login_prompt')) ?></span>
