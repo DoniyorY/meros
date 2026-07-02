@@ -84,9 +84,20 @@ return [
                 'maxFileSize' => 10240, // 10 MB
                 'maxLogFiles' => 10,
              ],
+             [
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['info', 'warning', 'error'],
+                'categories' => ['telegram'],
+                'logFile' => '@runtime/logs/telegram.log',
+                'logVars' => [],
+             ],
           ],
        ],
-       
+       'telegramBot' => [
+          'class' => \common\components\TelegramBot::class,
+          'token' => $params['telegramBotToken'],
+          'timeout' => 10,
+       ],
         'assetManager' => [
            'appendTimestamp' => true,
             'bundles' => [
@@ -142,6 +153,10 @@ return [
              'login' => 'site/login',
              'logout' => 'site/logout',
              'contact' => 'site/contact',
+             
+             'POST telegram/webhook' => 'telegram/webhook',
+             'GET telegram/health' => 'telegram/health',
+             
              'POST payme/webhook' => 'payme/webhook',
              'payment/click-return/<id:\d+>/<payment_status>/<payment_id>' => 'payment/click-return',
              'POST payment/payme/<id:\d+>' => 'payment/payme',
