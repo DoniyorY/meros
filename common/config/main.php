@@ -1,5 +1,4 @@
 <?php
-$params = Yii::$app->params;
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -20,7 +19,7 @@ return [
         ],
        'telegramBot' => [
           'class' => \common\components\TelegramBot::class,
-          'token' => $params['telegramBotToken'],
+          'token' => '8731982584:AAHtK866lI8wKhq8cXqWu1DXCpc-3i0HYgw',
           'timeout' => 10,
        ],
     ],
