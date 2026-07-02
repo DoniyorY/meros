@@ -19,7 +19,7 @@ return [
         ],
        'telegramBot' => [
           'class' => \common\components\TelegramBot::class,
-          'token' => '8731982584:AAHtK866lI8wKhq8cXqWu1DXCpc-3i0HYgw',
+          //'token' => '',
           'timeout' => 10,
        ],
     ],
