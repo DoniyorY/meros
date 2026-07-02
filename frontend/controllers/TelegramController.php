@@ -19,6 +19,12 @@ final class TelegramController extends Controller
 
    public function actionWebhook(): array
    {
+      Yii::info([
+         'message' => 'Telegram webhook update received.',
+         'headers' => Yii::$app->request->headers->toArray(),
+         'body' => Yii::$app->request->bodyParams,
+      ], 'telegram');
+      
       Yii::$app->response->format = Response::FORMAT_JSON;
 
       if (!$this->isWebhookAuthorized()) {
