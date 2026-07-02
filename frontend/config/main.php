@@ -93,11 +93,6 @@ return [
              ],
           ],
        ],
-       'telegramBot' => [
-          'class' => \common\components\TelegramBot::class,
-          'token' => $params['telegramBotToken'],
-          'timeout' => 10,
-       ],
         'assetManager' => [
            'appendTimestamp' => true,
             'bundles' => [
