@@ -80,10 +80,13 @@ class MentorsController extends Controller
                 $model->user_id = Yii::$app->user->id;
                 $file = UploadedFile::getInstance($model, 'imageFile');
                 if ($file) {
-                    $uploads = UploadsImage::uploadImage($model, $file, 'mentors');
-                    $model->image = $uploads;
-                }else{
+                    $model->image = UploadsImage::uploadImage($model, $file, 'mentors');
+                } else {
                     $model->image = ' ';
+                }
+                $avatarFile = UploadedFile::getInstance($model, 'avatarFile');
+                if ($avatarFile) {
+                    $model->avatar = UploadsImage::uploadImage($model, $avatarFile, 'mentors/avatar');
                 }
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -113,10 +116,11 @@ class MentorsController extends Controller
             $model->user_id = Yii::$app->user->id;
             $file = UploadedFile::getInstance($model, 'imageFile');
             if ($file) {
-                $uploads = UploadsImage::uploadImage($model, $file, 'mentors');
-                $model->image = $uploads;
-            }else{
-                $model->image = ' ';
+                $model->image = UploadsImage::uploadImage($model, $file, 'mentors');
+            }
+            $avatarFile = UploadedFile::getInstance($model, 'avatarFile');
+            if ($avatarFile) {
+                $model->avatar = UploadsImage::uploadImage($model, $avatarFile, 'mentors/avatar');
             }
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);

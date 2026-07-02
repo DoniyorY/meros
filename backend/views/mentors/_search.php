@@ -25,6 +25,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'image') ?>
 
+    <?= $form->field($model, 'avatar') ?>
+
+    <?= $form->field($model, 'position_ru') ?>
+
+    <?= $form->field($model, 'position_en') ?>
+
+    <?= $form->field($model, 'position_uz') ?>
+
     <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>

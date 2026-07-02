@@ -15,7 +15,7 @@ use Yii;
  * @property string|null $desc_ru
  * @property string|null $desc_en
  * @property string|null $desc_uz
- * @propertu string|null $avatar
+ * @property string|null $avatar
  * @property string|null $email
  * @property string|null $phone
  * @property string|null $image
@@ -31,6 +31,7 @@ class Mentors extends \yii\db\ActiveRecord
 {
    
    public $imageFile;
+   public $avatarFile;
    
    /**
     * {@inheritdoc}
@@ -46,11 +47,11 @@ class Mentors extends \yii\db\ActiveRecord
    public function rules()
    {
       return [
-         [['email', 'phone', 'image', 'status', 'instagram_link', 'linked_in_link', 'facebook_link'], 'default', 'value' => null],
+         [['email', 'phone', 'image', 'avatar', 'status', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'desc_ru', 'desc_en', 'desc_uz'], 'default', 'value' => null],
          [['fullname', 'created_at', 'updated_at', 'user_id'], 'required'],
          [['status', 'created_at', 'updated_at', 'user_id'], 'integer'],
          [['fullname', 'email', 'phone', 'image', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'desc_ru', 'desc_en', 'desc_uz', 'avatar'], 'string', 'max' => 255],
-         [['imageFile', 'avatar'], 'file', 'extensions' => 'jpg, gif, png', 'skipOnEmpty' => true],
+         [['imageFile', 'avatarFile'], 'file', 'extensions' => 'jpg, jpeg, gif, png, webp', 'skipOnEmpty' => true],
       ];
    }
    
@@ -65,6 +66,15 @@ class Mentors extends \yii\db\ActiveRecord
          'email' => 'Email',
          'phone' => 'Phone',
          'image' => 'Image',
+         'imageFile' => 'Image',
+         'avatar' => 'Avatar',
+         'avatarFile' => 'Avatar',
+         'position_ru' => 'Position Ru',
+         'position_en' => 'Position En',
+         'position_uz' => 'Position Uz',
+         'desc_ru' => 'Description Ru',
+         'desc_en' => 'Description En',
+         'desc_uz' => 'Description Uz',
          'status' => 'Status',
          'created_at' => 'Created At',
          'updated_at' => 'Updated At',
