@@ -14,33 +14,91 @@ final class TelegramUserService
       string $token,
       string $chatId,
       string $username,
-      string $telegramLanguage
+      string $telegramLanguage,
+      string $telegramUserId = ''
    ): array {
       $token = trim($token);
       $chatId = trim($chatId);
-
+      
       if ($token === '' || !preg_match('/^-?\d+$/', $chatId)) {
          return ['ok' => false, 'error' => 'invalid_payload'];
       }
-
+      
       $user = User::find()
          ->where(['telegram_link_token_hash' => hash('sha256', $token)])
          ->andWhere(['>=', 'telegram_link_expires_at', time()])
          ->one();
-
+      
       if ($user === null) {
          return ['ok' => false, 'error' => 'token_invalid_or_expired'];
       }
-
-      $alreadyBound = User::find()
+      
+      return self::attachTelegram(
+         $user,
+         $chatId,
+         $telegramUserId,
+         $username,
+         $telegramLanguage
+      );
+   }
+   
+   public static function attachTelegram(
+      User $user,
+      string $chatId,
+      string $telegramUserId,
+      string $username,
+      string $telegramLanguage
+   ): array {
+      $chatId = trim($chatId);
+      $telegramUserId = trim($telegramUserId);
+      $username = trim($username);
+      
+      if ($chatId === '' || !preg_match('/^-?\d+$/', $chatId)) {
+         return ['ok' => false, 'error' => 'invalid_payload'];
+      }
+      
+      $currentChatId = trim((string)self::attribute(
+         $user,
+         'telegram_chat_id',
+         ''
+      ));
+      
+      if ($currentChatId !== '' && $currentChatId !== $chatId) {
+         return ['ok' => false, 'error' => 'user_account_already_bound'];
+      }
+      
+      $chatAlreadyBound = User::find()
          ->where(['telegram_chat_id' => $chatId])
          ->andWhere(['<>', 'id', (int)$user->id])
          ->exists();
-
-      if ($alreadyBound) {
+      
+      if ($chatAlreadyBound) {
          return ['ok' => false, 'error' => 'telegram_account_already_bound'];
       }
-
+      
+      if (
+         $telegramUserId !== ''
+         && $user->hasAttribute('telegram_user_id')
+      ) {
+         $telegramUserAlreadyBound = User::find()
+            ->where(['telegram_user_id' => $telegramUserId])
+            ->andWhere(['<>', 'id', (int)$user->id])
+            ->exists();
+         
+         if ($telegramUserAlreadyBound) {
+            return ['ok' => false, 'error' => 'telegram_account_already_bound'];
+         }
+      }
+      
+      $attributes = [
+         'telegram_chat_id',
+         'telegram_username',
+         'telegram_language',
+         'telegram_connected_at',
+         'telegram_link_token_hash',
+         'telegram_link_expires_at',
+      ];
+      
       $user->telegram_chat_id = $chatId;
       $user->telegram_username = $username !== ''
          ? mb_substr($username, 0, 255)
@@ -51,34 +109,35 @@ final class TelegramUserService
       $user->telegram_connected_at = time();
       $user->telegram_link_token_hash = null;
       $user->telegram_link_expires_at = null;
-
-      if (!$user->save(false, [
-         'telegram_chat_id',
-         'telegram_username',
-         'telegram_language',
-         'telegram_connected_at',
-         'telegram_link_token_hash',
-         'telegram_link_expires_at',
-      ])) {
+      
+      if ($user->hasAttribute('telegram_user_id')) {
+         $user->setAttribute(
+            'telegram_user_id',
+            $telegramUserId !== '' ? $telegramUserId : null
+         );
+         $attributes[] = 'telegram_user_id';
+      }
+      
+      if (!$user->save(false, $attributes)) {
          return ['ok' => false, 'error' => 'bind_save_failed'];
       }
-
+      
       return [
          'ok' => true,
          'user' => $user,
       ];
    }
-
+   
    public static function findByChatId(string $chatId): ?User
    {
       $chatId = trim($chatId);
       if ($chatId === '' || !preg_match('/^-?\d+$/', $chatId)) {
          return null;
       }
-
+      
       return User::findOne(['telegram_chat_id' => $chatId]);
    }
-
+   
    public static function profile(User $user): array
    {
       return [
@@ -89,11 +148,11 @@ final class TelegramUserService
          'language' => self::resolveLanguage($user),
       ];
    }
-
+   
    public static function subscriptions(User $user, string $language): array
    {
       $language = PurchaseMessageBuilder::normalizeLanguage($language);
-
+      
       // If your actual table or column names differ, edit only this query.
       return (new Query())
          ->select([
@@ -116,7 +175,7 @@ final class TelegramUserService
          ->orderBy(['us.expires_date' => SORT_DESC])
          ->all();
    }
-
+   
    public static function resolveLanguage(User $user): string
    {
       foreach (['language', 'lang', 'telegram_language'] as $attribute) {
@@ -125,18 +184,18 @@ final class TelegramUserService
             return PurchaseMessageBuilder::normalizeLanguage($value);
          }
       }
-
+      
       return PurchaseMessageBuilder::normalizeLanguage(
          (string)Yii::$app->language
       );
    }
-
+   
    public static function attribute($model, string $attribute, mixed $default = null): mixed
    {
       if (method_exists($model, 'hasAttribute') && $model->hasAttribute($attribute)) {
          return $model->getAttribute($attribute);
       }
-
+      
       return $default;
    }
 }
