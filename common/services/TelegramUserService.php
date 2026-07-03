@@ -159,6 +159,7 @@ final class TelegramUserService
             'id' => 'us.id',
             'plan_id' => 'us.plan_id',
             'plan_name' => 'sp.name_' . $language,
+            'course_name'=>'c.name_' . $language,
             'status' => 'us.status',
             'start_date' => 'us.start_date',
             'expires_date' => 'us.expires_date',
@@ -168,6 +169,7 @@ final class TelegramUserService
             ['sp' => '{{%subscription_plans}}'],
             'sp.id = us.plan_id'
          )
+         ->leftJoin(['c'=>'{{%courses}}'],'c.id = sp.course_id')
          ->where([
             'us.user_id' => (int)$user->id,
             'us.status' => 1,

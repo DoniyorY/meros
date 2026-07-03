@@ -427,7 +427,7 @@ final class TelegramController extends Controller
       $parts = ['<b>' . $labels['subscriptions_title'] . '</b>'];
       
       foreach ($subscriptions as $index => $subscription) {
-         $name = trim((string)($subscription['plan_name'] ?? ''));
+         $name = $subscription['course_name'] . ' | ' . $subscription['plan_name'];
          if ($name === '') {
             $name = $labels['subscription'] . ' #' . (int)$subscription['id'];
          }
