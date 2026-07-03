@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Billing;
 use common\models\User;
+use common\services\TelegramNotificationService;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -68,6 +69,8 @@ class ApiController extends Controller
       $user = User::findOne($billing->user_id);
       $user->sendCongratsEmail($user, $billing);
       
+      TelegramNotificationService::sendPurchaseNotification($billing);
+      TelegramStaffNotificationService::sendNewSubscriptionNotification($billing);
       return true;
    }
    

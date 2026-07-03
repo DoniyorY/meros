@@ -22,5 +22,10 @@ return [
           //'token' => '',
           'timeout' => 10,
        ],
+       'telegramStaffBot' => [
+          'class' => \common\components\TelegramBot::class,
+          //'token' => $params['telegramStaffBotToken'],
+          'timeout' => 10,
+       ],
     ],
 ];

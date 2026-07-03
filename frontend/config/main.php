@@ -91,6 +91,13 @@ return [
                 'logFile' => '@runtime/logs/telegram.log',
                 'logVars' => [],
              ],
+             
+             [
+                'class' => \yii\log\FileTarget::class,
+                'categories' => ['telegram-staff'],
+                'logFile' => '@frontend/runtime/logs/telegram-staff.log',
+                'logVars' => [],
+             ]
           ],
        ],
         'assetManager' => [
@@ -148,6 +155,9 @@ return [
              'login' => 'site/login',
              'logout' => 'site/logout',
              'contact' => 'site/contact',
+             
+             'POST telegram/staff-webhook' => 'telegram-staff/webhook',
+             'GET telegram/staff-health' => 'telegram-staff/health',
              
              'POST telegram/webhook' => 'telegram/webhook',
              'GET telegram/health' => 'telegram/health',
