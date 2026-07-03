@@ -36,7 +36,14 @@ $params=Yii::$app->params;
             'fullname',
             'email:email',
             'phone',
+            'position_ru',
+            'position_en',
+            'position_uz',
+            'desc_ru',
+            'desc_en',
+            'desc_uz',
             'image',
+            'avatar',
             [
                 'attribute' => 'status',
                 'value' => function ($data) {

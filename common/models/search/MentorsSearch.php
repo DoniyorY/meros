@@ -18,7 +18,7 @@ class MentorsSearch extends Mentors
     {
         return [
             [['id', 'status', 'created_at', 'updated_at', 'user_id'], 'integer'],
-            [['fullname', 'email', 'phone', 'image', 'instagram_link', 'linked_in_link', 'facebook_link'], 'safe'],
+            [['fullname', 'email', 'phone', 'image', 'avatar', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'desc_ru', 'desc_en', 'desc_uz'], 'safe'],
         ];
     }
 
@@ -70,6 +70,13 @@ class MentorsSearch extends Mentors
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'avatar', $this->avatar])
+            ->andFilterWhere(['like', 'position_ru', $this->position_ru])
+            ->andFilterWhere(['like', 'position_en', $this->position_en])
+            ->andFilterWhere(['like', 'position_uz', $this->position_uz])
+            ->andFilterWhere(['like', 'desc_ru', $this->desc_ru])
+            ->andFilterWhere(['like', 'desc_en', $this->desc_en])
+            ->andFilterWhere(['like', 'desc_uz', $this->desc_uz])
             ->andFilterWhere(['like', 'instagram_link', $this->instagram_link])
             ->andFilterWhere(['like', 'linked_in_link', $this->linked_in_link])
             ->andFilterWhere(['like', 'facebook_link', $this->facebook_link]);

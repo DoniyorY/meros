@@ -33,7 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'fullname',
             'email:email',
             'phone',
+            'position_ru',
+            'position_en',
+            'position_uz',
             'image',
+            'avatar',
             [
                 'attribute' => 'created_at',
                 'value' => function ($data) {
