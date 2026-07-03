@@ -16,14 +16,10 @@ final class TelegramStaffUserService
          return null;
       }
 
-      return User::findOne(['telegram_staff_chat_id' => $chatId]);
+      return User::findOne(['staff_telegram_chat_id' => $chatId]);
    }
 
-   /**
-    * Ищет сотрудника по Telegram User ID, который уже был сохранён
-    * при подключении основного клиентского бота.
-    */
-   public static function findEmployeeByTelegramUserId(
+   public static function findByStaffTelegramId(
       string $telegramUserId
    ): ?User {
       $telegramUserId = trim($telegramUserId);
@@ -31,38 +27,36 @@ final class TelegramStaffUserService
          return null;
       }
 
-      $schema = User::getTableSchema();
-      if ($schema->getColumn('telegram_user_id') === null) {
-         return null;
-      }
-
-      $user = User::findOne(['telegram_user_id' => $telegramUserId]);
-
-      return $user !== null && self::hasAllowedRole($user)
-         ? $user
-         : null;
+      return User::findOne(['staff_telegram_id' => $telegramUserId]);
    }
 
    /**
-    * Строгая привязка: никакой почты и кодов.
-    * Telegram ID должен уже принадлежать пользователю с разрешённой ролью.
+    * Первая независимая привязка staff-бота выполняется только по одноразовому
+    * токену, который был создан для уже авторизованного сотрудника.
     */
-   public static function attachByEmployeeTelegramId(
+   public static function attachByToken(
+      string $token,
       string $chatId,
       string $telegramUserId,
       string $username
    ): array {
-      $user = self::findEmployeeByTelegramUserId($telegramUserId);
+      $user = TelegramStaffLinkService::findUserByToken($token);
       if ($user === null) {
-         return ['ok' => false, 'error' => 'employee_not_found'];
+         return ['ok' => false, 'error' => 'invalid_or_expired_token'];
       }
 
-      return self::attachStaffTelegram(
+      $result = self::attachStaffTelegram(
          $user,
          $chatId,
          $telegramUserId,
          $username
       );
+
+      if (($result['ok'] ?? false) === true) {
+         TelegramStaffLinkService::clearToken($user);
+      }
+
+      return $result;
    }
 
    public static function attachStaffTelegram(
@@ -88,18 +82,30 @@ final class TelegramStaffUserService
          return ['ok' => false, 'error' => 'access_denied'];
       }
 
-      $currentChatId = trim((string)self::attribute(
+      $currentTelegramId = trim((string)self::attribute(
          $user,
-         'telegram_staff_chat_id',
+         'staff_telegram_id',
          ''
       ));
 
-      if ($currentChatId !== '' && $currentChatId !== $chatId) {
+      if (
+         $currentTelegramId !== ''
+         && $currentTelegramId !== $telegramUserId
+      ) {
          return ['ok' => false, 'error' => 'staff_account_already_bound'];
       }
 
+      $telegramAlreadyBound = User::find()
+         ->where(['staff_telegram_id' => $telegramUserId])
+         ->andWhere(['<>', 'id', (int)$user->id])
+         ->exists();
+
+      if ($telegramAlreadyBound) {
+         return ['ok' => false, 'error' => 'telegram_account_already_bound'];
+      }
+
       $chatAlreadyBound = User::find()
-         ->where(['telegram_staff_chat_id' => $chatId])
+         ->where(['staff_telegram_chat_id' => $chatId])
          ->andWhere(['<>', 'id', (int)$user->id])
          ->exists();
 
@@ -107,28 +113,19 @@ final class TelegramStaffUserService
          return ['ok' => false, 'error' => 'telegram_account_already_bound'];
       }
 
-      $telegramUserAlreadyBound = User::find()
-         ->where(['telegram_staff_user_id' => $telegramUserId])
-         ->andWhere(['<>', 'id', (int)$user->id])
-         ->exists();
-
-      if ($telegramUserAlreadyBound) {
-         return ['ok' => false, 'error' => 'telegram_account_already_bound'];
-      }
-
-      $user->setAttribute('telegram_staff_chat_id', $chatId);
-      $user->setAttribute('telegram_staff_user_id', $telegramUserId);
+      $user->setAttribute('staff_telegram_id', $telegramUserId);
+      $user->setAttribute('staff_telegram_chat_id', $chatId);
       $user->setAttribute(
-         'telegram_staff_username',
+         'staff_telegram_username',
          $username !== '' ? mb_substr($username, 0, 255) : null
       );
-      $user->setAttribute('telegram_staff_connected_at', time());
+      $user->setAttribute('staff_telegram_connected_at', time());
 
       if (!$user->save(false, [
-         'telegram_staff_chat_id',
-         'telegram_staff_user_id',
-         'telegram_staff_username',
-         'telegram_staff_connected_at',
+         'staff_telegram_id',
+         'staff_telegram_chat_id',
+         'staff_telegram_username',
+         'staff_telegram_connected_at',
       ])) {
          return ['ok' => false, 'error' => 'bind_save_failed'];
       }
@@ -141,16 +138,20 @@ final class TelegramStaffUserService
 
    public static function disconnect(User $user): bool
    {
-      $user->setAttribute('telegram_staff_chat_id', null);
-      $user->setAttribute('telegram_staff_user_id', null);
-      $user->setAttribute('telegram_staff_username', null);
-      $user->setAttribute('telegram_staff_connected_at', null);
+      $user->setAttribute('staff_telegram_id', null);
+      $user->setAttribute('staff_telegram_chat_id', null);
+      $user->setAttribute('staff_telegram_username', null);
+      $user->setAttribute('staff_telegram_connected_at', null);
+      $user->setAttribute('staff_telegram_bind_token_hash', null);
+      $user->setAttribute('staff_telegram_bind_expires_at', null);
 
       return $user->save(false, [
-         'telegram_staff_chat_id',
-         'telegram_staff_user_id',
-         'telegram_staff_username',
-         'telegram_staff_connected_at',
+         'staff_telegram_id',
+         'staff_telegram_chat_id',
+         'staff_telegram_username',
+         'staff_telegram_connected_at',
+         'staff_telegram_bind_token_hash',
+         'staff_telegram_bind_expires_at',
       ]);
    }
 
@@ -158,8 +159,8 @@ final class TelegramStaffUserService
    public static function recipients(): array
    {
       $users = User::find()
-         ->andWhere(['not', ['telegram_staff_chat_id' => null]])
-         ->andWhere(['<>', 'telegram_staff_chat_id', ''])
+         ->andWhere(['not', ['staff_telegram_chat_id' => null]])
+         ->andWhere(['<>', 'staff_telegram_chat_id', ''])
          ->all();
 
       return array_values(array_filter(
@@ -184,7 +185,6 @@ final class TelegramStaffUserService
          }
       }
 
-      // Оставлено для проектов, где роль хранится прямо в user.role.
       $directRole = self::attribute($user, 'role');
       if (is_string($directRole) && in_array($directRole, $allowedRoles, true)) {
          return true;

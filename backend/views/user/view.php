@@ -17,51 +17,68 @@ $host = $_SERVER['SERVER_NAME']
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="col-md-3">
+           <?php if (!$model->staff_telegram_id) {
+              echo Html::a(
+                 'Подключить служебный Telegram',
+                 ['/telegram-staff-connect/connect'],
+                 ['class' => 'btn btn-primary']
+              );
+           }else{
+              echo Html::a(
+                 'Отключить служебный Telegram',
+                 ['/telegram-staff-connect/disconnect'],
+                 [
+                    'class' => 'btn btn-outline-danger',
+                    'data-method' => 'post',
+                 ]
+              );
+           }
+           ?>
             <div class="card text-center my-2">
                 <div class="card-header">
                     <img src="<?= "http://$host/uploads/user/$model->image" ?>" alt="user_photo"
                          style="width: 100%;height: 150px; object-fit: contain">
                 </div>
                 <div class="card-body">
-                    <?= "$model->fullname / $model->username" ?>
+                   <?= "$model->fullname / $model->username" ?>
                 </div>
             </div>
-            <?= DetailView::widget([
-                    'model' => $model,
-                    'attributes' => [
-                        //'username',
-                        //'fullname',
-                            'email:email',
-                            'phone',
-                            'address',
-                            'image',
-                            [
-                                    'attribute' => 'subscription_status',
-                                    'value' => function ($data) {
-                                        return Yii::$app->params['user_subscription_status'][$data->subscription_status];
-                                    }
-                            ],
-                            [
-                                    'attribute' => 'status',
-                                    'value' => function ($model) {
-                                        return Yii::$app->params['user_status'][$model->status];
-                                    }
-                            ],
-                            [
-                                    'attribute' => 'created_at',
-                                    'value' => function ($model) {
-                                        return Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i:s');
-                                    }
-                            ],
-                            [
-                                    'attribute' => 'updated_at',
-                                    'value' => function ($model) {
-                                        return Yii::$app->formatter->asDatetime($model->updated_at, 'php:d.m.Y H:i:s');
-                                    }
-                            ],
-
-                    ],
-            ]) ?>
+           <?= DetailView::widget([
+              'model' => $model,
+              'attributes' => [
+                 //'username',
+                 //'fullname',
+                 'email:email',
+                 'phone',
+                 'address',
+                 'image',
+                 [
+                    'attribute' => 'subscription_status',
+                    'value' => function ($data) {
+                       return Yii::$app->params['user_subscription_status'][$data->subscription_status];
+                    }
+                 ],
+                 [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+                       return Yii::$app->params['user_status'][$model->status];
+                    }
+                 ],
+                 [
+                    'attribute' => 'created_at',
+                    'value' => function ($model) {
+                       return Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i:s');
+                    }
+                 ],
+                 [
+                    'attribute' => 'updated_at',
+                    'value' => function ($model) {
+                       return Yii::$app->formatter->asDatetime($model->updated_at, 'php:d.m.Y H:i:s');
+                    }
+                 ],
+              
+              ],
+           ]) ?>
         </div>
 
         <div class="col-md-8" style="margin-left: 50px;">
@@ -87,7 +104,7 @@ $host = $_SERVER['SERVER_NAME']
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active p-3" id="user-settings" role="tabpanel" aria-labelledby="home-tab"
                      tabindex="0">
-                    <?= $this->render('_user_settings', ['model' => $model]) ?>
+                   <?= $this->render('_user_settings', ['model' => $model]) ?>
                 </div>
                 <div class="tab-pane fade p-3" id="user-subscriptions" role="tabpanel" aria-labelledby="profile-tab"
                      tabindex="0">
@@ -112,16 +129,16 @@ $host = $_SERVER['SERVER_NAME']
                                 <td><?= $item->subscription_key ?></td>
                                 <td><?= date('d.m.Y', $item->created_at) ?></td>
                                 <td>
-                                    <?php $start = date('d.m.Y', $item->start_date);
-                                    $end = date('d.m.Y', $item->expires_date);
-                                    echo "$start - $end";
-                                    ?>
+                                   <?php $start = date('d.m.Y', $item->start_date);
+                                   $end = date('d.m.Y', $item->expires_date);
+                                   echo "$start - $end";
+                                   ?>
                                 </td>
                                 <td>
-                                    <?= Yii::$app->formatter->asDecimal($item->amount) ?>
+                                   <?= Yii::$app->formatter->asDecimal($item->amount) ?>
                                 </td>
                                 <td>
-                                    <?= $item->currency_code ?>
+                                   <?= $item->currency_code ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

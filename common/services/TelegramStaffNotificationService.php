@@ -58,7 +58,7 @@ final class TelegramStaffNotificationService
    ): bool {
       $chatId = trim((string)TelegramStaffUserService::attribute(
          $staffUser,
-         'telegram_staff_chat_id',
+         'staff_telegram_chat_id',
          ''
       ));
 
@@ -95,7 +95,9 @@ final class TelegramStaffNotificationService
          } catch (IntegrityException) {
             $delivery = TelegramDelivery::findOne(['event_id' => $eventId]);
             if ($delivery === null) {
-               throw new IntegrityException('Unable to resolve staff Telegram delivery race.');
+               throw new IntegrityException(
+                  'Unable to resolve staff Telegram delivery race.'
+               );
             }
 
             if ((int)$delivery->status === TelegramDelivery::STATUS_SENT) {
