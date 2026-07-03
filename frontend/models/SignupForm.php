@@ -75,28 +75,34 @@ class SignupForm extends Model
      */
     public function signup()
     {
+       
         if (!$this->validate()) {
             return null;
         }
         
         $transaction = Yii::$app->db->beginTransaction();
-
+      
         try {
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
             $user->fullname = trim($this->first_name . ' ' . $this->last_name);
             $user->phone = $this->phone;
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+            $user->created_at=time();
+            $user->updated_at=time();
+            $user->status = User::STATUS_ACTIVE;
+            
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
-
+          
             if (!$user->save()) {
                 $this->addErrors($user->getErrors());
                 $transaction->rollBack();
                 return false;
             }
-
+           
             $authAssignment = new AuthAssignment([
                 'item_name' => 'guest',
                 'user_id' => (string)$user->id,
@@ -105,6 +111,7 @@ class SignupForm extends Model
 
             if (!$authAssignment->save()) {
                 $this->addErrors($authAssignment->getErrors());
+                
                 $transaction->rollBack();
                 return false;
             }
@@ -113,7 +120,7 @@ class SignupForm extends Model
                 $transaction->rollBack();
                 return false;
             }
-
+           
             $transaction->commit();
             return true;
         } catch (\Throwable $e) {
