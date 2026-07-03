@@ -948,8 +948,8 @@ final class PaymeController extends Controller
             'subscriptionDuration',
             '+3 months'
          );
-         
-         $expiresDate = strtotime($duration, $startDate);
+         $plan_days = $billing->subscription->duration_days;
+         $expiresDate = strtotime('+' . $plan_days . ' days', $startDate);
          
          if ($expiresDate === false) {
             throw new RuntimeException(
