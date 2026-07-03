@@ -333,7 +333,7 @@ final class TelegramRegistrationService
          'uz' => 'Telegram ulash kodi',
          'en' => 'Telegram connection code',
       ];
-
+      
       return Yii::$app->mailer
          ->compose(
             [
@@ -347,8 +347,12 @@ final class TelegramRegistrationService
                'expiresMinutes' => (int)ceil($ttl / 60),
             ]
          )
+         ->setFrom([
+            Yii::$app->params['adminEmail']
+            => 'Meros International Institute',
+         ])
          ->setTo((string)$user->email)
-         ->setSubject($subjects[$language])
+         ->setSubject($subjects[$language] ?? $subjects['en'])
          ->send();
    }
 
