@@ -271,7 +271,7 @@ final class TelegramRegistrationService
       if (!$registration->save(false)) {
          return ['ok' => false, 'error' => 'registration_save_failed'];
       }
-
+      
       try {
          $sent = self::sendVerificationEmail(
             $user,
@@ -279,12 +279,29 @@ final class TelegramRegistrationService
             (string)$registration->telegram_language,
             self::codeTtl()
          );
+         
+         if (!$sent) {
+            Yii::error([
+               'message' => 'Telegram verification email send() returned false.',
+               'user_id' => (int)$user->id,
+               'email' => (string)$user->email,
+               'registration_id' => (int)$registration->id,
+               'mailer_class' => get_class(Yii::$app->mailer),
+            ], 'telegram');
+         }
       } catch (Throwable $exception) {
          Yii::error([
             'message' => 'Telegram verification email threw an exception.',
             'user_id' => (int)$user->id,
+            'email' => (string)$user->email,
+            'registration_id' => (int)$registration->id,
+            'exception_class' => get_class($exception),
             'exception' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
          ], 'telegram');
+         
          $sent = false;
       }
 
