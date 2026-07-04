@@ -1312,7 +1312,7 @@ return [
         'en'=>'More about ',
         'uz'=>'Batafsil ',
     ],
-    'pricing'=>[
+    ''=>[
         'ru'=>'',
         'en'=>'',
         'uz'=>'',
