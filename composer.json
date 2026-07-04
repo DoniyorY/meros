@@ -17,7 +17,7 @@
     "irc": "ircs://irc.libera.chat:6697/yii",
     "source": "https://github.com/yiisoft/yii2"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": ">=8.2",
     "yiisoft/yii2": "~2.0.45",
@@ -28,7 +28,8 @@
     "kartik-v/yii2-editors": "dev-master",
     "yiisoft/yii2-httpclient": "2.0.x-dev",
     "kartik-v/yii2-editable": "dev-master",
-    "kartik-v/yii2-grid": "dev-master"
+    "kartik-v/yii2-grid": "dev-master",
+    "rakhmatov/yii2-playmobile": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

@@ -22,11 +22,11 @@ $courseName = $courses->{"name_$lang"} ?: $courses->name_en;
 $this->title = $courseName;
 $this->params['hideBreadcrumbs'] = true;
 $courseAnchorNavItems = [
-   ['label' => 'Pricing', 'href' => '#tickets'],
-   ['label' => 'Organisational Purchases', 'href' => '#organisational-purchases'],
-   ['label' => 'FAQ', 'href' => '#faq'],
-   ['label' => 'More about ' . $courseName, 'href' => '#more-about-english-for-nurses'],
-   ['label' => 'Contact us', 'href' => Url::to(['site/contact'])],
+   ['label' => translate('pricing'), 'href' => '#tickets'],
+   ['label' => translate('Organisational Purchases'), 'href' => '#organisational-purchases'],
+   ['label' => translate('b2b_faq_kicker'), 'href' => '#faq'],
+   ['label' => translate('More about') . $courseName, 'href' => '#more-about-english-for-nurses'],
+   ['label' => translate('contact_us'), 'href' => Url::to(['site/contact'])],
 ];
 
 $organisationalCardCopy = $params['course_organisational_cards'][$lang] ?? $params['course_organisational_cards']['en'];
