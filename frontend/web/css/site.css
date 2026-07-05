@@ -2495,3 +2495,213 @@ body p,
     line-height: 1.7;
     margin: 22px 0 0;
 }
+
+/* Privacy Policy page */
+.privacy-policy-page {
+    --privacy-bg: #f4f8fb;
+    --privacy-card: #ffffff;
+    --privacy-text: #17313b;
+    --privacy-muted: #617381;
+    --privacy-border: rgba(7, 113, 123, 0.14);
+    --privacy-accent: var(--meros-primary, #07717b);
+    --privacy-accent-dark: var(--meros-primary-dark, #04363f);
+    --privacy-accent-soft: rgba(75, 192, 202, 0.13);
+    background:
+        radial-gradient(circle at 8% 8%, rgba(75, 192, 202, 0.14), transparent 30%),
+        radial-gradient(circle at 90% 0%, rgba(0, 120, 174, 0.12), transparent 28%),
+        var(--privacy-bg);
+    color: var(--privacy-text);
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.75;
+    padding: clamp(32px, 5vw, 64px) 0;
+}
+
+.privacy-container {
+    margin: 0 auto;
+    max-width: 1040px;
+    padding: 0 16px;
+}
+
+.privacy-hero {
+    background:
+        linear-gradient(135deg, rgba(7, 113, 123, 0.95), rgba(75, 192, 202, 0.82)),
+        url("../images/meros_hospital.jpg") center/cover;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(4, 54, 63, 0.14);
+    color: #fff;
+    margin-bottom: 24px;
+    overflow: hidden;
+    padding: clamp(30px, 5vw, 54px);
+    position: relative;
+}
+
+.privacy-hero:after {
+    background:
+        radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.34), transparent 26%),
+        radial-gradient(circle at 5% 96%, rgba(255, 255, 255, 0.2), transparent 30%);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.privacy-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.privacy-hero h1 {
+    color: #fff;
+    font-size: clamp(30px, 4.6vw, 52px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin: 0 0 14px;
+    max-width: 820px;
+}
+
+.privacy-hero p {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: clamp(16px, 2vw, 19px);
+    margin: 0;
+    max-width: 820px;
+}
+
+.privacy-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.privacy-badge {
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    color: #fff;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 800;
+    gap: 6px;
+    letter-spacing: 0.01em;
+    padding: 9px 14px;
+}
+
+.privacy-card {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--privacy-border);
+    border-radius: 26px;
+    box-shadow: 0 18px 48px rgba(4, 54, 63, 0.08);
+    margin-bottom: 18px;
+    overflow: hidden;
+    padding: clamp(24px, 4vw, 36px);
+}
+
+.privacy-card h2 {
+    color: var(--privacy-accent-dark);
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin: 0 0 14px;
+}
+
+.privacy-card h3 {
+    color: var(--privacy-accent);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.35;
+    margin: 22px 0 8px;
+}
+
+.privacy-card p {
+    color: var(--privacy-muted);
+    font-size: 16px;
+    margin: 0 0 14px;
+}
+
+.privacy-list {
+    display: grid;
+    gap: 8px;
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+}
+
+.privacy-list li {
+    color: var(--privacy-text);
+    padding-left: 26px;
+    position: relative;
+}
+
+.privacy-list li:before {
+    background: linear-gradient(135deg, var(--privacy-accent), #4bc0ca);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px var(--privacy-accent-soft);
+    content: "";
+    height: 8px;
+    left: 5px;
+    position: absolute;
+    top: 0.72em;
+    width: 8px;
+}
+
+.privacy-contact {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-top: 18px;
+}
+
+.privacy-contact-item {
+    background: linear-gradient(180deg, #fff, rgba(244, 248, 251, 0.88));
+    border: 1px solid var(--privacy-border);
+    border-radius: 18px;
+    color: var(--privacy-text);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    padding: 16px;
+}
+
+.privacy-contact-item a {
+    color: var(--privacy-accent);
+    text-decoration: none;
+}
+
+.privacy-contact-item a:hover,
+.privacy-contact-item a:focus {
+    color: var(--privacy-accent-dark);
+    text-decoration: underline;
+}
+
+.privacy-contact-label {
+    color: var(--privacy-muted);
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.privacy-final {
+    background: linear-gradient(135deg, rgba(7, 113, 123, 0.1), rgba(75, 192, 202, 0.13));
+    border: 1px solid var(--privacy-border);
+    border-left: 5px solid var(--privacy-accent);
+    border-radius: 18px;
+    color: var(--privacy-accent-dark);
+    font-weight: 800;
+    margin-top: 18px;
+    padding: 18px 20px;
+}
+
+@media (max-width: 576px) {
+    .privacy-container { padding: 0 12px; }
+    .privacy-hero,
+    .privacy-card { border-radius: 22px; }
+    .privacy-meta { align-items: stretch; flex-direction: column; }
+    .privacy-badge { justify-content: center; text-align: center; }
+}
