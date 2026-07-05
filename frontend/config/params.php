@@ -458,6 +458,53 @@ return [
         'en' => 'Our Partners',
         'uz' => 'Hamkorlarimiz',
     ],
+    'team_page' => [
+        'hero_intro' => [
+            'ru' => 'Познакомьтесь с преподавателями и менторами, которые помогают нашим студентам уверенно использовать профессиональный английский в медицине, учёбе и международной коммуникации.',
+            'en' => 'Meet the teachers and mentors who help our learners build confident professional English for healthcare, study and international communication.',
+            'uz' => 'Talabalarimizga tibbiyot, ta’lim va xalqaro muloqotda professional ingliz tilidan ishonchli foydalanishga yordam beradigan o‘qituvchi va mentorlar bilan tanishing.',
+        ],
+        'benefit_1' => [
+            'ru' => 'Опытные преподаватели и менторы по медицинскому и профессиональному английскому.',
+            'en' => 'Experienced teachers and mentors for medical and professional English.',
+            'uz' => 'Tibbiy va professional ingliz tili bo‘yicha tajribali o‘qituvchi va mentorlar.',
+        ],
+        'benefit_2' => [
+            'ru' => 'Практические занятия для медицинской коммуникации и академического успеха.',
+            'en' => 'Practical lessons focused on healthcare communication and academic success.',
+            'uz' => 'Tibbiy muloqot va akademik muvaffaqiyatga qaratilgan amaliy darslar.',
+        ],
+        'benefit_3' => [
+            'ru' => 'Заботливые специалисты, которые сопровождают студентов на каждом этапе прогресса.',
+            'en' => 'Supportive specialists who guide learners through every stage of their progress.',
+            'uz' => 'Talabalarni rivojlanishning har bir bosqichida qo‘llab-quvvatlaydigan mutaxassislar.',
+        ],
+        'read_more' => [
+            'ru' => 'читать далее',
+            'en' => 'read more',
+            'uz' => 'batafsil',
+        ],
+        'close' => [
+            'ru' => 'Закрыть',
+            'en' => 'Close',
+            'uz' => 'Yopish',
+        ],
+        'empty' => [
+            'ru' => 'Информация о команде скоро появится.',
+            'en' => 'Team information will be available soon.',
+            'uz' => 'Jamoa haqidagi ma’lumot tez orada joylanadi.',
+        ],
+        'mentor_fallback' => [
+            'ru' => 'Информация скоро появится.',
+            'en' => 'Information will be available soon.',
+            'uz' => 'Ma’lumot tez orada joylanadi.',
+        ],
+        'mentor_name_fallback' => [
+            'ru' => 'Ментор',
+            'en' => 'Mentor',
+            'uz' => 'Mentor',
+        ],
+    ],
     'policy' => [
         'ru' => 'Экологическая политика',
         'en' => 'Environmental Policy',

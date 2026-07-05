@@ -2352,3 +2352,119 @@ body p,
     .meros-organisational-image { min-height: 240px; }
     .meros-organisational-body { padding: 22px; }
 }
+
+/* Meet the Team page */
+.meros-team-page .meros-team-hero-card {
+    background: linear-gradient(135deg, rgba(7, 113, 123, 0.94), rgba(75, 192, 202, 0.86)), url("../images/meros_hospital.jpg") center/cover;
+    border-radius: 34px;
+    box-shadow: var(--meros-shadow);
+    color: #fff;
+    overflow: hidden;
+    padding: clamp(44px, 7vw, 92px);
+    position: relative;
+}
+.meros-team-page .meros-team-hero-card:after {
+    background: radial-gradient(circle at 88% 10%, rgba(255,255,255,.32), transparent 28%), radial-gradient(circle at 8% 96%, rgba(255,255,255,.24), transparent 30%);
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+.meros-team-page .meros-team-hero-card > * { position: relative; z-index: 1; }
+.meros-team-page .meros-team-hero-card h1 { color: #fff; max-width: 760px; }
+.meros-team-page .meros-team-hero-card p { color: rgba(255,255,255,.88); max-width: 720px; }
+.meros-team-intro-list {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 0;
+}
+.meros-team-intro-list li {
+    align-items: flex-start;
+    color: var(--meros-muted);
+    display: flex;
+    font-size: 17px;
+    gap: 12px;
+}
+.meros-team-intro-list .fa { color: var(--meros-primary); margin-top: 5px; }
+.meros-team-grid {
+    display: grid;
+    gap: 34px 28px;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.meros-mentor-card {
+    background: transparent;
+    border: 0;
+    color: var(--meros-ink);
+    text-align: center;
+}
+.meros-mentor-photo-btn {
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 0;
+}
+.meros-mentor-photo {
+    aspect-ratio: 1/1;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 18px 44px rgba(4, 54, 63, .14);
+    filter: grayscale(100%);
+    height: 158px;
+    object-fit: cover;
+    transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
+    width: 158px;
+}
+.meros-mentor-card:hover .meros-mentor-photo,
+.meros-mentor-photo-btn:focus .meros-mentor-photo {
+    filter: grayscale(0%);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 24px 54px rgba(7, 113, 123, .24);
+}
+.meros-mentor-name {
+    color: var(--meros-primary-dark);
+    font-size: 18px;
+    font-weight: 800;
+    margin: 16px 0 2px;
+}
+.meros-mentor-readmore {
+    background: transparent;
+    border: 0;
+    color: var(--meros-primary);
+    font-size: 14px;
+    font-weight: 800;
+    padding: 0;
+    text-transform: lowercase;
+}
+.meros-mentor-readmore:hover { color: var(--meros-primary-dark); }
+.meros-team-empty {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 26px;
+    box-shadow: var(--meros-shadow);
+    padding: 34px;
+    text-align: center;
+}
+.meros-mentor-modal .modal-content {
+    border: 0;
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    overflow: hidden;
+}
+.meros-mentor-modal .modal-header { border-bottom: 1px solid var(--meros-border); }
+.meros-mentor-modal-photo {
+    border-radius: 24px;
+    filter: grayscale(100%);
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+.meros-mentor-modal h3 { color: var(--meros-primary-dark); font-size: 28px; margin-bottom: 14px; }
+.meros-mentor-modal .meros-mentor-description,
+.meros-mentor-modal .meros-mentor-description p { color: var(--meros-muted); font-size: 16px; line-height: 1.75; }
+@media (max-width: 575.98px) {
+    .meros-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
+    .meros-mentor-photo { height: 128px; width: 128px; }
+}
