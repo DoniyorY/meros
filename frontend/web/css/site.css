@@ -3446,3 +3446,32 @@ footer#page-footer #footer-content .footer-logo-column .logo {
         color: var(--meros-primary) !important;
     }
 }
+
+/* Keep language selector closed unless explicitly toggled, and fix mobile account order/readability. */
+@media (max-width: 991.98px) {
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > .child-navigation {
+        max-height: 0;
+        opacity: 0;
+        padding-bottom: 0;
+        padding-top: 0;
+        transform: translateY(-4px);
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.is-current-page > .child-navigation,
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.is-open > .child-navigation {
+        max-height: 70vh;
+        opacity: 1;
+        padding-bottom: 8px;
+        padding-top: 8px;
+        transform: translateY(0);
+    }
+
+    .navigation-wrapper #primary-navigation .mobile-account-link,
+    .navigation-wrapper #primary-navigation .btn.mobile-account-link {
+        justify-content: flex-start !important;
+    }
+
+    .navigation-wrapper #primary-navigation .mobile-account-link .fa {
+        margin-left: 8px;
+    }
+}

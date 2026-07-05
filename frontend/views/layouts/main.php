@@ -116,8 +116,8 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                 <li class="nav-item mobile-account-navigation d-lg-none">
                                    <?php if (!Yii::$app->user->isGuest): ?>
                                        <a href="<?= Url::to(['site/profile']) ?>" class="nav-link mobile-account-link">
-                                           <i class="fa fa-user" aria-hidden="true"></i>
                                           <?=$params['my_profile'][$lang]?>
+                                           <i class="fa fa-user" aria-hidden="true"></i>
                                        </a>
                                       <?php \yii\widgets\ActiveForm::begin(['action' => Url::to(['site/logout']),'method' => 'post', 'options' => ['class' => 'logout_form mobile-logout-form']]) ?>
                                         <button type="submit" class="nav-link btn btn-link logout mobile-account-link">
@@ -179,7 +179,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
         });
 
         if (hasActiveChild) {
-            item.classList.add('active');
+            item.classList.add('active', 'is-current-page');
             var childNavigation = item.querySelector(':scope > .list-unstyled');
             if (childNavigation) {
                 childNavigation.classList.add('active');
