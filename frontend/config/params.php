@@ -464,20 +464,52 @@ return [
             'en' => 'Meet the teachers and mentors who help our learners build confident professional English for healthcare, study and international communication.',
             'uz' => 'Talabalarimizga tibbiyot, ta’lim va xalqaro muloqotda professional ingliz tilidan ishonchli foydalanishga yordam beradigan o‘qituvchi va mentorlar bilan tanishing.',
         ],
-        'benefit_1' => [
-            'ru' => 'Опытные преподаватели и менторы по медицинскому и профессиональному английскому.',
-            'en' => 'Experienced teachers and mentors for medical and professional English.',
-            'uz' => 'Tibbiy va professional ingliz tili bo‘yicha tajribali o‘qituvchi va mentorlar.',
+        'senior_intro' => [
+            'ru' => 'Старшая команда SLC имеет более 100 лет совокупного отраслевого опыта.',
+            'en' => 'The senior team at SLC has over 100 years’ combined industry experience.',
+            'uz' => 'SLC katta jamoasi jami 100 yildan ortiq soha tajribasiga ega.',
         ],
-        'benefit_2' => [
-            'ru' => 'Практические занятия для медицинской коммуникации и академического успеха.',
-            'en' => 'Practical lessons focused on healthcare communication and academic success.',
-            'uz' => 'Tibbiy muloqot va akademik muvaffaqiyatga qaratilgan amaliy darslar.',
-        ],
-        'benefit_3' => [
-            'ru' => 'Заботливые специалисты, которые сопровождают студентов на каждом этапе прогресса.',
-            'en' => 'Supportive specialists who guide learners through every stage of their progress.',
-            'uz' => 'Talabalarni rivojlanishning har bir bosqichida qo‘llab-quvvatlaydigan mutaxassislar.',
+        'benefits' => [
+            [
+                'ru' => 'Преподавание английского языка профессионалам.',
+                'en' => 'Teaching English to professionals',
+                'uz' => 'Mutaxassislarga ingliz tilini o‘rgatish.',
+            ],
+            [
+                'ru' => 'Создание онлайн-программ самостоятельного обучения и смешанного языкового обучения.',
+                'en' => 'Creating online self-study and blended language training programmes',
+                'uz' => 'Onlayn mustaqil ta’lim va aralash til o‘qitish dasturlarini yaratish.',
+            ],
+            [
+                'ru' => 'Разработка индивидуальных языковых курсов для компаний и организаций.',
+                'en' => 'Designing bespoke language courses for companies and organisations',
+                'uz' => 'Kompaniyalar va tashkilotlar uchun maxsus til kurslarini ishlab chiqish.',
+            ],
+            [
+                'ru' => 'Организация международных программ языкового обучения.',
+                'en' => 'Organising international language training programmes',
+                'uz' => 'Xalqaro til o‘qitish dasturlarini tashkil etish.',
+            ],
+            [
+                'ru' => 'Написание учебных материалов по языку, включая всемирно известные учебники.',
+                'en' => 'Writing language learning materials, including world-renowned course books',
+                'uz' => 'Til o‘rganish materiallarini, jumladan dunyoga mashhur darsliklarni yozish.',
+            ],
+            [
+                'ru' => 'Подготовка к экзаменам по английскому языку, разработка и оценивание.',
+                'en' => 'English language exam preparation, writing and marking',
+                'uz' => 'Ingliz tili imtihonlariga tayyorgarlik, material yozish va baholash.',
+            ],
+            [
+                'ru' => 'Руководство и управление школами английского языка.',
+                'en' => 'Leading and managing English language schools',
+                'uz' => 'Ingliz tili maktablariga rahbarlik qilish va ularni boshqarish.',
+            ],
+            [
+                'ru' => 'Обучение преподавателей английского языка по всему миру.',
+                'en' => 'Training English teachers around the world',
+                'uz' => 'Butun dunyo bo‘ylab ingliz tili o‘qituvchilarini tayyorlash.',
+            ],
         ],
         'read_more' => [
             'ru' => 'читать далее',

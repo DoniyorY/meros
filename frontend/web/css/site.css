@@ -2479,3 +2479,19 @@ body p,
     animation-range: entry 8% cover 32%;
 }
 .meros-mentor-modal { z-index: 1065; }
+
+@keyframes merosTeamHeroPop {
+    0% { opacity: 0; transform: translateY(34px) scale(0.96); }
+    70% { opacity: 1; transform: translateY(-4px) scale(1.012); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.meros-team-page .meros-team-hero-card {
+    animation: merosTeamHeroPop 0.78s cubic-bezier(.2, .8, .2, 1) 0.12s both;
+    transform-origin: center bottom;
+}
+.meros-team-senior-intro {
+    color: var(--meros-ink);
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 22px 0 0;
+}

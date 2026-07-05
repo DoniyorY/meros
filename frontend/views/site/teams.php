@@ -40,10 +40,11 @@ $this->title = $t('meet_the_team', '');
                     <div class="meros-about-card">
                         <span class="meros-kicker"><?= Html::encode($t('about_meros', '')) ?></span>
                         <h2><?= Html::encode($t('meet_the_team', '')) ?></h2>
+                        <p class="meros-team-senior-intro"><?= Html::encode($teamT('senior_intro')) ?></p>
                         <ul class="meros-team-intro-list">
-                            <li><span class="fa fa-check"></span><span><?= Html::encode($teamT('benefit_1')) ?></span></li>
-                            <li><span class="fa fa-check"></span><span><?= Html::encode($teamT('benefit_2')) ?></span></li>
-                            <li><span class="fa fa-check"></span><span><?= Html::encode($teamT('benefit_3')) ?></span></li>
+                            <?php foreach (($params['team_page']['benefits'] ?? []) as $benefit): ?>
+                                <li><span class="fa fa-check"></span><span><?= Html::encode($benefit[$lang] ?? $benefit['en'] ?? '') ?></span></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
