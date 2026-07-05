@@ -1402,6 +1402,11 @@ return [
             'en' => 'Meros International Institute',
             'uz' => 'Meros International Institute',
         ],
+        'contact_brand_label' => [
+            'ru' => 'Мы',
+            'en' => 'We Are',
+            'uz' => 'Biz',
+        ],
         'effective_date_label' => [
             'ru' => 'Дата вступления в силу',
             'en' => 'Effective date',
