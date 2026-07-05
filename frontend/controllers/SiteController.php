@@ -141,6 +141,11 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionPolicy()
+    {
+        return $this->render('policy');
+    }
+
     public function actionProfile()
     {
         $user = Yii::$app->user->identity;
