@@ -3396,3 +3396,53 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     right: auto !important;
     top: auto !important;
 }
+
+/* Mobile navigation readability and collapse animation fixes. */
+@media (max-width: 991.98px) {
+    .navigation-wrapper #primary-navigation.navbar-collapse {
+        transform-origin: top center;
+    }
+
+    .navigation-wrapper #primary-navigation.collapsing {
+        display: block !important;
+        height: 0;
+        opacity: 0;
+        overflow: hidden !important;
+        transform: translateY(-8px);
+        transition: height 0.36s ease, opacity 0.28s ease, transform 0.28s ease !important;
+    }
+
+    .navigation-wrapper #primary-navigation.collapse.show {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .navigation-wrapper #primary-navigation .navbar-nav li > a,
+    .navigation-wrapper #primary-navigation .navbar-nav > li > a,
+    .navigation-wrapper #primary-navigation .navbar-nav .nav-link,
+    .navigation-wrapper #primary-navigation .navbar-nav a.active,
+    .navigation-wrapper #primary-navigation .navbar-nav li.active > a,
+    .navigation-wrapper #primary-navigation .mobile-account-link,
+    .navigation-wrapper #primary-navigation .btn.mobile-account-link,
+    .navigation-wrapper #primary-navigation .child-navigation li a,
+    .navigation-wrapper #primary-navigation .child-navigation li a.active {
+        color: var(--meros-primary-dark) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .navigation-wrapper #primary-navigation .navbar-nav li > a:hover,
+    .navigation-wrapper #primary-navigation .navbar-nav li > a:focus,
+    .navigation-wrapper #primary-navigation .navbar-nav li.active > a:hover,
+    .navigation-wrapper #primary-navigation .navbar-nav li.active > a:focus,
+    .navigation-wrapper #primary-navigation .child-navigation li a:hover,
+    .navigation-wrapper #primary-navigation .child-navigation li a:focus {
+        color: var(--meros-primary-dark) !important;
+    }
+
+    .navigation-wrapper #primary-navigation .has-child:after,
+    .navigation-wrapper #primary-navigation .mobile-account-link .fa {
+        color: var(--meros-primary) !important;
+    }
+}
