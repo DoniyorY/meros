@@ -112,6 +112,24 @@ $homeLabel = $params['home'][$lang] ?? $params['home']['en'] ?? 'Home';
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="nav-item mobile-account-navigation d-lg-none">
+                                   <?php if (!Yii::$app->user->isGuest): ?>
+                                       <a href="<?= Url::to(['site/profile']) ?>" class="nav-link mobile-account-link">
+                                           <i class="fa fa-user" aria-hidden="true"></i>
+                                          <?=$params['my_profile'][$lang]?>
+                                       </a>
+                                      <?php \yii\widgets\ActiveForm::begin(['action' => Url::to(['site/logout']),'method' => 'post', 'options' => ['class' => 'logout_form mobile-logout-form']]) ?>
+                                        <button type="submit" class="nav-link btn btn-link logout mobile-account-link">
+                                           <?=$params['logout'][$lang]?>
+                                        </button>
+                                      <?php \yii\widgets\ActiveForm::end(); ?>
+                                   <?php else: ?>
+                                       <a href="<?= Url::to(['site/login']) ?>" class="nav-link mobile-account-link">
+                                           <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                          <?=$params['login'][$lang]?>
+                                       </a>
+                                   <?php endif; ?>
+                                </li>
                                <?= MultiLanguageWidget::widget([
                                   'addCurrentLang' => true, // add current lang
                                   'calling_controller' => $this->context,
