@@ -116,7 +116,7 @@ $this->title = $t('page_title');
             <p><?= Html::encode($t('section_11_p1')) ?></p>
             <div class="privacy-contact">
                 <div class="privacy-contact-item">
-                    <span class="privacy-contact-label"><?= Html::encode($t('brand_name')) ?></span>
+                    <span class="privacy-contact-label">We Are</span>
                     <?= Html::encode($t('brand_name')) ?>
                 </div>
                 <div class="privacy-contact-item">

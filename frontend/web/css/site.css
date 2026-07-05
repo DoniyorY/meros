@@ -2638,6 +2638,7 @@ body p,
 }
 
 .privacy-list li:before {
+    animation: privacyListDotBreathe 2.8s ease-in-out infinite;
     background: linear-gradient(135deg, var(--privacy-accent), #4bc0ca);
     border-radius: 50%;
     box-shadow: 0 0 0 5px var(--privacy-accent-soft);
@@ -2646,7 +2647,26 @@ body p,
     left: 5px;
     position: absolute;
     top: 0.72em;
+    transform-origin: center;
     width: 8px;
+}
+
+@keyframes privacyListDotBreathe {
+    0%,
+    100% {
+        box-shadow: 0 0 0 5px var(--privacy-accent-soft);
+        opacity: 0.86;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(75, 192, 202, 0.08);
+        opacity: 1;
+        transform: scale(1.18);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .privacy-list li:before { animation: none; }
 }
 
 .privacy-contact {
