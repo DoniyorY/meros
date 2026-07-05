@@ -3373,3 +3373,26 @@ body p,
         opacity: 1;
     }
 }
+
+/* Remove footer logo card/pill completely. */
+#page-footer .footer-logo-column .logo,
+#page-footer #footer-content .footer-logo-column .logo,
+footer#page-footer #footer-content .footer-logo-column .logo {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+#page-footer .footer-logo-column .logo img,
+#page-footer .footer-logo-column .footer-logo {
+    bottom: auto !important;
+    left: auto !important;
+    margin: 0 !important;
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+}
