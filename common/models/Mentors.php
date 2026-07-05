@@ -50,7 +50,7 @@ class Mentors extends \yii\db\ActiveRecord
          [['email', 'phone', 'image', 'avatar', 'status', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'desc_ru', 'desc_en', 'desc_uz'], 'default', 'value' => null],
          [['fullname', 'created_at', 'updated_at', 'user_id'], 'required'],
          [['status', 'created_at', 'updated_at', 'user_id'], 'integer'],
-         [['fullname', 'email', 'phone', 'image', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'desc_ru', 'desc_en', 'desc_uz', 'avatar'], 'string', 'max' => 255],
+         [['fullname', 'email', 'phone', 'image', 'instagram_link', 'linked_in_link', 'facebook_link', 'position_ru', 'position_en', 'position_uz', 'avatar'], 'string', 'max' => 255],
          [['imageFile', 'avatarFile'], 'file', 'extensions' => 'jpg, jpeg, gif, png, webp', 'skipOnEmpty' => true],
       ];
    }
