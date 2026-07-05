@@ -18,6 +18,7 @@ $lang = Yii::$app->language;
 $category = CourseCategory::findAll(['status' => 1]);
 $params = Yii::$app->params;
 $homeLabel = $params['home'][$lang] ?? $params['home']['en'] ?? 'Home';
+$phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
 
 ?>
 <?php $this->beginPage() ?>
@@ -41,7 +42,7 @@ $homeLabel = $params['home'][$lang] ?? $params['home']['en'] ?? 'Home';
     <div class="wrapper">
         <div class="secondary-navigation-wrapper">
             <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
-                <div class="navigation-contact text-white"><?= $params['call_us'][$lang] ?? $params['call_us']['en'] ?>: <span><?= $params['phone'] ?></span></div>
+                <div class="navigation-contact text-white"><?= $params['call_us'][$lang] ?? $params['call_us']['en'] ?>: <a href="tel:<?= Html::encode($phoneHref) ?>" class="navigation-phone"><span><?= Html::encode($params['phone']) ?></span></a></div>
                 <ul class="secondary-navigation list-unstyled d-flex flex-wrap justify-content-center justify-content-sm-end gap-3 mb-0">
                    <?php if (!Yii::$app->user->isGuest): ?>
                        <li><a href="<?= Url::to(['site/profile']) ?>"><i class="fa fa-user"></i><?=$params['my_profile'][$lang]?></a></li>
@@ -156,6 +157,39 @@ $homeLabel = $params['home'][$lang] ?? $params['home']['en'] ?? 'Home';
     if (!navigation) {
         return;
     }
+
+    function normalizeUrl(url) {
+        var anchor = document.createElement('a');
+        anchor.href = url;
+        return anchor.pathname.replace(/\/$/, '') + anchor.search;
+    }
+
+    var currentUrl = normalizeUrl(window.location.href);
+
+    navigation.querySelectorAll('.has-child-wrapper').forEach(function (item) {
+        var hasActiveChild = false;
+
+        item.querySelectorAll('.child-navigation a[href]').forEach(function (link) {
+            var linkUrl = normalizeUrl(link.href);
+
+            if (linkUrl && linkUrl === currentUrl) {
+                link.classList.add('active');
+                hasActiveChild = true;
+            }
+        });
+
+        if (hasActiveChild) {
+            item.classList.add('active');
+            var childNavigation = item.querySelector(':scope > .list-unstyled');
+            if (childNavigation) {
+                childNavigation.classList.add('active');
+            }
+            var trigger = item.querySelector(':scope > .has-child');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        }
+    });
 
     navigation.addEventListener('click', function (event) {
         var trigger = event.target.closest('.has-child-wrapper > .has-child');
@@ -338,7 +372,7 @@ JS;
                                     <br>
                                     <?=$params['address_footer'][$lang]?>
                                     <br>
-                                    <abbr style="text-decoration: none; cursor: default;" title="Telephone"><?=$params['label_phone'][$lang]?>:</abbr> <?= $params['phone'] ?>
+                                    <abbr style="text-decoration: none; cursor: default;" title="Telephone"><?=$params['label_phone'][$lang]?>:</abbr> <a href="tel:<?= Html::encode($phoneHref) ?>"><?= Html::encode($params['phone']) ?></a>
                                     <br>
                                     <abbr style="text-decoration: none; cursor: default;" title="Email"><?=$params['label_email'][$lang]?>:</abbr> <a
                                             href="mailto:<?= $params['adminEmail'] ?>"><?= $params['adminEmail'] ?></a>
@@ -358,8 +392,8 @@ JS;
                         </div><!-- /.col-md-3 -->
                         <div class="col-lg-3 col-md-6 col-12">
                             <aside>
-                                <header><h4><?=$params['about_meros'][$lang]?></h4></header>
-                               <?= Yii::$app->params['about_short'][$lang] ?>
+                                <header><h4>About Meros International Institute</h4></header>
+                               <div class="about-meros-footer-text"><?= Yii::$app->params['about_short'][$lang] ?></div>
                             </aside>
                         </div><!-- /.col-md-3 -->
                     </div><!-- /.row -->

@@ -3231,3 +3231,145 @@ body p,
         --bs-gutter-y: 2rem;
     }
 }
+
+/* Header/footer review adjustments */
+.secondary-navigation-wrapper,
+#page-footer {
+    background: linear-gradient(135deg, #07717b 0%, #0b8b95 54%, #18a9b5 100%);
+}
+
+.secondary-navigation-wrapper .navigation-contact:before,
+.secondary-navigation-wrapper .secondary-navigation .fa,
+.secondary-navigation-wrapper .navigation-phone,
+.secondary-navigation-wrapper .navigation-phone span {
+    color: #fff !important;
+}
+
+.navigation-wrapper {
+    background: linear-gradient(135deg, #0b8b95 0%, #4bc0ca 100%);
+}
+
+.navigation-wrapper .brand-link {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav > li > a,
+.navigation-wrapper .navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a:hover,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a:focus,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > a,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > a:hover,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > a:focus {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff !important;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation li a {
+    color: #25464d !important;
+}
+
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation li a:hover,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation li a:focus,
+.navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation li a.active {
+    background: rgba(7, 113, 123, 0.12);
+    color: #04363f !important;
+}
+
+#primary-navigation.collapsing {
+    display: block;
+    overflow: hidden;
+    transition: height 0.34s ease, opacity 0.24s ease;
+}
+
+#primary-navigation.collapse:not(.show) {
+    opacity: 0;
+}
+
+#primary-navigation.collapse.show,
+#primary-navigation.collapsing {
+    opacity: 1;
+}
+
+#page-footer #footer-content {
+    background: linear-gradient(135deg, rgba(7, 113, 123, 0.96), rgba(24, 169, 181, 0.90));
+}
+
+#page-footer .footer-logo-column .logo {
+    border: 0;
+}
+
+#page-footer .list-links,
+#page-footer .list-links li {
+    list-style: none;
+}
+
+#page-footer .list-links li::marker {
+    content: "";
+}
+
+@media (max-width: 991.98px) {
+    .navigation-wrapper .brand-link {
+        background: linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
+        border-radius: 18px;
+        box-shadow: 0 16px 34px rgba(7, 113, 123, 0.22);
+        padding: 8px 12px;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a,
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav > li > a,
+    .navigation-wrapper .navbar-nav .nav-link,
+    .navigation-wrapper .mobile-account-link {
+        color: var(--meros-primary-dark) !important;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > a {
+        background: rgba(7, 113, 123, 0.12);
+        color: var(--meros-primary-dark) !important;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation {
+        display: block;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        padding-bottom: 0;
+        padding-top: 0;
+        transform: translateY(-4px);
+        transition: max-height 0.34s ease, opacity 0.24s ease, padding 0.24s ease, transform 0.24s ease;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.is-open > .child-navigation,
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > .child-navigation {
+        max-height: 70vh;
+        opacity: 1;
+        padding-bottom: 8px;
+        padding-top: 8px;
+        transform: translateY(0);
+    }
+
+    #page-footer .about-meros-footer-text {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #page-footer #footer-top .footer-inner .footer-social .icons {
+        justify-content: center;
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    #primary-navigation.collapse:not(.show) {
+        opacity: 1;
+    }
+}
