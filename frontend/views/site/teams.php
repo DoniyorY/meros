@@ -51,7 +51,7 @@ $this->title = $t('meet_the_team', '');
         </div>
     </section>
 
-    <section class="meros-section reveal-section">
+    <section class="meros-section meros-team-list-section">
         <div class="container">
             <div class="meros-section-heading text-center">
                 <span class="meros-kicker"><?= Html::encode($this->title) ?></span>
