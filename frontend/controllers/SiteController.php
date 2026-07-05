@@ -110,6 +110,14 @@ class SiteController extends Controller
 
     }
 
+    public function actionTeams()
+    {
+        $mentors = \common\models\Mentors::findAll(['status'=>1]);
+        return $this->render('teams', [
+            'mentors' => $mentors,
+        ]);
+    }
+
     /**
      * Logs in a user.
      *
