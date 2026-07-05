@@ -166,6 +166,21 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
 
     var currentUrl = normalizeUrl(window.location.href);
 
+    function isLanguageSelector(item) {
+        var links = Array.prototype.slice.call(item.querySelectorAll('.child-navigation a'));
+
+        if (!links.length) {
+            return false;
+        }
+
+        var allLinksAreLanguages = links.every(function (link) {
+            return /^(ru|en|uz)$/i.test(link.textContent.trim());
+        });
+        var hasFlagImage = !!item.querySelector('img[src*="flag"], img[alt="ru"], img[alt="en"], img[alt="uz"]');
+
+        return allLinksAreLanguages || hasFlagImage;
+    }
+
     navigation.querySelectorAll('.has-child-wrapper').forEach(function (item) {
         var hasActiveChild = false;
 
@@ -179,6 +194,10 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
         });
 
         if (hasActiveChild) {
+            if (isLanguageSelector(item)) {
+                return;
+            }
+
             item.classList.add('active', 'is-current-page');
             var childNavigation = item.querySelector(':scope > .list-unstyled');
             if (childNavigation) {
