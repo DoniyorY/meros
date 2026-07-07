@@ -41,6 +41,17 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
         </div>
     </div>
     <div class="wrapper">
+        <div class="meros-floating-background" aria-hidden="true">
+            <span class="meros-float-item meros-float-item--book"><i class="bi bi-book"></i></span>
+            <span class="meros-float-item meros-float-item--cap"><i class="bi bi-mortarboard"></i></span>
+            <span class="meros-float-item meros-float-item--globe"><i class="bi bi-globe2"></i></span>
+            <span class="meros-float-item meros-float-item--chat"><i class="bi bi-chat-dots"></i></span>
+            <span class="meros-float-item meros-float-item--play"><i class="bi bi-play-btn"></i></span>
+            <span class="meros-float-item meros-float-item--star"><i class="bi bi-stars"></i></span>
+            <span class="meros-float-bubble meros-float-bubble--one"></span>
+            <span class="meros-float-bubble meros-float-bubble--two"></span>
+            <span class="meros-float-bubble meros-float-bubble--three"></span>
+        </div>
         <div class="secondary-navigation-wrapper">
             <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2">
                 <div class="navigation-contact text-white"><?= $params['call_us'][$lang] ?? $params['call_us']['en'] ?>: <a href="tel:<?= Html::encode($phoneHref) ?>" class="navigation-phone"><span><?= Html::encode($params['phone']) ?></span></a></div>

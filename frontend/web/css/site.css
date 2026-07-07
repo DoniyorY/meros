@@ -3544,3 +3544,189 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 .meros-b2b-cta-text,
 .meros-hospitals-cta-text,
 .meros-recruit-cta-text { max-width:760px; }
+
+/* Decorative floating background elements for open white space */
+.wrapper {
+    position: relative;
+    isolation: isolate;
+}
+
+.meros-floating-background {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: fixed;
+    z-index: 0;
+}
+
+.meros-floating-background::before,
+.meros-floating-background::after {
+    background: radial-gradient(circle, rgba(75, 192, 202, 0.18) 0%, rgba(75, 192, 202, 0) 68%);
+    border-radius: 50%;
+    content: "";
+    filter: blur(1px);
+    height: 360px;
+    position: absolute;
+    width: 360px;
+}
+
+.meros-floating-background::before {
+    right: -140px;
+    top: 18vh;
+}
+
+.meros-floating-background::after {
+    bottom: 8vh;
+    left: -150px;
+}
+
+.meros-float-item,
+.meros-float-bubble {
+    animation-duration: var(--float-duration, 11s);
+    animation-iteration-count: infinite;
+    animation-name: meros-background-float;
+    animation-timing-function: ease-in-out;
+    position: absolute;
+}
+
+.meros-float-item {
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(75, 192, 202, 0.18);
+    border-radius: 24px;
+    box-shadow: 0 18px 42px rgba(4, 54, 63, 0.10);
+    color: rgba(0, 120, 174, 0.48);
+    display: inline-flex;
+    font-size: clamp(24px, 3vw, 44px);
+    height: var(--float-size, 82px);
+    justify-content: center;
+    opacity: 0.78;
+    transform: rotate(var(--float-rotate, -8deg));
+    width: var(--float-size, 82px);
+}
+
+.meros-float-bubble {
+    background: linear-gradient(135deg, rgba(75, 192, 202, 0.18), rgba(232, 91, 55, 0.12));
+    border-radius: 999px;
+    height: var(--bubble-size, 70px);
+    opacity: 0.65;
+    width: var(--bubble-size, 70px);
+}
+
+.meros-float-item--book {
+    --float-duration: 12s;
+    --float-rotate: -10deg;
+    --float-size: 92px;
+    left: 4vw;
+    top: 28vh;
+}
+
+.meros-float-item--cap {
+    --float-duration: 14s;
+    --float-rotate: 9deg;
+    --float-size: 104px;
+    right: 5vw;
+    top: 34vh;
+}
+
+.meros-float-item--globe {
+    --float-duration: 13s;
+    --float-rotate: 7deg;
+    --float-size: 78px;
+    left: 8vw;
+    top: 68vh;
+}
+
+.meros-float-item--chat {
+    --float-duration: 15s;
+    --float-rotate: -6deg;
+    --float-size: 74px;
+    right: 10vw;
+    top: 72vh;
+}
+
+.meros-float-item--play {
+    --float-duration: 16s;
+    --float-rotate: 12deg;
+    --float-size: 70px;
+    left: 17vw;
+    top: 46vh;
+}
+
+.meros-float-item--star {
+    --float-duration: 10s;
+    --float-rotate: -14deg;
+    --float-size: 66px;
+    right: 20vw;
+    top: 18vh;
+}
+
+.meros-float-bubble--one {
+    --bubble-size: 120px;
+    --float-duration: 18s;
+    left: 2vw;
+    top: 14vh;
+}
+
+.meros-float-bubble--two {
+    --bubble-size: 96px;
+    --float-duration: 16s;
+    right: 3vw;
+    top: 58vh;
+}
+
+.meros-float-bubble--three {
+    --bubble-size: 54px;
+    --float-duration: 12s;
+    left: 26vw;
+    top: 82vh;
+}
+
+.secondary-navigation-wrapper,
+.navigation-wrapper,
+#page-footer,
+.meros-page-loader {
+    position: relative;
+    z-index: 3;
+}
+
+.wrapper > :not(.meros-floating-background):not(.secondary-navigation-wrapper):not(.navigation-wrapper):not(#page-footer) {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes meros-background-float {
+    0%, 100% {
+        margin-top: 0;
+        translate: 0 0;
+    }
+    50% {
+        margin-top: -18px;
+        translate: 12px 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .meros-float-item,
+    .meros-float-bubble {
+        animation: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .meros-float-item {
+        opacity: 0.42;
+    }
+
+    .meros-float-item--play,
+    .meros-float-bubble--three {
+        display: none;
+    }
+}
+
+@media (max-width: 575px) {
+    .meros-floating-background {
+        display: none;
+    }
+}
