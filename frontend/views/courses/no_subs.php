@@ -32,7 +32,7 @@ $courseAnchorNavItems = [
 $organisationalCardCopy = $params['course_organisational_cards'][$lang] ?? $params['course_organisational_cards']['en'];
 $organisationalCards = [
    array_merge($organisationalCardCopy['university'], [
-      'image' => "$base/images/med_institute.jpg",
+      'image' => "$base/images/med_students.jpg",
       'url' => Url::to(['courses/index', 'category' => 'university-materials', 'slug' => 'medical-english-courses-for-universities-and-schools']),
    ]),
    array_merge($organisationalCardCopy['hospital'], [
@@ -59,7 +59,8 @@ courseAnchorLinks.forEach(function (link) {
 JS, \yii\web\View::POS_READY);
 ?>
 <!-- course banner -->
-<section id="course-banner" class="meros-course-hero reveal-section" aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
+<section id="course-banner" class="meros-course-hero reveal-section"
+         aria-label="<?= Html::encode(translate('course_banner_aria')) ?>">
     <div class="position-relative meros-course-hero-bg"
          style="background-image: url(<?= Html::encode("$base/uploads/courses/$courses->image") ?>)">
         <div class="container h-100">
@@ -79,19 +80,21 @@ JS, \yii\web\View::POS_READY);
                         <div>
                             <h2 style="margin-bottom: 10px;"><?= Html::encode(translate('advanced_communication_skills')) ?></h2>
                         </div>
-                        <?php if ($courses->lvl):?>
-                        <div>
-                            <h2><?=translate('recommended_lvl')?> <?=Html::encode($courses->lvl)?></h2>
-                        </div>
-                        <?php endif;?>
-                        <a href="#tickets" class="btn btn-outline-light btn-lg rounded-pill px-4" data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
+                       <?php if ($courses->lvl): ?>
+                           <div>
+                               <h2><?= translate('recommended_lvl') ?> <?= Html::encode($courses->lvl) ?></h2>
+                           </div>
+                       <?php endif; ?>
+                        <a href="#tickets" class="btn btn-outline-light btn-lg rounded-pill px-4"
+                           data-b2b-scroll="programme"><?= Html::encode(translate('view_plans')) ?></a>
                     </div>
                 </div>
                <?php if ($courses->preview_video_link): ?>
                    <div class="col-md col-12">
                        <div class="meros-video-frame reveal-section">
                            <iframe src="https://www.youtube.com/embed/<?= Html::encode($courses->preview_video_link) ?>"
-                                   title="<?= Html::encode(translate('youtube_video_player')) ?>" class="course-preview-video"
+                                   title="<?= Html::encode(translate('youtube_video_player')) ?>"
+                                   class="course-preview-video"
                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                        </div>
@@ -134,50 +137,22 @@ JS, \yii\web\View::POS_READY);
         <div class="block">
             <div class="container">
                 <div class="row g-4">
-                    <div class="text-center">
-                        <h2 class="package-title"><?= translate('all_package_include') ?></h2>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="accordion meros-accordion package-accordion" id="package-accordion">
-                           <?php foreach ($courses->features as $item): ?>
-                              <?php
-                              $featureName = $item->{"name_$lang"};
-                              $featureDesc = $item->{"desc_$lang"};
-                              $englishDescription = trim(strip_tags((string)($item->desc_en ?? '')));
-                              $hasEnglishDescription = $englishDescription !== '' && $englishDescription !== '-';
-                              ?>
-                              <?php if ($hasEnglishDescription): ?>
-                                   <div class="accordion-item meros-accordion-item">
-                                       <h3 class="accordion-header" id="<?= "package-heading-$item->id" ?>">
-                                           <button class="accordion-button collapsed" type="button"
-                                                   data-bs-toggle="collapse"
-                                                   data-bs-target="#<?= "package-collapse-$item->id" ?>"
-                                                   aria-expanded="false"
-                                                   aria-controls="<?= "package-collapse-$item->id" ?>">
-                                              <?= Html::encode($featureName) ?>
-                                           </button>
-                                       </h3>
-                                       <div id="<?= "package-collapse-$item->id" ?>" class="accordion-collapse collapse"
-                                            aria-labelledby="<?= "package-heading-$item->id" ?>"
-                                            data-bs-parent="#package-accordion">
-                                           <div class="accordion-body">
-                                              <?= $featureDesc ?>
-                                           </div>
-                                       </div>
-                                   </div>
-                              <?php else: ?>
-                                   <div class="meros-check-item">
-                                       <span class="fa fa-check" aria-hidden="true"></span>
-                                       <span><?= Html::encode($featureName) ?></span>
-                                   </div>
-                              <?php endif; ?>
-                           <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mt-5">
-                        <img src="<?= "$base/images/images_for_doctors.png" ?>" alt="<?= Html::encode(translate('english_for_doctors')) ?>"
-                             class="package-image">
-                    </div>
+                   <?php if ($courses->id != 28): ?>
+                   
+                   <?php elseif ($courses->id != 29): ?>
+                   
+                   <?php else: ?>
+                       <div class="text-center">
+                           <h2 class="package-title"><?= translate('all_package_include') ?></h2>
+                       </div>
+                   <?php endif; ?>
+                   <?php if ($courses->id == 28 || $courses->id == 29) {
+                      echo $this->render('_ielts', ['courses' => $courses]);
+                   } else {
+                      echo $this->render('_package', ['courses' => $courses]);
+                   }
+                   ?>
+
                 </div>
             </div>
             <div class="background background-color-grey-background"></div>
@@ -187,21 +162,21 @@ JS, \yii\web\View::POS_READY);
     <section id="instructors" class="instructors-section meros-section meros-testimonial reveal-section">
         <div class="container">
             <div class="meros-quote-card">
-                <span class="meros-kicker"><?=translate('student_outcomes')?></span>
-                <?php if (!empty($comments)): ?>
-                    <div class="meros-comments-carousel owl-carousel owl-theme">
-                        <?php foreach ($comments as $comment): ?>
-                            <blockquote class="meros-comment-slide">
-                                <p><?= Html::encode($comment['comment'] ?? '') ?></p>
-                                <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
-                            </blockquote>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <blockquote>
-                        <p><?= translate('comments') ?></p>
-                    </blockquote>
-                <?php endif; ?>
+                <span class="meros-kicker"><?= translate('student_outcomes') ?></span>
+               <?php if (!empty($comments)): ?>
+                   <div class="meros-comments-carousel owl-carousel owl-theme">
+                      <?php foreach ($comments as $comment): ?>
+                          <blockquote class="meros-comment-slide">
+                              <p><?= Html::encode($comment['comment'] ?? '') ?></p>
+                              <footer><?= Html::encode($comment['author'] ?? '') ?></footer>
+                          </blockquote>
+                      <?php endforeach; ?>
+                   </div>
+               <?php else: ?>
+                   <blockquote>
+                       <p><?= translate('comments') ?></p>
+                   </blockquote>
+               <?php endif; ?>
             </div>
         </div>
     </section><!-- /#instructors -->
@@ -233,10 +208,12 @@ JS, \yii\web\View::POS_READY);
                                     <span><?= translate('secure_payment') ?></span>
                                 </div>
                                 <div class="subscription-benefit click-icon">
-                                    <img src="<?= "$base/images/click_logo.png" ?>" alt="" style="height: 40px; width: 100%; object-fit: contain">
+                                    <img src="<?= "$base/images/click_logo.png" ?>" alt=""
+                                         style="height: 40px; width: 100%; object-fit: contain">
                                 </div>
                                 <div class="subscription-benefit payme-icon">
-                                    <img src="<?= "$base/images/payme_logo.png" ?>" alt="" style="height: 40px; width: 100%; object-fit: contain">
+                                    <img src="<?= "$base/images/payme_logo.png" ?>" alt=""
+                                         style="height: 40px; width: 100%; object-fit: contain">
                                 </div>
                                 <div class="subscription-benefit online-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
@@ -252,84 +229,89 @@ JS, \yii\web\View::POS_READY);
                        $useSubscriptionCarousel = $subscriptionPlanCount > 3;
                        ?>
                        <?php if ($useSubscriptionCarousel): ?>
-                           <div class="col-12 subscription-plans-carousel-wrap">
-                               <div class="subscription-plans-carousel owl-carousel owl-theme">
-                       <?php else: ?>
-                           <div class="col-12">
-                               <div class="row g-4 subscription-plans-row <?= ($subscriptionPlanCount === 2) ? 'justify-content-between' : '' ?>">
-                       <?php endif; ?>
-                       <?php $i = 1;
-                       foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
-                           <div class="<?= $useSubscriptionCarousel ? 'subscription-plan-carousel-item' : 'col-lg-4 col-md-6 col-12' ?>">
-                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card meros-plan-card reveal-section">
-                                   <header><h3><?= $item->{"name_$lang"} ?></h3></header>
-                                   <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?> uzs</div>
-                                   <figure style="height: 27px;"><?php
-                                      if ($item->duration_days == 30) {
-                                         $month = floor($item->duration_days / 30);
-                                         switch ($lang) {
-                                            case 'en':
-                                               echo "$month Month";
-                                               break;
-                                            case 'ru':
-                                               echo "$month Месяц";
-                                               break;
-                                            case 'uz':
-                                               echo "$month Oy";
-                                               break;
-                                         }
-                                      } elseif ($item->duration_days == 90) {
-                                         $month = floor($item->duration_days / 30);
-                                         switch ($lang) {
-                                            case 'en':
-                                               echo "$month Month";
-                                               break;
-                                            case 'ru':
-                                               echo "$month Месяца";
-                                               break;
-                                            case 'uz':
-                                               echo "$month Oy";
-                                               break;
-                                         }
-                                      }
-                                      ?></figure>
-                                   <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
-                                      class="btn btn-primary btn-lg w-100 meros-primary-btn"><?= Html::encode(translate('buy_now')) ?></a>
-                                   <div class="features">
-                                       <div class="accordion meros-accordion meros-plan-accordion"
-                                            id="<?= "plan-accordion-$item->id" ?>">
-                                          <?php foreach ($features as $v): $k = $v->id ?>
-                                              <div class="accordion-item meros-accordion-item">
-                                                  <h4 class="accordion-header" id="<?= "plan-feature-heading-$k" ?>">
-                                                      <button class="accordion-button collapsed" type="button"
-                                                              data-bs-toggle="collapse"
-                                                              data-bs-target="<?= "#plan-feature-$k" ?>"
-                                                              aria-expanded="false"
-                                                              aria-controls="<?= "plan-feature-$k" ?>">
-                                                         <?= Html::encode($v->{"name_$lang"}) ?>
-                                                      </button>
-                                                  </h4>
-                                                  <div id="<?= "plan-feature-$k" ?>" class="accordion-collapse collapse"
-                                                       aria-labelledby="<?= "plan-feature-heading-$k" ?>"
-                                                       data-bs-parent="#<?= "plan-accordion-$item->id" ?>">
-                                                      <div class="accordion-body">
-                                                         <?= $v->{"desc_$lang"} ?>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          <?php endforeach; ?>
-                                       </div>
-                                   </div>
-                               </div><!-- /.price-box -->
-                           </div><!-- /.subscription plan item -->
-                          <?php $i++; endforeach; ?>
-                       <?php if ($useSubscriptionCarousel): ?>
-                               </div>
-                           </div>
-                       <?php else: ?>
-                               </div>
-                           </div>
-                       <?php endif; ?>
+                        <div class="col-12 subscription-plans-carousel-wrap">
+                            <div class="subscription-plans-carousel owl-carousel owl-theme">
+                               <?php else: ?>
+                                <div class="col-12">
+                                    <div class="row g-4 subscription-plans-row <?= ($subscriptionPlanCount === 2) ? 'justify-content-center' : '' ?>">
+                                       <?php endif; ?>
+                                       <?php $i = 1;
+                                       foreach ($subs as $item): $features = SubscriptionPlanItems::findAll(['plan_id' => $item->id]); ?>
+                                           <div class="<?= $useSubscriptionCarousel ? 'subscription-plan-carousel-item' : 'col-lg-4 col-md-6 col-12' ?>">
+                                               <div class="price-box <?= ($i == 2) ? "recommended" : '' ?> subscription-card meros-plan-card reveal-section">
+                                                   <header><h3><?= $item->{"name_$lang"} ?></h3></header>
+                                                   <div class="price"><?= Yii::$app->formatter->asDecimal($item->price, 0) ?>
+                                                       uzs
+                                                   </div>
+                                                   <figure style="height: 27px;"><?php
+                                                      if ($item->duration_days == 30) {
+                                                         $month = floor($item->duration_days / 30);
+                                                         switch ($lang) {
+                                                            case 'en':
+                                                               echo "$month Month";
+                                                               break;
+                                                            case 'ru':
+                                                               echo "$month Месяц";
+                                                               break;
+                                                            case 'uz':
+                                                               echo "$month Oy";
+                                                               break;
+                                                         }
+                                                      } elseif ($item->duration_days == 90) {
+                                                         $month = floor($item->duration_days / 30);
+                                                         switch ($lang) {
+                                                            case 'en':
+                                                               echo "$month Month";
+                                                               break;
+                                                            case 'ru':
+                                                               echo "$month Месяца";
+                                                               break;
+                                                            case 'uz':
+                                                               echo "$month Oy";
+                                                               break;
+                                                         }
+                                                      }
+                                                      ?></figure>
+                                                   <a href="<?= Url::to(['get-plan', 'id' => $item->id]) ?>"
+                                                      class="btn btn-primary btn-lg w-100 meros-primary-btn"><?= Html::encode(translate('buy_now')) ?></a>
+                                                   <div class="features">
+                                                       <div class="accordion meros-accordion meros-plan-accordion"
+                                                            id="<?= "plan-accordion-$item->id" ?>">
+                                                          <?php foreach ($features as $v): $k = $v->id ?>
+                                                              <div class="accordion-item meros-accordion-item">
+                                                                  <h4 class="accordion-header"
+                                                                      id="<?= "plan-feature-heading-$k" ?>">
+                                                                      <button class="accordion-button collapsed"
+                                                                              type="button"
+                                                                              data-bs-toggle="collapse"
+                                                                              data-bs-target="<?= "#plan-feature-$k" ?>"
+                                                                              aria-expanded="false"
+                                                                              aria-controls="<?= "plan-feature-$k" ?>">
+                                                                         <?= Html::encode($v->{"name_$lang"}) ?>
+                                                                      </button>
+                                                                  </h4>
+                                                                  <div id="<?= "plan-feature-$k" ?>"
+                                                                       class="accordion-collapse collapse"
+                                                                       aria-labelledby="<?= "plan-feature-heading-$k" ?>"
+                                                                       data-bs-parent="#<?= "plan-accordion-$item->id" ?>">
+                                                                      <div class="accordion-body">
+                                                                         <?= $v->{"desc_$lang"} ?>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          <?php endforeach; ?>
+                                                       </div>
+                                                   </div>
+                                               </div><!-- /.price-box -->
+                                           </div><!-- /.subscription plan item -->
+                                          <?php $i++; endforeach; ?>
+                                       <?php if ($useSubscriptionCarousel): ?>
+                                    </div>
+                                </div>
+                               <?php else: ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                         <div class="col-12">
                             <div id="faq" class="meros-faq-card reveal-section">
@@ -366,42 +348,47 @@ JS, \yii\web\View::POS_READY);
                                 </div>
                             </div>
                         </div>
-
+                       <?php if ($courses->reads): ?>
+                           <div class="col-12">
+                               <section id="more-about-english-for-nurses" class="meros-read-more-course reveal-section"
+                                        aria-labelledby="read-more-course-title">
+                                   <div class="meros-section-heading text-center">
+                                       <h2 id="read-more-course-title"><?= translate('Read More About') ?> <?= Html::encode($courseName) ?></h2>
+                                   </div>
+                                   <div class="row g-4 justify-content-center">
+                                      <?php foreach ($courses->reads as $card): ?>
+                                          <div class="col-lg-4 col-md-6 col-12">
+                                              <article class="meros-read-more-card" tabindex="0">
+                                                  <span class="meros-read-more-card-title"><?= Html::encode($card->{"title_$lang"}) ?></span>
+                                                  <span class="meros-read-more-card-description"><?= Html::encode($card->{"content_$lang"}) ?></span>
+                                              </article>
+                                          </div>
+                                      <?php endforeach; ?>
+                                   </div>
+                               </section>
+                           </div>
+                       <?php endif; ?>
                         <div class="col-12">
-                            <section id="more-about-english-for-nurses" class="meros-read-more-course reveal-section" aria-labelledby="read-more-course-title">
+                            <section id="organisational-purchases" class="meros-organisational-section reveal-section"
+                                     aria-labelledby="organisational-purchases-title">
                                 <div class="meros-section-heading text-center">
-                                    <h2 id="read-more-course-title">Read More About <?= Html::encode($courseName) ?></h2>
-                                </div>
-                                <div class="row g-4">
-                                   <?php foreach ($courses->reads as $card): ?>
-                                       <div class="col-lg-4 col-md-6 col-12">
-                                           <article class="meros-read-more-card" tabindex="0">
-                                               <span class="meros-read-more-card-title"><?= Html::encode($card->{"title_$lang"}) ?></span>
-                                               <span class="meros-read-more-card-description"><?= Html::encode($card->{"content_$lang"}) ?></span>
-                                           </article>
-                                       </div>
-                                   <?php endforeach; ?>
-                                </div>
-                            </section>
-                        </div>
-
-                        <div class="col-12">
-                            <section id="organisational-purchases" class="meros-organisational-section reveal-section" aria-labelledby="organisational-purchases-title">
-                                <div class="meros-section-heading text-center">
-                                    <span class="meros-kicker">Organisational purchases</span>
-                                    <h2 id="organisational-purchases-title">Medical English for institutions and employers</h2>
+                                    <span class="meros-kicker"><?= translate('Organisational Purchases') ?></span>
+                                    <h2 id="organisational-purchases-title"><?=translate('Medical English for institutions and employers')?></h2>
                                 </div>
                                 <div class="row g-4">
                                    <?php foreach ($organisationalCards as $card): ?>
                                        <div class="col-lg-6 col-12">
                                            <article class="meros-organisational-card h-100">
-                                               <a class="meros-organisational-image" href="<?= Html::encode($card['url']) ?>">
-                                                   <img src="<?= Html::encode($card['image']) ?>" alt="<?= Html::encode($card['title']) ?>" loading="lazy">
+                                               <a class="meros-organisational-image"
+                                                  href="<?= Html::encode($card['url']) ?>">
+                                                   <img src="<?= Html::encode($card['image']) ?>"
+                                                        alt="<?= Html::encode($card['title']) ?>" loading="lazy">
                                                </a>
                                                <div class="meros-organisational-body">
                                                    <h3><?= Html::encode($card['title']) ?></h3>
                                                    <p><?= Html::encode($card['description']) ?></p>
-                                                   <a class="btn btn-lg rounded-pill meros-organisational-btn" href="<?= Html::encode($card['url']) ?>"><?= Html::encode($card['button']) ?></a>
+                                                   <a class="btn btn-lg rounded-pill meros-organisational-btn"
+                                                      href="<?= Html::encode($card['url']) ?>"><?= Html::encode($card['button']) ?></a>
                                                </div>
                                            </article>
                                        </div>

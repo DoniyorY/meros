@@ -47,11 +47,14 @@ use common\models\Mentors;
             <?= $form->field($model, 'preview_video_link')->textInput(['maxlength' => true]) ?>
         </div>
         <hr>
-        <div class="col-md-6 mt-4">
+        <div class="col-md-4 mt-4">
             <?=$form->field($model,'icon')->fileInput()?>
         </div>
-        <div class="col-md-6 mt-4">
+        <div class="col-md-4 mt-4">
             <?= $form->field($model, 'imageFile')->fileInput() ?>
+        </div>
+        <div class="col-md-4 mt-4">
+            <?=$form->field($model,'courseImage')->fileInput()?>
         </div>
         <hr>
         <div class="col-md-6 mt-4">

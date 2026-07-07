@@ -594,7 +594,7 @@ body p,
 
 .meros-kicker {
     color: var(--meros-primary);
-    display: inline-flex;
+    display: block;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.16em;

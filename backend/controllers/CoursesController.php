@@ -263,6 +263,17 @@ class CoursesController extends Controller
                
                $model->image = $uploaded;
             }
+            $file = UploadedFile::getInstance($model, 'courseImage');
+            if ($file) {
+               $model->imageFile = $file;
+               $uploaded = $model->uploadImage();
+               
+               if ($uploaded === false) {
+                  throw new HttpException(500, 'Failed to upload image');
+               }
+               
+               $model->course_image = $uploaded;
+            }
             $file = UploadedFile::getInstance($model, 'icon');
             if ($file) {
                $model->icon = $file;
@@ -349,6 +360,7 @@ class CoursesController extends Controller
       if ($this->request->isPost && $model->load($this->request->post())) {
          $model->updated_at = time();
          $oldImage = $model->image;
+         
          $file = UploadedFile::getInstance($model, 'imageFile');
          if ($file) {
             $model->imageFile = $file;
@@ -360,6 +372,22 @@ class CoursesController extends Controller
             
             $model->image = $uploaded;
             $oldImagePath = Yii::getAlias('@frontend/web/uploads/courses/' . $oldImage);
+            
+            if ($oldImage && file_exists($oldImagePath)) {
+               unlink($oldImagePath);
+            }
+         }
+         $file = UploadedFile::getInstance($model, 'courseImage');
+         $oldImage = $model->courseImage;
+         if ($file) {
+            $model->imageFile = $file;
+            $uploaded = $model->uploadCourseImage();
+            if ($uploaded === false) {
+               throw new HttpException(500, 'Failed to upload image');
+            }
+            
+            $model->course_image = $uploaded;
+            $oldImagePath = Yii::getAlias('@frontend/web/uploads/courses/courseImage/' . $oldImage);
             
             if ($oldImage && file_exists($oldImagePath)) {
                unlink($oldImagePath);

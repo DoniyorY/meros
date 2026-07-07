@@ -131,7 +131,7 @@ JS, \yii\web\View::POS_READY);
             <div class="col-lg-7">
                <div class="row g-4">
                   <?php foreach ($challengeCards as $card): ?>
-                     <div class="col-md-4"><div class="meros-b2b-card"><div class="meros-b2b-icon fa <?= Html::encode($card['icon']) ?>"></div><h3><?= Html::encode($card['title']) ?></h3><p><?= Html::encode($card['text']) ?></p></div></div>
+                     <div class="col-md-4"><div class="meros-b2b-card"><div class="meros-b2b-icon bi <?= Html::encode($card['icon']) ?>"></div><h3><?= Html::encode($card['title']) ?></h3><p><?= Html::encode($card['text']) ?></p></div></div>
                   <?php endforeach; ?>
                </div>
             </div>

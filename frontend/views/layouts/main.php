@@ -30,6 +30,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
        <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
        <?php $this->head() ?>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     </head>
     <body class="page-homepage-carousel">
     <?php $this->beginBody() ?>
@@ -103,7 +104,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                             <a href="<?= Url::to(['site/contact']); ?>"> <?=$params['contact_us'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/team']) ?>"> <?=$params['meet_the_team'][$lang]?></a>
+                                            <a href="<?= Url::to(['site/teams']) ?>"> <?=$params['meet_the_team'][$lang]?></a>
                                         </li>
                                         <li>
                                             <a href="<?= Url::to(['site/policy']) ?>"> <?=$params['policy'][$lang]?></a>
@@ -135,7 +136,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                   'addCurrentLang' => true, // add current lang
                                   'calling_controller' => $this->context,
                                   'image_type'  => 'rounded', // classic or rounded
-                                  'link_home'   => true, // true or false
+                                  'link_home'   => false, // true or false
                                   'widget_type' => 'selector', // classic or selector
                                   //'width'       => '28'
                                ]); ?>
@@ -362,10 +363,10 @@ JS;
                         <div class="footer-social">
                             <figure><?=$params['follow_us'][$lang]?>:</figure>
                             <div class="icons">
-                                <a href=""><i class="fa fa-twitter"></i></a>
-                                <a href=""><i class="fa fa-facebook"></i></a>
-                                <a href=""><i class="fa fa-pinterest"></i></a>
-                                <a href=""><i class="fa fa-youtube-play"></i></a>
+                                <a href="#"><i class="bi bi-telegram"></i></a>
+                                <a href="#"><i class="bi bi-instagram"></i></a>
+                                <a href="#"><i class="bi bi-facebook"></i></a>
+                                <a href="https://www.youtube.com/@MerosInstitute"><i class="bi bi-youtube"></i></a>
                             </div><!-- /.icons -->
                         </div><!-- /.social -->
                     </div><!-- /.footer-inner -->

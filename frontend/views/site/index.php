@@ -114,7 +114,7 @@ if (!empty($comments)) {
                 <div class="col-lg-7">
                     <div class="meros-news-card overflow-hidden">
                         <a class="meros-news-image" href="<?= Html::encode($b2bHomeUrl) ?>">
-                            <img src="<?= Html::encode($base . '/images/med_institute.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
+                            <img style="height: 400px;" src="<?= Html::encode($base . '/images/med_students.jpg') ?>" alt="<?= Html::encode($homeT('b2b_home_title')) ?>" loading="lazy">
                             <span><?= Html::encode($homeT('medical_english')) ?></span>
                         </a>
                         <div class="meros-news-body">
@@ -192,7 +192,7 @@ if (!empty($comments)) {
     <section id="testimonials" class="meros-section meros-testimonial reveal-section">
         <div class="container">
             <div class="meros-quote-card">
-                <span class="meros-kicker"><?=translate('student_outcomes')?></span>
+                <p class="meros-kicker text-center"><?=translate('student_outcomes')?></p>
                 <?php if (!empty($comments)): ?>
                     <div class="meros-comments-carousel owl-carousel owl-theme">
                         <?php foreach ($comments as $comment): ?>

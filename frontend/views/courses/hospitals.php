@@ -119,19 +119,19 @@ $tList = static function ($key) use ($lang) {
    $copy = [
       'challenge_cards' => [
          'ru' => [
-            ['icon' => 'fa-user-md', 'title' => 'Клинические консультации', 'text' => 'Язык для жалоб, анамнеза, объяснения диагноза и плана лечения.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'Безопасные процедуры', 'text' => 'Инструкции, согласие, подготовка пациента и коммуникация во время процедур.'],
-            ['icon' => 'fa-comments', 'title' => 'Сервис и регистратура', 'text' => 'Запись, навигация, платежи, сопровождение и ответы на частые вопросы.'],
+            ['icon' => 'bi-person-check', 'title' => 'Клинические консультации', 'text' => 'Язык для жалоб, анамнеза, объяснения диагноза и плана лечения.'],
+            ['icon' => 'bi-activity', 'title' => 'Безопасные процедуры', 'text' => 'Инструкции, согласие, подготовка пациента и коммуникация во время процедур.'],
+            ['icon' => 'bi-chat-dots', 'title' => 'Сервис и регистратура', 'text' => 'Запись, навигация, платежи, сопровождение и ответы на частые вопросы.'],
          ],
          'en' => [
-            ['icon' => 'fa-user-md', 'title' => 'Clinical consultations', 'text' => 'Language for symptoms, history taking, diagnosis explanation and treatment plans.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'Safer procedures', 'text' => 'Instructions, consent, patient preparation and communication during procedures.'],
-            ['icon' => 'fa-comments', 'title' => 'Service and reception', 'text' => 'Booking, navigation, payments, patient support and answers to common questions.'],
+            ['icon' => 'bi-person-check', 'title' => 'Clinical consultations', 'text' => 'Language for symptoms, history taking, diagnosis explanation and treatment plans.'],
+            ['icon' => 'bi-activity', 'title' => 'Safer procedures', 'text' => 'Instructions, consent, patient preparation and communication during procedures.'],
+            ['icon' => 'bi-chat-dots', 'title' => 'Service and reception', 'text' => 'Booking, navigation, payments, patient support and answers to common questions.'],
          ],
          'uz' => [
-            ['icon' => 'fa-user-md', 'title' => 'Klinik konsultatsiyalar', 'text' => 'Shikoyatlar, anamnez, tashxis va davolash rejasini tushuntirish tili.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'Xavfsiz protseduralar', 'text' => 'Ko‘rsatmalar, rozilik, bemorni tayyorlash va protsedura paytidagi muloqot.'],
-            ['icon' => 'fa-comments', 'title' => 'Servis va registratura', 'text' => 'Yozilish, yo‘naltirish, to‘lovlar, bemorni kuzatish va savollarga javoblar.'],
+            ['icon' => 'bi-person-check', 'title' => 'Klinik konsultatsiyalar', 'text' => 'Shikoyatlar, anamnez, tashxis va davolash rejasini tushuntirish tili.'],
+            ['icon' => 'bi-activity', 'title' => 'Xavfsiz protseduralar', 'text' => 'Ko‘rsatmalar, rozilik, bemorni tayyorlash va protsedura paytidagi muloqot.'],
+            ['icon' => 'bi-chat-dots', 'title' => 'Servis va registratura', 'text' => 'Yozilish, yo‘naltirish, to‘lovlar, bemorni kuzatish va savollarga javoblar.'],
          ],
       ],
       'pathways' => [
@@ -262,7 +262,7 @@ $roles = $tList('roles');
             <div class="col-lg-7">
                <div class="row g-4">
                   <?php foreach ($challengeCards as $card): ?>
-                     <div class="col-md-4"><div class="meros-hospitals-card"><div class="meros-hospitals-icon fa <?= Html::encode($card['icon']) ?>"></div><h3><?= Html::encode($card['title']) ?></h3><p><?= Html::encode($card['text']) ?></p></div></div>
+                     <div class="col-md-4"><div class="meros-hospitals-card"><div class="meros-hospitals-icon bi <?= Html::encode($card['icon']) ?>"></div><h3><?= Html::encode($card['title']) ?></h3><p><?= Html::encode($card['text']) ?></p></div></div>
                   <?php endforeach; ?>
                </div>
             </div>

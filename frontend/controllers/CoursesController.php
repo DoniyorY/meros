@@ -10,6 +10,7 @@ use common\models\Faq;
 use common\models\SubscriptionPlans;
 use common\models\User;
 use Yii;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -181,6 +182,31 @@ class CoursesController extends Controller
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
+   public function actionDownload($id,$file)
+   {
+  
+      $course = Courses::findOne($id);
+      $name = $file."_file";
+      if (!$course || empty($course->$name)) {
+         throw new NotFoundHttpException('File not found. 1');
+      }
+      
+      $fileName = basename($course->$name);
+      
+      $filePath = Yii::getAlias('@frontend/web') . '/uploads/course_docs/' . $fileName;
+      
+      if (!is_file($filePath)) {
+         throw new NotFoundHttpException('File not found. 2');
+      }
+      
+      $mimeType = FileHelper::getMimeType($filePath);
+      
+      return Yii::$app->response->sendFile($filePath, $fileName, [
+         'mimeType' => $mimeType,
+         'inline' => false,
+      ]);
+   }
+   
    public function actionTest(){
       $user = User::findOne(['id'=>6]);
       echo "<pre>";

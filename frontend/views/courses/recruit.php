@@ -123,22 +123,22 @@ $tList = static function ($key) use ($lang) {
       ],
       'services' => [
          'ru' => [
-            ['icon' => 'fa-line-chart', 'title' => 'Оценка уровня', 'text' => 'Онлайн-тестирование показывает текущий уровень английского и готовность к международным экзаменам.'],
-            ['icon' => 'fa-graduation-cap', 'title' => 'Подготовка к тестам', 'text' => 'Индивидуальные и групповые занятия под цели OET, IELTS и профессионального английского.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'OSCE и клиническая коммуникация', 'text' => 'Цифровые материалы и практика сценариев помогают кандидатам увереннее проходить станции и общаться с пациентами.'],
-            ['icon' => 'fa-plane', 'title' => 'Адаптация перед переездом', 'text' => 'Культура, система здравоохранения, повседневные ситуации и коммуникация на новом рабочем месте.'],
+            ['icon' => 'bi bi-graph-up-arrow', 'title' => 'Оценка уровня', 'text' => 'Онлайн-тестирование показывает текущий уровень английского и готовность к международным экзаменам.'],
+            ['icon' => 'bi-mortarboard', 'title' => 'Подготовка к тестам', 'text' => 'Индивидуальные и групповые занятия под цели OET, IELTS и профессионального английского.'],
+            ['icon' => 'bi-activity', 'title' => 'OSCE и клиническая коммуникация', 'text' => 'Цифровые материалы и практика сценариев помогают кандидатам увереннее проходить станции и общаться с пациентами.'],
+            ['icon' => 'bi-airplane', 'title' => 'Адаптация перед переездом', 'text' => 'Культура, система здравоохранения, повседневные ситуации и коммуникация на новом рабочем месте.'],
          ],
          'en' => [
-            ['icon' => 'fa-line-chart', 'title' => 'English level assessment', 'text' => 'Online testing clarifies current English level and readiness for international healthcare exams.'],
-            ['icon' => 'fa-graduation-cap', 'title' => 'Test preparation', 'text' => 'One-to-one and group programmes for OET, IELTS and professional Medical English goals.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'OSCE and clinical communication', 'text' => 'Digital materials and scenario practice help candidates approach stations and patient interaction with confidence.'],
-            ['icon' => 'fa-plane', 'title' => 'Pre-arrival orientation', 'text' => 'Culture, healthcare systems, everyday situations and communication for a new workplace.'],
+            ['icon' => 'bi bi-graph-up-arrow', 'title' => 'English level assessment', 'text' => 'Online testing clarifies current English level and readiness for international healthcare exams.'],
+            ['icon' => 'bi-mortarboard', 'title' => 'Test preparation', 'text' => 'One-to-one and group programmes for OET, IELTS and professional Medical English goals.'],
+            ['icon' => 'bi-activity', 'title' => 'OSCE and clinical communication', 'text' => 'Digital materials and scenario practice help candidates approach stations and patient interaction with confidence.'],
+            ['icon' => 'bi-airplane', 'title' => 'Pre-arrival orientation', 'text' => 'Culture, healthcare systems, everyday situations and communication for a new workplace.'],
          ],
          'uz' => [
-            ['icon' => 'fa-line-chart', 'title' => 'Ingliz tilini baholash', 'text' => 'Onlayn test hozirgi daraja va xalqaro tibbiy imtihonlarga tayyorlikni aniqlaydi.'],
-            ['icon' => 'fa-graduation-cap', 'title' => 'Testlarga tayyorgarlik', 'text' => 'OET, IELTS va professional tibbiy ingliz tili uchun individual hamda guruh dasturlari.'],
-            ['icon' => 'fa-heartbeat', 'title' => 'OSCE va klinik muloqot', 'text' => 'Raqamli materiallar va ssenariy mashqlari stansiyalar hamda bemor bilan muloqotda ishonch beradi.'],
-            ['icon' => 'fa-plane', 'title' => 'Ketishdan oldingi moslashuv', 'text' => 'Madaniyat, sog‘liqni saqlash tizimi, kundalik vaziyatlar va yangi ish joyidagi muloqot.'],
+            ['icon' => 'bi bi-graph-up-arrow', 'title' => 'Ingliz tilini baholash', 'text' => 'Onlayn test hozirgi daraja va xalqaro tibbiy imtihonlarga tayyorlikni aniqlaydi.'],
+            ['icon' => 'bi-mortarboard', 'title' => 'Testlarga tayyorgarlik', 'text' => 'OET, IELTS va professional tibbiy ingliz tili uchun individual hamda guruh dasturlari.'],
+            ['icon' => 'bi-activity', 'title' => 'OSCE va klinik muloqot', 'text' => 'Raqamli materiallar va ssenariy mashqlari stansiyalar hamda bemor bilan muloqotda ishonch beradi.'],
+            ['icon' => 'bi-airplane', 'title' => 'Ketishdan oldingi moslashuv', 'text' => 'Madaniyat, sog‘liqni saqlash tizimi, kundalik vaziyatlar va yangi ish joyidagi muloqot.'],
          ],
       ],
       'process' => [
@@ -249,7 +249,7 @@ $process = $tList('process');
          <div class="text-center meros-section-heading"><span class="meros-kicker"><?= Html::encode($t('services_kicker')) ?></span><h2><?= Html::encode($t('services_title')) ?></h2></div>
          <div class="row g-4">
             <?php foreach ($services as $service): ?>
-               <div class="col-lg-3 col-md-6"><article class="meros-recruit-card meros-recruit-service"><div class="meros-recruit-icon fa <?= Html::encode($service['icon']) ?>"></div><h3><?= Html::encode($service['title']) ?></h3><p><?= Html::encode($service['text']) ?></p></article></div>
+               <div class="col-lg-3 col-md-6"><article class="meros-recruit-card meros-recruit-service"><div class="meros-recruit-icon bi <?= Html::encode($service['icon']) ?>"></div><h3><?= Html::encode($service['title']) ?></h3><p><?= Html::encode($service['text']) ?></p></article></div>
             <?php endforeach; ?>
          </div>
       </div>

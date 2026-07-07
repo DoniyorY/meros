@@ -34,6 +34,7 @@ use yii\helpers\Inflector;
  * @property string $syllabus_file
  * @property string $flyer_file
  * @property string $course_icons
+ * @property string $course_image
  */
 class Courses extends \yii\db\ActiveRecord
 {
@@ -41,6 +42,7 @@ class Courses extends \yii\db\ActiveRecord
    const STATUS_ACTIVE = 1;
    const STATUS_INACTIVE = 0;
    public $imageFile;
+   public $courseImage;
    public $syllabus;
    public $flyer;
    public $icon;
@@ -76,7 +78,7 @@ class Courses extends \yii\db\ActiveRecord
          [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
          [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
          [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image', 'title_ru', 'title_en', 'title_uz','lvl'], 'string', 'max' => 255],
-         [['imageFile', 'icon'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
+         [['imageFile', 'icon','courseImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
          [['syllabus', 'flyer'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, doc, docx'],
       ];
    }
@@ -85,6 +87,25 @@ class Courses extends \yii\db\ActiveRecord
    {
       if ($this->validate(['imageFile'])) {
          $dir = Yii::getAlias('@frontend/web/uploads/courses/');
+         
+         if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+         }
+         
+         $baseName = $this->slug ?: Inflector::slug($this->name_en);
+         $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->imageFile->extension;
+         
+         if ($this->imageFile->saveAs($dir . $fileName)) {
+            return $fileName;
+         }
+      }
+      
+      return false;
+   }
+   public function uploadCourseImage()
+   {
+      if ($this->validate(['courseImage'])) {
+         $dir = Yii::getAlias('@frontend/web/uploads/courses/courseImage/');
          
          if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
