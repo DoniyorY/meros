@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Courses;
 use yii\helpers\Html;
 
 $params = Yii::$app->params;
@@ -30,7 +31,11 @@ $heroImage = $courses->image ? "$base/uploads/courses/$courses->image" : "$base/
 $courseIcon = $courses->course_icons ? "$base/uploads/course_icons/$courses->course_icons" : "$base/slc_logo_white.png";
 $consultationSubject = rawurlencode($t('b2b_email_subject'));
 
-$libraryCourses = $tList('b2b_library_courses');
+$libraryCourses = Courses::find()
+   ->where(['status' => 1])
+   ->orderBy(['id' => SORT_ASC])
+   ->limit(8)
+   ->all();
 $challengeCards = $tList('b2b_challenge_cards');
 $solutionCards = $tList('b2b_solution_cards');
 $roleItems = $tList('b2b_roles');
@@ -55,36 +60,6 @@ if (exploreProgrammeButton) {
 JS, \yii\web\View::POS_READY);
 ?>
 
-<style>
-   .meros-b2b-hero .meros-course-hero-bg:after { background: radial-gradient(circle at 22% 24%, rgba(75,192,202,.38), transparent 30%), linear-gradient(90deg, rgba(4,54,63,.92), rgba(7,113,123,.55)); }
-   .meros-b2b-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
-   .meros-b2b-card h3 { font-size:24px; margin-bottom:14px; }
-   .meros-b2b-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
-   .meros-b2b-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:26px; color:#fff; padding:28px; text-align:center; }
-   .meros-b2b-stat strong { color:#fff; display:block; font-size:clamp(34px,4vw,56px); font-weight:900; line-height:1; }
-   .meros-b2b-stat span { color:rgba(255,255,255,.82); font-weight:800; }
-   .meros-b2b-course { display:block; overflow:hidden; padding:0; position:relative; }
-   .meros-b2b-course-image { height:190px; overflow:hidden; position:relative; }
-   .meros-b2b-course-image img { height:100%; object-fit:cover; transition:transform .55s ease; width:100%; }
-   .meros-b2b-course-content { align-items:center; display:flex; gap:18px; padding:24px; }
-   .meros-b2b-course-badge { align-items:center; background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:18px; color:#fff; display:flex; flex:0 0 64px; font-weight:900; height:64px; justify-content:center; }
-   .meros-b2b-course-overlay { align-items:center; background:linear-gradient(135deg,rgba(4,54,63,.94),rgba(7,113,123,.9)); color:#fff; display:flex; flex-direction:column; inset:0; justify-content:center; opacity:0; padding:28px; position:absolute; text-align:center; transform:translateY(18px); transition:opacity .35s ease, transform .35s ease; z-index:2; }
-   .meros-b2b-course-overlay h3, .meros-b2b-course-overlay p { color:#fff; }
-   .meros-b2b-course:hover .meros-b2b-course-overlay, .meros-b2b-course:focus-within .meros-b2b-course-overlay { opacity:1; transform:translateY(0); }
-   .meros-b2b-course:hover .meros-b2b-course-image img, .meros-b2b-course:focus-within .meros-b2b-course-image img { transform:scale(1.08); }
-   .meros-b2b-table { border-collapse:separate; border-spacing:0 12px; width:100%; }
-   .meros-b2b-table td, .meros-b2b-table th { background:#fff; border-bottom:1px solid var(--meros-border); border-top:1px solid var(--meros-border); padding:18px; }
-   .meros-b2b-table th { color:var(--meros-primary-dark); }
-   .meros-b2b-table td:first-child, .meros-b2b-table th:first-child { border-left:1px solid var(--meros-border); border-radius:18px 0 0 18px; font-weight:800; }
-   .meros-b2b-table td:last-child, .meros-b2b-table th:last-child { border-right:1px solid var(--meros-border); border-radius:0 18px 18px 0; }
-   .meros-b2b-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
-   .meros-b2b-cta h2, .meros-b2b-cta p, .meros-b2b-cta .meros-kicker { color:#fff; }
-   .meros-b2b-case { background:linear-gradient(135deg,rgba(236,252,253,.95),#fff); border:1px solid var(--meros-border); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(28px,5vw,58px); position:relative; }
-   .meros-b2b-case:before { background:radial-gradient(circle, rgba(75,192,202,.22), transparent 65%); content:''; height:360px; position:absolute; right:-130px; top:-150px; width:360px; }
-   .meros-b2b-case > * { position:relative; z-index:1; }
-   .meros-b2b-case-step { background:#fff; border:1px solid var(--meros-border); border-radius:24px; height:100%; padding:24px; }
-   .meros-b2b-case-step h3 { color:var(--meros-primary-dark); font-size:22px; }
-</style>
 
 <section id="course-banner" class="meros-course-hero meros-b2b-hero reveal-section" aria-label="<?= Html::encode($t('b2b_hero_aria')) ?>">
    <div class="position-relative meros-course-hero-bg" style="background-image: url(<?= Html::encode($heroImage) ?>)">
@@ -176,19 +151,24 @@ JS, \yii\web\View::POS_READY);
          <div class="row g-4 align-items-end mb-4"><div class="col-lg-8"><span class="meros-kicker"><?= Html::encode($t('b2b_library_kicker')) ?></span><h2><?= Html::encode($t('b2b_library_title')) ?></h2></div><div class="col-lg-4"><p><?= Html::encode($t('b2b_library_text')) ?></p></div></div>
          <div class="row g-4">
             <?php foreach ($libraryCourses as $item): ?>
-               <?php $courseImage = $base . '/' . ltrim($item['image'] ?? 'images/meros_hospital.jpg', '/'); ?>
+               <?php
+                  $itemTitle = $item->{"name_$lang"} ?: $item->name_en;
+                  $itemDescription = $item->{"desc_$lang"} ?: $item->desc_en;
+                  $itemLevel = $item->lvl ?: 'Meros';
+                  $courseImage = $item->course_image ? "$base/uploads/courses/courseImage/$item->course_image" : "$base/images/meros_hospital.jpg";
+               ?>
                <div class="col-lg-3 col-md-6">
                   <article class="meros-b2b-card meros-b2b-course" tabindex="0">
                      <div class="meros-b2b-course-image">
-                        <img src="<?= Html::encode($courseImage) ?>" alt="<?= Html::encode($item['title']) ?>">
+                        <img src="<?= Html::encode($courseImage) ?>" alt="<?= Html::encode($itemTitle) ?>">
                      </div>
                      <div class="meros-b2b-course-content">
-                        <div class="meros-b2b-course-badge"><?= Html::encode($item['level']) ?></div>
-                        <div><h3><?= Html::encode($item['title']) ?></h3><p class="mb-0"><?= Html::encode($item['hours']) ?></p></div>
+                        <div class="meros-b2b-course-badge"><?= Html::encode($itemLevel) ?></div>
+                        <div><h3><?= Html::encode($itemTitle) ?></h3></div>
                      </div>
                      <div class="meros-b2b-course-overlay">
-                        <h3><?= Html::encode($item['title']) ?></h3>
-                        <p><?= Html::encode($limitText($item['description'] ?? '')) ?></p>
+                        <h3><?= Html::encode($itemTitle) ?></h3>
+                        <p><?= Html::encode($limitText($itemDescription)) ?></p>
                      </div>
                   </article>
                </div>
@@ -214,7 +194,7 @@ JS, \yii\web\View::POS_READY);
    </section>
 
    <section class="meros-section reveal-section">
-      <div class="container"><div class="meros-b2b-cta text-center"><span class="meros-kicker"><?= Html::encode($t('b2b_cta_kicker')) ?></span><h2><?= Html::encode($t('b2b_cta_title')) ?></h2><p class="mx-auto mb-4" style="max-width:760px"><?= Html::encode($t('b2b_cta_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('b2b_request_consultation')) ?></a></div></div>
+      <div class="container"><div class="meros-b2b-cta text-center"><span class="meros-kicker"><?= Html::encode($t('b2b_cta_kicker')) ?></span><h2><?= Html::encode($t('b2b_cta_title')) ?></h2><p class="mx-auto mb-4 meros-b2b-cta-text"><?= Html::encode($t('b2b_cta_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('b2b_request_consultation')) ?></a></div></div>
    </section>
 
    <section class="meros-section reveal-section">

@@ -179,22 +179,6 @@ $services = $tList('services');
 $process = $tList('process');
 ?>
 
-<style>
-   .meros-recruit-hero .meros-course-hero-bg:after { background:radial-gradient(circle at 80% 18%, rgba(255,190,70,.36), transparent 30%), linear-gradient(90deg, rgba(4,54,63,.96), rgba(7,113,123,.62)); }
-   .meros-recruit-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
-   .meros-recruit-card h3 { font-size:24px; margin-bottom:14px; }
-   .meros-recruit-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
-   .meros-recruit-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:24px; color:#fff; padding:24px 18px; text-align:center; }
-   .meros-recruit-stat strong { color:#fff; display:block; font-size:clamp(30px,3vw,44px); font-weight:900; line-height:1; }
-   .meros-recruit-stat span { color:rgba(255,255,255,.86); font-weight:800; }
-   .meros-recruit-service { overflow:hidden; position:relative; }
-   .meros-recruit-service:before { background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); content:""; height:6px; left:0; position:absolute; right:0; top:0; }
-   .meros-recruit-step { align-items:flex-start; display:flex; gap:18px; }
-   .meros-recruit-step-number { align-items:center; background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:18px; color:#fff; display:flex; flex:0 0 62px; font-size:20px; font-weight:900; height:62px; justify-content:center; }
-   .meros-recruit-highlight { background:linear-gradient(135deg,rgba(75,192,202,.14),rgba(255,190,70,.16)); border:1px solid var(--meros-border); border-radius:34px; padding:clamp(28px,4vw,56px); }
-   .meros-recruit-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
-   .meros-recruit-cta h2, .meros-recruit-cta p, .meros-recruit-cta .meros-kicker { color:#fff; }
-</style>
 
 <section id="course-banner" class="meros-course-hero meros-recruit-hero reveal-section" aria-label="<?= Html::encode($t('page_title')) ?>">
    <div class="position-relative meros-course-hero-bg" style="background-image: url(<?= Html::encode($heroImage) ?>)">
@@ -273,6 +257,6 @@ $process = $tList('process');
    </section>
 
    <section class="meros-section reveal-section">
-      <div class="container"><div class="meros-recruit-cta text-center"><span class="meros-kicker"><?= Html::encode($t('hero_kicker')) ?></span><h2><?= Html::encode($t('final_title')) ?></h2><p class="mx-auto mb-4" style="max-width:760px"><?= Html::encode($t('final_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('cta_primary')) ?></a></div></div>
+      <div class="container"><div class="meros-recruit-cta text-center"><span class="meros-kicker"><?= Html::encode($t('hero_kicker')) ?></span><h2><?= Html::encode($t('final_title')) ?></h2><p class="mx-auto mb-4 meros-recruit-cta-text"><?= Html::encode($t('final_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('cta_primary')) ?></a></div></div>
    </section>
 </div>

@@ -199,23 +199,6 @@ $pathways = $tList('pathways');
 $roles = $tList('roles');
 ?>
 
-<style>
-   .meros-hospitals-hero .meros-course-hero-bg:after { background:radial-gradient(circle at 20% 22%, rgba(75,192,202,.42), transparent 28%), linear-gradient(90deg, rgba(4,54,63,.94), rgba(7,113,123,.58)); }
-   .meros-hospitals-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
-   .meros-hospitals-card h3 { font-size:24px; margin-bottom:14px; }
-   .meros-hospitals-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
-   .meros-hospitals-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:26px; color:#fff; padding:28px; text-align:center; }
-   .meros-hospitals-stat strong { color:#fff; display:block; font-size:clamp(34px,4vw,54px); font-weight:900; line-height:1; }
-   .meros-hospitals-stat span { color:rgba(255,255,255,.84); font-weight:800; }
-   .meros-hospitals-pathway { overflow:hidden; position:relative; }
-   .meros-hospitals-level { background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:999px; color:#fff; display:inline-flex; font-weight:900; margin-bottom:18px; padding:8px 16px; }
-   .meros-hospitals-table { border-collapse:separate; border-spacing:0 12px; width:100%; }
-   .meros-hospitals-table td { background:#fff; border-bottom:1px solid var(--meros-border); border-top:1px solid var(--meros-border); padding:18px; }
-   .meros-hospitals-table td:first-child { border-left:1px solid var(--meros-border); border-radius:18px 0 0 18px; color:var(--meros-primary-dark); font-weight:800; }
-   .meros-hospitals-table td:last-child { border-right:1px solid var(--meros-border); border-radius:0 18px 18px 0; }
-   .meros-hospitals-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
-   .meros-hospitals-cta h2, .meros-hospitals-cta p, .meros-hospitals-cta .meros-kicker { color:#fff; }
-</style>
 
 <section id="course-banner" class="meros-course-hero meros-hospitals-hero reveal-section" aria-label="<?= Html::encode($t('page_title')) ?>">
    <div class="position-relative meros-course-hero-bg" style="background-image: url(<?= Html::encode($heroImage) ?>)">
@@ -298,6 +281,6 @@ $roles = $tList('roles');
    </section>
 
    <section class="meros-section reveal-section">
-      <div class="container"><div class="meros-hospitals-cta text-center"><span class="meros-kicker"><?= Html::encode($t('hero_kicker')) ?></span><h2><?= Html::encode($t('final_title')) ?></h2><p class="mx-auto mb-4" style="max-width:760px"><?= Html::encode($t('final_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('cta_primary')) ?></a></div></div>
+      <div class="container"><div class="meros-hospitals-cta text-center"><span class="meros-kicker"><?= Html::encode($t('hero_kicker')) ?></span><h2><?= Html::encode($t('final_title')) ?></h2><p class="mx-auto mb-4 meros-hospitals-cta-text"><?= Html::encode($t('final_text')) ?></p><a href="mailto:info@merosedu.uz?subject=<?= $consultationSubject ?>" class="btn btn-light btn-lg rounded-pill px-5"><?= Html::encode($t('cta_primary')) ?></a></div></div>
    </section>
 </div>

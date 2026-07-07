@@ -3475,3 +3475,72 @@ footer#page-footer #footer-content .footer-logo-column .logo {
         margin-left: 8px;
     }
 }
+
+/* Course B2B, hospitals and recruitment page styles. */
+
+/* Course page styles moved from b2b.php. */
+.meros-b2b-hero .meros-course-hero-bg:after { background: radial-gradient(circle at 22% 24%, rgba(75,192,202,.38), transparent 30%), linear-gradient(90deg, rgba(4,54,63,.92), rgba(7,113,123,.55)); }
+   .meros-b2b-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
+   .meros-b2b-card h3 { font-size:24px; margin-bottom:14px; }
+   .meros-b2b-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
+   .meros-b2b-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:26px; color:#fff; padding:28px; text-align:center; }
+   .meros-b2b-stat strong { color:#fff; display:block; font-size:clamp(34px,4vw,56px); font-weight:900; line-height:1; }
+   .meros-b2b-stat span { color:rgba(255,255,255,.82); font-weight:800; }
+   .meros-b2b-course { display:block; overflow:hidden; padding:0; position:relative; }
+   .meros-b2b-course-image { height:190px; overflow:hidden; position:relative; }
+   .meros-b2b-course-image img { height:100%; object-fit:cover; transition:transform .55s ease; width:100%; }
+   .meros-b2b-course-content { align-items:center; display:flex; gap:18px; padding:24px; }
+   .meros-b2b-course-badge { align-items:center; background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:18px; color:#fff; display:flex; flex:0 0 64px; font-weight:900; height:64px; justify-content:center; }
+   .meros-b2b-course-overlay { align-items:center; background:linear-gradient(135deg,rgba(4,54,63,.94),rgba(7,113,123,.9)); color:#fff; display:flex; flex-direction:column; inset:0; justify-content:center; opacity:0; padding:28px; position:absolute; text-align:center; transform:translateY(18px); transition:opacity .35s ease, transform .35s ease; z-index:2; }
+   .meros-b2b-course-overlay h3, .meros-b2b-course-overlay p { color:#fff; }
+   .meros-b2b-course:hover .meros-b2b-course-overlay, .meros-b2b-course:focus-within .meros-b2b-course-overlay { opacity:1; transform:translateY(0); }
+   .meros-b2b-course:hover .meros-b2b-course-image img, .meros-b2b-course:focus-within .meros-b2b-course-image img { transform:scale(1.08); }
+   .meros-b2b-table { border-collapse:separate; border-spacing:0 12px; width:100%; }
+   .meros-b2b-table td, .meros-b2b-table th { background:#fff; border-bottom:1px solid var(--meros-border); border-top:1px solid var(--meros-border); padding:18px; }
+   .meros-b2b-table th { color:var(--meros-primary-dark); }
+   .meros-b2b-table td:first-child, .meros-b2b-table th:first-child { border-left:1px solid var(--meros-border); border-radius:18px 0 0 18px; font-weight:800; }
+   .meros-b2b-table td:last-child, .meros-b2b-table th:last-child { border-right:1px solid var(--meros-border); border-radius:0 18px 18px 0; }
+   .meros-b2b-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
+   .meros-b2b-cta h2, .meros-b2b-cta p, .meros-b2b-cta .meros-kicker { color:#fff; }
+   .meros-b2b-case { background:linear-gradient(135deg,rgba(236,252,253,.95),#fff); border:1px solid var(--meros-border); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(28px,5vw,58px); position:relative; }
+   .meros-b2b-case:before { background:radial-gradient(circle, rgba(75,192,202,.22), transparent 65%); content:''; height:360px; position:absolute; right:-130px; top:-150px; width:360px; }
+   .meros-b2b-case > * { position:relative; z-index:1; }
+   .meros-b2b-case-step { background:#fff; border:1px solid var(--meros-border); border-radius:24px; height:100%; padding:24px; }
+   .meros-b2b-case-step h3 { color:var(--meros-primary-dark); font-size:22px; }
+
+/* Course page styles moved from hospitals.php. */
+.meros-hospitals-hero .meros-course-hero-bg:after { background:radial-gradient(circle at 20% 22%, rgba(75,192,202,.42), transparent 28%), linear-gradient(90deg, rgba(4,54,63,.94), rgba(7,113,123,.58)); }
+   .meros-hospitals-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
+   .meros-hospitals-card h3 { font-size:24px; margin-bottom:14px; }
+   .meros-hospitals-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
+   .meros-hospitals-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:26px; color:#fff; padding:28px; text-align:center; }
+   .meros-hospitals-stat strong { color:#fff; display:block; font-size:clamp(34px,4vw,54px); font-weight:900; line-height:1; }
+   .meros-hospitals-stat span { color:rgba(255,255,255,.84); font-weight:800; }
+   .meros-hospitals-pathway { overflow:hidden; position:relative; }
+   .meros-hospitals-level { background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:999px; color:#fff; display:inline-flex; font-weight:900; margin-bottom:18px; padding:8px 16px; }
+   .meros-hospitals-table { border-collapse:separate; border-spacing:0 12px; width:100%; }
+   .meros-hospitals-table td { background:#fff; border-bottom:1px solid var(--meros-border); border-top:1px solid var(--meros-border); padding:18px; }
+   .meros-hospitals-table td:first-child { border-left:1px solid var(--meros-border); border-radius:18px 0 0 18px; color:var(--meros-primary-dark); font-weight:800; }
+   .meros-hospitals-table td:last-child { border-right:1px solid var(--meros-border); border-radius:0 18px 18px 0; }
+   .meros-hospitals-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
+   .meros-hospitals-cta h2, .meros-hospitals-cta p, .meros-hospitals-cta .meros-kicker { color:#fff; }
+
+/* Course page styles moved from recruit.php. */
+.meros-recruit-hero .meros-course-hero-bg:after { background:radial-gradient(circle at 80% 18%, rgba(255,190,70,.36), transparent 30%), linear-gradient(90deg, rgba(4,54,63,.96), rgba(7,113,123,.62)); }
+   .meros-recruit-card { background:#fff; border:1px solid var(--meros-border); border-radius:28px; box-shadow:var(--meros-shadow); height:100%; padding:28px; }
+   .meros-recruit-card h3 { font-size:24px; margin-bottom:14px; }
+   .meros-recruit-icon { align-items:center; background:var(--meros-primary-soft); border-radius:18px; color:var(--meros-primary); display:inline-flex; font-size:24px; height:58px; justify-content:center; margin-bottom:18px; width:58px; }
+   .meros-recruit-stat { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:24px; color:#fff; padding:24px 18px; text-align:center; }
+   .meros-recruit-stat strong { color:#fff; display:block; font-size:clamp(30px,3vw,44px); font-weight:900; line-height:1; }
+   .meros-recruit-stat span { color:rgba(255,255,255,.86); font-weight:800; }
+   .meros-recruit-service { overflow:hidden; position:relative; }
+   .meros-recruit-service:before { background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); content:""; height:6px; left:0; position:absolute; right:0; top:0; }
+   .meros-recruit-step { align-items:flex-start; display:flex; gap:18px; }
+   .meros-recruit-step-number { align-items:center; background:linear-gradient(135deg,var(--meros-primary),var(--meros-accent)); border-radius:18px; color:#fff; display:flex; flex:0 0 62px; font-size:20px; font-weight:900; height:62px; justify-content:center; }
+   .meros-recruit-highlight { background:linear-gradient(135deg,rgba(75,192,202,.14),rgba(255,190,70,.16)); border:1px solid var(--meros-border); border-radius:34px; padding:clamp(28px,4vw,56px); }
+   .meros-recruit-cta { background:linear-gradient(135deg,var(--meros-primary-dark),var(--meros-primary)); border-radius:34px; box-shadow:var(--meros-shadow); overflow:hidden; padding:clamp(34px,5vw,68px); position:relative; }
+   .meros-recruit-cta h2, .meros-recruit-cta p, .meros-recruit-cta .meros-kicker { color:#fff; }
+
+.meros-b2b-cta-text,
+.meros-hospitals-cta-text,
+.meros-recruit-cta-text { max-width:760px; }
