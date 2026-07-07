@@ -168,7 +168,7 @@ JS, \yii\web\View::POS_READY);
                      </div>
                      <div class="meros-b2b-course-overlay">
                         <h3><?= Html::encode($itemTitle) ?></h3>
-                        <p><?= Html::encode($limitText($itemDescription)) ?></p>
+                        <p><?= Html::encode($limitText($itemDescription, 150)) ?></p>
                      </div>
                   </article>
                </div>
