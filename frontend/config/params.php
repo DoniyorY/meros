@@ -974,17 +974,17 @@ return [
    ],
    'b2b_challenge_cards' => [
       'ru' => [
-         ['icon' => 'fa-book', 'title' => 'Специализированная глубина', 'text' => 'Профессиональные темы заменяют общий английский клиническими сценариями.'],
+         ['icon' => 'bi-book', 'title' => 'Специализированная глубина', 'text' => 'Профессиональные темы заменяют общий английский клиническими сценариями.'],
          ['icon' => 'bi-door-open', 'title' => 'Простой доступ', 'text' => 'Единая структура программы уменьшает фрагментацию покупок и администрирования курсов.'],
          ['icon' => 'bi-graph-up-arrow', 'title' => 'Видимый прогресс', 'text' => 'Преподаватели и менеджеры могут использовать отчётность, чтобы раньше выявлять потребности и поддерживать студентов.'],
       ],
       'en' => [
-         ['icon' => 'fa-book', 'title' => 'Specialist depth', 'text' => 'Profession-specific topics replace generic English with clinical scenarios.'],
+         ['icon' => 'bi-book', 'title' => 'Specialist depth', 'text' => 'Profession-specific topics replace generic English with clinical scenarios.'],
          ['icon' => 'bi-door-open', 'title' => 'Simple access', 'text' => 'One programme structure reduces fragmented course purchasing and administration.'],
          ['icon' => 'bi-graph-up-arrow', 'title' => 'Progress visibility', 'text' => 'Teachers and managers can use reporting to identify needs and support learners earlier.'],
       ],
       'uz' => [
-         ['icon' => 'fa-book', 'title' => 'Maxsus yo‘nalish', 'text' => 'Kasbga xos mavzular umumiy ingliz tilini klinik vaziyatlar bilan almashtiradi.'],
+         ['icon' => 'bi-book', 'title' => 'Maxsus yo‘nalish', 'text' => 'Kasbga xos mavzular umumiy ingliz tilini klinik vaziyatlar bilan almashtiradi.'],
          ['icon' => 'bi-door-open', 'title' => 'Qulay kirish', 'text' => 'Yagona dastur tuzilmasi kurs xaridi va boshqaruvidagi tarqoqlikni kamaytiradi.'],
          ['icon' => 'bi-graph-up-arrow', 'title' => 'Progress ko‘rinishi', 'text' => 'O‘qituvchilar va menejerlar ehtiyojlarni erta aniqlash va talabalarni qo‘llab-quvvatlash uchun hisobotlardan foydalanishlari mumkin.'],
       ],
