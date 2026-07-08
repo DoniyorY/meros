@@ -1407,12 +1407,12 @@ return [
       'uz' => 'Tashkiliy Xaridlar',
    ],
    'More about' => [
-      'ru' => 'Подробнее об ',
+      'ru' => 'Подробнее о курсе ',
       'en' => 'More about ',
       'uz' => 'Batafsil ',
    ],
    'Read More About' => [
-      'ru' => 'Подробнее о ',
+      'ru' => 'Узнайте подробнее о курсе ',
       'en' => 'Read More About ',
       'uz' => 'Batafsil ',
    ],

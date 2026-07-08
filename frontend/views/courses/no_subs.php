@@ -25,9 +25,11 @@ $courseAnchorNavItems = [
    ['label' => translate('pricing'), 'href' => '#tickets'],
    ['label' => translate('Organisational Purchases'), 'href' => '#organisational-purchases'],
    ['label' => translate('b2b_faq_kicker'), 'href' => '#faq'],
-   ['label' => translate('More about') . $courseName, 'href' => '#more-about-english-for-nurses'],
-   ['label' => translate('contact_us'), 'href' => Url::to(['site/contact'])],
 ];
+if ($courses->reads){
+    $courseAnchorNavItems[]=['label' => translate('More about') ."\"$courseName\"", 'href' => '#more-about-english-for-nurses'];
+}
+$courseAnchorNavItems[]=['label' => translate('contact_us'), 'href' => Url::to(['site/contact'])];
 
 $organisationalCardCopy = $params['course_organisational_cards'][$lang] ?? $params['course_organisational_cards']['en'];
 $organisationalCards = [
@@ -107,7 +109,7 @@ JS, \yii\web\View::POS_READY);
 </section>
 <nav class="meros-course-anchor-nav" aria-label="Course sections">
     <div class="container">
-        <ul>
+        <ul style="<?=($courses->reads)?'grid-template-columns: repeat(5, minmax(0, 1fr));':'grid-template-columns: repeat(4, minmax(0, 1fr));'?>">
            <?php foreach ($courseAnchorNavItems as $navItem): ?>
                <li><a href="<?= Html::encode($navItem['href']) ?>"><?= Html::encode($navItem['label']) ?></a></li>
            <?php endforeach; ?>
@@ -124,7 +126,6 @@ JS, \yii\web\View::POS_READY);
             <div class="container">
                 <div class="row g-4">
                     <div class="col-12 about_course_text meros-about-card">
-                       
                        <?= $courses->{"desc_$lang"} ?>
                     </div>
                 </div>
