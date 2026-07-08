@@ -24,6 +24,7 @@ use frontend\models\ContactForm;
 use common\models\Banner;
 use common\models\Posts;
 use common\models\Events;
+use common\models\Gallery;
 
 /**
  * Site controller
@@ -266,7 +267,16 @@ class SiteController extends Controller
    public function actionAbout()
    {
       $posts = Posts::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(6)->all();
-      return $this->render('about', ['posts' => $posts]);
+      $gallery = Gallery::find()
+         ->where(['status' => Gallery::STATUS_ACTIVE])
+         ->andWhere(['not', ['image' => null]])
+         ->orderBy(['created_at' => SORT_DESC, 'id' => SORT_DESC])
+         ->all();
+
+      return $this->render('about', [
+         'posts' => $posts,
+         'gallery' => $gallery,
+      ]);
    }
    
    public function actionTestBot()

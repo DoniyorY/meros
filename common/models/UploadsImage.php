@@ -34,9 +34,10 @@ class UploadsImage extends Model
                 }
                 $name = time();
                 $filePrefix = str_replace('/', '_', trim($pathName, '/'));
-                $fileName = $filePrefix . '_' . date('d-m-Y-H-i-s',$name) . '.' . $model->imageFile->extension;
+                $uniqueSuffix = \Yii::$app->security->generateRandomString(8);
+                $fileName = $filePrefix . '_' . date('d-m-Y-H-i-s', $name) . '_' . $uniqueSuffix . '.' . $model->imageFile->extension;
                 $model->imageFile->saveAs($dir . $fileName);
-                $model->imageFile = $fileName;
+                $model->imageFile = null;
                 return $fileName;
             }
         } else {

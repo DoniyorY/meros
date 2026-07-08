@@ -17,6 +17,11 @@ use Yii;
  */
 class Gallery extends \yii\db\ActiveRecord
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
+    public $imageFile;
+    public $imageFiles;
 
 
     /**
@@ -33,9 +38,12 @@ class Gallery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['page_id', 'image', 'created_at', 'updated_at', 'user_id', 'status'], 'default', 'value' => null],
+            [['page_id', 'image', 'created_at', 'updated_at', 'user_id'], 'default', 'value' => null],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
             [['page_id', 'created_at', 'updated_at', 'user_id', 'status'], 'integer'],
             [['image'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'extensions' => 'jpg, jpeg, gif, png, webp', 'skipOnEmpty' => true],
+            [['imageFiles'], 'file', 'extensions' => 'jpg, jpeg, gif, png, webp', 'skipOnEmpty' => true, 'maxFiles' => 20],
         ];
     }
 
@@ -48,6 +56,8 @@ class Gallery extends \yii\db\ActiveRecord
             'id' => 'ID',
             'page_id' => 'Page ID',
             'image' => 'Image',
+            'imageFile' => 'Image',
+            'imageFiles' => 'Images',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'user_id' => 'User ID',

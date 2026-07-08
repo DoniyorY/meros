@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var common\models\Gallery[] $gallery */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -13,7 +14,7 @@ function translate($key)
 $this->title = translate('about_meros_international_institute');
 $base = Yii::$app->request->baseUrl;
 $lang = Yii::$app->language;
-$galleryImages = range(1, 4);
+$gallery = $gallery ?? [];
 
 ?>
 
@@ -78,17 +79,25 @@ $galleryImages = range(1, 4);
                 <span class="meros-kicker"><?= Html::encode(translate('campus_life')) ?></span>
                 <h2><?= translate('gallery') ?></h2>
             </div>
-            <div class="meros-gallery-grid">
-                <?php foreach ($galleryImages as $imageNumber): ?>
-                    <?php $image = sprintf('image-%02d.jpg', $imageNumber); ?>
-                    <a href="<?= "$base/img/gallery-big-image.jpg" ?>" class="image-popup meros-gallery-item">
-                        <img src="<?= "$base/img/$image" ?>" alt="<?= Html::encode(translate('meros_gallery_image')) ?> <?= $imageNumber ?>" loading="lazy">
-                    </a>
-                <?php endforeach; ?>
-            </div>
-            <div class="text-center mt-4">
-                <a href="<?= Url::to(['site/about']) ?>" class="btn btn-primary meros-primary-btn"><?= translate('go_to_gallery') ?></a>
-            </div>
+            <?php if (!empty($gallery)): ?>
+                <div class="meros-gallery-grid">
+                    <?php foreach ($gallery as $index => $item): ?>
+                        <?php $imageUrl = "$base/uploads/gallery/{$item->image}"; ?>
+                        <a href="<?= Html::encode($imageUrl) ?>" class="image-popup meros-gallery-item">
+                            <img src="<?= Html::encode($imageUrl) ?>" alt="<?= Html::encode(translate('meros_gallery_image')) ?> <?= $index + 1 ?>" loading="lazy">
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="meros-gallery-grid">
+                    <?php foreach (range(1, 4) as $imageNumber): ?>
+                        <?php $image = sprintf('image-%02d.jpg', $imageNumber); ?>
+                        <a href="<?= "$base/img/gallery-big-image.jpg" ?>" class="image-popup meros-gallery-item">
+                            <img src="<?= "$base/img/$image" ?>" alt="<?= Html::encode(translate('meros_gallery_image')) ?> <?= $imageNumber ?>" loading="lazy">
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </div>
