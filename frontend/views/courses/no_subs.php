@@ -313,95 +313,99 @@ JS, \yii\web\View::POS_READY);
                         </div>
                     <?php endif; ?>
 
-                        <div class="col-12">
-                            <div id="faq" class="meros-faq-card reveal-section">
-                                <div class="meros-section-heading text-center">
-                                    <span class="meros-kicker"><?= Html::encode(translate('faq')) ?></span>
-                                    <h2><?= Html::encode(translate('frequently_asked_questions')) ?></h2>
-                                </div>
-                                <div class="row g-3" id="course-faq-accordion">
-                                   <?php foreach ($faqItems as $faq): ?>
-                                       <div class="col-md-6 col-12">
-                                           <div class="accordion meros-accordion meros-faq-accordion">
-                                               <div class="accordion-item meros-accordion-item">
-                                                   <h3 class="accordion-header" id="<?= $faq['id'] ?>-heading">
-                                                       <button class="accordion-button collapsed" type="button"
-                                                               data-bs-toggle="collapse"
-                                                               data-bs-target="#<?= $faq['id'] ?>-collapse"
-                                                               aria-expanded="false"
-                                                               aria-controls="<?= $faq['id'] ?>-collapse">
-                                                          <?= Html::encode($faq["question_$lang"]) ?>
-                                                       </button>
-                                                   </h3>
-                                                   <div id="<?= $faq['id'] ?>-collapse"
-                                                        class="accordion-collapse collapse"
-                                                        aria-labelledby="<?= $faq['id'] ?>-heading"
-                                                        data-bs-parent="#course-faq-accordion">
-                                                       <div class="accordion-body">
-                                                          <?= Html::encode($faq["answer_$lang"]) ?>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
-                       <?php if ($courses->reads): ?>
-                           <div class="col-12">
-                               <section id="more-about-english-for-nurses" class="meros-read-more-course reveal-section"
-                                        aria-labelledby="read-more-course-title">
-                                   <div class="meros-section-heading text-center">
-                                       <h2 id="read-more-course-title"><?= translate('Read More About') ?> <?= Html::encode($courseName) ?></h2>
-                                   </div>
-                                   <div class="row g-4 justify-content-center">
-                                      <?php foreach ($courses->reads as $card): ?>
-                                          <div class="col-lg-4 col-md-6 col-12">
-                                              <article class="meros-read-more-card" tabindex="0">
-                                                  <span class="meros-read-more-card-title"><?= Html::encode($card->{"title_$lang"}) ?></span>
-                                                  <span class="meros-read-more-card-description"><?= Html::encode($card->{"content_$lang"}) ?></span>
-                                              </article>
-                                          </div>
-                                      <?php endforeach; ?>
-                                   </div>
-                               </section>
-                           </div>
-                       <?php endif; ?>
-                        <div class="col-12">
-                            <section id="organisational-purchases" class="meros-organisational-section reveal-section"
-                                     aria-labelledby="organisational-purchases-title">
-                                <div class="meros-section-heading text-center">
-                                    <span class="meros-kicker"><?= translate('Organisational Purchases') ?></span>
-                                    <h2 id="organisational-purchases-title"><?=translate('Medical English for institutions and employers')?></h2>
-                                </div>
-                                <div class="row g-4">
-                                   <?php foreach ($organisationalCards as $card): ?>
-                                       <div class="col-lg-6 col-12">
-                                           <article class="meros-organisational-card h-100">
-                                               <a class="meros-organisational-image"
-                                                  href="<?= Html::encode($card['url']) ?>">
-                                                   <img src="<?= Html::encode($card['image']) ?>"
-                                                        alt="<?= Html::encode($card['title']) ?>" loading="lazy">
-                                               </a>
-                                               <div class="meros-organisational-body">
-                                                   <h3><?= Html::encode($card['title']) ?></h3>
-                                                   <p><?= Html::encode($card['description']) ?></p>
-                                                   <a class="btn btn-lg rounded-pill meros-organisational-btn"
-                                                      href="<?= Html::encode($card['url']) ?>"><?= Html::encode($card['button']) ?></a>
-                                               </div>
-                                           </article>
-                                       </div>
-                                   <?php endforeach; ?>
-                                </div>
-                            </section>
-                        </div>
-
                     </div><!-- /.row -->
                 </div><!-- /.pricing -->
             </div><!-- /.container -->
             <div class="background background-color-grey-background"></div><!-- /.background -->
         </div><!-- /.block -->
     </section><!-- /#tickets -->
+
+    <section id="faq" class="meros-section meros-faq-section reveal-section">
+        <div class="container">
+            <div class="meros-faq-card">
+                <div class="meros-section-heading text-center">
+                    <span class="meros-kicker"><?= Html::encode(translate('faq')) ?></span>
+                    <h2><?= Html::encode(translate('frequently_asked_questions')) ?></h2>
+                </div>
+                <div class="row g-3" id="course-faq-accordion">
+                   <?php foreach ($faqItems as $faq): ?>
+                       <div class="col-md-6 col-12">
+                           <div class="accordion meros-accordion meros-faq-accordion">
+                               <div class="accordion-item meros-accordion-item">
+                                   <h3 class="accordion-header" id="<?= $faq['id'] ?>-heading">
+                                       <button class="accordion-button collapsed" type="button"
+                                               data-bs-toggle="collapse"
+                                               data-bs-target="#<?= $faq['id'] ?>-collapse"
+                                               aria-expanded="false"
+                                               aria-controls="<?= $faq['id'] ?>-collapse">
+                                          <?= Html::encode($faq["question_$lang"]) ?>
+                                       </button>
+                                   </h3>
+                                   <div id="<?= $faq['id'] ?>-collapse"
+                                        class="accordion-collapse collapse"
+                                        aria-labelledby="<?= $faq['id'] ?>-heading"
+                                        data-bs-parent="#course-faq-accordion">
+                                       <div class="accordion-body">
+                                          <?= Html::encode($faq["answer_$lang"]) ?>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <?php if ($courses->reads): ?>
+       <section id="more-about-english-for-nurses" class="meros-section meros-read-more-course reveal-section"
+                aria-labelledby="read-more-course-title">
+           <div class="container">
+               <div class="meros-section-heading text-center">
+                   <h2 id="read-more-course-title"><?= translate('Read More About') ?> <?= Html::encode($courseName) ?></h2>
+               </div>
+               <div class="row g-4 justify-content-center">
+                  <?php foreach ($courses->reads as $card): ?>
+                      <div class="col-lg-4 col-md-6 col-12">
+                          <article class="meros-read-more-card" tabindex="0">
+                              <span class="meros-read-more-card-title"><?= Html::encode($card->{"title_$lang"}) ?></span>
+                              <span class="meros-read-more-card-description"><?= Html::encode($card->{"content_$lang"}) ?></span>
+                          </article>
+                      </div>
+                  <?php endforeach; ?>
+               </div>
+           </div>
+       </section>
+   <?php endif; ?>
+
+    <section id="organisational-purchases" class="meros-section meros-organisational-section reveal-section"
+             aria-labelledby="organisational-purchases-title">
+        <div class="container">
+            <div class="meros-section-heading text-center">
+                <span class="meros-kicker"><?= translate('Organisational Purchases') ?></span>
+                <h2 id="organisational-purchases-title"><?= translate('Medical English for institutions and employers') ?></h2>
+            </div>
+            <div class="row g-4">
+               <?php foreach ($organisationalCards as $card): ?>
+                   <div class="col-lg-6 col-12">
+                       <article class="meros-organisational-card h-100">
+                           <a class="meros-organisational-image"
+                              href="<?= Html::encode($card['url']) ?>">
+                               <img src="<?= Html::encode($card['image']) ?>"
+                                    alt="<?= Html::encode($card['title']) ?>" loading="lazy">
+                           </a>
+                           <div class="meros-organisational-body">
+                               <h3><?= Html::encode($card['title']) ?></h3>
+                               <p><?= Html::encode($card['description']) ?></p>
+                               <a class="btn btn-lg rounded-pill meros-organisational-btn"
+                                  href="<?= Html::encode($card['url']) ?>"><?= Html::encode($card['button']) ?></a>
+                           </div>
+                       </article>
+                   </div>
+               <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 </div>
 <!-- end Page Content -->
