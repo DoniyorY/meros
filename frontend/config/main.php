@@ -157,6 +157,7 @@ return [
             'contact' => 'site/contact',
             'team' => 'site/teams',
             'download/<id>-<file>'=>'courses/download',
+            'faq/<page>'=>'site/faq',
             
             'POST telegram/staff-webhook' => 'telegram-staff/webhook',
             'GET telegram/staff-health' => 'telegram-staff/health',

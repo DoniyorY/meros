@@ -1878,6 +1878,10 @@ return [
       'ru'=>'Медицинский английский для университетов и работников',
       'en'=>'Medical English for institutions and employers',
       'uz'=>'Muassasalar va ish beruvchilar uchun tibbiy ingliz tili',
+   ],
+   'faq_org'=>[
+      'ru'=>'Часто задаваемые вопросы - Организации',
+      'en'=>'FAQ Organizations',
+      'uz'=>'Ko‘p so‘raladigan savollar — Organizatsiyalar',
    ]
-
 ];

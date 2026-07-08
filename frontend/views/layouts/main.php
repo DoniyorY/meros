@@ -121,7 +121,10 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                             <a href="<?= Url::to(['site/policy']) ?>"> <?=$params['policy'][$lang]?></a>
                                         </li>
                                         <li>
-                                            <a href="<?= Url::to(['site/faq-students']) ?>"> <?=$params['faq_students'][$lang]?></a>
+                                            <a href="<?= Url::to(['site/faq','page'=>$params['faq_page_id'][1]]) ?>"> <?=$params['faq_students'][$lang]?></a>
+                                        </li>
+                                        <li>
+                                            <a href="<?= Url::to(['site/faq','page'=>$params['faq_page_id'][2]]) ?>"> <?=$params['faq_org'][$lang]?></a>
                                         </li>
                                     </ul>
                                 </li>

@@ -29,7 +29,7 @@ $isCreate = $model->isNewRecord;
             ]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'page_id')->textInput() ?>
+            <?= $form->field($model, 'page_id')->dropDownList(Yii::$app->params['faq_page_id'],['prompt'=>'Select the page']) ?>
         </div>
 
         <?php if ($isCreate): ?>
