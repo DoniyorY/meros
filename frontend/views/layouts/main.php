@@ -418,8 +418,8 @@ JS;
                                 <header><h4><?=$params['important_links'][$lang]?></h4></header>
                                 <ul class="list-links">
                                     <li><a href="<?= Url::to(['site/about']) ?>"><?=$params['about_meros'][$lang]?></a></li>
-                                    <li><a href="#"><?=$params['faq_students'][$lang]?></a></li>
-                                    <li><a href="#"><?=$params['faq_teachers'][$lang]?></a></li>
+                                    <li><a href="<?= Url::to(['site/faq','page'=>$params['faq_page_id'][1]]) ?>"><?=$params['faq_students'][$lang]?></a></li>
+                                    <li><a href="<?= Url::to(['site/faq','page'=>$params['faq_page_id'][2]]) ?>"><?=$params['faq_org'][$lang]?></a></li>
                                     <li><a href="<?= Url::to(['site/policy']) ?>"><?=$params['policy_privacy'][$lang]?></a></li>
                                 </ul>
                             </aside>
