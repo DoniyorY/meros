@@ -204,7 +204,7 @@ $returnURL = "сайт поставщика";
                             <div class="d-flex justify-content-between mb-3">
                                 <span><?= Html::encode($t('duration')) ?></span>
                                 <strong><?php
-                                   (int)$duration = $billing->subscription->duration_days / 30;
+                                   (int)$duration = Yii::$app->formatter->asInteger($billing->subscription->duration_days / 30);
                                    echo Html::encode(strtr($t('duration_months'), ['{count}' => $duration]));
                                    ?>
                                 </strong>

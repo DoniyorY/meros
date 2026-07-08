@@ -1407,7 +1407,7 @@ return [
       'uz' => 'Tashkiliy Xaridlar',
    ],
    'More about' => [
-      'ru' => 'Подробнее о ',
+      'ru' => 'Подробнее об ',
       'en' => 'More about ',
       'uz' => 'Batafsil ',
    ],
