@@ -20,6 +20,20 @@ $teamT = static function (string $key) use ($params, $lang): string {
 
 $this->title = $t('meet_the_team', '');
 
+
+$mentorModalFixJs = <<<JS
+(function () {
+    var modals = document.querySelectorAll('.meros-mentor-modal');
+
+    modals.forEach(function (modal) {
+        if (modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+        }
+    });
+})();
+JS;
+$this->registerJs($mentorModalFixJs, \yii\web\View::POS_END);
+
 ?>
 
 <div id="page-content" class="meros-modern-page meros-content-page meros-team-page">

@@ -2479,6 +2479,8 @@ body p,
     animation-range: entry 8% cover 32%;
 }
 .meros-mentor-modal { z-index: 1065; }
+body.modal-open .meros-mentor-modal { z-index: 1065; }
+body.modal-open .modal-backdrop { z-index: 1050; }
 
 @keyframes merosTeamHeroPop {
     0% { opacity: 0; transform: translateY(34px) scale(0.96); }
