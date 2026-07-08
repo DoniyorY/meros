@@ -292,6 +292,33 @@ JS;
 JS;
        $this->registerJs($pageLoaderJs);
        ?>
+
+       <?php
+       $toTopJs = <<<JS
+(function () {
+    var toTopButton = document.querySelector('.meros-to-top');
+
+    if (!toTopButton) {
+        return;
+    }
+
+    function toggleToTopButton() {
+        toTopButton.classList.toggle('is-visible', window.scrollY > 360);
+    }
+
+    toTopButton.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    toggleToTopButton();
+    window.addEventListener('scroll', toggleToTopButton, { passive: true });
+}());
+JS;
+       $this->registerJs($toTopJs);
+       ?>
        
        <?php
        $route = Yii::$app->controller ? Yii::$app->controller->route : '';
@@ -443,6 +470,9 @@ JS;
         </footer>
         <!-- end Footer -->
     </div>
+    <button class="meros-to-top" type="button" aria-label="Scroll to top">
+        <i class="bi bi-arrow-up-short" aria-hidden="true"></i>
+    </button>
     <script src="//code.jivosite.com/widget/sAIAhsY8qj" async></script>
     <!--<script src="/js/jquery-2.1.0.min.js"></script>-->
     <?php $this->endBody() ?>
