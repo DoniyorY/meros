@@ -303,7 +303,8 @@ JS;
     }
 
     function toggleToTopButton() {
-        toTopButton.classList.toggle('is-visible', window.scrollY > 360);
+        var pageCanScroll = document.documentElement.scrollHeight > window.innerHeight + 120;
+        toTopButton.classList.toggle('is-visible', pageCanScroll);
     }
 
     toTopButton.addEventListener('click', function () {
@@ -314,7 +315,8 @@ JS;
     });
 
     toggleToTopButton();
-    window.addEventListener('scroll', toggleToTopButton, { passive: true });
+    window.addEventListener('resize', toggleToTopButton, { passive: true });
+    window.addEventListener('load', toggleToTopButton);
 }());
 JS;
        $this->registerJs($toTopJs);
