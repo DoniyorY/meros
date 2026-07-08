@@ -3685,8 +3685,7 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 
 .secondary-navigation-wrapper,
 .navigation-wrapper,
-#page-footer,
-.meros-page-loader {
+#page-footer {
     position: relative;
     z-index: 3;
 }
