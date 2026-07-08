@@ -51,6 +51,7 @@ AppAsset::register($this);
             ]],
             ['label' => 'Settings', 'items' => [
                 ['label' => 'Banner', 'url' => ['/banner']],
+                ['label' => 'Gallery', 'url' => ['/gallery']],
                 ['label' => 'Users', 'url' => ['/user']],
                 ['label' => 'Contacts', 'url' => ['/contacts']],
                 ['label' => 'Events', 'url' => ['/events']],
