@@ -97,6 +97,12 @@ return [
                'categories' => ['telegram-staff'],
                'logFile' => '@frontend/runtime/logs/telegram-staff.log',
                'logVars' => [],
+            ],
+            [
+               'class' => \yii\log\FileTarget::class,
+               'categories' => ['playmobile'],
+               'logFile' => '@frontend/runtime/logs/playmobile.log',
+               'logVars' => [],
             ]
          ],
       ],
