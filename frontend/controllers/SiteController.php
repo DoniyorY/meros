@@ -25,6 +25,7 @@ use common\models\Banner;
 use common\models\Posts;
 use common\models\Events;
 use common\models\Gallery;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -312,7 +313,10 @@ class SiteController extends Controller
    {
       $model = new SignupForm();
       if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-         $user = User::findOne(['id' => Yii::$app->user->id]);
+         $user = User::findByUsername($model->username);
+         if (!$user){
+            throw new NotFoundHttpException('User not found.');
+         }
          $text = $this->buildSmsText('registration', $user);
          Yii::$app->playmobile->sendSms("$user->phone", $text);
          Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
