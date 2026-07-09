@@ -103,6 +103,8 @@ return [
                'categories' => ['playmobile'],
                'logFile' => '@frontend/runtime/logs/playmobile.log',
                'logVars' => [],
+               'maxFileSize' => 10240, // 10 MB
+               'maxLogFiles' => 3,
             ]
          ],
       ],
