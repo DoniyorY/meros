@@ -125,7 +125,7 @@ $host = $_SERVER['SERVER_NAME']
                         foreach ($model->subscriptions as $item): ?>
                             <tr>
                                 <td><?= $i++ ?></td>
-                                <td><?= $item->plan->name_en ?></td>
+                                <td><?= $item->plan->name_en ?? 'Не задано'?></td>
                                 <td><?= $item->subscription_key ?></td>
                                 <td><?= date('d.m.Y', $item->created_at) ?></td>
                                 <td>
