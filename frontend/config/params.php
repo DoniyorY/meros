@@ -974,7 +974,7 @@ return [
    ],
    'b2b_challenge_cards' => [
       'ru' => [
-         ['icon' => 'bi-book', 'title' => 'Специализированная глубина', 'text' => 'Профессиональные темы заменяют общий английский клиническими сценариями.'],
+         ['icon' => 'bi-book', 'title' => 'Специализация', 'text' => 'Профессиональные темы заменяют общий английский клиническими сценариями.'],
          ['icon' => 'bi-door-open', 'title' => 'Простой доступ', 'text' => 'Единая структура программы уменьшает фрагментацию покупок и администрирования курсов.'],
          ['icon' => 'bi-graph-up-arrow', 'title' => 'Видимый прогресс', 'text' => 'Преподаватели и менеджеры могут использовать отчётность, чтобы раньше выявлять потребности и поддерживать студентов.'],
       ],
@@ -1161,9 +1161,9 @@ return [
       'uz' => 'Samarqand davlat tibbiyot universitetida bu qanday ishlashi mumkin',
    ],
    'b2b_case_text' => [
-      'ru' => 'Страница university-materials/medical-english-courses-for-universities-and-schools может презентовать готовую учебную витрину для медицинского вуза: от диагностирования уровня до модулей по клинической коммуникации, терминологии и академическому письму.',
-      'en' => 'The university-materials/medical-english-courses-for-universities-and-schools page can present a ready learning showcase for a medical university: from level diagnostics to modules in clinical communication, terminology and academic writing.',
-      'uz' => 'university-materials/medical-english-courses-for-universities-and-schools sahifasi tibbiyot universiteti uchun tayyor o‘quv vitrinasi bo‘lib xizmat qiladi: daraja diagnostikasidan klinik muloqot, terminologiya va akademik yozuv modullarigacha.',
+      'ru' => 'Страница "Медицинский английский для учебных программ медицинских университетов" может презентовать готовую учебную витрину для медицинского вуза: от диагностирования уровня до модулей по клинической коммуникации, терминологии и академическому письму.',
+      'en' => 'The Medical English Courses for Universities and Schools page can present a ready learning showcase for a medical university: from level diagnostics to modules in clinical communication, terminology and academic writing.',
+      'uz' => 'Universitetlar va maktablar uchun tibbiy ingliz Tili kurslari sahifasi tibbiyot universiteti uchun tayyor o‘quv vitrinasi bo‘lib xizmat qiladi: daraja diagnostikasidan klinik muloqot, terminologiya va akademik yozuv modullarigacha.',
    ],
    'b2b_case_steps' => [
       'ru' => [
@@ -1631,7 +1631,7 @@ return [
             'Specialist Language Courses (SLC), Великобритания',
             'Платформа управления обучением Avallain (LMS)',
             'Поставщики платежных услуг',
-            'Технологические, хостинг- и аналитические провайдеры',
+            'Технологические, хостинг и аналитические провайдеры',
             'Государственные органы в случаях, предусмотренных законодательством',
          ],
          'en' => [
@@ -1883,5 +1883,15 @@ return [
       'ru'=>'Часто задаваемые вопросы - Организации',
       'en'=>'FAQ Organizations',
       'uz'=>'Ko‘p so‘raladigan savollar — Organizatsiyalar',
+   ],
+   'access'=>[
+      'ru'=>'доступ',
+      'en'=>'access',
+      'uz'=>'kirish'
+   ],
+   'level'=>[
+      'ru'=>'уровень',
+      'en'=>'levels',
+      'uz'=>'bosqich'
    ]
 ];

@@ -180,7 +180,7 @@ JS, \yii\web\View::POS_READY);
    <section class="meros-section reveal-section">
       <div class="container">
          <div class="row g-5 align-items-center">
-            <div class="col-lg-6"><div class="meros-about-card"><span class="meros-kicker"><?= Html::encode($t('b2b_about_course')) ?></span><h2><?= Html::encode($courseName) ?></h2><?= $courseDescription ?></div></div>
+            <div class="col-lg-6"><div class="meros-about-card"><span class="meros-kicker"><?= Html::encode($t('b2b_about_course')) ?></span><h2><?= Html::encode($courseName) ?></h2><?= ($courseDescription == '-')?'':$courseDescription ?></div></div>
             <div class="col-lg-6">
                <div class="meros-section-heading"><span class="meros-kicker"><?= Html::encode($t('b2b_roles_kicker')) ?></span><h2><?= Html::encode($t('b2b_roles_title')) ?></h2></div>
                <table class="meros-b2b-table"><tbody>

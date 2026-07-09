@@ -223,8 +223,8 @@ $roles = $tList('roles');
                   <h3><?= Html::encode($t('platform_title')) ?></h3>
                   <p><?= Html::encode($t('platform_text')) ?></p>
                   <div class="row g-3 mt-2">
-                     <div class="col-6"><div class="meros-hospitals-stat"><strong>24/7</strong><span>access</span></div></div>
-                     <div class="col-6"><div class="meros-hospitals-stat"><strong>A2-C1</strong><span>levels</span></div></div>
+                     <div class="col-6"><div class="meros-hospitals-stat"><strong>24/7</strong><span><?=(translate('access'))?></span></div></div>
+                     <div class="col-6"><div class="meros-hospitals-stat"><strong>A2-C1</strong><span><?=translate('levels')?></span></div></div>
                   </div>
                </div>
             </div>

@@ -223,7 +223,7 @@ $process = $tList('process');
                <h2><?= Html::encode($t('intro_title')) ?></h2>
                <p><?= Html::encode($t('intro_text')) ?></p>
             </div>
-            <div class="col-lg-6"><div class="meros-about-card"><h2><?= Html::encode($courseName) ?></h2><?= $courseDescription ?></div></div>
+            <div class="col-lg-6"><div class="meros-about-card"><h2><?= Html::encode($courseName) ?></h2><?= ($courseDescription == '-')?'':$courseDescription ?></div></div>
          </div>
       </div>
    </section>
