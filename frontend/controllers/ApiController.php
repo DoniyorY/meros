@@ -69,10 +69,10 @@ class ApiController extends Controller
         ], 'zapier');
         $user = User::findOne($billing->user_id);
         $user->sendCongratsEmail($user, $billing);
-        /*if (is_null($user->telegram_chat_id)) {
+        if (is_null($user->telegram_chat_id)) {
             $text = self::buildSmsText('purchase_without_telegram', $user);
             Yii::$app->playmobile->sendSms("$user->phone", $text);
-        }*/
+        }
         TelegramNotificationService::sendPurchaseNotification($billing);
         TelegramStaffNotificationService::sendNewSubscriptionNotification($billing);
         return true;

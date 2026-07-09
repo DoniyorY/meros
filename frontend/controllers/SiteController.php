@@ -272,7 +272,7 @@ class SiteController extends Controller
          ->andWhere(['not', ['image' => null]])
          ->orderBy(['created_at' => SORT_DESC, 'id' => SORT_DESC])
          ->all();
-
+      
       return $this->render('about', [
          'posts' => $posts,
          'gallery' => $gallery,
@@ -314,7 +314,7 @@ class SiteController extends Controller
       if ($model->load(Yii::$app->request->post()) && $model->signup()) {
          $user = User::findOne(['id' => Yii::$app->user->id]);
          $text = $this->buildSmsText('registration', $user);
-         //Yii::$app->playmobile->sendSms("$user->phone", $text);
+         Yii::$app->playmobile->sendSms("$user->phone", $text);
          Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
          return $this->goHome();
       }
@@ -328,10 +328,10 @@ class SiteController extends Controller
    {
       if ($page == 'faq-students') {
          $page = 1;
-      }else{
+      } else {
          $page = 2;
       }
-      $faq = Faq::find()->where(['page_id'=>$page])->orderBy(['id' => SORT_ASC])->all();
+      $faq = Faq::find()->where(['page_id' => $page])->orderBy(['id' => SORT_ASC])->all();
       return $this->render('faqs', [
          'faqs' => $faq,
       ]);

@@ -173,6 +173,8 @@ class CoursesController extends Controller
             Yii::$app->user->login($user, 3600 * 24 * 30);
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             $user->sendEmail($user);
+            $text = $this->buildSmsText('registration', $user);
+            Yii::$app->playmobile->sendSms("$user->phone", $text);
             $transaction->commit();
          } catch (\Exception $e) {
             $transaction->rollBack();
@@ -181,6 +183,23 @@ class CoursesController extends Controller
 
          return $this->redirect(Yii::$app->request->referrer);
       }
+   }
+   
+   private function buildSmsText(string $type, User $user): string
+   {
+      $lang = substr((string)Yii::$app->language, 0, 2);
+      
+      $messages = Yii::$app->params['smsMessages'][$type] ?? [];
+      
+      $template = $messages[$lang]
+         ?? $messages['en']
+         ?? '';
+      
+      return strtr($template, [
+         '{name}' => (string)$user->fullname,
+         '{bot_link}' => (string)Yii::$app->params['telegramBotLink'],
+         '{platform_link}' => (string)Yii::$app->params['coursePlatformUrl'],
+      ]);
    }
    public function actionDownload($id,$file)
    {
