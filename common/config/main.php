@@ -27,10 +27,6 @@ return [
           //'token' => $params['telegramStaffBotToken'],
           'timeout' => 10,
        ],
-        'playmobile' => [
-            'class' => \rakhmatov\playmobile\components\Connection::class,
-            'username' => 'here playmobile login',
-            'password' => 'here playmobile password',
-        ],
+       
     ],
 ];
