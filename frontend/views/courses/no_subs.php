@@ -347,7 +347,7 @@ JS, \yii\web\View::POS_READY);
                                         aria-labelledby="<?= $faq['id'] ?>-heading"
                                         data-bs-parent="#course-faq-accordion">
                                        <div class="accordion-body">
-                                          <?= Html::encode($faq["answer_$lang"]) ?>
+                                          <?= $faq["answer_$lang"]?>
                                        </div>
                                    </div>
                                </div>

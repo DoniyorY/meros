@@ -25,7 +25,7 @@ $base = Yii::$app->request->baseUrl;
                                data-bs-target="#<?= "package-collapse-$item->id" ?>"
                                aria-expanded="false"
                                aria-controls="<?= "package-collapse-$item->id" ?>">
-                          <?= Html::encode($featureName) ?>
+                          <?= $featureName ?>
                        </button>
                    </h3>
                    <div id="<?= "package-collapse-$item->id" ?>" class="accordion-collapse collapse"
@@ -39,7 +39,7 @@ $base = Yii::$app->request->baseUrl;
           <?php else: ?>
                <div class="meros-check-item">
                    <span class="fa fa-check" aria-hidden="true"></span>
-                   <span><?= Html::encode($featureName) ?></span>
+                   <span><?= $featureName ?></span>
                </div>
           <?php endif; ?>
        <?php endforeach; ?>
