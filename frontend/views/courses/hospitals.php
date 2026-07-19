@@ -197,6 +197,12 @@ $consultationSubject = rawurlencode($t('page_title'));
 $challengeCards = $tList('challenge_cards');
 $pathways = $tList('pathways');
 $roles = $tList('roles');
+function translate($key)
+{
+    $params = Yii::$app->params;
+    $lang = Yii::$app->language;
+ return $params[$key][$lang] ?? $params[$key]['en'];
+}
 ?>
 
 
@@ -224,7 +230,7 @@ $roles = $tList('roles');
                   <p><?= Html::encode($t('platform_text')) ?></p>
                   <div class="row g-3 mt-2">
                      <div class="col-6"><div class="meros-hospitals-stat"><strong>24/7</strong><span><?=(translate('access'))?></span></div></div>
-                     <div class="col-6"><div class="meros-hospitals-stat"><strong>A2-C1</strong><span><?=translate('levels')?></span></div></div>
+                     <div class="col-6"><div class="meros-hospitals-stat"><strong>A2-C1</strong><span><?=translate('level')?></span></div></div>
                   </div>
                </div>
             </div>
