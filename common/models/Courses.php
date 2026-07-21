@@ -153,6 +153,11 @@ class Courses extends \yii\db\ActiveRecord
       return $this->hasOne(CourseCategory::class, ['id' => 'category_id']);
    }
    
+   public function getCatName()
+   {
+      return $this->category->name_en;
+   }
+   
    public function getUser()
    {
       return $this->hasOne(User::class, ['id' => 'user_id']);

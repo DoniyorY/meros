@@ -40,13 +40,13 @@ use common\models\Mentors;
             <?= $form->field($model, 'title_uz')->textInput() ?>
             <?= $form->field($model, 'desc_uz')->textarea(['rows' => 6]) ?>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <?=$form->field($model,'lvl')->textInput(['maxlength' => true,'placeholder' => 'Enter the recommended level'])?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'preview_video_link')->textInput(['maxlength' => true]) ?>
         </div>
-        <hr>
+        <hr class="mt-3">
         <div class="col-md-4 mt-4">
             <?=$form->field($model,'icon')->fileInput()?>
         </div>
@@ -56,7 +56,7 @@ use common\models\Mentors;
         <div class="col-md-4 mt-4">
             <?=$form->field($model,'courseImage')->fileInput()?>
         </div>
-        <hr>
+        <hr class="mt-3">
         <div class="col-md-6 mt-4">
            <?= $form->field($model, 'syllabus')->fileInput() ?>
         </div>

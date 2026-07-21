@@ -20,63 +20,68 @@ use yii\behaviors\SluggableBehavior;
  */
 class CourseCategory extends \yii\db\ActiveRecord
 {
-
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'course_category';
-    }
-
-    public function behaviors()
-    {
-        return array_merge(parent::behaviors(), [
-            'slug' => [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'name_en',
-                'slugAttribute' => 'slug',
-            ]
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['status'], 'default', 'value' => 1],
-            [['name_ru', 'name_en', 'name_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
-            [['status', 'created_at', 'updated_at', 'user_id'], 'integer'],
-            [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'slug' => 'Slug',
-            'name_ru' => 'Name Ru',
-            'name_en' => 'Name En',
-            'name_uz' => 'Name Uz',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'user_id' => 'User ID',
-        ];
-    }
-
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
-
+   
+   const STATUS_ACTIVE = 1;
+   const STATUS_INACTIVE = 0;
+   
+   /**
+    * {@inheritdoc}
+    */
+   public static function tableName()
+   {
+      return 'course_category';
+   }
+   
+   public function behaviors()
+   {
+      return array_merge(parent::behaviors(), [
+         'slug' => [
+            'class' => SluggableBehavior::class,
+            'attribute' => 'name_en',
+            'slugAttribute' => 'slug',
+         ]
+      ]);
+   }
+   
+   /**
+    * {@inheritdoc}
+    */
+   public function rules()
+   {
+      return [
+         [['status'], 'default', 'value' => 1],
+         [['name_ru', 'name_en', 'name_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
+         [['status', 'created_at', 'updated_at', 'user_id'], 'integer'],
+         [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
+      ];
+   }
+   
+   /**
+    * {@inheritdoc}
+    */
+   public function attributeLabels()
+   {
+      return [
+         'id' => 'ID',
+         'slug' => 'Slug',
+         'name_ru' => 'Name Ru',
+         'name_en' => 'Name En',
+         'name_uz' => 'Name Uz',
+         'status' => 'Status',
+         'created_at' => 'Created At',
+         'updated_at' => 'Updated At',
+         'user_id' => 'User ID',
+      ];
+   }
+   
+   public function getUser()
+   {
+      return $this->hasOne(User::class, ['id' => 'user_id']);
+   }
+   
+   public function getCourses()
+   {
+      return $this->hasMany(Courses::class, ['category_id' => 'id']);
+   }
+   
 }

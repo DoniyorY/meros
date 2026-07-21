@@ -9,12 +9,39 @@ $this->title = 'Create Gallery';
 $this->params['breadcrumbs'][] = ['label' => 'Galleries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="gallery-create">
+<div class="page-content">
+    <div class="container-fluid">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
+                    <h4 class="mb-sm-0"><?= \yii\helpers\Html::encode($this->title) ?></h4>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a
+                                        href="<?= Yii::$app->homeUrl ?>"><?= Yii::$app->name ?></a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="<?= \yii\helpers\Url::to(['index']) ?>">Galleries</a>
+                            </li>
+                            <li class="breadcrumb-item active"><?= \yii\helpers\Html::encode($this->title) ?></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="gallery-create">
+           
+           <?= $this->render('_form', [
+              'model' => $model,
+           ]) ?>
 
+        </div>
+    </div>
+    <!-- container-fluid -->
 </div>
+<!-- End Page-content -->
+

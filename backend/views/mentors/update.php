@@ -1,21 +1,45 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var common\models\Mentors $model */
 
-$this->title = 'Update Mentors: ' . $model->id;
+$this->title = 'Update Mentors: ' . $model->fullname;
 $this->params['breadcrumbs'][] = ['label' => 'Mentors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="mentors-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="page-content">
+    <div class="container-fluid">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
+                    <h4 class="mb-sm-0"><?=\yii\helpers\Html::encode($this->title)?></h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="<?=Yii::$app->homeUrl?>"><?=Yii::$app->name?></a></li>
+                            <li class="breadcrumb-item"><a href="<?=Url::to(['index'])?>"><?="Mentors"?></a></li>
+                            <li class="breadcrumb-item"><a href="<?=Url::to(['view','id'=>$model->id])?>"><?=$model->fullname?></a></li>
+                            <li class="breadcrumb-item active"><?=\yii\helpers\Html::encode($this->title)?></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="mentors-update">
+           <?= $this->render('_form', [
+              'model' => $model,
+           ]) ?>
+        </div>
+    </div>
+    <!-- container-fluid -->
 </div>
+<!-- End Page-content -->
+
+

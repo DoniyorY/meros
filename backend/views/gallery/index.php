@@ -13,37 +13,61 @@ use yii\grid\GridView;
 $this->title = 'Galleries';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="gallery-index">
+<div class="page-content">
+    <div class="container-fluid">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
+                    <h4 class="mb-sm-0"><?= \yii\helpers\Html::encode($this->title) ?></h4>
 
-    <p>
-        <?= Html::a('Create Gallery', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a
+                                        href="<?= Yii::$app->homeUrl ?>"><?= Yii::$app->name ?></a></li>
+                            <li class="breadcrumb-item active"><?= \yii\helpers\Html::encode($this->title) ?></li>
+                        </ol>
+                    </div>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="gallery-index">
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            <p>
+               <?= Html::a('Create Gallery', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+           
+           <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+           
+           <?= GridView::widget([
+              'dataProvider' => $dataProvider,
+              'filterModel' => $searchModel,
+              'columns' => [
+                 ['class' => 'yii\grid\SerialColumn'],
+                 
+                 'id',
+                 'page_id',
+                 'image',
+                 'created_at',
+                 'updated_at',
+                 //'user_id',
+                 //'status',
+                 [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, Gallery $model, $key, $index, $column) {
+                       return Url::toRoute([$action, 'id' => $model->id]);
+                    }
+                 ],
+              ],
+           ]); ?>
 
-            'id',
-            'page_id',
-            'image',
-            'created_at',
-            'updated_at',
-            //'user_id',
-            //'status',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Gallery $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
 
-
+        </div>
+    </div>
+    <!-- container-fluid -->
 </div>
+<!-- End Page-content -->
+

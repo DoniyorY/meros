@@ -16,486 +16,511 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 $params = Yii::$app->params;
 ?>
-    <div class="courses-view">
-        <div class="row">
-            <div class="col-md-8">
-                <h1><?= Html::encode($this->title) ?></h1>
-            </div>
-            <div class="col-md-4 text-end">
-               <?php
-               if ($model->status == 0) {
-                  echo Html::a('Inactive',
-                     ['status', 'id' => $model->id, 'status' => 1],
-                     [
-                        'class' => 'btn btn-warning',
-                        'data' => [
-                           'confirm' => 'Are you sure you want to inactivate this Course?',
-                           'method' => 'post'
-                        ]
-                     ]);
-               } else {
-                  echo Html::a('Active',
-                     ['status', 'id' => $model->id, 'status' => 0],
-                     [
-                        'class' => 'btn btn-success',
-                        'data' => [
-                           'confirm' => 'Are you sure you want to activate this Course?',
-                           'method' => 'post'
-                        ]
-                     ]);
-               }
-               ?>
-               <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-               <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                  'class' => 'btn btn-danger',
-                  'data' => [
-                     'confirm' => 'Are you sure you want to delete this item?',
-                     'method' => 'post',
-                  ],
-               ]) ?>
-            </div>
-            <hr>
-            <div class="col-md-4">
-               <?= DetailView::widget([
-                  'model' => $model,
-                  'attributes' => [
-                     'id',
-                     [
-                        'attribute' => 'page_type',
-                        'value' => function ($data) {
-                           return Yii::$app->params['page_type'][$data->page_type];
-                        }
-                     ],
-                     [
-                        'attribute' => 'category_id',
-                        'value' => function ($data) {
-                           if ($data->category) {
-                              return $data->category->name_en;
-                           }
-                        }
-                     ],
-                     'slug',
-                     'name_ru',
-                     'name_en',
-                     'name_uz',
-                     'desc_ru:html',
-                     'desc_en:html',
-                     'desc_uz:html',
-                     [
-                        'attribute' => 'created_at',
-                        'value' => function ($data) {
-                           return date('d.m.Y H:i:s', $data->created_at);
-                        }
-                     ],
-                     [
-                        'attribute' => 'updated_at',
-                        'value' => function ($data) {
-                           return date('d.m.Y H:i:s', $data->updated_at);
-                        }
-                     ],
-                     [
-                        'attribute' => 'status',
-                        'value' => function ($data) {
-                           return $data->status == 1 ? 'Active' : 'Inactive';
-                        }
-                     ],
-                     [
-                        'attribute' => 'user_id',
-                        'value' => function ($data) {
-                           return $data->user->username;
-                        }
-                     ],
-                     [
-                        'attribute' => 'mentor_id',
-                        'value' => function ($data) {
-                           if ($data->mentor) {
-                              return $data->mentor->fullname;
-                           } else {
-                              return "Not Set!!!";
-                           }
-                        }
-                     ],
-                     'preview_video_link',
-                     [
-                        'attribute' => 'image',
-                        'format' => 'raw',
-                        'value' => function ($data) {
-                           if (!$data->image) {
-                              return 'Not Set!!!';
-                           }
-                           
-                           return Html::img(Yii::$app->request->hostInfo . '/uploads/courses/' . $data->image, [
-                              'class' => 'img-thumbnail',
-                              'style' => 'max-height: 160px;',
-                              'alt' => $data->name_en,
-                           ]);
-                        }
-                     ],
-                  ],
-               ]) ?>
-            </div>
-            <div class="col-md-8">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="subs-tab" data-bs-toggle="tab"
-                                data-bs-target="#subs-tab-pane" type="button" role="tab"
-                                aria-controls="subs-tab-pane" aria-selected="true">Subscriptions
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="features-tab" data-bs-toggle="tab"
-                                data-bs-target="#features-tab-pane" type="button" role="tab"
-                                aria-controls="features-tab-pane" aria-selected="false">Features
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="faq-tab" data-bs-toggle="tab"
-                                data-bs-target="#faq-tab-pane" type="button" role="tab"
-                                aria-controls="faq-tab-pane" aria-selected="true">FAQ
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="read-more-tab" data-bs-toggle="tab"
-                                data-bs-target="#read-more-tab-pane" type="button" role="tab"
-                                aria-controls="read-more-tab-pane" aria-selected="false">More Info
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane p-3 fade show active" id="subs-tab-pane" role="tabpanel"
-                         aria-labelledby="subs-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>Subscriptions</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                        data-bs-target="#subsModal">
-                                    Add Subscription
-                                </button>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <!-- Modal -->
-                                <div class="modal fade" id="subsModal" tabindex="-1"
-                                     aria-labelledby="subsModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="subsModalLabel">New Lesson</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                               <?= $this->render('_form_subs', [
-                                                  'model' => new SubscriptionPlans(),
-                                                  'url' => Url::to(['add-subscription', 'course_id' => $model->id]),
-                                                  'course_id' => $model->id,
-                                               ]) ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-md-12">
-                                <table class="table table-sm table-bordered table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name Ru</th>
-                                        <th>Name En</th>
-                                        <th>Name Uz</th>
-                                        <th>Price</th>
-                                        <th>Days</th>
-                                        <th>Status</th>
-                                        <th>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1;
-                                    foreach ($model->subs as $item): ?>
-                                        <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td><?= $item->name_en ?></td>
-                                            <td><?= $item->name_ru ?></td>
-                                            <td><?= $item->name_uz ?></td>
-                                            <td><?= Yii::$app->formatter->asDecimal($item->price, 0) ?></td>
-                                            <td><?= $item->duration_days ?></td>
-                                            <td><?php
-                                               if ($item->status == 0) {
-                                                  echo Html::a('Inactive',
-                                                     ['update-subs-status', 'id' => $item->id, 'status' => 1],
-                                                     [
-                                                        'class' => 'btn btn-warning btn-sm w-100',
-                                                        'data-confirm' => 'Are you sure you want to activate this Lesson?',
-                                                     ]);
-                                               } else {
-                                                  echo Html::a('Active', ['update-subs-status', 'id' => $item->id, 'status' => 0],
-                                                     [
-                                                        'class' => 'btn btn-success btn-sm w-100',
-                                                        'data-confirm' => 'Are you sure you want to inactivate this Lesson?',
-                                                     ]);
-                                               }
-                                               ?></td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['update-subs-modal', 'id' => $item->id]) ?>">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane p-3 fade" id="faq-tab-pane" role="tabpanel"
-                         aria-labelledby="faq-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>FAQ</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                        data-bs-target="#FaqModal">
-                                    Add FAQ
-                                </button>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <!-- Modal -->
-                                <div class="modal fade" id="FaqModal" tabindex="-1"
-                                     aria-labelledby="FaqModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="FaqModalLabel">New faq</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                               <?= $this->render('_form_faq', [
-                                                  'model' => new \common\models\Faq(),
-                                                  'url' => \yii\helpers\Url::to(['add-faq', 'course_id' => $model->id]),
-                                                  'course_id' => $model->id,
-                                               ]) ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-md-12">
-                                <table class="table table-sm table-bordered table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Question Ru</th>
-                                        <th>Question En</th>
-                                        <th>Question Uz</th>
-                                        <th>Answer Ru</th>
-                                        <th>Answer En</th>
-                                        <th>Answer Uz</th>
-                                        <th>Created</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1;
-                                    foreach ($faq as $item): ?>
-                                        <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td><?= $item->question_ru ?></td>
-                                            <td><?= $item->question_en ?></td>
-                                            <td><?= $item->question_uz ?></td>
-                                            <td><?= $item->answer_ru ?></td>
-                                            <td><?= $item->answer_en ?></td>
-                                            <td><?= $item->answer_uz ?></td>
-                                            <td><?=date('d.m.Y H:i',$item->created_at)?></td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['update-faq-modal', 'id' => $item->id]) ?>">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <a class="btn btn-sm btn-danger"
-                                                   href="<?= Url::to(['delete-faq', 'id' => $item->id]) ?>"
-                                                   data-method="post"
-                                                   data-confirm="Are you sure you want to delete this video?">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane p-3 fade" id="read-more-tab-pane" role="tabpanel"
-                         aria-labelledby="read-more-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>More Info</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                        data-bs-target="#ReadMoreModal">
-                                    Create Info
-                                </button>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <div class="modal fade" id="ReadMoreModal" tabindex="-1"
-                                     aria-labelledby="ReadMoreModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="ReadMoreModalLabel">Create Info</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                               <?= $this->render('_form_read_more', [
-                                                  'models' => [new \common\models\ReadMore()],
-                                                  'url' => Url::to(['add-read-more', 'course_id' => $model->id]),
-                                                  'isUpdate' => false,
-                                               ]) ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-md-12">
-                                <table class="table table-sm table-bordered table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Title Ru</th>
-                                        <th>Title En</th>
-                                        <th>Title Uz</th>
-                                        <th>Content Ru</th>
-                                        <th>Content En</th>
-                                        <th>Content Uz</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1;
-                                    foreach ($readMore as $item): ?>
-                                        <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td><?= Html::encode($item->title_ru) ?></td>
-                                            <td><?= Html::encode($item->title_en) ?></td>
-                                            <td><?= Html::encode($item->title_uz) ?></td>
-                                            <td><?= Html::encode($item->content_ru) ?></td>
-                                            <td><?= Html::encode($item->content_en) ?></td>
-                                            <td><?= Html::encode($item->content_uz) ?></td>
-                                            <td class="text-nowrap">
-                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['update-read-more-modal', 'id' => $item->id]) ?>">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <a class="btn btn-sm btn-danger"
-                                                   href="<?= Url::to(['delete-read-more', 'id' => $item->id]) ?>"
-                                                   data-method="post"
-                                                   data-confirm="Are you sure you want to delete this info?">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade p-4" id="features-tab-pane" role="tabpanel" aria-labelledby="features-tab"
-                         tabindex="0">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>Course Fetures</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
-                                        data-bs-target="#FeatureModal">
-                                    Add Feature
-                                </button>
-                            </div>
-                            <div class="col-md-12">
-                                <!-- Modal -->
-                                <div class="modal fade" id="FeatureModal" tabindex="-1"
-                                     aria-labelledby="FeatureModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="FeatureModalLabel">New Feature</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                               <?= $this->render('_form_features', [
-                                                  'model' => new \common\models\CourseFeatures(),
-                                                  'url' => \yii\helpers\Url::to(['add-feature', 'course_id' => $model->id]),
-                                                  'course_id' => $model->id,
-                                               ]) ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-md-12">
-                                <table class="table table-sm table-bordered table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name En</th>
-                                        <th>Desc En</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i = 1;
-                                    foreach ($model->features as $item): ?>
-                                        <tr>
-                                            <td><?= $i++ ?></td>
-                                            <td><?= $item->name_en ?></td>
-                                            <td><?= $item->desc_en ?></td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                        data-url="<?= Url::to(['update-feature-ajax', 'id' => $item->id]) ?>'])?>">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                            </td>
-                                            <td>
+    <div class="page-content">
+        <div class="container-fluid">
 
-                                                <a href="<?= Url::to(['delete-feature', 'id' => $item->id]) ?>"
-                                                   class="btn btn-danger btn-sm" data-method="post"
-                                                   data-confirm="Are you sure that you want to delete this item?">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
+                        <h4 class="mb-sm-0"><?=Html::encode($this->title)?></h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="<?=Yii::$app->name?>"><?=Yii::$app->name?></a></li>
+                                <li class="breadcrumb-item"><a href="<?=Url::to(['index'])?>"><?="Courses"?></a></li>
+                                <li class="breadcrumb-item active"><?=Html::encode($this->title)?></li>
+                            </ol>
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- end page title -->
+            <div class="courses-view">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1><?= Html::encode($this->title) ?></h1>
+                    </div>
+                    <div class="col-md-4 text-end">
+                       <?php
+                       if ($model->status == 0) {
+                          echo Html::a('Inactive',
+                             ['status', 'id' => $model->id, 'status' => 1],
+                             [
+                                'class' => 'btn btn-warning',
+                                'data' => [
+                                   'confirm' => 'Are you sure you want to inactivate this Course?',
+                                   'method' => 'post'
+                                ]
+                             ]);
+                       } else {
+                          echo Html::a('Active',
+                             ['status', 'id' => $model->id, 'status' => 0],
+                             [
+                                'class' => 'btn btn-success',
+                                'data' => [
+                                   'confirm' => 'Are you sure you want to activate this Course?',
+                                   'method' => 'post'
+                                ]
+                             ]);
+                       }
+                       ?>
+                       <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                       <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                          'class' => 'btn btn-danger',
+                          'data' => [
+                             'confirm' => 'Are you sure you want to delete this item?',
+                             'method' => 'post',
+                          ],
+                       ]) ?>
+                    </div>
+                    <hr>
+                    <div class="col-md-4">
+                       <?= DetailView::widget([
+                          'model' => $model,
+                          'attributes' => [
+                             'id',
+                             [
+                                'attribute' => 'page_type',
+                                'value' => function ($data) {
+                                   return Yii::$app->params['page_type'][$data->page_type];
+                                }
+                             ],
+                             [
+                                'attribute' => 'category_id',
+                                'value' => function ($data) {
+                                   if ($data->category) {
+                                      return $data->category->name_en;
+                                   }
+                                }
+                             ],
+                             'slug',
+                             'name_ru',
+                             'name_en',
+                             'name_uz',
+                             'desc_ru:html',
+                             'desc_en:html',
+                             'desc_uz:html',
+                             [
+                                'attribute' => 'created_at',
+                                'value' => function ($data) {
+                                   return date('d.m.Y H:i:s', $data->created_at);
+                                }
+                             ],
+                             [
+                                'attribute' => 'updated_at',
+                                'value' => function ($data) {
+                                   return date('d.m.Y H:i:s', $data->updated_at);
+                                }
+                             ],
+                             [
+                                'attribute' => 'status',
+                                'value' => function ($data) {
+                                   return $data->status == 1 ? 'Active' : 'Inactive';
+                                }
+                             ],
+                             [
+                                'attribute' => 'user_id',
+                                'value' => function ($data) {
+                                   return $data->user->username;
+                                }
+                             ],
+                             [
+                                'attribute' => 'mentor_id',
+                                'value' => function ($data) {
+                                   if ($data->mentor) {
+                                      return $data->mentor->fullname;
+                                   } else {
+                                      return "Not Set!!!";
+                                   }
+                                }
+                             ],
+                             'preview_video_link',
+                             [
+                                'attribute' => 'image',
+                                'format' => 'raw',
+                                'value' => function ($data) {
+                                   if (!$data->image) {
+                                      return 'Not Set!!!';
+                                   }
+                                   
+                                   return Html::img(Yii::$app->request->hostInfo . '/uploads/courses/' . $data->image, [
+                                      'class' => 'img-thumbnail',
+                                      'style' => 'max-height: 160px;',
+                                      'alt' => $data->name_en,
+                                   ]);
+                                }
+                             ],
+                          ],
+                       ]) ?>
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="subs-tab" data-bs-toggle="tab"
+                                        data-bs-target="#subs-tab-pane" type="button" role="tab"
+                                        aria-controls="subs-tab-pane" aria-selected="true">Subscriptions
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="features-tab" data-bs-toggle="tab"
+                                        data-bs-target="#features-tab-pane" type="button" role="tab"
+                                        aria-controls="features-tab-pane" aria-selected="false">Features
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="faq-tab" data-bs-toggle="tab"
+                                        data-bs-target="#faq-tab-pane" type="button" role="tab"
+                                        aria-controls="faq-tab-pane" aria-selected="true">FAQ
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="read-more-tab" data-bs-toggle="tab"
+                                        data-bs-target="#read-more-tab-pane" type="button" role="tab"
+                                        aria-controls="read-more-tab-pane" aria-selected="false">More Info
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane p-3 fade show active" id="subs-tab-pane" role="tabpanel"
+                                 aria-labelledby="subs-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>Subscriptions</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                                data-bs-target="#subsModal">
+                                            Add Subscription
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="subsModal" tabindex="-1"
+                                             aria-labelledby="subsModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="subsModalLabel">New Lesson</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <?= $this->render('_form_subs', [
+                                                          'model' => new SubscriptionPlans(),
+                                                          'url' => Url::to(['add-subscription', 'course_id' => $model->id]),
+                                                          'course_id' => $model->id,
+                                                       ]) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <table class="table table-sm table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name Ru</th>
+                                                <th>Name En</th>
+                                                <th>Name Uz</th>
+                                                <th>Price</th>
+                                                <th>Days</th>
+                                                <th>Status</th>
+                                                <th>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1;
+                                            foreach ($model->subs as $item): ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td><?= $item->name_en ?></td>
+                                                    <td><?= $item->name_ru ?></td>
+                                                    <td><?= $item->name_uz ?></td>
+                                                    <td><?= Yii::$app->formatter->asDecimal($item->price, 0) ?></td>
+                                                    <td><?= $item->duration_days ?></td>
+                                                    <td><?php
+                                                       if ($item->status == 0) {
+                                                          echo Html::a('Inactive',
+                                                             ['update-subs-status', 'id' => $item->id, 'status' => 1],
+                                                             [
+                                                                'class' => 'btn btn-warning btn-sm w-100',
+                                                                'data-confirm' => 'Are you sure you want to activate this Lesson?',
+                                                             ]);
+                                                       } else {
+                                                          echo Html::a('Active', ['update-subs-status', 'id' => $item->id, 'status' => 0],
+                                                             [
+                                                                'class' => 'btn btn-success btn-sm w-100',
+                                                                'data-confirm' => 'Are you sure you want to inactivate this Lesson?',
+                                                             ]);
+                                                       }
+                                                       ?></td>
+                                                    <td>
+                                                        <a href="<?= Url::to(['subscription-plans/view', 'id' => $item->id]) ?>" class="btn btn-primary btn-sm " target="_blank">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-3 fade" id="faq-tab-pane" role="tabpanel"
+                                 aria-labelledby="faq-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>FAQ</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                                data-bs-target="#FaqModal">
+                                            Add FAQ
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="FaqModal" tabindex="-1"
+                                             aria-labelledby="FaqModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="FaqModalLabel">New faq</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <?= $this->render('_form_faq', [
+                                                          'model' => new \common\models\Faq(),
+                                                          'url' => \yii\helpers\Url::to(['add-faq', 'course_id' => $model->id]),
+                                                          'course_id' => $model->id,
+                                                       ]) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <table class="table table-sm table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question Ru</th>
+                                                <th>Question En</th>
+                                                <th>Question Uz</th>
+                                                <th>Answer Ru</th>
+                                                <th>Answer En</th>
+                                                <th>Answer Uz</th>
+                                                <th>Created</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1;
+                                            foreach ($faq as $item): ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td><?= $item->question_ru ?></td>
+                                                    <td><?= $item->question_en ?></td>
+                                                    <td><?= $item->question_uz ?></td>
+                                                    <td><?= $item->answer_ru ?></td>
+                                                    <td><?= $item->answer_en ?></td>
+                                                    <td><?= $item->answer_uz ?></td>
+                                                    <td><?=date('d.m.Y H:i',$item->created_at)?></td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                                data-url="<?= Url::to(['update-faq-modal', 'id' => $item->id]) ?>">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <a class="btn btn-sm btn-danger"
+                                                           href="<?= Url::to(['delete-faq', 'id' => $item->id]) ?>"
+                                                           data-method="post"
+                                                           data-confirm="Are you sure you want to delete this video?">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-3 fade" id="read-more-tab-pane" role="tabpanel"
+                                 aria-labelledby="read-more-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>More Info</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                                data-bs-target="#ReadMoreModal">
+                                            Create Info
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <div class="modal fade" id="ReadMoreModal" tabindex="-1"
+                                             aria-labelledby="ReadMoreModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="ReadMoreModalLabel">Create Info</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <?= $this->render('_form_read_more', [
+                                                          'models' => [new \common\models\ReadMore()],
+                                                          'url' => Url::to(['add-read-more', 'course_id' => $model->id]),
+                                                          'isUpdate' => false,
+                                                       ]) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <table class="table table-sm table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title Ru</th>
+                                                <th>Title En</th>
+                                                <th>Title Uz</th>
+                                                <th>Content Ru</th>
+                                                <th>Content En</th>
+                                                <th>Content Uz</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1;
+                                            foreach ($readMore as $item): ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td><?= Html::encode($item->title_ru) ?></td>
+                                                    <td><?= Html::encode($item->title_en) ?></td>
+                                                    <td><?= Html::encode($item->title_uz) ?></td>
+                                                    <td><?= Html::encode($item->content_ru) ?></td>
+                                                    <td><?= Html::encode($item->content_en) ?></td>
+                                                    <td><?= Html::encode($item->content_uz) ?></td>
+                                                    <td class="text-nowrap">
+                                                        <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                                data-url="<?= Url::to(['update-read-more-modal', 'id' => $item->id]) ?>">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <a class="btn btn-sm btn-danger"
+                                                           href="<?= Url::to(['delete-read-more', 'id' => $item->id]) ?>"
+                                                           data-method="post"
+                                                           data-confirm="Are you sure you want to delete this info?">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade p-4" id="features-tab-pane" role="tabpanel" aria-labelledby="features-tab"
+                                 tabindex="0">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>Course Fetures</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                                                data-bs-target="#FeatureModal">
+                                            Add Feature
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="FeatureModal" tabindex="-1"
+                                             aria-labelledby="FeatureModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="FeatureModalLabel">New Feature</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <?= $this->render('_form_features', [
+                                                          'model' => new \common\models\CourseFeatures(),
+                                                          'url' => \yii\helpers\Url::to(['add-feature', 'course_id' => $model->id]),
+                                                          'course_id' => $model->id,
+                                                       ]) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-12">
+                                        <table class="table table-sm table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name En</th>
+                                                <th>Desc En</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1;
+                                            foreach ($model->features as $item): ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td><?= $item->name_en ?></td>
+                                                    <td><?= $item->desc_en ?></td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm modalUpdateBtn"
+                                                                data-url="<?= Url::to(['update-feature-ajax', 'id' => $item->id]) ?>'])?>">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
 
+                                                        <a href="<?= Url::to(['delete-feature', 'id' => $item->id]) ?>"
+                                                           class="btn btn-danger btn-sm" data-method="post"
+                                                           data-confirm="Are you sure that you want to delete this item?">
+                                                            <i class="bi bi-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- container-fluid -->
     </div>
+    <!-- End Page-content -->
+
+ 
 
 
 <?php
