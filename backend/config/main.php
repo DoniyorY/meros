@@ -22,7 +22,9 @@ return [
     'name'=>'MEROS Admin Panel',
    
     'components' => [
-       
+       'assetManager' => [
+          'appendTimestamp' => true,
+       ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
