@@ -51,6 +51,7 @@ $base = Yii::$app->request->baseUrl;
                                 <label class="form-label" for="password-input">Password</label>
                                 <div class="position-relative auth-pass-inputgroup mb-3">
                                    <?= $form->field($model, 'password')->passwordInput(['id' => 'password-input', 'placeholder' => 'Enter Password', 'class' => 'form-control pe-5 password-input'])->label(false) ?>
+                                    <button style="right: 20px" class="btn btn-link position-absolute top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                 </div>
                             </div>
                             <?=$form->field($model, 'rememberMe')->checkbox()?>

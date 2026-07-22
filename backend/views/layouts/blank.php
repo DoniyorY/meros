@@ -8,6 +8,7 @@ use common\widgets\Alert;
 use yii\helpers\Html;
 
 AppAsset::register($this);
+$base = Yii::$app->request->baseUrl;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -40,7 +41,12 @@ AppAsset::register($this);
     </footer>
     <!-- end Footer -->
 </div>
-
+<!-- particles js -->
+<script src="<?=$base .'/'?>libs/particles.js/particles.js"></script>
+<!-- particles app js -->
+<script src="<?=$base .'/'?>js/pages/particles.app.js"></script>
+<!-- password-addon init -->
+<script src="<?=$base .'/'?>js/pages/password-addon.init.js"></script>
 <?php $this->endBody() ?>
 </body>
 </html>
