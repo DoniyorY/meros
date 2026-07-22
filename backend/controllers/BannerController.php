@@ -12,7 +12,7 @@ use Yii;
 /**
  * BannerController implements the CRUD actions for Banner model.
  */
-class BannerController extends Controller
+class BannerController extends BaseController
 {
     /**
      * @inheritDoc

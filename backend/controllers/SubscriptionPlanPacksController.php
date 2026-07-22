@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * SubscriptionPlanPacksController implements the CRUD actions for SubscriptionPlanPacks model.
  */
-class SubscriptionPlanPacksController extends Controller
+class SubscriptionPlanPacksController extends BaseController
 {
     /**
      * @inheritDoc

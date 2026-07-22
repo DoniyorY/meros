@@ -1,6 +1,7 @@
 <?php
 
 use common\models\SubscriptionPlans;
+use common\widgets\Alert;
 use kartik\grid\EditableColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -34,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <!-- end page title -->
+       <?= Alert::widget() ?>
         <div class="subscription-plans-index">
 
             <div class="row">

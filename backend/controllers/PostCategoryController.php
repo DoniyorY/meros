@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * PostCategoryController implements the CRUD actions for PostCategory model.
  */
-class PostCategoryController extends Controller
+class PostCategoryController extends BaseController
 {
     /**
      * @inheritDoc

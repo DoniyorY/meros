@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * ReadMoreController implements the CRUD actions for ReadMore model.
  */
-class ReadMoreController extends Controller
+class ReadMoreController extends BaseController
 {
     /**
      * @inheritDoc

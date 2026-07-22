@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * CourseCategoryController implements the CRUD actions for CourseCategory model.
  */
-class CourseCategoryController extends Controller
+class CourseCategoryController extends BaseController
 {
     /**
      * @inheritDoc

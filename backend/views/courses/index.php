@@ -3,6 +3,7 @@
 use common\models\Courses;
 use common\models\User;
 use common\models\CourseCategory;
+use common\widgets\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -37,6 +38,7 @@ $params = Yii::$app->params;
             </div>
         </div>
         <!-- end page title -->
+       <?= Alert::widget() ?>
         <div class="courses-index">
             <div class="row">
                 <div class="col-md-8">

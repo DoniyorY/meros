@@ -261,7 +261,7 @@ class User extends ActiveRecord implements IdentityInterface
    }
     public function getSubscriptions()
     {
-        return $this->hasMany(UserSubscriptions::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserSubscriptions::className(), ['user_id' => 'id'])->orderBy(['created_at' => SORT_DESC]);
     }
 
     public function getProgresses()

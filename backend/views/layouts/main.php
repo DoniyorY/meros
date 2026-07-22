@@ -37,7 +37,7 @@ AppAsset::register($this);
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
         <div class="main-content">
-           <?= Alert::widget() ?>
+           
            <?= $content ?>
 
             <footer class="footer border-top">

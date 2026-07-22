@@ -12,7 +12,7 @@ use yii\web\UploadedFile;
 /**
  * PostsController implements the CRUD actions for Posts model.
  */
-class PostsController extends Controller
+class PostsController extends BaseController
 {
     /**
      * @inheritDoc

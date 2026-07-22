@@ -1,6 +1,7 @@
 <?php
 
 use common\models\SubscriptionPlans;
+use common\widgets\Alert;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -36,6 +37,7 @@ $params = Yii::$app->params;
                 </div>
             </div>
             <!-- end page title -->
+           <?= Alert::widget() ?>
             <div class="courses-view">
                 <div class="row">
                     <div class="col-md-8">

@@ -1,7 +1,9 @@
 <?php
 
+use common\services\UserLoginSessionService;
 use frontend\components\CourseUrlRule;
 use yii\log\FileTarget;
+use yii\web\UserEvent;
 
 $params = array_merge(
    require __DIR__ . '/../../common/config/params.php',
@@ -125,6 +127,15 @@ return [
          'identityClass' => 'common\models\User',
          'enableAutoLogin' => true,
          'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+         'on afterLogin' => static function (UserEvent $event): void {
+            UserLoginSessionService::start(
+               (int) $event->identity->getId()
+            );
+         },
+         
+         'on beforeLogout' => static function (): void {
+            UserLoginSessionService::finishCurrent();
+         },
       ],
       'session' => [
          // this is the name of the session cookie used for login on the frontend

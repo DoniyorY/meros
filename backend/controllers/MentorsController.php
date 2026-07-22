@@ -14,7 +14,7 @@ use Yii;
 /**
  * MentorsController implements the CRUD actions for Mentors model.
  */
-class MentorsController extends Controller
+class MentorsController extends BaseController
 {
     /**
      * @inheritDoc

@@ -22,7 +22,7 @@ use yii\web\UploadedFile;
 /**
  * CoursesController implements the CRUD actions for Courses model.
  */
-class CoursesController extends Controller
+class CoursesController extends BaseController
 {
    /**
     * @inheritDoc

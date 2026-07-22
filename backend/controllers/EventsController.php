@@ -14,7 +14,7 @@ use Yii;
 /**
  * EventsController implements the CRUD actions for Events model.
  */
-class EventsController extends Controller
+class EventsController extends BaseController
 {
    /**
     * @inheritDoc

@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 use common\models\AuthAssignment;
+use common\models\ChangePass;
 use common\models\UploadsImage;
 use common\models\User;
 use common\models\search\UserSearch;
+use common\models\UserLoginSession;
 use common\models\UserSubscriptions;
+use common\services\UserLoginSessionService;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -16,7 +18,7 @@ use yii\web\UploadedFile;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
    /**
     * @inheritDoc
@@ -30,6 +32,8 @@ class UserController extends Controller
                'class' => VerbFilter::className(),
                'actions' => [
                   'delete' => ['POST'],
+                  'reset-password' => ['POST'],
+                  'change-pass'=>['post'],
                ],
             ],
          ]
@@ -44,6 +48,7 @@ class UserController extends Controller
    public function actionIndex()
    {
       $searchModel = new UserSearch();
+      $searchModel->role = 'admin';
       $dataProvider = $searchModel->search($this->request->queryParams);
       
       return $this->render('index', [
@@ -67,11 +72,63 @@ class UserController extends Controller
     */
    public function actionView($id)
    {
+      $model = $this->findModel($id);
       $subs = UserSubscriptions::findAll(['user_id' => $id]);
+      $loginSessions = UserLoginSession::find()
+         ->where([
+            'user_id' => $model->id,
+         ])
+         ->orderBy([
+            'last_seen_at' => SORT_DESC,
+         ])
+         ->limit(20)
+         ->all();
+      
       return $this->render('view', [
-         'model' => $this->findModel($id),
+         'model' => $model,
          'subs' => $subs,
+         'loginSessions' => $loginSessions,
       ]);
+   }
+   
+   public function actionResetPassword($id)
+   {
+      $user = User::findOne(['id'=>$id]);
+      $user->setPassword('123456');
+      $user->save(false);
+      Yii::$app->session->setFlash('success', 'Your password has been reset.');
+      return $this->redirect(Yii::$app->request->referrer);
+   }
+   
+   
+   public function actionChangePass(int $id)
+   {
+      $user = User::findOne($id);
+      
+      if ($user === null) {
+         throw new NotFoundHttpException('User not found.');
+      }
+      
+      $changePass = new ChangePass($user);
+      
+      if (
+         Yii::$app->request->isPost
+         && $changePass->load(Yii::$app->request->post())
+      ) {
+         if ($changePass->changePassword()) {
+            Yii::$app->session->setFlash(
+               'success',
+               'Password has been changed.'
+            );
+         } else {
+            Yii::$app->session->setFlash(
+               'error',
+               implode('<br>', $changePass->getFirstErrors())
+            );
+         }
+      }
+      
+      return $this->redirect(Yii::$app->request->referrer);
    }
    
    /**
@@ -188,5 +245,111 @@ class UserController extends Controller
       }
       
       throw new NotFoundHttpException('The requested page does not exist.');
+   }
+   public function actionLogoutSession(int $id)
+   {
+      $loginSession = UserLoginSession::findOne($id);
+      
+      if ($loginSession === null) {
+         throw new \yii\web\NotFoundHttpException(
+            'Login session was not found.'
+         );
+      }
+      
+      if (!Yii::$app->user->can('admin')) {
+         throw new \yii\web\ForbiddenHttpException(
+            'You are not allowed to manage user sessions.'
+         );
+      }
+      
+      if (!$loginSession->getIsActive()) {
+         return $this->redirect([
+            'profile',
+            'id' => $loginSession->user_id,
+         ]);
+      }
+      
+      $currentTokenHash = UserLoginSessionService::getCurrentTokenHash();
+      
+      $isCurrentSession = $currentTokenHash !== null
+         && hash_equals(
+            $loginSession->token_hash,
+            $currentTokenHash
+         );
+      
+      $userId = $loginSession->user_id;
+      
+      if ($isCurrentSession) {
+         $loginSession->logged_out_at = time();
+         $loginSession->save(false, ['logged_out_at']);
+         
+         Yii::$app->user->logout();
+         
+         return $this->redirect(['/site/login']);
+      }
+      
+      $loginSession->revoked_at = time();
+      $loginSession->save(false, ['revoked_at']);
+      
+      Yii::$app->session->setFlash(
+         'success',
+         'The selected session has been logged out.'
+      );
+      
+      return $this->redirect([
+         'profile',
+         'id' => $userId,
+      ]);
+   }
+   
+   public function actionLogoutOtherSessions(int $userId)
+   {
+      if (!Yii::$app->user->can('admin')) {
+         throw new \yii\web\ForbiddenHttpException(
+            'You are not allowed to manage user sessions.'
+         );
+      }
+      
+      $condition = [
+         'and',
+         ['user_id' => $userId],
+         ['logged_out_at' => null],
+         ['revoked_at' => null],
+         ['>', 'expires_at', time()],
+      ];
+      
+      $currentTokenHash = UserLoginSessionService::getCurrentTokenHash();
+      
+      /*
+       * Не исключаем текущую сессию администратора,
+       * если он смотрит профиль другого пользователя.
+       */
+      if (
+         (int) Yii::$app->user->id === $userId
+         && $currentTokenHash !== null
+      ) {
+         $condition[] = [
+            '<>',
+            'token_hash',
+            $currentTokenHash,
+         ];
+      }
+      
+      UserLoginSession::updateAll(
+         [
+            'revoked_at' => time(),
+         ],
+         $condition
+      );
+      
+      Yii::$app->session->setFlash(
+         'success',
+         'All other sessions have been logged out.'
+      );
+      
+      return $this->redirect([
+         'profile',
+         'id' => $userId,
+      ]);
    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\CourseCategory;
+use common\widgets\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -33,6 +34,7 @@ $params = Yii::$app->params;
             </div>
         </div>
         <!-- end page title -->
+       <?= Alert::widget() ?>
         <div class="course-category-index">
             <div class="row">
                 <div class="col-md-8">

@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * FaqController implements the CRUD actions for Faq model.
  */
-class FaqController extends Controller
+class FaqController extends BaseController
 {
     /**
      * @inheritDoc

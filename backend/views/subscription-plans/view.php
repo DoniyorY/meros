@@ -1,5 +1,6 @@
 <?php
 
+use common\widgets\Alert;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -38,7 +39,7 @@ $this->title = $model->name_en;
             </div>
         </div>
         <!-- end page title -->
-        
+       <?= Alert::widget() ?>
         <div class="subscription-plans-view">
             <div class="row">
                 <div class="col-md-8">

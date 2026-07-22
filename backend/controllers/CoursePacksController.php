@@ -13,7 +13,7 @@ use Yii;
 /**
  * CoursePacksController implements the CRUD actions for CoursePacks model.
  */
-class CoursePacksController extends Controller
+class CoursePacksController extends BaseController
 {
     /**
      * @inheritDoc

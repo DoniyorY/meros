@@ -14,7 +14,7 @@ use yii\web\UploadedFile;
 /**
  * GalleryController implements the CRUD actions for Gallery model.
  */
-class GalleryController extends Controller
+class GalleryController extends BaseController
 {
     /**
      * @inheritDoc

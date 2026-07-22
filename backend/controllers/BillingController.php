@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * BillingController implements the CRUD actions for Billing model.
  */
-class BillingController extends Controller
+class BillingController extends BaseController
 {
     /**
      * @inheritDoc

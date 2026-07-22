@@ -1,4 +1,8 @@
 <?php
+
+use common\services\UserLoginSessionService;
+use yii\web\UserEvent;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -25,8 +29,17 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+           'on afterLogin' => static function (UserEvent $event): void {
+              UserLoginSessionService::start(
+                 (int) $event->identity->getId()
+              );
+           },
+           
+           'on beforeLogout' => static function (): void {
+              UserLoginSessionService::finishCurrent();
+           },
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
