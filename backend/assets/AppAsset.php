@@ -17,7 +17,6 @@ class AppAsset extends AssetBundle
        'css/icons.min.css',
        'css/app.min.css',
        'css/custom.min.css',
-       '',
     ];
     public $js = [
         'js/main.js',
@@ -26,9 +25,8 @@ class AppAsset extends AssetBundle
        'libs/node-waves/waves.min.js',
        'libs/feather-icons/feather.min.js',
        'js/pages/plugins/lord-icon-2.1.0.js',
-       'js/plugins.js',
+       //'js/plugins.js',
        'js/app.js',
-       '',
     ];
     public $depends = [
         'yii\web\YiiAsset',

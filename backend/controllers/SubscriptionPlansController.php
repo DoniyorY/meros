@@ -37,7 +37,7 @@ class SubscriptionPlansController extends BaseController
         );
     }
 
-    public function beforeAction($action)
+    public function beforeAction($action): bool
     {
         if ($action->id == 'delete-item') {
             $this->enableCsrfValidation = false;
