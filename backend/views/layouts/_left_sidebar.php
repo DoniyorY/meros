@@ -70,7 +70,11 @@ $base = Yii::$app->request->baseUrl;
                         <i class="ri-money-dollar-box-line"></i> <span>Subscriptions</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="<?= Url::to(['user/clients']) ?>" class="nav-link menu-link">
+                        <i class="ri-group-3-line"></i> <span>Clients</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarNews" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarNews">

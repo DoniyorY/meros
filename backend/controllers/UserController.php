@@ -57,6 +57,17 @@ class UserController extends BaseController
       ]);
    }
    
+   public function actionClients()
+   {
+      $searchModel = new UserSearch();
+      $searchModel->role = 'guest';
+      $dataProvider = $searchModel->search($this->request->queryParams);
+      return $this->render('index', [
+         'searchModel' => $searchModel,
+         'dataProvider' => $dataProvider,
+      ]);
+   }
+   
    public function actionSendEmail($id)
    {
       $user = User::findOne(['id'=>$id]);
@@ -347,9 +358,6 @@ class UserController extends BaseController
          'All other sessions have been logged out.'
       );
       
-      return $this->redirect([
-         'profile',
-         'id' => $userId,
-      ]);
+      return $this->redirect(Yii::$app->request->referrer);
    }
 }
