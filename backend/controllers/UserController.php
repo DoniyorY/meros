@@ -121,7 +121,7 @@ class UserController extends BaseController
          $billing->status = Billing::STATUS_SUCCESS;
          $billing->update(false);
          $transaction->commit();
-         //ApiController::sendZapierOrderPaidWebhook($billing);
+         ApiController::sendZapierOrderPaidWebhook($billing);
       }catch (\Exception $e){
          $transaction->rollBack();
          Yii::$app->session->setFlash('error', $e->getMessage());
