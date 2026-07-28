@@ -42,6 +42,7 @@ class UserSubscriptionsSearch extends UserSubscriptions
     public function search($params, $formName = null)
     {
         $query = UserSubscriptions::find();
+        $query->orderBy('id DESC');
 
         // add conditions that should always apply here
 
