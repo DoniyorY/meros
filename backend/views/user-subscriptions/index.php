@@ -24,9 +24,11 @@ $this->title = "User Subscriptions";
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
                     <h4 class="mb-sm-0"><?= $this->title ?></h4>
-
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item">
+                                <a href="<?= Yii::$app->homeUrl ?>"><?=Yii::$app->name?></a>
+                            </li>
                             <li class="breadcrumb-item active"><?= $this->title ?></li>
                         </ol>
                     </div>
@@ -68,8 +70,9 @@ $this->title = "User Subscriptions";
                  [
                     'attribute' => 'user_id',
                     'value' => function ($data) {
-                       return $data->user->username;
+                       return Html::a($data->user->username, ['user/view', 'id' => $data->user_id],['class'=>'btn btn-sm btn-primary w-100']);
                     },
+                    'format' => 'raw',
                     'filter' => Select2::widget([
                        'model' => $searchModel,
                        'attribute' => 'user_id',
