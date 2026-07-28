@@ -86,6 +86,8 @@ class SiteController extends Controller
     */
    public function actionIndex()
    {
+      $this->checkAllSubs();
+      $this->dropTrashBilling();
       $banner = Banner::findAll(['status' => Banner::STATUS_ACTIVE]);
       $news = Posts::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(6)->all();
       $events = Events::find()->where(['status' => 1])->orderBy(['created_at' => SORT_DESC])->limit(2)->all();
@@ -112,7 +114,30 @@ class SiteController extends Controller
       ]);
       
    }
-   
+   private function checkAllSubs()
+   {
+      
+      $user_subs = UserSubscriptions::findAll(['status'=>1]);
+      foreach ($user_subs as $item) {
+         if ($item->expires_date <= time()){
+            $item->status = 0;
+            $item->save(false);
+         }
+      }
+   }
+   private function dropTrashBilling()
+   {
+      
+      $billing = Billing::find()
+         ->where(['start_date'=>null])
+         ->andWhere(['expires_date'=>null])
+         ->andWhere(['status'=>0])
+         ->andWhere(['payment_transaction_id'=>null])
+         ->all();
+      foreach ($billing as $item) {
+         $item->delete();
+      }
+   }
    public function actionTeams()
    {
       $mentors = \common\models\Mentors::findAll(['status' => 1]);

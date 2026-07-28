@@ -83,11 +83,11 @@ $base = Yii::$app->request->baseUrl;
                     <div class="collapse menu-dropdown" id="sidebarNews">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="<?=Url::to(['post-category/index'])?>" class="nav-link"
+                                <a href="<?= Url::to(['post-category/index']) ?>" class="nav-link"
                                    data-key="t-horizontal">News Category</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['posts/index'])?>" class="nav-link">News</a>
+                                <a href="<?= Url::to(['posts/index']) ?>" class="nav-link">News</a>
                             </li>
                         </ul>
                     </div>
@@ -101,22 +101,22 @@ $base = Yii::$app->request->baseUrl;
                     <div class="collapse menu-dropdown" id="sidebarSettings">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="<?=Url::to(['banner/index'])?>" class="nav-link"> Banner </a>
+                                <a href="<?= Url::to(['banner/index']) ?>" class="nav-link"> Banner </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['gallery/index'])?>" class="nav-link"> Gallery</a>
+                                <a href="<?= Url::to(['gallery/index']) ?>" class="nav-link"> Gallery</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['user/index'])?>" class="nav-link"> User</a>
+                                <a href="<?= Url::to(['user/index']) ?>" class="nav-link"> User</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['contacts/index'])?>" class="nav-link"> Contact</a>
+                                <a href="<?= Url::to(['contacts/index']) ?>" class="nav-link"> Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['events/index'])?>" class="nav-link"> Events</a>
+                                <a href="<?= Url::to(['events/index']) ?>" class="nav-link"> Events</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=Url::to(['faq/index'])?>" class="nav-link"> FAQ</a>
+                                <a href="<?= Url::to(['faq/index']) ?>" class="nav-link"> FAQ</a>
                             </li>
                         </ul>
                     </div>
@@ -126,11 +126,13 @@ $base = Yii::$app->request->baseUrl;
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?=Url::to(['billing/index'])?>">
+                    <a class="nav-link menu-link" href="<?= Url::to(['billing/index']) ?>">
                         <i class="ri-honour-line"></i> <span>Billing</span>
                     </a>
+                    <a class="nav-link menu-link" href="<?= Url::to(['user-subscriptions/index']) ?>">
+                        <i class="ri-id-card-line"></i> <span>User Subscriptions</span>
+                    </a>
                 </li>
-
             </ul>
         </div>
         <!-- Sidebar -->

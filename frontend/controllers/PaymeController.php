@@ -33,12 +33,6 @@ final class PaymeController extends Controller
       return parent::beforeAction($action);
    }
    
-   public function actionTest()
-   {
-      echo "<pre>";
-      print_r(base64_decode('UGF5Y29tOm9FUXptcSY4QGlOeTIwanY2YW1Nc3N3ZCZtQUhzcEJ2I21VWg=='));
-      die();
-   }
    
    public function actionWebhook(): array
    {

@@ -75,4 +75,9 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
    {
       return $this->hasOne(Courses::className(), ['id' => 'course_id']);
    }
+   
+   public function getCourseName()
+   {
+      return $this->course->name_en;
+   }
 }

@@ -29,13 +29,13 @@ $params = Yii::$app->params;
     </tr>
     </thead>
     <tbody>
-    <?php $i=1; foreach ($model->billing as $item):?>
+    <?php $i=1; foreach ($billings as $item):?>
     <tr>
         <td><?=$i++?></td>
         <td><?=$item->subscription->course->name_en ?? "Not Set!!!"?></td>
         <td><?=$item->subscription->name_en ?? "Not Set!!!"?></td>
-        <td><?=date('d.m.Y H:i:s',$item->start_date)?></td>
-        <td><?=date('d.m.Y H:i:s',$item->expires_date)?></td>
+        <td><?=($item->start_date)?date('d.m.Y H:i:s',$item->start_date):"Not Set!"?></td>
+        <td><?=($item->expires_date)?date('d.m.Y H:i:s',$item->expires_date):"Not Set!"?></td>
         <td><?=$item->payment_transaction_id?></td>
         <td><?=$params['telegramStaffPaymentMethodMap'][$item->payment_provider] ?? "Not Set!!!"?></td>
         <td><?=$item->payment_status?></td>

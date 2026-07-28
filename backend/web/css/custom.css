@@ -5,3 +5,7 @@ Website: https://themesbrand.com/
 Contact: support@themesbrand.com
 File: Custom Css File
 */
+
+span.select2-selection span.select2-selection__rendered{
+    line-height: 25px !important;
+}

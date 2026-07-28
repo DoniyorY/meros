@@ -50,19 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
            <?= GridView::widget([
               'dataProvider' => $dataProvider,
               'filterModel' => $searchModel,
-              'pager' => [
-                 'prevPageLabel' => '<span class="page-item">Prev</span>',
-                 'nextPageLabel' => '<span class="page-item">Next</span>',
-                 'disabledPageCssClass' => 'page-link',
-                 'activePageCssClass' => 'page-item active',
-                 'maxButtonCount' => 5,
-                 'linkOptions' => ['class' => 'page-link'],
-                 'options' => [
-                    'tag' => 'ul',
-                    'class' => 'pagination',
-                    'style' => 'margin-left: 1px;'
-                 ],
-              ],
+              'pager' => Yii::$app->params['pager'],
               'columns' => [
                  ['class' => 'yii\grid\SerialColumn'],
                  [

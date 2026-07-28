@@ -35,7 +35,7 @@
                <?= Yii::$app->formatter->asDecimal($item->amount) ?>
             </td>
             <td>
-                <?=$item->paymentProvider->name ?? "Not Set"?>
+                <?=$item->payment_provider ?? "Not Set"?>
             </td>
             <td>
                <?= Yii::$app->params['status'][$item->status] ?>

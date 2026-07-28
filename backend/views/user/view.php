@@ -5,6 +5,7 @@ use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
+
 /** @var yii\web\View $this */
 /** @var common\models\User $model */
 $this->title = $model->fullname;
@@ -43,7 +44,9 @@ $base = Yii::$app->request->baseUrl;
                     <div class="card-body p-4">
                         <div class="text-center">
                             <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                                <img src="<?="$base/"?>images/users/user-dummy-img.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image">
+                                <img src="<?= "$base/" ?>images/users/user-dummy-img.jpg"
+                                     class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                     alt="user-profile-image">
                                 <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                                     <input id="profile-img-file-input" type="file" class="profile-img-file-input">
                                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
@@ -53,35 +56,35 @@ $base = Yii::$app->request->baseUrl;
                                     </label>
                                 </div>
                             </div>
-                            <h5 class="fs-16 mb-1"><?=$model->fullname?></h5>
-                            <p class="text-muted mb-0"><?=$model->username . ' / ' . $model->assignment->item_name?></p>
+                            <h5 class="fs-16 mb-1"><?= $model->fullname ?></h5>
+                            <p class="text-muted mb-0"><?= $model->username . ' / ' . $model->assignment->item_name ?></p>
                         </div>
                     </div>
                 </div>
                 <!--end card-->
-                <?php if ($model->assignment->item_name == "admin"):?>
-                <div class="card">
-                    <div class="card-body p-2">
-                       <?php if (!$model->staff_telegram_id) {
-                          echo Html::a(
-                             'Подключить служебный Telegram',
-                             ['/telegram-staff-connect/connect'],
-                             ['class' => 'btn btn-primary w-100']
-                          );
-                       }else{
-                          echo Html::a(
-                             'Отключить служебный Telegram',
-                             ['/telegram-staff-connect/disconnect'],
-                             [
-                                'class' => 'btn btn-outline-danger w-100',
-                                'data-method' => 'post',
-                             ]
-                          );
-                       }
-                       ?>
-                    </div>
-                </div>
-                <?php endif;?>
+               <?php if ($model->assignment->item_name == "admin"): ?>
+                   <div class="card">
+                       <div class="card-body p-2">
+                          <?php if (!$model->staff_telegram_id) {
+                             echo Html::a(
+                                'Подключить служебный Telegram',
+                                ['/telegram-staff-connect/connect'],
+                                ['class' => 'btn btn-primary w-100']
+                             );
+                          } else {
+                             echo Html::a(
+                                'Отключить служебный Telegram',
+                                ['/telegram-staff-connect/disconnect'],
+                                [
+                                   'class' => 'btn btn-outline-danger w-100',
+                                   'data-method' => 'post',
+                                ]
+                             );
+                          }
+                          ?>
+                       </div>
+                   </div>
+               <?php endif; ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
@@ -163,16 +166,17 @@ $base = Yii::$app->request->baseUrl;
                             </div>
                             <!--end tab-pane-->
                             <div class="tab-pane" id="changePassword" role="tabpanel">
-                                <?=$this->render('_change_password', ['model' => $model,'changePass'=>new ChangePass($model)])?>
-                                <?=$this->render('_session_history',['model' => $model,'loginSessions'=>$loginSessions])?>
+                               <?= $this->render('_change_password', ['model' => $model, 'changePass' => new ChangePass($model)]) ?>
+                               <?= $this->render('_session_history', ['model' => $model, 'loginSessions' => $loginSessions]) ?>
                             </div>
                             <!--end tab-pane-->
                             <div class="tab-pane" id="user-subscriptions" role="tabpanel">
-                                <?=$this->render('_user_subscriptions', ['model' => $model])?>
+                               <?= $this->render('_user_subscriptions', ['model' => $model]) ?>
                             </div>
                             <!--end tab-pane-->
                             <div class="tab-pane" id="userBilling" role="tabpanel">
-                                <?=$this->render('_user_billing',['model' => $model])?>
+                               <?= $this->render('_gift_subs', ['model' => $model]) ?>
+                               <?= $this->render('_user_billing', ['model' => $model,'billings'=>$billings]) ?>
                             </div>
                             <!--end tab-pane-->
                         </div>

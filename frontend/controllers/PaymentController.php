@@ -713,7 +713,7 @@ final class PaymentController extends Controller
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
       $billing->updated_at = time();
-      
+      $billing->status = Billing::STATUS_PENDING;
       if (!$billing->save(false)) {
          throw new RuntimeException(
             'Failed to mark Billing as pending.'
@@ -790,6 +790,7 @@ final class PaymentController extends Controller
       }
       
       $billing->payment_status = Billing::STATUS_CANCELLED;
+      $billing->status = Billing::STATUS_CANCELLED;
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
       $billing->updated_at = time();

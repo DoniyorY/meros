@@ -41,7 +41,7 @@ class BillingSearch extends Billing
      */
     public function search($params, $formName = null)
     {
-        $query = Billing::find();
+        $query = Billing::find()->orderBy(['created_at' => SORT_DESC]);
 
         // add conditions that should always apply here
 

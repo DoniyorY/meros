@@ -3,13 +3,16 @@
 namespace backend\controllers;
 
 use common\models\AuthAssignment;
+use common\models\Billing;
 use common\models\ChangePass;
+use common\models\SubscriptionPlans;
 use common\models\UploadsImage;
 use common\models\User;
 use common\models\search\UserSearch;
 use common\models\UserLoginSession;
 use common\models\UserSubscriptions;
 use common\services\UserLoginSessionService;
+use frontend\controllers\ApiController;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,6 +50,8 @@ class UserController extends BaseController
     */
    public function actionIndex()
    {
+      $this->dropTrashBilling();
+      $this->checkAllSubs();
       $searchModel = new UserSearch();
       $searchModel->role = 'admin';
       $dataProvider = $searchModel->search($this->request->queryParams);
@@ -75,6 +80,54 @@ class UserController extends BaseController
       var_dump($user->sendEmail($user));
    }
    
+   public function actionGiftSubscription()
+   {
+      $transaction = Yii::$app->db->beginTransaction();
+      try {
+         $billing = new Billing([
+            'billing_token'=>Yii::$app->security->generateRandomString(16),
+            'created_at'=>time(),
+            'updated_at'=>time(),
+            'payment_transaction_id'=>null,
+            'payment_provider'=>76,
+            'payment_status'=>Billing::STATUS_SUCCESS,
+            'status'=>Billing::STATUS_PENDING
+         ]);
+        
+         if ($billing->load($this->request->post())) {
+            $subscription = SubscriptionPlans::findOne($billing->subscription_id);
+            $billing->amount = $subscription->price;
+            $billing->start_date=time();
+            $billing->expires_date=strtotime("+$subscription->duration_days days",$billing->start_date);
+            if (!$billing->save(false)) throw new \Exception(print_r($billing->getErrors()));
+         }
+         
+         $subs = new UserSubscriptions([
+            'user_id'=>$billing->user_id,
+            'plan_id'=>$billing->subscription_id,
+            'status'=>1,
+            'subscription_key'=>Yii::$app->security->generateRandomString(16),
+            'start_date'=>$billing->start_date,
+            'expires_date'=>$billing->expires_date,
+            'created_at'=>$billing->created_at,
+            'updated_at'=>$billing->updated_at,
+            'amount'=>$billing->amount,
+            'currency_code'=>860,
+            'payment_transaction_id'=>Yii::$app->security->generateRandomString(16).'_meros_gift',
+            'payment_provider'=>"MEROS"
+         ]);
+         if (!$subs->save(false)) throw new \Exception(print_r($subs->getErrors()));
+         Yii::$app->session->setFlash('success','Subscription Gifted Successfully');
+         $billing->status = Billing::STATUS_SUCCESS;
+         $billing->update(false);
+         $transaction->commit();
+         //ApiController::sendZapierOrderPaidWebhook($billing);
+      }catch (\Exception $e){
+         $transaction->rollBack();
+         Yii::$app->session->setFlash('error', $e->getMessage());
+      }
+      return $this->redirect(Yii::$app->request->referrer);
+   }
    /**
     * Displays a single User model.
     * @param int $id
@@ -94,11 +147,12 @@ class UserController extends BaseController
          ])
          ->limit(20)
          ->all();
-      
+      $billings = Billing::find()->where(['user_id' => $id])->orderBy(['id'=>SORT_DESC])->all();
       return $this->render('view', [
          'model' => $model,
          'subs' => $subs,
          'loginSessions' => $loginSessions,
+         'billings' => $billings,
       ]);
    }
    
