@@ -10,11 +10,8 @@ use common\services\TelegramStaffNotificationService;
 use frontend\models\ChangePasswordForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ProfileForm;
-use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
-use yii\web\Controller;
 use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -30,7 +27,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
    /**
     * {@inheritdoc}

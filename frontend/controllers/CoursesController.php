@@ -14,7 +14,7 @@ use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class CoursesController extends Controller
+class CoursesController extends BaseController
 {
 
    public function actionIndex($category, $slug)

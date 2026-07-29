@@ -6,7 +6,7 @@ use common\models\Events;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class EventsController extends Controller
+class EventsController extends BaseController
 {
     public function actionIndex()
     {

@@ -27,6 +27,8 @@ return [
           //'token' => $params['telegramStaffBotToken'],
           'timeout' => 10,
        ],
-       
+       'visitTracker' => [
+          'class' => common\components\VisitTracker::class,
+       ],
     ],
 ];

@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Url;
-
+use yii\helpers\Json;
 /** @var yii\web\View $this */
 $base = Yii::$app->request->baseUrl;
 
 $this->title = 'Meros Admin Panel';
+$visitChartUrl = Url::to(['site/visit-chart']);
+$host = $_SERVER['HTTP_HOST'];
 ?>
 <div class="page-content">
     <div class="container-fluid">
@@ -119,15 +121,17 @@ $this->title = 'Meros Admin Panel';
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Course Count</p>
+                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Course
+                                            Count</p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                     <div>
                                         <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
-                                                                                               data-target="<?=$course_count?>"><?=$course_count?></span>
+                                                                                              data-target="<?= $course_count ?>"><?= $course_count ?></span>
                                         </h4>
-                                        <a href="<?=Url::to(['courses/index'])?>" class="text-decoration-underline">All Courses</a>
+                                        <a href="<?= Url::to(['courses/index']) ?>" class="text-decoration-underline">All
+                                            Courses</a>
                                     </div>
                                     <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-primary-subtle rounded fs-3">
@@ -143,22 +147,42 @@ $this->title = 'Meros Admin Panel';
                     <div class="card">
                         <div class="card-header align-items-center d-flex">
                             <h5 class="card-title mb-0 flex-grow-1">Site Visitors</h5>
+
                             <div class="flex-shrink-0">
                                 <div class="dropdown card-header-dropdown">
                                     <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
                                        aria-haspopup="true" aria-expanded="false">
-                                        <span class="fw-semibold text-uppercase fs-12">Sort by: </span><span
-                                                class="text-muted">Current Week<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                        <span class="fw-semibold text-uppercase fs-12">Sort by:</span>
+                                        <span class="text-muted">
+                                            <span id="visitChartPeriodLabel">Current Week</span>
+                                            <i class="mdi mdi-chevron-down ms-1"></i>
+                                        </span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">Today</a>
-                                        <a class="dropdown-item" href="#">Last Week</a>
-                                        <a class="dropdown-item" href="#">Last Month</a>
-                                        <a class="dropdown-item" href="#">Current Year</a>
+                                        <a class="dropdown-item visit-chart-filter" href="#" data-period="today">
+                                            Today
+                                        </a>
+                                        <a class="dropdown-item visit-chart-filter active" href="#"
+                                           data-period="current_week">
+                                            Current Week
+                                        </a>
+
+                                        <a class="dropdown-item visit-chart-filter" href="#" data-period="last_week">
+                                            Last Week
+                                        </a>
+
+                                        <a class="dropdown-item visit-chart-filter" href="#" data-period="last_month">
+                                            Last Month
+                                        </a>
+
+                                        <a class="dropdown-item visit-chart-filter" href="#" data-period="current_year">
+                                            Current Year
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card header -->
+                        </div>
+
                         <div class="card-body">
                             <div id="column_chart_datalabel" data-colors='["--vz-primary"]' class="apex-charts"
                                  dir="ltr"></div>
@@ -171,7 +195,7 @@ $this->title = 'Meros Admin Panel';
                     <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mb-0 flex-grow-1">Recent Contacts</h4>
                         <div class="flex-shrink-0">
-                            <a href="<?=Url::to(['contacts/index'])?>" class="btn btn-soft-primary btn-sm">
+                            <a href="<?= Url::to(['contacts/index']) ?>" class="btn btn-soft-primary btn-sm">
                                 View All
                             </a>
                         </div>
@@ -179,16 +203,21 @@ $this->title = 'Meros Admin Panel';
                     <div class="card-body">
                         <div data-simplebar class="mx-n3 px-3" style="height: 440px;">
                             <div class="vstack gap-3">
-                                <?php foreach ($contacts as $item):?>
-                                <div class="d-flex gap-3">
-                                    <img src="<?= "$base/" ?>images/users/user-dummy-img.jpg" alt=""
-                                         class="avatar-sm rounded flex-shrink-0">
-                                    <div class="flex-shrink-1">
-                                        <h6 class="mb-2"><?=$item->fullname?> <span class="text-muted"><?=date('d.m.Y H:i:s',$item->created_at)?></span></h6>
-                                        <p class="text-muted mb-0">" <?=$item->subject?> "</p>
-                                    </div>
-                                </div>
-                                <?php endforeach;?>
+                               <?php foreach ($contacts as $item): ?>
+
+                                   <div class="d-flex gap-3">
+                                       <img src="<?= "$base/" ?>images/users/user-dummy-img.jpg" alt=""
+                                            class="avatar-sm rounded flex-shrink-0">
+                                       <div class="flex-shrink-1">
+                                           <a href="<?= Url::to(['contacts/view', 'id' => $item->id]) ?>">
+                                               <h6 class="mb-2"><?= $item->fullname ?> <span
+                                                           class="text-muted"><?= date('d.m.Y H:i:s', $item->created_at) ?></span>
+                                               </h6>
+                                           </a>
+                                           <p class="text-muted mb-0">" <?= $item->subject ?> "</p>
+                                       </div>
+                                   </div>
+                               <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -197,7 +226,7 @@ $this->title = 'Meros Admin Panel';
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Recent Article</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Customers</h4>
                         <div class="flex-shrink-0">
                             <div class="dropdown card-header-dropdown">
                                 <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
@@ -219,13 +248,12 @@ $this->title = 'Meros Admin Panel';
                                 <thead class="table-light">
                                 <tr class="text-muted">
                                     <th scope="col">No</th>
-                                    <th scope="col">Blog Title</th>
-                                    <th scope="col">Post Date</th>
-                                    <th scope="col">Category</th>
-                                    <th scope="col">Comment</th>
-                                    <th scope="col">Like</th>
-                                    <th scope="col">Shared</th>
-                                    <th scope="col">Viewers</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Created at</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                                 </thead>
 
@@ -337,89 +365,40 @@ $this->title = 'Meros Admin Panel';
                     </div>
                 </div>
             </div><!--end col-->
-            <div class="col-xl-4">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0 me-3">
-                                        <img src="<?= "$base/" ?>images/users/avatar-1.jpg" alt=""
-                                             class="avatar-sm rounded-circle img-thumbnail">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex">
-                                            <div class="flex-grow-1">
-                                                <h5 class="mb-1 card-title">Anna Adame</h5>
-                                                <p class="mb-0 text-muted">Founder</p>
-                                            </div>
+            <div class="col-xxl-4">
+                <div class="card card-height-100">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">News Feed</h4>
+                        <div>
+                            <a href="<?=Url::to(['posts/index'])?>" class="btn btn-soft-primary btn-sm">
+                                View all
+                            </a>
+                        </div>
+                    </div><!-- end card-header -->
 
-                                            <div class="flex-shrink-0 dropdown ms-2">
-                                                <button class="btn btn-light btn-sm" type="button"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    <i class="bx bxs-cog align-middle me-1"></i> Setting
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-4">
-                                                <div class="border p-2 rounded border-dashed">
-                                                    <p class="text-muted text-truncate mb-2">Total Post</p>
-                                                    <h5 class="mb-0">26</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="border p-2 rounded border-dashed">
-                                                    <p class="text-muted text-truncate mb-2">Subscribes</p>
-                                                    <h5 class="mb-0">17k</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="border p-2 rounded border-dashed">
-                                                    <p class="text-muted text-truncate mb-2">Viewers</p>
-                                                    <h5 class="mb-0">487k</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="card-body">
+                        <?php $i=0; foreach ($posts as $post):?>
+                        <div class="d-flex <?=($i==0)?"align-middle":"mt-4"?>">
+                            <div class="flex-shrink-0">
+                                <img src="<?= "/uploads/posts/$post->image" ?>" class="rounded img-fluid"
+                                     style="height: 60px;" alt="">
                             </div>
-                        </div>
-                    </div><!--end col-->
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header align-items-center d-flex">
-                                <h5 class="card-title mb-0 flex-grow-1">Used Device</h5>
-                                <div class="flex-shrink-0">
-                                    <div class="dropdown card-header-dropdown">
-                                        <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                           aria-haspopup="true" aria-expanded="false">
-                                            <span class="text-muted fs-16"><i
-                                                        class="mdi mdi-dots-vertical align-middle"></i></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="#">Today</a>
-                                            <a class="dropdown-item" href="#">Last Week</a>
-                                            <a class="dropdown-item" href="#">Last Month</a>
-                                            <a class="dropdown-item" href="#">Current Year</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end card header -->
-                            <div class="card-body">
-                                <div id="gradient_chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning"]'
-                                     class="apex-charts" dir="ltr"></div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 lh-base">
+                                    <a href="<?=Url::to(['posts/view','id'=>$post->id])?>" class="text-reset"><?=$post->name_en?></a>
+                                </h6>
+                                <p class="text-muted fs-12 mb-0"><?=date('d.m.Y',$post->created_at)?> <i
+                                            class="mdi mdi-circle-medium align-middle mx-1"></i><?=date('H:i',$post->created_at)?></p>
                             </div>
+                        </div><!-- end -->
+                        <?php $i++; endforeach;?>
+                        <div class="mt-3 text-center">
+                            <a href="<?=Url::to(['posts/index'])?>" class="text-muted text-decoration-underline">View all News</a>
                         </div>
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end col-->
+
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div>
         </div><!--end row-->
 
     </div>
@@ -429,5 +408,5 @@ $this->title = 'Meros Admin Panel';
 <!-- apexcharts -->
 <?php
 $this->registerJsFile("$base/libs/apexcharts/apexcharts.min.js");
-$this->registerJsFile("$base/js/pages/dashboard-blog.init.js");
+$this->registerJsFile("$base/js/site.js");
 ?>

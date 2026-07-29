@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use common\models\Posts;
 
-class PostController extends Controller
+class PostController extends BaseController
 {
 
     public function actionIndex()
