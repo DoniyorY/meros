@@ -69,7 +69,7 @@ function translate($key)
                             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
                             <?= $form->field($model, 'email')->input('email') ?>
                             <?= $form->field($model, 'subject')->textInput() ?>
-                            <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
+                            <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
                             <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
                                 'template' => '<div class="row g-3 align-items-center"><div class="col-sm-5">{image}</div><div class="col-sm-7">{input}</div></div>',
                             ]) ?>

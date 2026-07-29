@@ -2,7 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Billing;
+use common\models\Contacts;
+use common\models\Courses;
 use common\models\LoginForm;
+use common\models\User;
+use common\models\UserSubscriptions;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -64,7 +69,22 @@ class SiteController extends BaseController
    {
       $this->dropTrashBilling();
       $this->checkAllSubs();
-      return $this->render('index');
+      $billing_count = Billing::find()->where(['status'=>Billing::STATUS_SUCCESS])->count();
+      $client_count = User::find()
+         ->joinWith('assignment')
+         ->where(['auth_assignment.item_name' => 'guest'])
+         ->andWhere(['status'=>10])
+         ->count();
+      $course_count = Courses::find()->where(['status'=>1])->count();
+      $subs_count = UserSubscriptions::find()->where(['status'=>1])->count();
+      $contacts = Contacts::findAll(['status'=>0]);
+      return $this->render('index',[
+         'billing_count' => $billing_count,
+         'client_count' => $client_count,
+         'course_count' => $course_count,
+         'subs_count' => $subs_count,
+         'contacts' => $contacts,
+      ]);
    }
    
    /**
@@ -82,6 +102,10 @@ class SiteController extends BaseController
       
       $model = new LoginForm();
       if ($model->load(Yii::$app->request->post()) && $model->login()) {
+         if (Yii::$app->user->identity->status == 9){
+            Yii::$app->session->setFlash('warning','Your Account Has Been Inactivated');
+            return $this->refresh();
+         }
          if (Yii::$app->user->can('guest')) {
             Yii::$app->user->logout();
             Yii::$app->session->setFlash('warning', 'HTTP ERROR 403 You are not allowed to access this page.');;

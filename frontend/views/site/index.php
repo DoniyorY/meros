@@ -300,6 +300,7 @@ if (!empty($comments)) {
                           ],
                        ]); ?>
                        <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label($homeT('contact_label_name')) ?>
+                       <?=$form->field($contactModel, 'email')->textInput(['autocomplete'=>'email'])->label($homeT('contact_label_email')) ?>
                        <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label($homeT('contact_label_phone_required')) ?>
                        <?= $form->field($contactModel, 'direction')->textInput()->label($homeT('contact_label_direction')) ?>
                        <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label($homeT('contact_label_message')) ?>

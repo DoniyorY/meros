@@ -1893,5 +1893,10 @@ return [
       'ru'=>'уровень',
       'en'=>'levels',
       'uz'=>'bosqich'
+   ],
+   'contact_label_email'=>[
+      'ru'=>'Эл.Почта',
+      'en'=>'Email',
+      'uz'=>'El.Pochta'
    ]
 ];

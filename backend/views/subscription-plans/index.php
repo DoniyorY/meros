@@ -22,12 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
-                    <h4 class="mb-sm-0"><?=\yii\helpers\Html::encode($this->title)?></h4>
+                    <h4 class="mb-sm-0"><?= \yii\helpers\Html::encode($this->title) ?></h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="<?=Yii::$app->homeUrl?>"><?=Yii::$app->name?></a></li>
-                            <li class="breadcrumb-item active"><?=\yii\helpers\Html::encode($this->title)?></li>
+                            <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Yii::$app->name ?></a>
+                            </li>
+                            <li class="breadcrumb-item active"><?= \yii\helpers\Html::encode($this->title) ?></li>
                         </ol>
                     </div>
 
@@ -58,11 +59,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($data) {
                        if ($data->course) {
                           return $data->course->name_en;
-                       }else{
+                       } else {
                           return "Not Set!!!";
                        }
                     },
-                    'filter' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_en','catName'),
+                    'filter' => \yii\helpers\ArrayHelper::map(\common\models\Courses::find()->all(), 'id', 'name_en', 'catName'),
                     'format' => 'raw',
                  ],
                  //'id',
@@ -81,7 +82,12 @@ $this->params['breadcrumbs'][] = $this->title;
                        return date('d.m.Y H:i:s', $data->updated_at);
                     }
                  ],
-                 'price',
+                 [
+                    'attribute' => 'price',
+                    'value' => function ($data) {
+                       return Yii::$app->formatter->asDecimal($data->price);
+                    }
+                 ],
                  'duration_days',
                  [
                     'attribute' => 'status',

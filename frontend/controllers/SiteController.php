@@ -94,7 +94,6 @@ class SiteController extends Controller
       $contactModel = new ContactForm(['scenario' => 'homepage']);
       
       if ($contactModel->load(Yii::$app->request->post())) {
-         $contactModel->email = Yii::$app->params['senderEmail'];
          $contactModel->subject = 'Homepage consultation request';
          
          if ($contactModel->validate() && $contactModel->sendEmail(Yii::$app->params['adminEmail'])) {
