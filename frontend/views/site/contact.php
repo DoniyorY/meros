@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var \frontend\models\ContactForm $model */
+/** @var \common\models\Contacts $model */
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -66,8 +66,9 @@ function translate($key)
                         <h2><?= Html::encode($params['send_us_message'][$lang] ?? $params['send_us_message']['en']) ?></h2>
                         <p><?= Html::encode($params['contact_form_intro'][$lang] ?? $params['contact_form_intro']['en']) ?></p>
                         <?php $form = ActiveForm::begin(['id' => 'contact-form', 'options' => ['class' => 'meros-form']]); ?>
-                            <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+                            <?= $form->field($model, 'fullname')->textInput(['autofocus' => true]) ?>
                             <?= $form->field($model, 'email')->input('email') ?>
+                            <?= $form->field($model, 'phone')->input('tel') ?>
                             <?= $form->field($model, 'subject')->textInput() ?>
                             <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
                             <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [

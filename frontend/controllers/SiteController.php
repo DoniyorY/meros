@@ -19,8 +19,8 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Contacts;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 use common\models\Banner;
 use common\models\Posts;
 use common\models\Events;
@@ -91,18 +91,13 @@ class SiteController extends Controller
       $banner = Banner::findAll(['status' => Banner::STATUS_ACTIVE]);
       $news = Posts::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(6)->all();
       $events = Events::find()->where(['status' => 1])->orderBy(['created_at' => SORT_DESC])->limit(2)->all();
-      $contactModel = new ContactForm(['scenario' => 'homepage']);
+      $contactModel = new Contacts(['scenario' => 'homepage']);
       
       if ($contactModel->load(Yii::$app->request->post())) {
-         $contactModel->subject = 'Homepage consultation request';
-         
-         if ($contactModel->validate() && $contactModel->sendEmail(Yii::$app->params['adminEmail'])) {
+         if ($contactModel->save()) {
             Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-         } else {
-            Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+            return $this->refresh();
          }
-         
-         return $this->refresh();
       }
       
       return $this->render('index', [
@@ -268,15 +263,12 @@ class SiteController extends Controller
     */
    public function actionContact()
    {
-      $model = new ContactForm();
-      if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-         if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+      $model = new Contacts();
+      if ($model->load(Yii::$app->request->post())) {
+         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-         } else {
-            Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+            return $this->refresh();
          }
-         
-         return $this->refresh();
       }
       
       return $this->render('contact', [

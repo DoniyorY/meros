@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "contacts".
@@ -19,7 +19,19 @@ use Yii;
  */
 class Contacts extends \yii\db\ActiveRecord
 {
+    public $verifyCode;
 
+    /**
+     * {@inheritdoc}
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->getIsNewRecord() && $this->status === null) {
+            $this->status = 0;
+        }
+    }
 
     /**
      * {@inheritdoc}
@@ -32,13 +44,28 @@ class Contacts extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            [['fullname', 'email', 'phone', 'subject', 'message', 'created_at', 'updated_at', 'status'], 'required'],
+            [['fullname', 'email', 'phone', 'subject', 'message'], 'required', 'except' => 'homepage'],
+            [['fullname', 'phone', 'message'], 'required', 'on' => 'homepage'],
             [['message'], 'string'],
             [['created_at', 'updated_at', 'status'], 'integer'],
             [['fullname', 'email', 'phone', 'subject'], 'string', 'max' => 255],
+            ['email', 'email'],
+            ['status', 'default', 'value' => 0],
+            [['email', 'subject'], 'default', 'value' => '', 'on' => 'homepage'],
+            ['verifyCode', 'captcha', 'except' => 'homepage'],
         ];
     }
 
@@ -49,7 +76,7 @@ class Contacts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'fullname' => 'Fullname',
+            'fullname' => 'Full name',
             'email' => 'Email',
             'phone' => 'Phone',
             'subject' => 'Subject',
@@ -57,6 +84,7 @@ class Contacts extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
+            'verifyCode' => 'Verification Code',
         ];
     }
 

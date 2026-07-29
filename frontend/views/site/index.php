@@ -2,7 +2,7 @@
 
 /** @var yii\web\View $this */
 
-/** @var \frontend\models\ContactForm $contactModel */
+/** @var \common\models\Contacts $contactModel */
 
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -299,11 +299,11 @@ if (!empty($comments)) {
                              'errorOptions' => ['class' => 'invalid-feedback d-block'],
                           ],
                        ]); ?>
-                       <?= $form->field($contactModel, 'name')->textInput(['autocomplete' => 'name'])->label($homeT('contact_label_name')) ?>
+                       <?= $form->field($contactModel, 'fullname')->textInput(['autocomplete' => 'name'])->label($homeT('contact_label_name')) ?>
                        <?=$form->field($contactModel, 'email')->textInput(['autocomplete'=>'email'])->label($homeT('contact_label_email')) ?>
                        <?= $form->field($contactModel, 'phone')->textInput(['autocomplete' => 'tel'])->label($homeT('contact_label_phone_required')) ?>
-                       <?= $form->field($contactModel, 'direction')->textInput()->label($homeT('contact_label_direction')) ?>
-                       <?= $form->field($contactModel, 'body')->textarea(['rows' => 5])->label($homeT('contact_label_message')) ?>
+                       <?= $form->field($contactModel, 'subject')->textInput()->label($homeT('contact_label_direction')) ?>
+                       <?= $form->field($contactModel, 'message')->textarea(['rows' => 5])->label($homeT('contact_label_message')) ?>
                        <?= Html::submitButton($homeT('send_message_button'), ['class' => 'btn meros-consultation-btn', 'name' => 'homepage-contact-button']) ?>
                         <p class="meros-consultation-note"><?= Html::encode($homeT('consultation_privacy_note')) ?></p>
                        <?php ActiveForm::end(); ?>
