@@ -2,12 +2,22 @@
 
 use yii\helpers\Url;
 use yii\helpers\Json;
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
 /** @var yii\web\View $this */
+/** @var common\models\User[] $customers */
+/** @var yii\data\Pagination $customerPagination */
+/** @var string $customerSort */
 $base = Yii::$app->request->baseUrl;
 
 $this->title = 'Meros Admin Panel';
 $visitChartUrl = Url::to(['site/visit-chart']);
 $host = $_SERVER['HTTP_HOST'];
+$customerSortLabels = [
+    'subscribed' => 'Subscribed',
+    'newest' => 'Newest',
+    'oldest' => 'Oldest',
+];
 ?>
 <div class="page-content">
     <div class="container-fluid">
@@ -232,12 +242,15 @@ $host = $_SERVER['HTTP_HOST'];
                                 <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="fw-semibold text-uppercase fs-12">Sort by: </span><span
-                                            class="text-muted">Popular <i class="mdi mdi-chevron-down ms-1"></i></span>
+                                            class="text-muted"><?= Html::encode($customerSortLabels[$customerSort]) ?> <i class="mdi mdi-chevron-down ms-1"></i></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Popular</a>
-                                    <a class="dropdown-item" href="#">Newest</a>
-                                    <a class="dropdown-item" href="#">Oldest</a>
+                                    <?php foreach ($customerSortLabels as $sort => $label): ?>
+                                        <a class="dropdown-item<?= $customerSort === $sort ? ' active' : '' ?>"
+                                           href="<?= Url::current(['customerSort' => $sort, 'customerPage' => null]) ?>">
+                                            <?= Html::encode($label) ?>
+                                        </a>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -258,108 +271,42 @@ $host = $_SERVER['HTTP_HOST'];
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>
-                                        <img src="<?= "$base/" ?>images/blog/img-2.jpg" alt="" class="me-2 rounded"
-                                             height="40">
-                                        <a href="#!" class="text-body fw-medium">The Evolution of Minimalism in
-                                            Design</a>
-                                    </td>
-                                    <td>20 Sep, 2024</td>
-                                    <td><span class="badge bg-success-subtle text-success p-2">MinimalDesign</span></td>
-                                    <td>23</td>
-                                    <td>157</td>
-                                    <td>11</td>
-                                    <td>2149</td>
-                                </tr>
-                                <tr>
-                                    <td>02</td>
-                                    <td>
-                                        <img src="<?= "$base/" ?>images/blog/img-3.jpg" alt="" class="me-2 rounded"
-                                             height="40">
-                                        <a href="#!" class="text-body fw-medium">Mastering User Experience Through
-                                            Storytelling</a>
-                                    </td>
-                                    <td>11 Feb, 2024</td>
-                                    <td><span class="badge bg-success-subtle text-success p-2">UXDesign</span></td>
-                                    <td>547</td>
-                                    <td>1458</td>
-                                    <td>317</td>
-                                    <td>34978</td>
-                                </tr>
-                                <tr>
-                                    <td>03</td>
-                                    <td>
-                                        <img src="<?= "$base/" ?>images/blog/img-4.jpg" alt="" class="me-2 rounded"
-                                             height="40">
-                                        <a href="#!" class="text-body fw-medium">Designing for Purpose: A Mindful
-                                            Approach</a>
-                                    </td>
-                                    <td>15 Sep, 2024</td>
-                                    <td><span class="badge bg-success-subtle text-success p-2">CreativeProcess</span>
-                                    </td>
-                                    <td>88</td>
-                                    <td>649</td>
-                                    <td>237</td>
-                                    <td>1982</td>
-                                </tr>
-                                <tr>
-                                    <td>04</td>
-                                    <td>
-                                        <img src="<?= "$base/" ?>images/blog/img-5.jpg" alt="" class="me-2 rounded"
-                                             height="40">
-                                        <a href="#!" class="text-body fw-medium">How to Overcome Creative Block</a>
-                                    </td>
-                                    <td>09 July, 2024</td>
-                                    <td><span class="badge bg-success-subtle text-success p-2">CreativeBlock</span></td>
-                                    <td>67</td>
-                                    <td>1114</td>
-                                    <td>1547</td>
-                                    <td>15747</td>
-                                </tr>
-                                <tr>
-                                    <td>05</td>
-                                    <td>
-                                        <img src="<?= "$base/" ?>images/blog/img-6.jpg" alt="" class="me-2 rounded"
-                                             height="40">
-                                        <a href="#!" class="text-body fw-medium">Building Brand Identity through
-                                            Design</a>
-                                    </td>
-                                    <td>19 Nov, 2024</td>
-                                    <td><span class="badge bg-success-subtle text-success p-2">BrandDesign</span></td>
-                                    <td>8</td>
-                                    <td>10</td>
-                                    <td>7</td>
-                                    <td>110</td>
-                                </tr>
+                                <?php foreach ($customers as $index => $customer): ?>
+                                    <tr>
+                                        <td><?= $customerPagination->offset + $index + 1 ?></td>
+                                        <td><?= Html::encode($customer->username) ?></td>
+                                        <td><?= Html::encode($customer->fullname) ?></td>
+                                        <td><?= Yii::$app->formatter->asDatetime($customer->created_at, 'php:d.m.Y H:i:s') ?></td>
+                                        <td><?= Html::mailto(Html::encode($customer->email), $customer->email) ?></td>
+                                        <td><?= Html::encode($customer->phone) ?></td>
+                                        <td>
+                                            <?= Html::a('View', ['user/view', 'id' => $customer->id], [
+                                                'class' => 'btn btn-soft-primary btn-sm',
+                                            ]) ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <?php if (!$customers): ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">No customers found.</td>
+                                    </tr>
+                                <?php endif; ?>
                                 </tbody><!-- end tbody -->
                             </table><!-- end table -->
                         </div>
                         <div class="align-items-center mt-3 row g-3 text-center text-sm-start">
                             <div class="col-sm">
-                                <div class="text-muted">Showing <span class="fw-semibold">5</span> of <span
-                                            class="fw-semibold">14</span> Results
+                                <div class="text-muted">Showing <span class="fw-semibold"><?= count($customers) ?></span> of <span
+                                            class="fw-semibold"><?= $customerPagination->totalCount ?></span> Results
                                 </div>
                             </div>
                             <div class="col-sm-auto">
-                                <ul class="pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0">
-                                    <li class="page-item disabled">
-                                        <a href="#!" class="page-link">←</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#!" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#!" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#!" class="page-link">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#!" class="page-link">→</a>
-                                    </li>
-                                </ul>
+                                <?= LinkPager::widget([
+                                    'pagination' => $customerPagination,
+                                    'options' => [
+                                        'class' => 'pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0',
+                                    ],
+                                ]) ?>
                             </div>
                         </div>
                     </div>

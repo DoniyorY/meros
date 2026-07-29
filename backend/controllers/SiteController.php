@@ -12,6 +12,7 @@ use common\models\UserSubscriptions;
 use Yii;
 use yii\db\Expression;
 use yii\db\Query;
+use yii\data\Pagination;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
@@ -90,6 +91,34 @@ class SiteController extends BaseController
       $subs_count = UserSubscriptions::find()->where(['status'=>1])->count();
       $posts = Posts::find()->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->limit(4)->all();
       $contacts = Contacts::findAll(['status'=>0]);
+
+      $customerSort = Yii::$app->request->get('customerSort', 'subscribed');
+      $customerSortOptions = [
+         'subscribed' => new Expression(
+            'EXISTS (SELECT 1 FROM user_subscriptions WHERE user_subscriptions.user_id = user.id) DESC, user.created_at DESC'
+         ),
+         'newest' => ['user.created_at' => SORT_DESC],
+         'oldest' => ['user.created_at' => SORT_ASC],
+      ];
+
+      if (!is_string($customerSort) || !isset($customerSortOptions[$customerSort])) {
+         $customerSort = 'subscribed';
+      }
+
+      $customersQuery = User::find()
+         ->joinWith('assignment')
+         ->where(['auth_assignment.item_name' => 'guest']);
+      $customerPagination = new Pagination([
+         'totalCount' => $customersQuery->count(),
+         'pageSize' => 5,
+         'pageParam' => 'customerPage',
+      ]);
+      $customers = $customersQuery
+         ->orderBy($customerSortOptions[$customerSort])
+         ->offset($customerPagination->offset)
+         ->limit($customerPagination->limit)
+         ->all();
+
       return $this->render('index',[
          'billing_count' => $billing_count,
          'client_count' => $client_count,
@@ -97,6 +126,9 @@ class SiteController extends BaseController
          'subs_count' => $subs_count,
          'contacts' => $contacts,
          'posts' => $posts,
+         'customers' => $customers,
+         'customerPagination' => $customerPagination,
+         'customerSort' => $customerSort,
       ]);
    }
    
