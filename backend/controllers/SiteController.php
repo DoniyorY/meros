@@ -295,6 +295,9 @@ class SiteController extends BaseController
             'session_id',
             '',
          ])
+         ->andWhere([
+            'is_bot'=>0,
+         ])
          ->groupBy($groupExpression)
          ->indexBy('bucket')
          ->all();

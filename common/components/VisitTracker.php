@@ -11,6 +11,10 @@ class VisitTracker extends Component
    {
       $request = Yii::$app->request;
       
+      $userAgent = Yii::$app->request->userAgent;
+      
+      
+      
       if (!$request->isGet || $request->isAjax) {
          return;
       }
@@ -56,8 +60,21 @@ class VisitTracker extends Component
          'referrer' => $request->referrer,
          'visited_at' => time(),
       ]);
-      
+      $visit->is_bot = $this->isBot($request->userAgent) ? 1 : 0;
       $visit->save(false);
+   }
+   private function isBot(?string $userAgent): bool
+   {
+      if (!$userAgent) {
+         return true;
+      }
+      
+      return (bool) preg_match(
+         '/bot|crawler|spider|slurp|facebookexternalhit|preview|'
+         . 'google|bing|yandex|baidu|duckduck|ahrefs|semrush|'
+         . 'mj12bot|dotbot|petalbot|gptbot|chatgpt-user/i',
+         $userAgent
+      );
    }
 }
 ?>
