@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Json;
 use yii\helpers\Html;
-use yii\widgets\LinkPager;
+use yii\bootstrap5\LinkPager;
 /** @var yii\web\View $this */
 /** @var common\models\User[] $customers */
 /** @var yii\data\Pagination $customerPagination */
