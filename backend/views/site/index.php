@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Json;
 use yii\helpers\Html;
 use yii\bootstrap5\LinkPager;
+use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\User[] $customers */
 /** @var yii\data\Pagination $customerPagination */
@@ -234,13 +235,17 @@ $customerSortLabels = [
                 </div>
             </div>
             <div class="col-xl-8">
+                <?php Pjax::begin([
+                    'id' => 'customers-pjax',
+                    'timeout' => 10000,
+                ]); ?>
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mb-0 flex-grow-1">Customers</h4>
                         <div class="flex-shrink-0">
                             <div class="dropdown card-header-dropdown">
                                 <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
+                                   data-pjax="0" aria-haspopup="true" aria-expanded="false">
                                     <span class="fw-semibold text-uppercase fs-12">Sort by: </span><span
                                             class="text-muted"><?= Html::encode($customerSortLabels[$customerSort]) ?> <i class="mdi mdi-chevron-down ms-1"></i></span>
                                 </a>
@@ -282,6 +287,7 @@ $customerSortLabels = [
                                         <td>
                                             <?= Html::a('View', ['user/view', 'id' => $customer->id], [
                                                 'class' => 'btn btn-soft-primary btn-sm',
+                                                'data-pjax' => '0',
                                             ]) ?>
                                         </td>
                                     </tr>
@@ -311,6 +317,7 @@ $customerSortLabels = [
                         </div>
                     </div>
                 </div>
+                <?php Pjax::end(); ?>
             </div><!--end col-->
             <div class="col-xxl-4">
                 <div class="card card-height-100">
