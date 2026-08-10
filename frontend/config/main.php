@@ -123,6 +123,9 @@ return [
          'csrfParam' => '_csrf-frontend',
          'baseUrl' => '',
       ],
+      'seo' => [
+         'class' => \frontend\components\Seo::class,
+      ],
       'user' => [
          'identityClass' => 'common\models\User',
          'enableAutoLogin' => true,
@@ -165,6 +168,7 @@ return [
          'enableStrictParsing' => false,
          
          'rules' => [
+            'sitemap.xml' => 'site/sitemap',
             /*
              * Системные страницы ставим выше,
              * чтобы не обращаться к базе без необходимости.
@@ -196,6 +200,7 @@ return [
              */
             'events' => 'events/index',
             'events/<id:\d+>' => 'events/view',
+            'post/<id:\d+>' => 'post/view',
             
             /*
              * Динамическая категория + динамический курс.

@@ -25,6 +25,9 @@ $this->title = $t('b2b_page_title');
 
 $base = Yii::$app->request->baseUrl;
 $courseName = $courses->{"name_$lang"} ?: $courses->name_en;
+$this->params['seoDescription'] = $courses->{"desc_$lang"} ?: $courses->desc_en;
+$this->params['seoImage'] = $courses->course_image ? Yii::$app->request->baseUrl . "/uploads/courses/courseImage/$courses->course_image" : '/logo.png';
+$this->params['ogType'] = 'product';
 $this->params['hideBreadcrumbs'] = true;
 $courseDescription = $courses->{"desc_$lang"} ?: $courses->desc_en;
 $heroImage = $courses->image ? "$base/uploads/courses/$courses->image" : "$base/images/meros_hospital.jpg";

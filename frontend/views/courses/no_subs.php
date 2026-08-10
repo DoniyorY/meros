@@ -20,6 +20,9 @@ if (!empty($comments)) {
 }
 $courseName = $courses->{"name_$lang"} ?: $courses->name_en;
 $this->title = $courseName;
+$this->params['seoDescription'] = $courses->{"desc_$lang"} ?: $courses->desc_en;
+$this->params['seoImage'] = $courses->course_image ? "$base/uploads/courses/courseImage/$courses->course_image" : '/logo.png';
+$this->params['ogType'] = 'product';
 $this->params['hideBreadcrumbs'] = true;
 $courseAnchorNavItems = [
    ['label' => translate('pricing'), 'href' => '#tickets'],

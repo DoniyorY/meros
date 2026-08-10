@@ -23,6 +23,9 @@ use common\models\Posts;
 use common\models\Events;
 use common\models\Gallery;
 use yii\web\NotFoundHttpException;
+use common\models\Courses;
+use common\models\CourseCategory;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -104,6 +107,57 @@ class SiteController extends BaseController
          'contactModel' => $contactModel,
       ]);
       
+   }
+
+   /** XML index of every public, indexable page in all supported languages. */
+   public function actionSitemap(): string
+   {
+      Yii::$app->response->format = Response::FORMAT_RAW;
+      Yii::$app->response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
+
+      $pages = [];
+      foreach (['', 'about', 'contact', 'team', 'post', 'events', 'faq/faq-students', 'faq/faq-organisations'] as $path) {
+         $pages[] = ['path' => $path, 'priority' => $path === '' ? '1.0' : '0.7'];
+      }
+
+      $categories = CourseCategory::find()->where(['status' => 1])->indexBy('id')->all();
+      foreach (Courses::find()->where(['status' => Courses::STATUS_ACTIVE])->all() as $course) {
+         if (isset($categories[$course->category_id])) {
+            $pages[] = [
+               'path' => $categories[$course->category_id]->slug . '/' . $course->slug,
+               'lastmod' => $course->updated_at,
+               'priority' => '0.9',
+            ];
+         }
+      }
+      foreach (Posts::find()->where(['status' => 1])->all() as $post) {
+         $pages[] = ['path' => 'post/' . $post->id, 'lastmod' => $post->updated_at, 'priority' => '0.7'];
+      }
+      foreach (Events::find()->where(['status' => 1])->all() as $event) {
+         $pages[] = ['path' => 'events/' . $event->id, 'lastmod' => $event->updated_at, 'priority' => '0.7'];
+      }
+
+      $origin = rtrim(Yii::$app->request->hostInfo, '/');
+      $xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'];
+      foreach ($pages as $page) {
+         foreach (['ru', 'en', 'uz'] as $language) {
+            $location = $origin . '/' . $language . '/' . ltrim($page['path'], '/');
+            $xml[] = '  <url>';
+            $xml[] = '    <loc>' . htmlspecialchars($location, ENT_XML1) . '</loc>';
+            if (!empty($page['lastmod'])) {
+               $xml[] = '    <lastmod>' . gmdate('Y-m-d', (int) $page['lastmod']) . '</lastmod>';
+            }
+            foreach (['ru', 'en', 'uz'] as $alternate) {
+               $href = $origin . '/' . $alternate . '/' . ltrim($page['path'], '/');
+               $xml[] = '    <xhtml:link rel="alternate" hreflang="' . $alternate . '" href="' . htmlspecialchars($href, ENT_XML1) . '" />';
+            }
+            $xml[] = '    <priority>' . $page['priority'] . '</priority>';
+            $xml[] = '  </url>';
+         }
+      }
+      $xml[] = '</urlset>';
+
+      return implode("\n", $xml);
    }
    private function checkAllSubs()
    {

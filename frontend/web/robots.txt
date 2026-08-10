@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /*/login
+Disallow: /*/signup
+Disallow: /*/profile
+Disallow: /*/request-password-reset
+Disallow: /*/reset-password
+Disallow: /*/payment/
+Disallow: /*/telegram/
+Disallow: /*/api/
+Disallow: /*?*
+
+Sitemap: https://merosedu.uz/sitemap.xml

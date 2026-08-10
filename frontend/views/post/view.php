@@ -10,6 +10,9 @@ $t = static function ($key) use ($params, $lang) {
 };
 $base = Yii::$app->request->baseUrl;
 $this->title = $model->{"name_$lang"} ?: $model->name_en;
+$this->params['seoDescription'] = $model->{"desc_$lang"} ?: $model->desc_en;
+$this->params['seoImage'] = "$base/uploads/posts/$model->image";
+$this->params['ogType'] = 'article';
 $this->params['breadcrumbs'][] = [
     'label' => $t('news_page_title'),
     'url' => ['post/index'],

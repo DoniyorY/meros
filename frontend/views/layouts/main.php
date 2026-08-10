@@ -19,6 +19,7 @@ $category = CourseCategory::findAll(['status' => 1]);
 $params = Yii::$app->params;
 $homeLabel = $params['home'][$lang] ?? $params['home']['en'] ?? 'Home';
 $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
+(Yii::$app->seo)->register();
 
 ?>
 <?php $this->beginPage() ?>
@@ -29,6 +30,9 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
         <meta name="viewport" content="width=device-width, initial-scale=1">
        <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
+       <?php if (!empty($this->params['seoSchema'])): ?>
+           <?= Html::script(json_encode($this->params['seoSchema'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), ['type' => 'application/ld+json']) ?>
+       <?php endif; ?>
        <?php $this->head() ?>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     </head>
