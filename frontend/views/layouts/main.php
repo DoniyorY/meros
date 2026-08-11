@@ -33,6 +33,17 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
        <?php if (!empty($this->params['seoSchema'])): ?>
            <?= Html::script(json_encode($this->params['seoSchema'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), ['type' => 'application/ld+json']) ?>
        <?php endif; ?>
+        <!-- Google Tag Manager -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BGGS96YQZ5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-BGGS96YQZ5');
+        </script>
+        <!-- End Google Tag Manager -->
        <?php $this->head() ?>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     </head>
