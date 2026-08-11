@@ -92,9 +92,9 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                 </a>
                             </div>
                         </div>
-                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-lg-end"
+                        <nav class="collapse navbar-collapse bs-navbar-collapse justify-content-xxl-end"
                              id="primary-navigation" role="navigation">
-                            <ul class="navbar-nav ms-lg-auto align-items-lg-center">
+                            <ul class="navbar-nav ms-xxl-auto align-items-xxl-center">
                                <?php foreach ($category as $item): $courses = Courses::findAll(['category_id' => $item->id, 'status' => 1]) ?>
                                    <li class="nav-item has-child-wrapper">
                                        <a href="#" class="nav-link has-child no-link" aria-haspopup="true"

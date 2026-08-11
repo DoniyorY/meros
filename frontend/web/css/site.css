@@ -3118,7 +3118,7 @@ body.modal-open .modal-backdrop { z-index: 1050; }
     }
 
     .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
-        align-items: stretch;
+        align-items: stretch !important;
         background: transparent;
         gap: 6px;
         margin: 0;
@@ -3128,6 +3128,8 @@ body.modal-open .modal-backdrop { z-index: 1050; }
 
     .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav > li {
         border: 0;
+        text-align: left;
+        width: 100%;
     }
 
     .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a,
@@ -3141,6 +3143,7 @@ body.modal-open .modal-backdrop { z-index: 1050; }
         display: flex;
         justify-content: space-between;
         padding: 13px 14px !important;
+        text-align: left;
         width: 100%;
     }
 
