@@ -76,7 +76,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
         <!-- Header -->
         <div class="navigation-wrapper sticky-top" style="position:sticky">
             <div class="primary-navigation-wrapper">
-                <header class="navbar navbar-expand-lg" id="top" role="banner">
+                <header class="navbar navbar-expand-xxl" id="top" role="banner">
                     <div class="container-fluid px-3 px-lg-4">
                         <div class="navbar-header d-flex align-items-center justify-content-between">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -132,7 +132,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item mobile-account-navigation d-lg-none">
+                                <li class="nav-item mobile-account-navigation d-xxl-none">
                                    <?php if (!Yii::$app->user->isGuest): ?>
                                        <a href="<?= Url::to(['site/profile']) ?>" class="nav-link mobile-account-link">
                                           <?=$params['my_profile'][$lang]?>
@@ -170,7 +170,7 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
        <?php
        $headerDropdownJs = <<<JS
 (function () {
-    var mobileQuery = window.matchMedia('(max-width: 991.98px)');
+    var mobileQuery = window.matchMedia('(max-width: 1399.98px)');
     var navigation = document.getElementById('primary-navigation');
 
     if (!navigation) {

@@ -107,7 +107,7 @@
     color: inherit;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
         width: 100%;
     }
@@ -286,7 +286,7 @@ img {
     min-height: 150px;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navigation-wrapper .navbar-header {
         width: 100%;
     }

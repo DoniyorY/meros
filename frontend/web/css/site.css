@@ -3072,7 +3072,7 @@ body.modal-open .modal-backdrop { z-index: 1050; }
     }
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .secondary-navigation-wrapper .secondary-navigation {
         display: none !important;
     }
@@ -3316,7 +3316,7 @@ body.modal-open .modal-backdrop { z-index: 1050; }
     content: "";
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navigation-wrapper .brand-link {
         background: linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
         border-radius: 18px;
@@ -3370,9 +3370,50 @@ body.modal-open .modal-backdrop { z-index: 1050; }
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1400px) {
     #primary-navigation.collapse:not(.show) {
         opacity: 1;
+    }
+}
+
+/* Keep the desktop header on one balanced row on medium and smaller laptops. */
+@media (min-width: 1400px) and (max-width: 1750px) {
+    .navigation-wrapper .primary-navigation-wrapper header .container-fluid {
+        gap: clamp(10px, 1vw, 18px);
+        padding-left: clamp(16px, 2vw, 32px) !important;
+        padding-right: clamp(16px, 2vw, 32px) !important;
+    }
+
+    .navigation-wrapper .navbar-header,
+    .navigation-wrapper .navbar-brand {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    .navigation-wrapper .brand-logo,
+    .navigation-wrapper .primary-navigation-wrapper header .navbar-brand img {
+        height: clamp(44px, 3vw, 52px) !important;
+        max-width: clamp(160px, 13vw, 220px);
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav {
+        flex-wrap: nowrap;
+        gap: clamp(2px, 0.35vw, 6px);
+        justify-content: flex-end;
+        min-width: 0;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li a,
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav > li > a,
+    .navigation-wrapper .navbar-nav .nav-link {
+        font-size: clamp(12px, 0.78vw, 14px);
+        padding: 10px clamp(8px, 0.65vw, 12px);
+        white-space: nowrap;
     }
 }
 
@@ -3400,7 +3441,7 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 /* Mobile navigation readability and collapse animation fixes. */
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navigation-wrapper #primary-navigation.navbar-collapse {
         transform-origin: top center;
     }
@@ -3450,7 +3491,7 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 /* Keep language selector closed unless explicitly toggled, and fix mobile account order/readability. */
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li.active > .child-navigation {
         max-height: 0;
         opacity: 0;
