@@ -3379,6 +3379,31 @@ body.modal-open .modal-backdrop { z-index: 1050; }
     }
 }
 
+/* Keep desktop dropdowns usable on short laptop screens and at browser zoom. */
+@media (min-width: 1400px) and (max-height: 799.98px) {
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation {
+        max-height: min(55vh, calc(100vh - 190px));
+        overscroll-behavior: contain;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-color: rgba(7, 113, 123, 0.45) transparent;
+        scrollbar-width: thin;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation::-webkit-scrollbar-thumb {
+        background: rgba(7, 113, 123, 0.45);
+        border-radius: 999px;
+    }
+
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
 /* Keep the desktop header on one balanced row on medium and smaller laptops. */
 @media (min-width: 1400px) and (max-width: 1750px) {
     .navigation-wrapper .primary-navigation-wrapper header .container-fluid {
