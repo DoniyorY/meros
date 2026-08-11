@@ -3156,6 +3156,10 @@ body.modal-open .modal-backdrop { z-index: 1050; }
         padding: 8px;
     }
 
+    .navigation-wrapper .primary-navigation-wrapper header nav .navbar-nav li .child-navigation li + li {
+        margin-top: 4px;
+    }
+
     .mobile-account-navigation {
         display: block;
     }
