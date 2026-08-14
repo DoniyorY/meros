@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 
 class CoursesController extends BaseController
 {
-
+   
    public function actionIndex($category, $slug)
    {
       if ($category === 'healthcare-employers' && $slug === 'hospitals') {
@@ -25,13 +25,13 @@ class CoursesController extends BaseController
       if ($category === 'healthcare-employers' && in_array($slug, ['recruit', 'international-healthcare-recruitment-projects', 'healthcare-recruitment-companies'], true)) {
          return $this->actionRecruit($category, $slug);
       }
-
+      
       $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
       if ($category === null || $courses === null) {
          throw new NotFoundHttpException('Курс не найден.');
       }
-      $faqs = Faq::find()->where(['course_id'=>$courses->id])->asArray()->all();
+      $faqs = Faq::find()->where(['course_id' => $courses->id])->asArray()->all();
       $view = (int)$courses->page_type === 0 ? 'b2b' : 'no_subs';
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       return $this->render($view, [
@@ -40,7 +40,7 @@ class CoursesController extends BaseController
          'faqItems' => $faqs,
       ]);
    }
-
+   
    public function actionHospitals($category, $course)
    {
       $category = CourseCategory::findOne(['slug' => $category]);
@@ -48,14 +48,14 @@ class CoursesController extends BaseController
       if ($category === null || $courses === null) {
          throw new NotFoundHttpException('Курс не найден.');
       }
-
+      
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       return $this->render('hospitals', [
          'courses' => $courses,
          'subs' => $subs,
       ]);
    }
-
+   
    public function actionRecruit($category, $course)
    {
       $category = CourseCategory::findOne(['slug' => $category]);
@@ -63,18 +63,18 @@ class CoursesController extends BaseController
       if ($category === null || $courses === null) {
          throw new NotFoundHttpException('Курс не найден.');
       }
-
+      
       $subs = SubscriptionPlans::findAll(['status' => 1, 'course_id' => $courses->id]);
       return $this->render('recruit', [
          'courses' => $courses,
          'subs' => $subs,
       ]);
    }
-
+   
    public function actionGetPlan($id)
    {
       $subs = SubscriptionPlans::findOne($id);
-      $cleaning = Billing::find()->where(['user_id'=>null])->andWhere(['status'=>0])->all();
+      $cleaning = Billing::find()->where(['user_id' => null])->andWhere(['status' => 0])->all();
       $now = time();
       foreach ($cleaning as $item) {
          if ($now > $item->created_at + 86400) {
@@ -84,67 +84,120 @@ class CoursesController extends BaseController
       if (!$subs) {
          throw new \yii\web\NotFoundHttpException();
       }
-
+      
       $cookies = Yii::$app->request->cookies;
-
+      
       $billing = null;
+      
+      $gaClientId = $cookies->getValue('meros_ga_client_id');
+      $gaSessionId = $cookies->getValue('meros_ga_session_id');
 
-      // Ищем существующий billing по токену из cookie
+
+// Ищем существующий billing по токену из cookie
       if ($cookies->has('billing_token')) {
-
+         
          $billingToken = $cookies->getValue('billing_token');
-
+         
          $billing = Billing::find()
             ->where([
                'billing_token' => $billingToken,
-               'status' => 0, // только неоплаченные
+               'status' => 0,
             ])
             ->one();
-         if($billing){
-            if (!Yii::$app->user->isGuest && $billing->user_id == null) {
+         
+         if ($billing) {
+            $changed = false;
+            
+            /*
+             * Если пользователь уже авторизовался
+             */
+            if (!Yii::$app->user->isGuest && $billing->user_id === null) {
                $billing->user_id = Yii::$app->user->id;
+               $changed = true;
+            }
+            
+            /*
+             * GA данные сохраняем только если
+             * раньше их не получили.
+             *
+             * Старые значения НЕ перезаписываем.
+             */
+            if (!$billing->ga_client_id && $gaClientId) {
+               $billing->ga_client_id = $gaClientId;
+               $changed = true;
+            }
+            
+            if (!$billing->ga_session_id && $gaSessionId) {
+               $billing->ga_session_id = $gaSessionId;
+               $changed = true;
+            }
+            
+            if ($changed) {
+               $billing->updated_at = time();
                $billing->save(false);
             }
          }
          
-         // если пользователь открыл другой тариф
+         
+         /*
+          * Пользователь выбрал другой тариф.
+          *
+          * Старый invoice не используем.
+          */
          if ($billing && $billing->subscription_id != $subs->id) {
             $billing = null;
          }
       }
+      
 
-      // если не нашли - создаем новый
+// Если billing не найден — создаём новый
       if (!$billing) {
-
+         
          $billing = new Billing([
             'billing_token' => Yii::$app->security->generateRandomString(32),
-            'user_id' => Yii::$app->user->id ?? null,
+            'user_id' => Yii::$app->user->isGuest ? null : Yii::$app->user->id,
             'subscription_id' => $subs->id,
             'amount' => $subs->price,
             'status' => 0,
+            /*
+             * GA4
+             */
+            'ga_client_id' => $gaClientId ?: null,
+            
+            'ga_session_id' => $gaSessionId ?: null,
+            
             'created_at' => time(),
+            
             'updated_at' => time(),
          ]);
-
+         
          $billing->save(false);
-
+         
+         
          Yii::$app->response->cookies->add(
             new \yii\web\Cookie([
                'name' => 'billing_token',
+               
                'value' => $billing->billing_token,
-               'expire' => time() + 86400, // 1 день
+               
+               'expire' => time() + 86400,
+               
                'httpOnly' => true,
+               
+               'sameSite' => \yii\web\Cookie::SAME_SITE_LAX,
+               
+               'secure' => Yii::$app->request->isSecureConnection,
             ])
          );
       }
-
-
+      
+      
       return $this->render('invoice', [
          'model' => $subs,
          'billing' => $billing,
       ]);
    }
-
+   
    public function actionGuestRegister()
    {
       if (Yii::$app->request->isPost) {
@@ -180,7 +233,7 @@ class CoursesController extends BaseController
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', $e->getMessage());
          }
-
+         
          return $this->redirect(Yii::$app->request->referrer);
       }
    }
@@ -201,11 +254,12 @@ class CoursesController extends BaseController
          '{platform_link}' => (string)Yii::$app->params['coursePlatformUrl'],
       ]);
    }
-   public function actionDownload($id,$file)
+   
+   public function actionDownload($id, $file)
    {
-  
+      
       $course = Courses::findOne($id);
-      $name = $file."_file";
+      $name = $file . "_file";
       if (!$course || empty($course->$name)) {
          throw new NotFoundHttpException('File not found. 1');
       }
@@ -226,8 +280,9 @@ class CoursesController extends BaseController
       ]);
    }
    
-   public function actionTest(){
-      $user = User::findOne(['id'=>6]);
+   public function actionTest()
+   {
+      $user = User::findOne(['id' => 6]);
       echo "<pre>";
       print_r($user->sendEmail($user));
       die();

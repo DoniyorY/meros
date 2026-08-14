@@ -7,6 +7,7 @@ namespace frontend\controllers;
 use common\models\Billing;
 use common\models\PaymeLog;
 use common\models\PaymeTransaction;
+use common\models\SubscriptionPlans;
 use common\models\UserSubscriptions;
 use JsonException;
 use RuntimeException;
@@ -168,7 +169,7 @@ final class PaymeController extends Controller
          requestBody: $rawBody,
          response: $response,
          authorized: $authorized,
-         durationMs: (int) round(
+         durationMs: (int)round(
             (microtime(true) - $startedAt) * 1000
          )
       );
@@ -205,7 +206,7 @@ final class PaymeController extends Controller
       $billingId = $this->extractBillingId($account);
       
       $billing = Billing::findOne($billingId);
-      $this->assertBillingCanBePaid($billing, $amount *100);
+      $this->assertBillingCanBePaid($billing, $amount * 100);
       
       return ['allow' => true];
    }
@@ -239,7 +240,7 @@ final class PaymeController extends Controller
          }
          
          $billing = Billing::findOne($billingId);
-         $this->assertBillingCanBePaid($billing, $amount *100);
+         $this->assertBillingCanBePaid($billing, $amount * 100);
          
          $isRecovery = $this->isCreateRecovery(
             $billing,
@@ -326,7 +327,7 @@ final class PaymeController extends Controller
          $transaction = $this->findOrRecoverTransaction($paymeId);
          
          if (
-            (int) $transaction->state
+            (int)$transaction->state
             === PaymeTransaction::STATE_PERFORMED
          ) {
             $dbTransaction->commit();
@@ -335,7 +336,7 @@ final class PaymeController extends Controller
          }
          
          if (
-            (int) $transaction->state
+            (int)$transaction->state
             !== PaymeTransaction::STATE_CREATED
          ) {
             throw new PaymeRpcException(
@@ -354,8 +355,8 @@ final class PaymeController extends Controller
          $nowMs = $this->nowMs();
          
          if (
-            (int) $transaction->payme_time > 0
-            && ($nowMs - (int) $transaction->payme_time)
+            (int)$transaction->payme_time > 0
+            && ($nowMs - (int)$transaction->payme_time)
             >= self::TRANSACTION_TIMEOUT_MS
          ) {
             $transaction->state = PaymeTransaction::STATE_CANCELLED;
@@ -388,6 +389,16 @@ final class PaymeController extends Controller
          $billing->save(false);
          if ($billing !== null) {
             ApiController::sendZapierOrderPaidWebhook($billing);
+            try {
+               $plan = SubscriptionPlans::findOne(['id' => $billing->subscription_id]);
+               $sent = Yii::$app->googleAnalytics->purchase($billing, $plan, 'Payme');
+               if ($sent) {
+                  $billing->ga_purchase_sent_at = time();
+                  $billing->save(false, ['ga_purchase_sent_at']);
+               }
+            } catch (Throwable $e) {
+               Yii::error(['billing_id' => $billing->id, 'error' => $e->getMessage()], 'analytics');
+            }
          }
          $dbTransaction->commit();
          
@@ -409,7 +420,7 @@ final class PaymeController extends Controller
       
       try {
          $transaction = $this->findOrRecoverTransaction($paymeId);
-         $state = (int) $transaction->state;
+         $state = (int)$transaction->state;
          
          if (in_array(
             $state,
@@ -519,8 +530,7 @@ final class PaymeController extends Controller
       
       return [
          'transactions' => array_map(
-            fn (PaymeTransaction $transaction): array =>
-            $this->statementResponse($transaction),
+            fn(PaymeTransaction $transaction): array => $this->statementResponse($transaction),
             $rows
          ),
       ];
@@ -563,7 +573,8 @@ final class PaymeController extends Controller
     */
    private function findOrRecoverTransaction(
       string $paymeId
-   ): PaymeTransaction {
+   ): PaymeTransaction
+   {
       $transaction = PaymeTransaction::findByPaymeId($paymeId);
       
       if ($transaction !== null) {
@@ -600,13 +611,13 @@ final class PaymeController extends Controller
       $transaction->updated_at = time();
       
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_SUCCESS
       ) {
          $transaction->state = PaymeTransaction::STATE_PERFORMED;
          $transaction->perform_time = $timestampMs;
       } elseif (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_CANCELLED
       ) {
          $transaction->state = $this->hasSubscriptionHistory($paymeId)
@@ -636,17 +647,18 @@ final class PaymeController extends Controller
    
    private function isCreateRecovery(
       Billing $billing,
-      string $paymeId
-   ): bool {
+      string  $paymeId
+   ): bool
+   {
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          !== Billing::STATUS_PENDING
       ) {
          return false;
       }
       
       $storedToken = trim(
-         (string) $billing->payment_transaction_id
+         (string)$billing->payment_transaction_id
       );
       
       if ($storedToken === '') {
@@ -671,14 +683,15 @@ final class PaymeController extends Controller
    
    private function claimBillingForTransaction(
       Billing $billing,
-      string $paymeId
-   ): void {
+      string  $paymeId
+   ): void
+   {
       $currentToken = trim(
-         (string) $billing->payment_transaction_id
+         (string)$billing->payment_transaction_id
       );
       
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_PENDING
          && $currentToken !== ''
       ) {
@@ -699,7 +712,7 @@ final class PaymeController extends Controller
       $updated = Billing::updateAll([
          'payment_status' => Billing::STATUS_PENDING,
          'payment_transaction_id' => $paymeId,
-         'payment_provider' => (int) $this->config(
+         'payment_provider' => (int)$this->config(
             'providerCode',
             2
          ),
@@ -733,7 +746,7 @@ final class PaymeController extends Controller
          
          if (
             $freshBilling === null
-            || trim((string) $freshBilling->payment_transaction_id)
+            || trim((string)$freshBilling->payment_transaction_id)
             !== $paymeId
          ) {
             throw new PaymeRpcException(
@@ -752,16 +765,17 @@ final class PaymeController extends Controller
    
    private function assertSameTransaction(
       PaymeTransaction $transaction,
-      ?Billing $billing,
-      int $paymeTime,
-      int $amount
-   ): void {
+      ?Billing         $billing,
+      int              $paymeTime,
+      int              $amount
+   ): void
+   {
       if (
          $billing === null
-         || (string) $transaction->billing_id
-         !== (string) $billing->id
-         || (int) $transaction->amount !== $amount
-         || (int) $transaction->payme_time !== $paymeTime
+         || (string)$transaction->billing_id
+         !== (string)$billing->id
+         || (int)$transaction->amount !== $amount
+         || (int)$transaction->payme_time !== $paymeTime
       ) {
          throw new PaymeRpcException(
             -31008,
@@ -776,8 +790,9 @@ final class PaymeController extends Controller
    
    private function assertStoredPaymeToken(
       ?Billing $billing,
-      string $paymeId
-   ): void {
+      string   $paymeId
+   ): void
+   {
       if ($billing === null) {
          throw new PaymeRpcException(
             -31003,
@@ -790,7 +805,7 @@ final class PaymeController extends Controller
       }
       
       $storedToken = trim(
-         (string) $billing->payment_transaction_id
+         (string)$billing->payment_transaction_id
       );
       
       if ($storedToken === '') {
@@ -836,8 +851,9 @@ final class PaymeController extends Controller
    
    private function assertBillingCanBePaid(
       ?Billing $billing,
-      int $amountTiyin
-   ): void {
+      int      $amountTiyin
+   ): void
+   {
       if ($billing === null) {
          throw new PaymeRpcException(
             -31050,
@@ -852,7 +868,7 @@ final class PaymeController extends Controller
       
       $paymentStatus = $billing->payment_status === null
          ? null
-         : (int) $billing->payment_status;
+         : (int)$billing->payment_status;
       
       $allowedStatuses = [
          null,
@@ -877,7 +893,7 @@ final class PaymeController extends Controller
          );
       }
       
-      if ($this->billingAmountTiyin($billing) !== $amountTiyin /100) {
+      if ($this->billingAmountTiyin($billing) !== $amountTiyin / 100) {
          throw new PaymeRpcException(
             -31001,
             $this->message(
@@ -891,14 +907,14 @@ final class PaymeController extends Controller
    
    private function billingAmountTiyin(Billing $billing): int
    {
-      $amount = (int) $billing->amount;
+      $amount = (int)$billing->amount;
       
       return $amount * 100;
    }
    
    private function billingTimestampMs(Billing $billing): int
    {
-      $timestamp = (int) ($billing->updated_at
+      $timestamp = (int)($billing->updated_at
          ?: $billing->created_at
             ?: time());
       
@@ -907,11 +923,12 @@ final class PaymeController extends Controller
    
    private function markBillingPending(
       Billing $billing,
-      string $paymeId
-   ): void {
+      string  $paymeId
+   ): void
+   {
       $billing->payment_status = Billing::STATUS_PENDING;
       $billing->payment_transaction_id = $paymeId;
-      $billing->payment_provider = (int) $this->config(
+      $billing->payment_provider = (int)$this->config(
          'providerCode',
          2
       );
@@ -925,11 +942,12 @@ final class PaymeController extends Controller
    
    private function markBillingSuccess(
       Billing $billing,
-      string $paymeId
-   ): void {
+      string  $paymeId
+   ): void
+   {
       $billing->payment_status = Billing::STATUS_SUCCESS;
       $billing->payment_transaction_id = $paymeId;
-      $billing->payment_provider = (int) $this->config(
+      $billing->payment_provider = (int)$this->config(
          'providerCode',
          2
       );
@@ -938,7 +956,7 @@ final class PaymeController extends Controller
       $billing->start_date = $startDate;
       
       if (empty($billing->expires_date)) {
-         $duration = (string) $this->config(
+         $duration = (string)$this->config(
             'subscriptionDuration',
             '+3 months'
          );
@@ -968,23 +986,24 @@ final class PaymeController extends Controller
    
    private function markBillingCancelled(
       Billing $billing,
-      bool $wasPerformed
-   ): void {
+      bool    $wasPerformed
+   ): void
+   {
       $billing->payment_status = Billing::STATUS_CANCELLED;
-      $billing->payment_provider = (int) $this->config(
+      $billing->payment_provider = (int)$this->config(
          'providerCode',
          2
       );
       
       if ($wasPerformed) {
          $this->deactivateUserSubscription(
-            (string) $billing->payment_transaction_id
+            (string)$billing->payment_transaction_id
          );
       }
       
       if (
          $wasPerformed
-         && (bool) $this->config(
+         && (bool)$this->config(
             'clearSubscriptionDatesOnRefund',
             true
          )
@@ -1002,9 +1021,10 @@ final class PaymeController extends Controller
    
    private function createOrUpdateUserSubscription(
       Billing $billing,
-      string $paymeId
-   ): void {
-      $provider = (string) $this->config(
+      string  $paymeId
+   ): void
+   {
+      $provider = (string)$this->config(
          'subscriptionPaymentProvider',
          'payme'
       );
@@ -1024,13 +1044,13 @@ final class PaymeController extends Controller
          $subscription->created_at = time();
       }
       
-      $subscription->plan_id = (int) $billing->subscription_id;
-      $subscription->user_id = (int) $billing->user_id;
+      $subscription->plan_id = (int)$billing->subscription_id;
+      $subscription->user_id = (int)$billing->user_id;
       $subscription->status = UserSubscriptions::STATUS_ACTIVE;
-      $subscription->start_date = (int) $billing->start_date;
-      $subscription->expires_date = (int) $billing->expires_date;
-      $subscription->amount = (int) $billing->amount;
-      $subscription->currency_code = (int) $this->config(
+      $subscription->start_date = (int)$billing->start_date;
+      $subscription->expires_date = (int)$billing->expires_date;
+      $subscription->amount = (int)$billing->amount;
+      $subscription->currency_code = (int)$this->config(
          'currencyCode',
          860
       );
@@ -1047,12 +1067,13 @@ final class PaymeController extends Controller
    
    private function deactivateUserSubscription(
       string $paymeId
-   ): void {
+   ): void
+   {
       if ($paymeId === '') {
          throw $this->missingStoredPaymeTokenError();
       }
       
-      $provider = (string) $this->config(
+      $provider = (string)$this->config(
          'subscriptionPaymentProvider',
          'payme'
       );
@@ -1108,7 +1129,7 @@ final class PaymeController extends Controller
    
    private function canCancelPerformedBilling(): bool
    {
-      return (bool) $this->config(
+      return (bool)$this->config(
          'allowCancelPerformed',
          true
       );
@@ -1116,7 +1137,8 @@ final class PaymeController extends Controller
    
    private function saveTransaction(
       PaymeTransaction $transaction
-   ): void {
+   ): void
+   {
       if (!$transaction->save(false)) {
          throw new RuntimeException(
             'Failed to save PaymeTransaction.'
@@ -1126,64 +1148,69 @@ final class PaymeController extends Controller
    
    private function createResponse(
       PaymeTransaction $transaction
-   ): array {
+   ): array
+   {
       return [
-         'create_time' => (int) $transaction->create_time,
-         'transaction' => (string) $transaction->id,
-         'state' => (int) $transaction->state,
+         'create_time' => (int)$transaction->create_time,
+         'transaction' => (string)$transaction->id,
+         'state' => (int)$transaction->state,
       ];
    }
    
    private function performResponse(
       PaymeTransaction $transaction
-   ): array {
+   ): array
+   {
       return [
-         'transaction' => (string) $transaction->id,
-         'perform_time' => (int) $transaction->perform_time,
-         'state' => (int) $transaction->state,
+         'transaction' => (string)$transaction->id,
+         'perform_time' => (int)$transaction->perform_time,
+         'state' => (int)$transaction->state,
       ];
    }
    
    private function cancelResponse(
       PaymeTransaction $transaction
-   ): array {
+   ): array
+   {
       return [
-         'transaction' => (string) $transaction->id,
-         'cancel_time' => (int) $transaction->cancel_time,
-         'state' => (int) $transaction->state,
+         'transaction' => (string)$transaction->id,
+         'cancel_time' => (int)$transaction->cancel_time,
+         'state' => (int)$transaction->state,
       ];
    }
    
    private function checkResponse(
       PaymeTransaction $transaction
-   ): array {
+   ): array
+   {
       return [
-         'create_time' => (int) $transaction->create_time,
-         'perform_time' => (int) $transaction->perform_time,
-         'cancel_time' => (int) $transaction->cancel_time,
-         'transaction' => (string) $transaction->id,
-         'state' => (int) $transaction->state,
+         'create_time' => (int)$transaction->create_time,
+         'perform_time' => (int)$transaction->perform_time,
+         'cancel_time' => (int)$transaction->cancel_time,
+         'transaction' => (string)$transaction->id,
+         'state' => (int)$transaction->state,
          'reason' => $transaction->reason !== null
-            ? (int) $transaction->reason
+            ? (int)$transaction->reason
             : null,
       ];
    }
    
    private function statementResponse(
       PaymeTransaction $transaction
-   ): array {
+   ): array
+   {
       return [
          'id' => $transaction->payme_id,
-         'time' => (int) $transaction->payme_time,
-         'amount' => (int) $transaction->amount,
+         'time' => (int)$transaction->payme_time,
+         'amount' => (int)$transaction->amount,
          'account' => $transaction->getAccountData(),
-         'create_time' => (int) $transaction->create_time,
-         'perform_time' => (int) $transaction->perform_time,
-         'cancel_time' => (int) $transaction->cancel_time,
-         'transaction' => (string) $transaction->id,
-         'state' => (int) $transaction->state,
+         'create_time' => (int)$transaction->create_time,
+         'perform_time' => (int)$transaction->perform_time,
+         'cancel_time' => (int)$transaction->cancel_time,
+         'transaction' => (string)$transaction->id,
+         'state' => (int)$transaction->state,
          'reason' => $transaction->reason !== null
-            ? (int) $transaction->reason
+            ? (int)$transaction->reason
             : null,
       ];
    }
@@ -1202,7 +1229,7 @@ final class PaymeController extends Controller
       
       if (
          $billingId === ''
-         || preg_match('/^[1-9]\d*$/', (string) $billingId) !== 1
+         || preg_match('/^[1-9]\d*$/', (string)$billingId) !== 1
       ) {
          throw $this->invalidBillingIdError();
       }
@@ -1224,9 +1251,10 @@ final class PaymeController extends Controller
    }
    
    private function requiredPaymeId(
-      array $params,
+      array  $params,
       string $key
-   ): string {
+   ): string
+   {
       $value = $params[$key] ?? null;
       
       if (
@@ -1247,9 +1275,10 @@ final class PaymeController extends Controller
    }
    
    private function requiredPositiveInt(
-      array $params,
+      array  $params,
       string $key
-   ): int {
+   ): int
+   {
       $value = $params[$key] ?? null;
       
       if (!is_int($value) || $value <= 0) {
@@ -1267,9 +1296,10 @@ final class PaymeController extends Controller
    }
    
    private function requiredNonNegativeInt(
-      array $params,
+      array  $params,
       string $key
-   ): int {
+   ): int
+   {
       $value = $params[$key] ?? null;
       
       if (!is_int($value) || $value < 0) {
@@ -1287,9 +1317,10 @@ final class PaymeController extends Controller
    }
    
    private function requiredArray(
-      array $params,
+      array  $params,
       string $key
-   ): array {
+   ): array
+   {
       $value = $params[$key] ?? null;
       
       if (!is_array($value)) {
@@ -1305,27 +1336,27 @@ final class PaymeController extends Controller
       
       return $value;
    }
-
-    private function isAuthorized(): bool
-    {
-        $authorization = trim((string) Yii::$app->request
-            ->headers
-            ->get('Authorization', ''));
-         $login = Yii::$app->params['payme']['login'];
-         $pass = Yii::$app->params['payme']['key'];
-        $key = (string) "$login:$pass";
-        
-        if ($authorization === '' || $key === '') {
-            return false;
-        }
-
-        $expectedAuthorization = 'Basic ' . base64_encode($key);
-
-        return hash_equals(
-            $expectedAuthorization,
-            $authorization
-        );
-    }
+   
+   private function isAuthorized(): bool
+   {
+      $authorization = trim((string)Yii::$app->request
+         ->headers
+         ->get('Authorization', ''));
+      $login = Yii::$app->params['payme']['login'];
+      $pass = Yii::$app->params['payme']['key'];
+      $key = (string)"$login:$pass";
+      
+      if ($authorization === '' || $key === '') {
+         return false;
+      }
+      
+      $expectedAuthorization = 'Basic ' . base64_encode($key);
+      
+      return hash_equals(
+         $expectedAuthorization,
+         $authorization
+      );
+   }
    
    private function isAllowedIp(): bool
    {
@@ -1344,8 +1375,9 @@ final class PaymeController extends Controller
    
    private function config(
       string $path,
-      mixed $default = null
-   ): mixed {
+      mixed  $default = null
+   ): mixed
+   {
       $value = Yii::$app->params['payme'] ?? [];
       
       foreach (explode('.', $path) as $segment) {
@@ -1364,7 +1396,7 @@ final class PaymeController extends Controller
    
    private function nowMs(): int
    {
-      return (int) floor(microtime(true) * 1000);
+      return (int)floor(microtime(true) * 1000);
    }
    
    private function jsonEncode(array $value): string
@@ -1381,18 +1413,20 @@ final class PaymeController extends Controller
       string $ru,
       string $uz,
       string $en
-   ): array {
+   ): array
+   {
       return compact('ru', 'uz', 'en');
    }
    
    private function writeLog(
-      mixed $rpcId,
+      mixed   $rpcId,
       ?string $method,
-      string $requestBody,
-      array $response,
-      bool $authorized,
-      int $durationMs
-   ): void {
+      string  $requestBody,
+      array   $response,
+      bool    $authorized,
+      int     $durationMs
+   ): void
+   {
       try {
          $log = new PaymeLog();
          $log->rpc_id = is_int($rpcId) ? $rpcId : null;
@@ -1426,10 +1460,11 @@ final class PaymeController extends Controller
 final class PaymeRpcException extends RuntimeException
 {
    public function __construct(
-      public readonly int $rpcCode,
+      public readonly int          $rpcCode,
       public readonly array|string $rpcMessage,
-      public readonly mixed $rpcData = null
-   ) {
+      public readonly mixed        $rpcData = null
+   )
+   {
       parent::__construct(
          is_string($rpcMessage)
             ? $rpcMessage

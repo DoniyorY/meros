@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var \common\models\Contacts $model */
 
 use yii\bootstrap5\ActiveForm;
@@ -12,8 +13,8 @@ $params = Yii::$app->params;
 $lang = Yii::$app->language;
 function translate($key)
 {
-    $lang = Yii::$app->language;
-        return Yii::$app->params[$key][$lang];
+   $lang = Yii::$app->language;
+   return Yii::$app->params[$key][$lang];
 }
 
 ?>
@@ -37,14 +38,17 @@ function translate($key)
                     <div class="meros-contact-card h-100">
                         <i class="fa fa-phone"></i>
                         <h3><?= Html::encode($params['label_phone'][$lang] ?? $params['label_phone']['en']) ?></h3>
-                        <p><a href="tel:<?= Html::encode($params['phone']) ?>"><?= Html::encode($params['phone']) ?></a></p>
+                        <p><a href="tel:<?= Html::encode($params['phone']) ?>"><?= Html::encode($params['phone']) ?></a>
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="meros-contact-card h-100">
                         <i class="fa fa-envelope"></i>
                         <h3><?= Html::encode($params['label_email'][$lang] ?? $params['label_email']['en']) ?></h3>
-                        <p><a href="mailto:<?= Html::encode($params['adminEmail']) ?>"><?= Html::encode($params['adminEmail']) ?></a></p>
+                        <p>
+                            <a href="mailto:<?= Html::encode($params['adminEmail']) ?>"><?= Html::encode($params['adminEmail']) ?></a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -57,7 +61,8 @@ function translate($key)
                 <div class="col-lg-6">
                     <div class="meros-map-card h-100">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3071.780816052281!2d66.91040297781956!3d39.65464709999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f4d190002e36ddf%3A0x8e83f4ad3be4f23a!2sMeros%20International%20Hospital!5e0!3m2!1sru!2s!4v1780140649710!5m2!1sru!2s"
-                                width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen=""
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -65,19 +70,19 @@ function translate($key)
                         <span class="meros-kicker"><?= Html::encode($params['message_us'][$lang] ?? $params['message_us']['en']) ?></span>
                         <h2><?= Html::encode($params['send_us_message'][$lang] ?? $params['send_us_message']['en']) ?></h2>
                         <p><?= Html::encode($params['contact_form_intro'][$lang] ?? $params['contact_form_intro']['en']) ?></p>
-                        <?php $form = ActiveForm::begin(['id' => 'contact-form', 'options' => ['class' => 'meros-form']]); ?>
-                            <?= $form->field($model, 'fullname')->textInput(['autofocus' => true]) ?>
-                            <?= $form->field($model, 'email')->input('email') ?>
-                            <?= $form->field($model, 'phone')->input('tel') ?>
-                            <?= $form->field($model, 'subject')->textInput() ?>
-                            <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
-                            <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
-                                'template' => '<div class="row g-3 align-items-center"><div class="col-sm-5">{image}</div><div class="col-sm-7">{input}</div></div>',
-                            ]) ?>
-                            <div class="form-group mb-0">
-                                <?= Html::submitButton($params['send_message_button'][$lang] ?? $params['send_message_button']['en'], ['class' => 'btn btn-primary meros-primary-btn', 'name' => 'contact-button']) ?>
-                            </div>
-                        <?php ActiveForm::end(); ?>
+                       <?php $form = ActiveForm::begin(['id' => 'contact-form', 'options' => ['class' => 'meros-form']]); ?>
+                       <?= $form->field($model, 'fullname')->textInput(['autofocus' => true]) ?>
+                       <?= $form->field($model, 'email')->input('email') ?>
+                       <?= $form->field($model, 'phone')->input('tel') ?>
+                       <?= $form->field($model, 'subject')->textInput() ?>
+                       <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
+                       <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+                          'template' => '<div class="row g-3 align-items-center"><div class="col-sm-5">{image}</div><div class="col-sm-7">{input}</div></div>',
+                       ]) ?>
+                        <div class="form-group mb-0">
+                           <?= Html::submitButton($params['send_message_button'][$lang] ?? $params['send_message_button']['en'], ['class' => 'btn btn-primary meros-primary-btn', 'name' => 'contact-button']) ?>
+                        </div>
+                       <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>

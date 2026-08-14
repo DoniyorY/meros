@@ -20,6 +20,9 @@ use Yii;
  * @property int|null $payment_status
  * @property int|null $amount
  * @property int $status
+ * @property string $ga_client_id
+ * @property string $ga_session_id
+ * @property int $ga_purchase_sent_at
  */
 class Billing extends \yii\db\ActiveRecord
 {
@@ -86,7 +89,7 @@ class Billing extends \yii\db\ActiveRecord
    
    public function getUser()
    {
-      return $this->hasOne(User::class,['id'=>'user_id']);
+      return $this->hasOne(User::class, ['id' => 'user_id']);
    }
    
 }
