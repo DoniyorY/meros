@@ -388,7 +388,15 @@ final class PaymeController extends Controller
          $billing->updated_at = time();
          $billing->save(false);
          if ($billing !== null) {
-            ApiController::sendZapierOrderPaidWebhook($billing);
+            try {
+               ApiController::sendZapierOrderPaidWebhook($billing);
+            } catch (Throwable $e) {
+               Yii::error([
+                  'message' => 'Zapier webhook failed after Payme payment.',
+                  'billing_id' => (int) $billing->id,
+                  'exception' => $e,
+               ], 'payme');
+            }
             try {
                $plan = SubscriptionPlans::findOne(['id' => $billing->subscription_id]);
                $sent = Yii::$app->googleAnalytics->purchase($billing, $plan, 'Payme');

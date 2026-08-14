@@ -7,6 +7,7 @@ namespace frontend\controllers;
 use common\models\Billing;
 use common\models\ClickPayment;
 use common\models\ClickWebhookLog;
+use common\models\SubscriptionPlans;
 use common\models\UserSubscriptions;
 use frontend\controllers\traits\PaymePaymentActions;
 use RuntimeException;
@@ -880,6 +881,16 @@ final class PaymentController extends Controller
    
    private function sendPaidWebhookSafely(Billing $billing): void
    {
+      try {
+         $plan = SubscriptionPlans::findOne(['id' => $billing->subscription_id]);
+         $sent = Yii::$app->googleAnalytics->purchase($billing, $plan, 'Payme');
+         if ($sent) {
+            $billing->ga_purchase_sent_at = time();
+            $billing->save(false, ['ga_purchase_sent_at']);
+         }
+      } catch (Throwable $e) {
+         Yii::error(['billing_id' => $billing->id, 'error' => $e->getMessage()], 'analytics');
+      }
       try {
          ApiController::sendZapierOrderPaidWebhook($billing);
       } catch (Throwable $e) {
