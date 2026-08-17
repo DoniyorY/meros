@@ -223,6 +223,36 @@ return [
       'en' => 'Created At',
       'uz' => 'Yaratilgan sana',
    ],
+   'profile_billing_view' => [
+      'ru' => 'Посмотреть инвойс',
+      'en' => 'View invoice',
+      'uz' => 'Hisob-fakturani ko‘rish',
+   ],
+   'profile_billing_receipt' => [
+      'ru' => 'Чек по инвойсу',
+      'en' => 'Invoice receipt',
+      'uz' => 'Hisob-faktura cheki',
+   ],
+   'profile_billing_customer' => [
+      'ru' => 'Покупатель',
+      'en' => 'Customer',
+      'uz' => 'Xaridor',
+   ],
+   'profile_billing_course' => [
+      'ru' => 'Курс',
+      'en' => 'Course',
+      'uz' => 'Kurs',
+   ],
+   'profile_billing_print' => [
+      'ru' => 'Скачать / распечатать',
+      'en' => 'Download / print',
+      'uz' => 'Yuklab olish / chop etish',
+   ],
+   'profile_billing_back' => [
+      'ru' => 'Вернуться к инвойсам',
+      'en' => 'Back to invoices',
+      'uz' => 'Hisob-fakturalarga qaytish',
+   ],
    'profile_billing_pending' => [
       'ru' => 'В процессе',
       'en' => 'Pending',

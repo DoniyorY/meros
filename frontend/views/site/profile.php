@@ -317,7 +317,13 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                                    <tbody>
                                    <?php foreach ($billings as $billing): ?>
                                        <tr>
-                                           <td><strong>#<?= (int)$billing->id ?></strong></td>
+                                           <td>
+                                               <?= Html::a(
+                                                  '#' . (int)$billing->id,
+                                                  ['site/invoice', 'id' => $billing->id],
+                                                  ['class' => 'fw-bold', 'aria-label' => $t('profile_billing_view') . ' #' . (int)$billing->id]
+                                               ) ?>
+                                           </td>
                                            <td><?= Html::encode($billing->subscription ? ($billing->subscription->{"name_$lang"} ?: $billing->subscription->name_en) : '-') ?></td>
                                            <td><?= $formatDate($billing->created_at) ?></td>
                                            <td><?= $formatAmount($billing->amount) ?></td>

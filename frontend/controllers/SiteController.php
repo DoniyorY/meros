@@ -40,7 +40,7 @@ class SiteController extends BaseController
       return [
          'access' => [
             'class' => AccessControl::class,
-            'only' => ['logout', 'signup', 'profile'],
+            'only' => ['logout', 'signup', 'profile', 'invoice'],
             'rules' => [
                [
                   'actions' => ['signup'],
@@ -48,7 +48,7 @@ class SiteController extends BaseController
                   'roles' => ['?'],
                ],
                [
-                  'actions' => ['logout', 'profile'],
+                  'actions' => ['logout', 'profile', 'invoice'],
                   'allow' => true,
                   'roles' => ['@'],
                ],
@@ -260,6 +260,26 @@ class SiteController extends BaseController
          'currentSubscription' => $currentSubscription,
          'subscriptionHistory' => $subscriptionHistory,
          'billings' => $billings,
+      ]);
+   }
+
+   public function actionInvoice($id)
+   {
+      $billing = Billing::find()
+         ->where([
+            'id' => (int)$id,
+            'user_id' => Yii::$app->user->id,
+         ])
+         ->with(['subscription.course'])
+         ->one();
+
+      if ($billing === null) {
+         throw new NotFoundHttpException('Invoice not found.');
+      }
+
+      return $this->render('invoice', [
+         'billing' => $billing,
+         'user' => Yii::$app->user->identity,
       ]);
    }
    
