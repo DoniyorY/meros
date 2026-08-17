@@ -55,6 +55,9 @@ $this->title = $model->name_en;
                          'name_ru',
                          'name_en',
                          'name_uz',
+                         'desc_ru:ntext',
+                         'desc_en:ntext',
+                         'desc_uz:ntext',
                          [
                             'attribute' => 'status',
                             'value' => function ($data) {
@@ -120,4 +123,3 @@ $this->title = $model->name_en;
     <!-- container-fluid -->
 </div>
 <!-- End Page-content -->
-
