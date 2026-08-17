@@ -246,6 +246,12 @@ class SiteController extends BaseController
          ->with(['plan'])
          ->orderBy(['created_at' => SORT_DESC, 'id' => SORT_DESC])
          ->all();
+
+      $billings = Billing::find()
+         ->where(['user_id' => Yii::$app->user->id])
+         ->with(['subscription'])
+         ->orderBy(['id' => SORT_DESC])
+         ->all();
       
       return $this->render('profile', [
          'user' => $user,
@@ -253,6 +259,7 @@ class SiteController extends BaseController
          'passwordModel' => $passwordModel,
          'currentSubscription' => $currentSubscription,
          'subscriptionHistory' => $subscriptionHistory,
+         'billings' => $billings,
       ]);
    }
    

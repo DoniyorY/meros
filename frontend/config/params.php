@@ -183,6 +183,11 @@ return [
       'en' => 'Subscription',
       'uz' => 'Obuna',
    ],
+   'profile_tab_billing' => [
+      'ru' => 'Инвойсы',
+      'en' => 'Invoices',
+      'uz' => 'Hisob-fakturalar',
+   ],
    'profile_tab_password' => [
       'ru' => 'Пароль',
       'en' => 'Password',
@@ -202,6 +207,46 @@ return [
       'ru' => 'Информация о подписке',
       'en' => 'Subscription Information',
       'uz' => 'Obuna ma’lumotlari',
+   ],
+   'profile_billing_title' => [
+      'ru' => 'История инвойсов',
+      'en' => 'Invoice History',
+      'uz' => 'Hisob-fakturalar tarixi',
+   ],
+   'profile_billing_number' => [
+      'ru' => 'Инвойс',
+      'en' => 'Invoice',
+      'uz' => 'Hisob-faktura',
+   ],
+   'profile_billing_date' => [
+      'ru' => 'Дата создания',
+      'en' => 'Created At',
+      'uz' => 'Yaratilgan sana',
+   ],
+   'profile_billing_pending' => [
+      'ru' => 'В процессе',
+      'en' => 'Pending',
+      'uz' => 'Jarayonda',
+   ],
+   'profile_billing_paid' => [
+      'ru' => 'Оплачен',
+      'en' => 'Paid',
+      'uz' => 'To‘langan',
+   ],
+   'profile_billing_failed' => [
+      'ru' => 'Ошибка',
+      'en' => 'Failed',
+      'uz' => 'Xatolik',
+   ],
+   'profile_billing_cancelled' => [
+      'ru' => 'Отменён',
+      'en' => 'Cancelled',
+      'uz' => 'Bekor qilingan',
+   ],
+   'profile_no_billings' => [
+      'ru' => 'Инвойсов пока нет.',
+      'en' => 'There are no invoices yet.',
+      'uz' => 'Hozircha hisob-fakturalar yo‘q.',
    ],
    'profile_save_button' => [
       'ru' => 'Сохранить изменения',

@@ -7,7 +7,9 @@
 /** @var common\models\UserSubscriptions|null $currentSubscription */
 
 /** @var common\models\UserSubscriptions[] $subscriptionHistory */
+/** @var common\models\Billing[] $billings */
 
+use common\models\Billing;
 use common\models\User;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -36,6 +38,22 @@ $planName = static function ($subscription) use ($lang) {
 };
 $subscriptionStatus = static function ($status) use ($t) {
    return (int)$status === 1 ? $t('profile_active') : $t('profile_inactive');
+};
+$billingStatus = static function ($status) use ($t) {
+   return match ((int)$status) {
+      Billing::STATUS_SUCCESS => $t('profile_billing_paid'),
+      Billing::STATUS_FAILED => $t('profile_billing_failed'),
+      Billing::STATUS_CANCELLED => $t('profile_billing_cancelled'),
+      default => $t('profile_billing_pending'),
+   };
+};
+$billingStatusClass = static function ($status) {
+   return match ((int)$status) {
+      Billing::STATUS_SUCCESS => 'bg-success',
+      Billing::STATUS_FAILED => 'bg-danger',
+      Billing::STATUS_CANCELLED => 'bg-secondary',
+      default => 'bg-warning text-dark',
+   };
 };
 
 $this->title = $t('profile_page_title');
@@ -97,6 +115,12 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                 <button class="nav-link" id="tab-subscription-link" data-bs-toggle="tab"
                         data-bs-target="#tab-subscription" type="button" role="tab">
                    <?= Html::encode($t('profile_tab_subscription')) ?>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-billing-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-billing" type="button" role="tab">
+                   <?= Html::encode($t('profile_tab_billing')) ?>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -264,6 +288,55 @@ $passwordHasErrors = $passwordModel->hasErrors() ? 'true' : 'false';
                        <?php else: ?>
                            <div class="profile-empty-state meros-profile-empty mb-0"><i
                                        class="fa fa-list-alt"></i><span><?= Html::encode($t('profile_no_history')) ?></span>
+                           </div>
+                       <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-billing" role="tabpanel">
+                <div class="profile-card meros-profile-card">
+                    <div class="profile-card-body p-4 p-lg-5">
+                        <span class="meros-kicker"><?= Html::encode($t('profile_tab_billing')) ?></span>
+                        <h2 class="h4 mb-4"><?= Html::encode($t('profile_billing_title')) ?></h2>
+
+                       <?php if ($billings): ?>
+                           <div class="table-responsive">
+                               <table class="table table-hover align-middle profile-history-table mb-0">
+                                   <thead>
+                                   <tr>
+                                       <th><?= Html::encode($t('profile_billing_number')) ?></th>
+                                       <th><?= Html::encode($t('profile_plan')) ?></th>
+                                       <th><?= Html::encode($t('profile_billing_date')) ?></th>
+                                       <th><?= Html::encode($t('profile_amount')) ?></th>
+                                       <th><?= Html::encode($t('profile_payment_status')) ?></th>
+                                       <th><?= Html::encode($t('profile_payment_provider')) ?></th>
+                                       <th><?= Html::encode($t('profile_transaction')) ?></th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <?php foreach ($billings as $billing): ?>
+                                       <tr>
+                                           <td><strong>#<?= (int)$billing->id ?></strong></td>
+                                           <td><?= Html::encode($billing->subscription ? ($billing->subscription->{"name_$lang"} ?: $billing->subscription->name_en) : '-') ?></td>
+                                           <td><?= $formatDate($billing->created_at) ?></td>
+                                           <td><?= $formatAmount($billing->amount) ?></td>
+                                           <td>
+                                               <span class="badge <?= $billingStatusClass($billing->payment_status) ?>">
+                                                   <?= Html::encode($billingStatus($billing->payment_status)) ?>
+                                               </span>
+                                           </td>
+                                           <td><?= Html::encode($billing->payment_provider ?? '-') ?></td>
+                                           <td><?= Html::encode($billing->payment_transaction_id ?: '-') ?></td>
+                                       </tr>
+                                   <?php endforeach; ?>
+                                   </tbody>
+                               </table>
+                           </div>
+                       <?php else: ?>
+                           <div class="profile-empty-state meros-profile-empty mb-0">
+                               <i class="fa fa-file-text-o"></i>
+                               <span><?= Html::encode($t('profile_no_billings')) ?></span>
                            </div>
                        <?php endif; ?>
                     </div>
