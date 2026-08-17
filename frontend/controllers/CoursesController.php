@@ -19,8 +19,27 @@ class CoursesController extends BaseController
    
    public function actionCategory($category)
    {
-      
-      return $this->render('category',);
+      $categoryModel = CourseCategory::findOne([
+         'slug' => $category,
+         'status' => CourseCategory::STATUS_ACTIVE,
+      ]);
+
+      if ($categoryModel === null) {
+         throw new NotFoundHttpException('Категория курсов не найдена.');
+      }
+
+      $courses = Courses::find()
+         ->where([
+            'category_id' => $categoryModel->id,
+            'status' => Courses::STATUS_ACTIVE,
+         ])
+         ->orderBy(['id' => SORT_ASC])
+         ->all();
+
+      return $this->render('category', [
+         'category' => $categoryModel,
+         'courses' => $courses,
+      ]);
    }
    
    public function actionIndex($category, $slug)

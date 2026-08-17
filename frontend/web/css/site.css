@@ -1228,6 +1228,53 @@ body p,
 }
 
 /* Ensure homepage hero overlay is rendered after legacy banner CSS removal */
+
+/* Course category landing page */
+.meros-category-hero {
+    background: linear-gradient(90deg, rgba(4, 54, 63, .94), rgba(7, 113, 123, .7)), url('../images/med_institute.jpg') center 42% / cover;
+    color: #fff;
+    padding: clamp(80px, 11vw, 145px) 0;
+    position: relative;
+}
+
+.meros-category-hero__content { max-width: 820px; }
+.meros-category-hero .meros-kicker { color: #9ce2e7; }
+.meros-category-hero h1 { color: #fff; font-size: clamp(42px, 7vw, 78px); line-height: 1.02; margin: 0 0 22px; }
+.meros-category-hero__content > p { color: rgba(255, 255, 255, .88); font-size: clamp(18px, 2vw, 22px); max-width: 680px; }
+
+.meros-category-facts { display: flex; flex-wrap: wrap; gap: 16px; margin: 38px 0 0; }
+.meros-category-facts > div { border-left: 2px solid var(--meros-accent); min-width: 145px; padding: 2px 24px; }
+.meros-category-facts dt { color: rgba(255, 255, 255, .68); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.meros-category-facts dd { color: #fff; font-size: 20px; font-weight: 800; margin: 6px 0 0; }
+
+.meros-category-intro__text { color: var(--meros-muted); font-size: 18px; line-height: 1.8; margin-top: 24px; }
+.meros-category-intro__text > :last-child { margin-bottom: 0; }
+.meros-category-courses { background: var(--meros-primary-soft); }
+
+.meros-category-card { background: #fff; border: 1px solid var(--meros-border); border-radius: 24px; box-shadow: 0 18px 45px rgba(4, 54, 63, .09); display: flex; flex-direction: column; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease; }
+.meros-category-card:hover { box-shadow: 0 24px 55px rgba(4, 54, 63, .16); transform: translateY(-6px); }
+.meros-category-card__image { display: block; height: 235px; overflow: hidden; position: relative; }
+.meros-category-card__image img { height: 100%; object-fit: cover; transition: transform .45s ease; width: 100%; }
+.meros-category-card:hover .meros-category-card__image img { transform: scale(1.045); }
+.meros-category-card__image span { background: var(--meros-primary); border-radius: 999px; bottom: 16px; color: #fff; font-size: 13px; font-weight: 800; left: 16px; padding: 8px 14px; position: absolute; }
+.meros-category-card__body { display: flex; flex: 1; flex-direction: column; padding: 28px; }
+.meros-category-card__category { color: var(--meros-primary); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.meros-category-card h3 { font-size: 24px; line-height: 1.25; margin: 10px 0 14px; }
+.meros-category-card h3 a { color: var(--meros-primary-dark); }
+.meros-category-card__body p { font-size: 16px; line-height: 1.65; }
+.meros-category-card__link { align-items: center; color: var(--meros-primary); display: inline-flex; font-weight: 800; gap: 9px; margin-top: auto; padding-top: 12px; }
+.meros-category-card__link:hover { color: var(--meros-primary-dark); gap: 13px; }
+.meros-category-empty { background: #fff; border: 1px solid var(--meros-border); border-radius: 24px; padding: 56px 24px; }
+.meros-category-empty i { color: var(--meros-primary); font-size: 42px; }
+.meros-category-empty h3 { margin: 14px 0 8px; }
+
+@media (max-width: 575px) {
+    .meros-category-facts { display: grid; grid-template-columns: 1fr 1fr; }
+    .meros-category-facts > div { min-width: 0; padding-right: 8px; }
+    .meros-category-facts > div:last-child { grid-column: 1 / -1; }
+    .meros-category-card__image { height: 210px; }
+}
+
 #homepage-slider.meros-hero .meros-hero-slide:after {
     content: "";
     inset: 0;

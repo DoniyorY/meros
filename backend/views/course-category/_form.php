@@ -23,6 +23,12 @@ if (Yii::$app->controller->action->id == 'index') {
 
     <?= $form->field($model, 'name_uz')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'desc_ru')->textarea(['rows' => 5]) ?>
+
+    <?= $form->field($model, 'desc_en')->textarea(['rows' => 5]) ?>
+
+    <?= $form->field($model, 'desc_uz')->textarea(['rows' => 5]) ?>
+
     <div class="form-group mt-2">
         <?= Html::submitButton('Save', ['class' => 'w-100 btn btn-success']) ?>
     </div>

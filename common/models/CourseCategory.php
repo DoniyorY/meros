@@ -13,6 +13,9 @@ use yii\behaviors\SluggableBehavior;
  * @property string $name_ru
  * @property string $name_en
  * @property string $name_uz
+ * @property string|null $desc_ru
+ * @property string|null $desc_en
+ * @property string|null $desc_uz
  * @property int|null $status
  * @property int $created_at
  * @property int $updated_at
@@ -52,6 +55,7 @@ class CourseCategory extends \yii\db\ActiveRecord
          [['status'], 'default', 'value' => 1],
          [['name_ru', 'name_en', 'name_uz', 'created_at', 'updated_at', 'user_id'], 'required'],
          [['status', 'created_at', 'updated_at', 'user_id'], 'integer'],
+         [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
          [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
       ];
    }
@@ -67,6 +71,9 @@ class CourseCategory extends \yii\db\ActiveRecord
          'name_ru' => 'Name Ru',
          'name_en' => 'Name En',
          'name_uz' => 'Name Uz',
+         'desc_ru' => 'Description Ru',
+         'desc_en' => 'Description En',
+         'desc_uz' => 'Description Uz',
          'status' => 'Status',
          'created_at' => 'Created At',
          'updated_at' => 'Updated At',
