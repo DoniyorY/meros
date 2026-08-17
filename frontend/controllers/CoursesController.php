@@ -17,6 +17,12 @@ use yii\web\NotFoundHttpException;
 class CoursesController extends BaseController
 {
    
+   public function actionCategory($category)
+   {
+      
+      return $this->render('category',);
+   }
+   
    public function actionIndex($category, $slug)
    {
       if ($category === 'healthcare-employers' && $slug === 'hospitals') {

@@ -213,6 +213,7 @@ return [
                'pattern' => '<category:[a-z0-9-]+>/<slug:[a-z0-9-]+>',
                'route' => 'courses/index',
             ],
+            '<category:[a-z0-9-]+>' => 'courses/category',
             
             /*
              * Обычные Yii-маршруты должны идти после курса.
