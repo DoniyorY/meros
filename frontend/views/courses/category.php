@@ -34,7 +34,11 @@ $this->params['hideBreadcrumbs'] = true;
    <div class="container">
       <div class="meros-category-hero__content">
          <span class="meros-kicker"><?= Html::encode(Yii::t('app', 'Course category')) ?></span>
-         <h1 id="category-title"><?= Html::encode($categoryName) ?></h1>
+         <h1 id="category-title"><?= \yii\helpers\Html::encode(
+               Yii::$app->seo->getH1(
+                  $categoryName
+               )
+            ) ?></h1>
          <p><?= Html::encode(Yii::t('app', 'Practical learning programmes created for confident professional communication.')) ?></p>
          <dl class="meros-category-facts">
             <div>
@@ -63,7 +67,14 @@ $this->params['hideBreadcrumbs'] = true;
                <h2 id="category-about-title"><?= Html::encode($categoryName) ?></h2>
                <?php if (trim(strip_tags((string)$categoryDescription)) !== ''): ?>
                   <div class="meros-category-intro__text">
-                     <?= Html::purifier($categoryDescription) ?>
+                     <?php if ($seoText = Yii::$app->seo->getText()): ?>
+
+                         <section class="category-seo-content">
+                            <?= $seoText ?>
+                         </section>
+                     
+                     <?php endif; ?>
+                     <?= $categoryDescription ?>
                   </div>
                <?php else: ?>
                   <p class="meros-category-intro__text"><?= Html::encode(Yii::t('app', 'Choose a course that matches your goals and current level.')) ?></p>
@@ -83,6 +94,7 @@ $this->params['hideBreadcrumbs'] = true;
          <?php if ($courses): ?>
             <div class="row g-4">
                <?php foreach ($courses as $course):
+                  if ($course->status == 0) continue;
                   $courseName = $localized($course, 'name');
                   $courseDescription = trim(strip_tags((string)$localized($course, 'desc')));
                   $courseImage = $course->course_image

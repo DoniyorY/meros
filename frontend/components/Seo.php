@@ -7,7 +7,17 @@ use yii\base\Component;
 
 final class Seo extends Component
 {
-   public array $languages = ['ru', 'en', 'uz'];
+   /*
+    |--------------------------------------------------------------------------
+    | GENERAL
+    |--------------------------------------------------------------------------
+    */
+   
+   public array $languages = [
+      'ru',
+      'en',
+      'uz',
+   ];
    
    public array $ogLocales = [
       'ru' => 'ru_RU',
@@ -21,7 +31,7 @@ final class Seo extends Component
    public string $siteUrl = 'https://merosedu.uz';
    
    /**
-    * Именно название сайта/бренда.
+    * Название бренда.
     */
    public string $siteName = 'Meros';
    
@@ -32,15 +42,38 @@ final class Seo extends Component
    ];
    
    /**
-    * В идеале заменить на отдельную OG-картинку 1200x630.
+    * Дефолтная OG-картинка.
+    *
+    * Позже желательно сделать отдельную 1200x630.
     */
    public string $defaultImage = '/logo.png';
    
    /**
-    * Логотип организации.
-    * НЕ путать с OG-картинкой страницы.
+    * Логотип организации для Schema.org.
     */
    public string $logo = '/logo.png';
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | SEO META MODEL
+    |--------------------------------------------------------------------------
+    |
+    | Здесь может лежать SeoMeta ActiveRecord.
+    |
+    | Специально используем object, чтобы Seo component
+    | не был жёстко связан с конкретным namespace модели.
+    |
+    */
+   
+   private ?object $meta = null;
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | NO INDEX ROUTES
+    |--------------------------------------------------------------------------
+    */
    
    public array $noIndexRoutes = [
       'site/error',
@@ -59,18 +92,143 @@ final class Seo extends Component
       'payment/payme-result',
    ];
    
+   
+   /*
+    |--------------------------------------------------------------------------
+    | PUBLIC META API
+    |--------------------------------------------------------------------------
+    */
+   
+   /**
+    * Передаёт SeoMeta текущей сущности.
+    *
+    * Пример:
+    *
+    * Yii::$app->seo->useMeta($category->seoMeta);
+    */
+   public function useMeta(?object $meta): self
+   {
+      $this->meta = $meta;
+      
+      return $this;
+   }
+   
+   
+   /**
+    * Возвращает текущий SeoMeta.
+    */
+   public function getMeta(): ?object
+   {
+      return $this->meta;
+   }
+   
+   
+   /**
+    * Проверяет, назначен ли SeoMeta.
+    */
+   public function hasMeta(): bool
+   {
+      return $this->meta !== null;
+   }
+   
+   
+   /**
+    * Сбрасывает SeoMeta.
+    */
+   public function clearMeta(): self
+   {
+      $this->meta = null;
+      
+      return $this;
+   }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | H1
+    |--------------------------------------------------------------------------
+    |
+    | H1 не является meta-тегом, поэтому отдаём его view отдельно.
+    |
+    */
+   
+   public function getH1(?string $fallback = null): string
+   {
+      $h1 = $this->metaValue(
+         'h1',
+         $this->currentLanguage()
+      );
+      
+      return (string)(
+         $h1
+         ?? $fallback
+         ?? ''
+      );
+   }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | SEO / LANDING TEXT
+    |--------------------------------------------------------------------------
+    |
+    | Возвращается HTML как есть.
+    |
+    | Поэтому во view не использовать Html::encode().
+    |
+    */
+   
+   public function getText(): string
+   {
+      return (string)(
+         $this->metaValue(
+            'text',
+            $this->currentLanguage()
+         )
+         ?? ''
+      );
+   }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | REGISTER
+    |--------------------------------------------------------------------------
+    */
+   
    public function register(): void
    {
       $view = Yii::$app->view;
-      $request = Yii::$app->request;
       $route = Yii::$app->controller->route;
       
       $language = $this->currentLanguage();
       
+      
       /*
-       * TITLE
+       |--------------------------------------------------------------------------
+       | TITLE
+       |--------------------------------------------------------------------------
+       |
+       | Приоритет:
+       |
+       | 1. View::$params['seoTitle']
+       | 2. SeoMeta::title_{lang}
+       | 3. View::$title
+       | 4. Meros
+       |
        */
-      $title = trim((string)$view->title);
+      
+      $title = trim(
+         (string)(
+            $view->params['seoTitle']
+            ?? $this->metaValue(
+            'title',
+            $language
+         )
+            ?? $view->title
+            ?? ''
+         )
+      );
       
       if ($title === '') {
          $title = $this->siteName;
@@ -79,79 +237,169 @@ final class Seo extends Component
       /*
        * На внутренних страницах автоматически добавляем бренд.
        *
-       * Reach OET B Medicine
+       * Например:
+       *
+       * English for Doctors
+       *
        * ->
-       * Reach OET B Medicine | Meros
+       *
+       * English for Doctors | Meros
+       *
+       * Если SeoMeta уже содержит Meros,
+       * второй раз бренд не добавится.
        */
       if (
          $route !== 'site/index'
-         && mb_stripos($title, $this->siteName) === false
+         && mb_stripos(
+            $title,
+            $this->siteName
+         ) === false
       ) {
          $title .= ' | ' . $this->siteName;
       }
       
       $view->title = $title;
       
+      
       /*
-       * DESCRIPTION
+       |--------------------------------------------------------------------------
+       | DESCRIPTION
+       |--------------------------------------------------------------------------
+       |
+       | Приоритет:
+       |
+       | 1. View params
+       | 2. SeoMeta
+       | 3. Default description
+       |
        */
+      
       $description =
          $view->params['seoDescription']
+         ?? $this->metaValue(
+         'description',
+         $language
+      )
          ?? $this->defaultDescription();
       
       $description = preg_replace(
          '/\s+/u',
          ' ',
-         strip_tags((string)$description)
+         strip_tags(
+            (string)$description
+         )
       );
       
-      $description = trim($description);
+      $description = trim(
+         (string)$description
+      );
       
       /*
-       * 160 — не магическое SEO-число.
-       * Просто не даём случайно засунуть сюда пол-страницы.
+       * Это не жёсткое SEO-ограничение.
+       *
+       * Просто не позволяем случайно
+       * засунуть сюда пол-страницы.
        */
-      $description = $this->truncate($description, 180);
+      $description = $this->truncate(
+         $description,
+         180
+      );
+      
       
       /*
-       * CANONICAL
+       |--------------------------------------------------------------------------
+       | CANONICAL
+       |--------------------------------------------------------------------------
        */
+      
       $canonical =
          $view->params['canonical']
+         ?? $this->metaValue('canonical')
          ?? $this->currentCanonicalUrl();
       
-      $canonical = $this->absoluteUrl($canonical);
+      $canonical = $this->absoluteUrl(
+         $canonical
+      );
+      
       
       /*
-       * IMAGE
+       |--------------------------------------------------------------------------
+       | IMAGE
+       |--------------------------------------------------------------------------
        */
+      
       $image =
          $view->params['seoImage']
+         ?? $this->metaValue('og_image')
          ?? $this->defaultImage;
       
-      $image = $this->absoluteUrl($image);
+      $image = $this->absoluteUrl(
+         $image
+      );
       
       $imageAlt =
          $view->params['seoImageAlt']
          ?? $title;
       
+      
       /*
-       * INDEXING
+       |--------------------------------------------------------------------------
+       | INDEXING
+       |--------------------------------------------------------------------------
+       |
+       | noIndexRoutes имеет высший приоритет.
+       |
+       | Таким образом администратор случайно не сможет
+       | сделать invoice/indexable через seo_meta.
+       |
        */
+      
       $noIndex =
          ($view->params['seoNoIndex'] ?? false)
-         || in_array($route, $this->noIndexRoutes, true);
-      
-      $robots = $view->params['seoRobots']
-         ?? (
-         $noIndex
-            ? 'noindex, nofollow'
-            : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+         || in_array(
+            $route,
+            $this->noIndexRoutes,
+            true
          );
       
+      if ($noIndex) {
+         
+         $robots =
+            'noindex, nofollow';
+         
+      } else {
+         
+         $robots =
+            $view->params['seoRobots']
+            ?? $this->metaValue('robots')
+            ?? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+      }
+      
+      
       /*
-       * STANDARD SEO
+       |--------------------------------------------------------------------------
+       | SCHEMA PAGE TYPE
+       |--------------------------------------------------------------------------
+       |
+       | Категория курсов автоматически является CollectionPage.
+       |
        */
+      
+      if (
+         empty($view->params['schemaPageType'])
+         && $this->metaValue('entity_type') === 'course_category'
+      ) {
+         $view->params['schemaPageType'] =
+            'CollectionPage';
+      }
+      
+      
+      /*
+       |--------------------------------------------------------------------------
+       | STANDARD SEO
+       |--------------------------------------------------------------------------
+       */
+      
       $view->registerMetaTag([
          'name' => 'description',
          'content' => $description,
@@ -162,26 +410,34 @@ final class Seo extends Component
          'content' => $robots,
       ], 'seo-robots');
       
+      
       /*
-       * CANONICAL
+       |--------------------------------------------------------------------------
+       | CANONICAL
+       |--------------------------------------------------------------------------
        */
+      
       $view->registerLinkTag([
          'rel' => 'canonical',
          'href' => $canonical,
       ], 'seo-canonical');
       
+      
       /*
-       * HREFLANG
-       *
-       * Если у языковых версий разные slug,
-       * можно передать:
-       *
+       |--------------------------------------------------------------------------
+       | HREFLANG
+       |--------------------------------------------------------------------------
+       |
+       | Если slug разных языковых версий отличается:
+       |
        * $this->params['seoAlternates'] = [
        *     'ru' => '...',
        *     'en' => '...',
        *     'uz' => '...',
        * ];
+       |
        */
+      
       $customAlternates =
          $view->params['seoAlternates']
          ?? [];
@@ -189,6 +445,7 @@ final class Seo extends Component
       $alternateUrls = [];
       
       foreach ($this->languages as $alternateLanguage) {
+         
          $href =
             $customAlternates[$alternateLanguage]
             ?? $this->languageUrl(
@@ -196,9 +453,12 @@ final class Seo extends Component
             $alternateLanguage
          );
          
-         $href = $this->absoluteUrl($href);
+         $href = $this->absoluteUrl(
+            $href
+         );
          
-         $alternateUrls[$alternateLanguage] = $href;
+         $alternateUrls[$alternateLanguage] =
+            $href;
          
          $view->registerLinkTag([
             'rel' => 'alternate',
@@ -207,17 +467,23 @@ final class Seo extends Component
          ], 'seo-alternate-' . $alternateLanguage);
       }
       
+      
       /*
-       * x-default.
-       *
-       * Если / является выбором языка,
-       * лучше передать:
-       *
-       * $this->params['seoXDefault'] = 'https://merosedu.uz/';
+       |--------------------------------------------------------------------------
+       | X-DEFAULT
+       |--------------------------------------------------------------------------
        */
+      
       $xDefault =
          $view->params['seoXDefault']
-         ?? ($alternateUrls['en'] ?? $this->siteUrl . '/');
+         ?? (
+         $alternateUrls['en']
+         ?? $this->siteUrl . '/'
+      );
+      
+      $xDefault = $this->absoluteUrl(
+         $xDefault
+      );
       
       $view->registerLinkTag([
          'rel' => 'alternate',
@@ -225,9 +491,13 @@ final class Seo extends Component
          'href' => $xDefault,
       ], 'seo-alternate-default');
       
+      
       /*
-       * OPEN GRAPH
+       |--------------------------------------------------------------------------
+       | OPEN GRAPH
+       |--------------------------------------------------------------------------
        */
+      
       $ogType =
          $view->params['ogType']
          ?? 'website';
@@ -276,64 +546,94 @@ final class Seo extends Component
       ];
       
       foreach ($ogTags as $tag) {
+         
          $name = $tag['property'];
          
          $view->registerMetaTag(
             $tag,
-            'seo-' . str_replace(':', '-', $name)
+            'seo-' . str_replace(
+               ':',
+               '-',
+               $name
+            )
          );
       }
       
+      
       /*
-       * OG IMAGE SIZE
-       *
-       * Для страницы можно передать:
-       *
+       |--------------------------------------------------------------------------
+       | OG IMAGE SIZE
+       |--------------------------------------------------------------------------
+       |
+       | Для страницы можно передать:
+       |
        * $this->params['seoImageWidth'] = 1200;
        * $this->params['seoImageHeight'] = 630;
+       |
        */
+      
       if (!empty($view->params['seoImageWidth'])) {
+         
          $view->registerMetaTag([
             'property' => 'og:image:width',
-            'content' => (string)$view->params['seoImageWidth'],
+            'content' =>
+               (string)$view->params['seoImageWidth'],
          ], 'seo-og-image-width');
       }
       
       if (!empty($view->params['seoImageHeight'])) {
+         
          $view->registerMetaTag([
             'property' => 'og:image:height',
-            'content' => (string)$view->params['seoImageHeight'],
+            'content' =>
+               (string)$view->params['seoImageHeight'],
          ], 'seo-og-image-height');
       }
       
       if (!empty($view->params['seoImageType'])) {
+         
          $view->registerMetaTag([
             'property' => 'og:image:type',
-            'content' => $view->params['seoImageType'],
+            'content' =>
+               $view->params['seoImageType'],
          ], 'seo-og-image-type');
       }
       
+      
       /*
-       * OG LOCALE ALTERNATES
+       |--------------------------------------------------------------------------
+       | OG LOCALE ALTERNATES
+       |--------------------------------------------------------------------------
        */
+      
       foreach ($this->languages as $alternateLanguage) {
+         
          if ($alternateLanguage === $language) {
             continue;
          }
          
-         if (!isset($this->ogLocales[$alternateLanguage])) {
+         if (
+            !isset(
+               $this->ogLocales[$alternateLanguage]
+            )
+         ) {
             continue;
          }
          
          $view->registerMetaTag([
             'property' => 'og:locale:alternate',
-            'content' => $this->ogLocales[$alternateLanguage],
+            'content' =>
+               $this->ogLocales[$alternateLanguage],
          ], 'seo-og-locale-' . $alternateLanguage);
       }
       
+      
       /*
-       * TWITTER / X
+       |--------------------------------------------------------------------------
+       | TWITTER / X
+       |--------------------------------------------------------------------------
        */
+      
       foreach ([
                   [
                      'name' => 'twitter:card',
@@ -356,47 +656,72 @@ final class Seo extends Component
                      'content' => $imageAlt,
                   ],
                ] as $tag) {
+         
          $view->registerMetaTag(
             $tag,
-            'seo-' . str_replace(':', '-', $tag['name'])
+            'seo-' . str_replace(
+               ':',
+               '-',
+               $tag['name']
+            )
          );
       }
       
+      
       /*
-       * Если есть официальный X/Twitter:
-       *
        * params.php:
+       *
        * 'twitterSite' => '@meros...',
        */
       if (!empty(Yii::$app->params['twitterSite'])) {
+         
          $view->registerMetaTag([
             'name' => 'twitter:site',
-            'content' => Yii::$app->params['twitterSite'],
+            'content' =>
+               Yii::$app->params['twitterSite'],
          ], 'seo-twitter-site');
       }
       
+      
       /*
-       * STRUCTURED DATA
-       *
-       * На noindex страницах Schema нам особо не нужна.
+       |--------------------------------------------------------------------------
+       | STRUCTURED DATA
+       |--------------------------------------------------------------------------
+       |
+       | На noindex страницах Schema не генерируем.
+       |
        */
+      
       if (!$noIndex) {
+         
          $extraSchema =
             $view->params['seoSchema']
             ?? [];
          
-         $view->params['seoSchema'] = $this->buildSchema(
-            title: $title,
-            description: $description,
-            canonical: $canonical,
-            image: $image,
-            language: $language,
-            extraSchema: $extraSchema,
-         );
+         $view->params['seoSchema'] =
+            $this->buildSchema(
+               title: $title,
+               description: $description,
+               canonical: $canonical,
+               image: $image,
+               language: $language,
+               extraSchema: $extraSchema,
+            );
+         
       } else {
-         unset($view->params['seoSchema']);
+         
+         unset(
+            $view->params['seoSchema']
+         );
       }
    }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | SCHEMA
+    |--------------------------------------------------------------------------
+    */
    
    private function buildSchema(
       string $title,
@@ -404,10 +729,11 @@ final class Seo extends Component
       string $canonical,
       string $image,
       string $language,
-      array  $extraSchema = [],
-   ): array
-   {
-      $siteUrl = rtrim($this->siteUrl, '/') . '/';
+      array $extraSchema = [],
+   ): array {
+      $siteUrl =
+         rtrim($this->siteUrl, '/')
+         . '/';
       
       $organizationId =
          $siteUrl . '#organization';
@@ -416,11 +742,15 @@ final class Seo extends Component
          $siteUrl . '#website';
       
       $logo =
-         $this->absoluteUrl($this->logo);
+         $this->absoluteUrl(
+            $this->logo
+         );
+      
       
       /*
+       * Публичные контактные данные.
+       *
        * Не используем adminEmail.
-       * В Schema должен попадать публичный контакт.
        */
       $email =
          Yii::$app->params['contactEmail']
@@ -438,19 +768,30 @@ final class Seo extends Component
          Yii::$app->params['seoAddress']
          ?? [];
       
+      
+      /*
+       |--------------------------------------------------------------------------
+       | ORGANIZATION
+       |--------------------------------------------------------------------------
+       */
+      
       $organization = [
-         '@type' => 'EducationalOrganization',
+         '@type' =>
+            'EducationalOrganization',
          
-         '@id' => $organizationId,
+         '@id' =>
+            $organizationId,
          
-         'name' => $this->siteName,
+         'name' =>
+            $this->siteName,
          
          'alternateName' => [
             'Meros International Institute',
             'Meros Edu',
          ],
          
-         'url' => $siteUrl,
+         'url' =>
+            $siteUrl,
          
          'logo' => [
             '@type' => 'ImageObject',
@@ -458,17 +799,24 @@ final class Seo extends Component
             'contentUrl' => $logo,
          ],
          
-         'description' => $this->defaultDescription(),
+         'description' =>
+            $this->defaultDescription(),
          
-         'email' => $email,
+         'email' =>
+            $email,
          
-         'telephone' => $telephone,
+         'telephone' =>
+            $telephone,
          
-         'sameAs' => $sameAs,
+         'sameAs' =>
+            $sameAs,
       ];
       
+      
       /*
-       * ADDRESS
+       |--------------------------------------------------------------------------
+       | ADDRESS
+       |--------------------------------------------------------------------------
        *
        * params.php:
        *
@@ -479,17 +827,30 @@ final class Seo extends Component
        *     'postalCode' => '...',
        *     'addressCountry' => 'UZ',
        * ],
+       *
        */
+      
       if (!empty($addressData)) {
-         $organization['address'] = array_merge([
-            '@type' => 'PostalAddress',
-         ], $addressData);
+         
+         $organization['address'] =
+            array_merge(
+               [
+                  '@type' =>
+                     'PostalAddress',
+               ],
+               $addressData
+            );
       }
       
+      
       /*
-       * CONTACT POINT
+       |--------------------------------------------------------------------------
+       | CONTACT POINT
+       |--------------------------------------------------------------------------
        */
+      
       if ($email || $telephone) {
+         
          $organization['contactPoint'] = [
             '@type' => 'ContactPoint',
             'email' => $email,
@@ -497,34 +858,61 @@ final class Seo extends Component
          ];
       }
       
-      $graph = [
-         $this->clean($organization),
-      ];
       
       /*
-       * WebSite нужен Google именно на корне домена.
+       |--------------------------------------------------------------------------
+       | GRAPH
+       |--------------------------------------------------------------------------
        */
-      if ($this->isRootPage()) {
+      
+      $graph = [
+         $this->clean(
+            $organization
+         ),
+      ];
+      
+      
+      /*
+       |--------------------------------------------------------------------------
+       | WEBSITE
+       |--------------------------------------------------------------------------
+       |
+       | Добавляем на homepage.
+       |
+       */
+      
+      if ($this->isHomePage()) {
+         
          $graph[] = [
-            '@type' => 'WebSite',
+            '@type' =>
+               'WebSite',
             
-            '@id' => $websiteId,
+            '@id' =>
+               $websiteId,
             
-            'url' => $siteUrl,
+            'url' =>
+               $siteUrl,
             
-            'name' => $this->siteName,
+            'name' =>
+               $this->siteName,
             
-            'alternateName' => $this->siteAlternateNames,
+            'alternateName' =>
+               $this->siteAlternateNames,
             
             'publisher' => [
-               '@id' => $organizationId,
+               '@id' =>
+                  $organizationId,
             ],
          ];
       }
       
+      
       /*
-       * Текущая страница.
+       |--------------------------------------------------------------------------
+       | CURRENT PAGE
+       |--------------------------------------------------------------------------
        */
+      
       $graph[] = [
          '@type' =>
             Yii::$app->view->params['schemaPageType']
@@ -546,41 +934,77 @@ final class Seo extends Component
             $language,
          
          'isPartOf' => [
-            '@id' => $websiteId,
+            '@id' =>
+               $websiteId,
          ],
          
          'about' => [
-            '@id' => $organizationId,
+            '@id' =>
+               $organizationId,
          ],
          
          'primaryImageOfPage' => [
-            '@type' => 'ImageObject',
-            'url' => $image,
+            '@type' =>
+               'ImageObject',
+            
+            'url' =>
+               $image,
          ],
       ];
       
+      
       /*
-       * Course / Article / Event / Person /
-       * BreadcrumbList и т.д.
+       |--------------------------------------------------------------------------
+       | EXTRA SCHEMA
+       |--------------------------------------------------------------------------
+       |
+       | Course
+       | Article
+       | Event
+       | Person
+       | BreadcrumbList
+       | ...
+       |
        */
-      foreach ($this->normalizeSchemaNodes($extraSchema) as $node) {
+      
+      foreach (
+         $this->normalizeSchemaNodes(
+            $extraSchema
+         )
+         as $node
+      ) {
          $graph[] = $node;
       }
       
+      
       return [
-         '@context' => 'https://schema.org',
-         '@graph' => array_map(
-            fn(array $node) => $this->clean($node),
-            $graph
-         ),
+         '@context' =>
+            'https://schema.org',
+         
+         '@graph' =>
+            array_map(
+               fn(array $node) =>
+               $this->clean($node),
+               
+               $graph
+            ),
       ];
    }
    
-   private function normalizeSchemaNodes(array $schema): array
-   {
+   
+   /*
+    |--------------------------------------------------------------------------
+    | NORMALIZE EXTRA SCHEMA
+    |--------------------------------------------------------------------------
+    */
+   
+   private function normalizeSchemaNodes(
+      array $schema
+   ): array {
       if (!$schema) {
          return [];
       }
+      
       
       /*
        * Уже полноценный @graph.
@@ -592,6 +1016,7 @@ final class Seo extends Component
          return $schema['@graph'];
       }
       
+      
       /*
        * Один объект Schema.
        */
@@ -599,28 +1024,43 @@ final class Seo extends Component
          isset($schema['@type'])
          || isset($schema['@id'])
       ) {
-         unset($schema['@context']);
+         unset(
+            $schema['@context']
+         );
          
-         return [$schema];
+         return [
+            $schema,
+         ];
       }
       
+      
       /*
-       * Массив объектов.
+       * Массив объектов Schema.
        */
       $result = [];
       
       foreach ($schema as $node) {
+         
          if (!is_array($node)) {
             continue;
          }
          
-         unset($node['@context']);
+         unset(
+            $node['@context']
+         );
          
          $result[] = $node;
       }
       
       return $result;
    }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | CANONICAL
+    |--------------------------------------------------------------------------
+    */
    
    private function currentCanonicalUrl(): string
    {
@@ -631,23 +1071,37 @@ final class Seo extends Component
          )
             ?: '/';
       
-      return $this->absoluteUrl($path);
+      return $this->absoluteUrl(
+         $path
+      );
    }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | LANGUAGE URL
+    |--------------------------------------------------------------------------
+    */
    
    private function languageUrl(
       string $url,
       string $language
-   ): string
-   {
+   ): string {
       $path =
-         parse_url($url, PHP_URL_PATH)
+         parse_url(
+            $url,
+            PHP_URL_PATH
+         )
             ?: '/';
       
+      
       /*
-       * Уже есть язык.
+       * URL уже содержит язык.
        *
        * /ru/about
+       *
        * ->
+       *
        * /en/about
        */
       if (
@@ -662,12 +1116,16 @@ final class Seo extends Component
             $path,
             1
          );
+         
       } else {
+         
          /*
-          * Языка нет.
+          * Языка ещё нет.
           *
           * /about
+          *
           * ->
+          *
           * /en/about
           */
          $path =
@@ -675,16 +1133,29 @@ final class Seo extends Component
             . (
             $path === '/'
                ? '/'
-               : '/' . ltrim($path, '/')
+               : '/' . ltrim(
+                  $path,
+                  '/'
+               )
             );
       }
       
-      return rtrim($this->siteUrl, '/')
-         . $path;
+      return rtrim(
+            $this->siteUrl,
+            '/'
+         ) . $path;
    }
    
-   private function absoluteUrl(string $url): string
-   {
+   
+   /*
+    |--------------------------------------------------------------------------
+    | ABSOLUTE URL
+    |--------------------------------------------------------------------------
+    */
+   
+   private function absoluteUrl(
+      string $url
+   ): string {
       if (
          preg_match(
             '#^https?://#i',
@@ -694,14 +1165,34 @@ final class Seo extends Component
          return $url;
       }
       
-      if ($url === '' || $url === '/') {
-         return rtrim($this->siteUrl, '/') . '/';
+      if (
+         $url === ''
+         || $url === '/'
+      ) {
+         return rtrim(
+               $this->siteUrl,
+               '/'
+            )
+            . '/';
       }
       
-      return rtrim($this->siteUrl, '/')
+      return rtrim(
+            $this->siteUrl,
+            '/'
+         )
          . '/'
-         . ltrim($url, '/');
+         . ltrim(
+            $url,
+            '/'
+         );
    }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | CURRENT LANGUAGE
+    |--------------------------------------------------------------------------
+    */
    
    private function currentLanguage(): string
    {
@@ -714,7 +1205,8 @@ final class Seo extends Component
          preg_split(
             '/[-_]/',
             $language
-         )[0] ?? 'en';
+         )[0]
+         ?? 'en';
       
       return in_array(
          $language,
@@ -725,21 +1217,41 @@ final class Seo extends Component
          : 'en';
    }
    
-   private function isRootPage(): bool
+   
+   /*
+    |--------------------------------------------------------------------------
+    | HOME PAGE
+    |--------------------------------------------------------------------------
+    |
+    | Используем route, а не URL.
+    |
+    | Поэтому работает одинаково для:
+    |
+    | /
+    | /ru
+    | /en
+    | /uz
+    |
+    */
+   
+   private function isHomePage(): bool
    {
-      $path =
-         parse_url(
-            Yii::$app->request->url,
-            PHP_URL_PATH
-         )
-            ?: '/';
-      
-      return $path === '/';
+      return Yii::$app->controller->route
+         === 'site/index';
    }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | DEFAULT DESCRIPTION
+    |--------------------------------------------------------------------------
+    */
    
    private function defaultDescription(): string
    {
-      return match ($this->currentLanguage()) {
+      return match (
+      $this->currentLanguage()
+      ) {
          'ru' =>
          'Meros — международный образовательный институт в Узбекистане: медицинский английский, подготовка к OET и профессиональное обучение.',
          
@@ -751,11 +1263,80 @@ final class Seo extends Component
       };
    }
    
+   
+   /*
+    |--------------------------------------------------------------------------
+    | META VALUE
+    |--------------------------------------------------------------------------
+    |
+    | $this->metaValue('title', 'ru')
+    |
+    | ->
+    |
+    | title_ru
+    |
+    |
+    | $this->metaValue('canonical')
+    |
+    | ->
+    |
+    | canonical
+    |
+    */
+   
+   private function metaValue(
+      string $field,
+      ?string $language = null
+   ): mixed {
+      if ($this->meta === null) {
+         return null;
+      }
+      
+      if ($language !== null) {
+         $field .= '_' . $language;
+      }
+      
+      try {
+         
+         $value =
+            $this->meta->{$field};
+         
+      } catch (\Throwable) {
+         
+         return null;
+      }
+      
+      
+      /*
+       * Пустая строка = значения нет.
+       *
+       * Тогда Seo component продолжит fallback.
+       */
+      if (is_string($value)) {
+         
+         $value = trim(
+            $value
+         );
+         
+         return $value !== ''
+            ? $value
+            : null;
+      }
+      
+      return $value;
+   }
+   
+   
+   /*
+    |--------------------------------------------------------------------------
+    | TRUNCATE
+    |--------------------------------------------------------------------------
+    */
+   
    private function truncate(
       string $value,
-      int    $length
-   ): string
-   {
+      int $length
+   ): string {
       if (
          mb_strlen($value)
          <= $length
@@ -769,15 +1350,30 @@ final class Seo extends Component
                0,
                $length - 1
             )
-         ) . '…';
+         )
+         . '…';
    }
    
-   private function clean(array $data): array
-   {
-      foreach ($data as $key => $value) {
+   
+   /*
+    |--------------------------------------------------------------------------
+    | CLEAN SCHEMA
+    |--------------------------------------------------------------------------
+    */
+   
+   private function clean(
+      array $data
+   ): array {
+      foreach (
+         $data
+         as $key => $value
+      ) {
          if (is_array($value)) {
+            
             $value =
-               $this->clean($value);
+               $this->clean(
+                  $value
+               );
          }
          
          if (
@@ -785,12 +1381,15 @@ final class Seo extends Component
             || $value === ''
             || $value === []
          ) {
-            unset($data[$key]);
+            unset(
+               $data[$key]
+            );
             
             continue;
          }
          
-         $data[$key] = $value;
+         $data[$key] =
+            $value;
       }
       
       return $data;

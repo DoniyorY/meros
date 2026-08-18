@@ -91,4 +91,16 @@ class CourseCategory extends \yii\db\ActiveRecord
       return $this->hasMany(Courses::class, ['category_id' => 'id']);
    }
    
+   public function getSeoMeta()
+   {
+      return $this->hasOne(
+         SeoMeta::class,
+         [
+            'entity_id' => 'id',
+         ]
+      )->andWhere([
+         'entity_type' =>
+            SeoMeta::TYPE_COURSE_CATEGORY,
+      ]);
+   }
 }

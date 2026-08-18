@@ -17,28 +17,31 @@ use yii\web\NotFoundHttpException;
 class CoursesController extends BaseController
 {
    
-   public function actionCategory($category)
+   public function actionCategory(string $category)
    {
-      $categoryModel = CourseCategory::findOne([
-         'slug' => $category,
-         'status' => CourseCategory::STATUS_ACTIVE,
-      ]);
-
-      if ($categoryModel === null) {
-         throw new NotFoundHttpException('Категория курсов не найдена.');
-      }
-
-      $courses = Courses::find()
+      $categoryModel = CourseCategory::find()
          ->where([
-            'category_id' => $categoryModel->id,
-            'status' => Courses::STATUS_ACTIVE,
+            'course_category.slug' => $category,
+            'course_category.status' => 1,
          ])
-         ->orderBy(['id' => SORT_ASC])
-         ->all();
-
+         ->joinWith([
+            'seoMeta',
+            'courses',
+         ])
+         ->andWhere(['courses.status' => 1])
+         ->one();
+      
+      if (!$categoryModel) {
+         throw new NotFoundHttpException();
+      }
+      
+      Yii::$app->seo->useMeta(
+         $categoryModel->seoMeta
+      );
+      
       return $this->render('category', [
          'category' => $categoryModel,
-         'courses' => $courses,
+         'courses'=>$categoryModel->courses
       ]);
    }
    
