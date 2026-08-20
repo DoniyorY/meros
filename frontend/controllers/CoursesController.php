@@ -47,6 +47,7 @@ class CoursesController extends BaseController
    
    public function actionIndex($category, $slug)
    {
+      
       if ($category === 'healthcare-employers' && $slug === 'hospitals') {
          return $this->actionHospitals($category, $slug);
       }
@@ -56,6 +57,9 @@ class CoursesController extends BaseController
       
       $category = CourseCategory::findOne(['slug' => $category]);
       $courses = Courses::findOne(['slug' => $slug]);
+      Yii::$app->seo->useMeta(
+         $courses->seoMeta
+      );
       if ($category === null || $courses === null) {
          throw new NotFoundHttpException('Курс не найден.');
       }

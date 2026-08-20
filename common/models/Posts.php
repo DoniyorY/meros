@@ -94,5 +94,16 @@ class Posts extends \yii\db\ActiveRecord
     {
         return $this->hasOne(PostCategory::class, ['id' => 'category_id']);
     }
-
+   public function getSeoMeta()
+   {
+      return $this->hasOne(
+         SeoMeta::class,
+         [
+            'entity_id' => 'id',
+         ]
+      )->andWhere([
+         'entity_type' =>
+            SeoMeta::TYPE_POST,
+      ]);
+   }
 }
