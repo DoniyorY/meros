@@ -118,6 +118,9 @@ $base = Yii::$app->request->baseUrl;
                             <li class="nav-item">
                                 <a href="<?= Url::to(['faq/index']) ?>" class="nav-link"> FAQ</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="<?= Url::to(['medical-dictionary/index']) ?>" class="nav-link">Medical Dictionary</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

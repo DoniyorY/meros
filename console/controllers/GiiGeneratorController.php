@@ -128,7 +128,7 @@ class GiiGeneratorController extends Controller
         // Генерация контроллеров
         foreach ($models as $tableName => $model) {
             $controllerClass = "backend\\controllers\\{$model}Controller";
-            $viewPath = "@app/views/" . Inflector::camel2id($model, '-');
+            $viewPath = "@backend/views/" . Inflector::camel2id($model, '-');
             $this->stdout("Генерация контроллера: $controllerClass...\n", Console::FG_GREEN);
             \Yii::$app->runAction('gii/crud', [
                 'modelClass' => "common\\models\\$model",

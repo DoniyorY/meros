@@ -49,5 +49,83 @@ return [
    'faq_page_id' => [
       1 => 'faq-students',
       2 => 'faq-organisations',
-   ]
+   ],
+   'medical_dictionary_categories' => [
+      'ru' => [
+         1  => 'Общая медицина',
+         2  => 'Кардиология',
+         3  => 'Неврология',
+         4  => 'Пульмонология',
+         5  => 'Гастроэнтерология',
+         6  => 'Эндокринология',
+         7  => 'Гематология',
+         8  => 'Инфекционные заболевания',
+         9  => 'Диагностика',
+         10 => 'Фармакология',
+         11 => 'Анатомия',
+         12 => 'Неотложная помощь',
+      ],
+      
+      'en' => [
+         1  => 'General Medicine',
+         2  => 'Cardiology',
+         3  => 'Neurology',
+         4  => 'Pulmonology',
+         5  => 'Gastroenterology',
+         6  => 'Endocrinology',
+         7  => 'Hematology',
+         8  => 'Infectious Diseases',
+         9  => 'Diagnostics',
+         10 => 'Pharmacology',
+         11 => 'Anatomy',
+         12 => 'Emergency Medicine',
+      ],
+      
+      'uz' => [
+         1  => 'Umumiy tibbiyot',
+         2  => 'Kardiologiya',
+         3  => 'Nevrologiya',
+         4  => 'Pulmonologiya',
+         5  => 'Gastroenterologiya',
+         6  => 'Endokrinologiya',
+         7  => 'Gematologiya',
+         8  => 'Yuqumli kasalliklar',
+         9  => 'Diagnostika',
+         10 => 'Farmakologiya',
+         11 => 'Anatomiya',
+         12 => 'Shoshilinch tibbiy yordam',
+      ],
+   ],
+   
+   'medical_dictionary_types' => [
+      'ru' => [
+         1 => 'Заболевание / состояние',
+         2 => 'Симптом / признак',
+         3 => 'Анатомический термин',
+         4 => 'Диагностика / показатель',
+         5 => 'Процедура',
+         6 => 'Фармакологический термин',
+         7 => 'Общий медицинский термин',
+      ],
+      
+      'en' => [
+         1 => 'Disease / Condition',
+         2 => 'Symptom / Sign',
+         3 => 'Anatomical Term',
+         4 => 'Diagnostic / Indicator',
+         5 => 'Procedure',
+         6 => 'Pharmacological Term',
+         7 => 'General Medical Term',
+      ],
+      
+      'uz' => [
+         1 => 'Kasallik / holat',
+         2 => 'Simptom / belgi',
+         3 => 'Anatomik atama',
+         4 => 'Diagnostika / ko‘rsatkich',
+         5 => 'Protsedura',
+         6 => 'Farmakologik atama',
+         7 => 'Umumiy tibbiy atama',
+      ],
+   ],
 ];

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Billing;
 use common\models\Faq;
+use common\models\MedicalDictionary;
 use common\models\User;
 use common\models\UserSubscriptions;
 use common\services\TelegramStaffNotificationService;
@@ -108,6 +109,15 @@ class SiteController extends BaseController
       ]);
       
    }
+   
+   public function actionMedicalDictionary()
+   {
+      $model = MedicalDictionary::findAll(['status'=>1]);
+      return $this->render('medical-dictionary',[
+         'model'=>$model,
+      ]);
+   }
+   
 
    /** XML index of every public, indexable page in all supported languages. */
    public function actionSitemap(): string
