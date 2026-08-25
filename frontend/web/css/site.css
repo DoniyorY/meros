@@ -3954,6 +3954,47 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     padding: clamp(16px, 3vw, 30px);
 }
 
+.meros-dictionary-page .meros-dictionary-filters {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, .35fr);
+    margin-bottom: 24px;
+}
+
+.meros-dictionary-page .meros-dictionary-search {
+    position: relative;
+}
+
+.meros-dictionary-page .meros-dictionary-search .bi-search {
+    color: var(--meros-muted);
+    left: 18px;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.meros-dictionary-page .meros-dictionary-search .form-control,
+.meros-dictionary-page .meros-dictionary-category-filter .form-select {
+    background-color: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 14px;
+    color: #111;
+    font-weight: 600;
+    min-height: 52px;
+}
+
+.meros-dictionary-page .meros-dictionary-search .form-control {
+    padding-left: 48px;
+}
+
+.meros-dictionary-page .meros-dictionary-search .form-control:focus,
+.meros-dictionary-page .meros-dictionary-category-filter .form-select:focus {
+    border-color: var(--meros-primary);
+    box-shadow: 0 0 0 3px rgba(0, 140, 153, .12);
+}
+
 .meros-dictionary-page .meros-term-item {
     border: 1px solid var(--meros-border);
     border-radius: 18px !important;
@@ -3982,7 +4023,7 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 .meros-dictionary-page .meros-term-meta {
-    color: var(--meros-muted);
+    color: #111;
     display: block;
     font-size: 12px;
     font-weight: 700;
@@ -4010,8 +4051,19 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 
 .meros-dictionary-page .meros-term-item .accordion-body {
     border-top: 1px solid var(--meros-border);
-    color: var(--meros-muted);
+    color: #111;
     padding: 20px;
+}
+
+.meros-dictionary-page .meros-term-item[hidden] {
+    display: none !important;
+}
+
+.meros-dictionary-page .meros-dictionary-no-results {
+    color: #111;
+    font-weight: 700;
+    padding: 36px 16px 12px;
+    text-align: center;
 }
 
 .meros-dictionary-page .meros-dictionary-empty {
@@ -4047,6 +4099,10 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 @media (max-width: 575.98px) {
+    .meros-dictionary-page .meros-dictionary-filters {
+        grid-template-columns: 1fr;
+    }
+
     .meros-dictionary-page .meros-dictionary-visual {
         min-height: 230px;
     }

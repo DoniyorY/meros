@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
+use frontend\assets\AppAsset;
 
 $lang = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
 $selectedTerm = $selectedTerm ?? null;
@@ -27,6 +28,7 @@ if ($selectedTerm !== null) {
    $this->registerMetaTag(['name' => 'description', 'content' => $seoDescription]);
 } else {
    $this->title = $copy['title'];
+   $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::class]);
 }
 
 ?>
@@ -65,6 +67,24 @@ if ($selectedTerm !== null) {
             </div>
             <div class="meros-dictionary-list">
                <?php if ($model): ?>
+                  <div class="meros-dictionary-filters" data-medical-dictionary-filters>
+                     <div class="meros-dictionary-search">
+                        <label class="visually-hidden" for="medical-dictionary-search"><?= Html::encode($copy['search_label']) ?></label>
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        <input id="medical-dictionary-search" class="form-control" type="search" placeholder="<?= Html::encode($copy['search_placeholder']) ?>" autocomplete="off" data-dictionary-search>
+                     </div>
+                     <div class="meros-dictionary-category-filter">
+                        <label class="visually-hidden" for="medical-dictionary-category"><?= Html::encode($copy['category_filter']) ?></label>
+                        <select id="medical-dictionary-category" class="form-select" data-dictionary-category>
+                           <option value=""><?= Html::encode($copy['all_categories']) ?></option>
+                           <?php foreach ($categories as $categoryId => $categoryName): ?>
+                              <?php if (in_array((int) $categoryId, $usedCategoryIds, true)): ?>
+                                 <option value="<?= (int) $categoryId ?>"><?= Html::encode($categoryName) ?></option>
+                              <?php endif; ?>
+                           <?php endforeach; ?>
+                        </select>
+                     </div>
+                  </div>
                   <div class="accordion meros-accordion" id="medical-dictionary-accordion">
                      <?php foreach ($model as $term): ?>
                         <?php
@@ -74,7 +94,7 @@ if ($selectedTerm !== null) {
                         $slug = $term->{"slug_{$lang}"} ?: $term->slug_en;
                         $meta = array_filter([$categories[$term->category_id] ?? null, $types[$term->type] ?? null]);
                         ?>
-                        <div class="accordion-item meros-term-item">
+                        <div class="accordion-item meros-term-item" data-dictionary-item data-category="<?= (int) $term->category_id ?>" data-search="<?= Html::encode(implode(' ', [$name, $description, ...$meta])) ?>">
                            <h3 class="accordion-header meros-term-heading" id="<?= $id ?>-heading">
                               <button class="accordion-button collapsed meros-term-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#<?= $id ?>-collapse" aria-expanded="false" aria-controls="<?= $id ?>-collapse">
                                  <span><span class="meros-term-title"><?= Html::encode($name) ?></span><span class="meros-term-meta"><?= Html::encode(implode(' · ', $meta)) ?></span></span>
@@ -89,6 +109,7 @@ if ($selectedTerm !== null) {
                         </div>
                      <?php endforeach; ?>
                   </div>
+                  <div class="meros-dictionary-no-results" data-dictionary-no-results hidden><?= Html::encode($copy['no_results']) ?></div>
                <?php else: ?>
                   <div class="meros-dictionary-empty"><?= Html::encode($copy['empty']) ?></div>
                <?php endif; ?>
