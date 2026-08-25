@@ -75,7 +75,8 @@ if ($selectedTerm !== null) {
                      </div>
                      <div class="meros-dictionary-category-filter">
                         <label class="visually-hidden" for="medical-dictionary-category"><?= Html::encode($copy['category_filter']) ?></label>
-                        <select id="medical-dictionary-category" class="form-select" data-dictionary-category>
+                        <i class="bi bi-grid" aria-hidden="true"></i>
+                        <select id="medical-dictionary-category" class="form-select" data-dictionary-category data-no-selectize>
                            <option value=""><?= Html::encode($copy['all_categories']) ?></option>
                            <?php foreach ($categories as $categoryId => $categoryName): ?>
                               <?php if (in_array((int) $categoryId, $usedCategoryIds, true)): ?>
@@ -84,6 +85,12 @@ if ($selectedTerm !== null) {
                            <?php endforeach; ?>
                         </select>
                      </div>
+                  </div>
+                  <div class="meros-dictionary-filter-status">
+                     <span aria-live="polite"><strong data-dictionary-count><?= $termCount ?></strong> <?= Html::encode($copy['results']) ?></span>
+                     <button class="meros-dictionary-reset" type="button" data-dictionary-reset hidden>
+                        <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> <?= Html::encode($copy['reset_filters']) ?>
+                     </button>
                   </div>
                   <div class="accordion meros-accordion" id="medical-dictionary-accordion">
                      <?php foreach ($model as $term): ?>

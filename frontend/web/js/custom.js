@@ -107,7 +107,7 @@ $(document).ready(function($) {
 //  Selectize
 
     if ($.fn.selectize) {
-        $('select').selectize();
+        $('select:not([data-no-selectize])').selectize();
     }
 
 //  Center Slide Vertically

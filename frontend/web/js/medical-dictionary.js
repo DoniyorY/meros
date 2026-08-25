@@ -11,6 +11,8 @@
     var category = filters.querySelector('[data-dictionary-category]');
     var items = Array.prototype.slice.call(document.querySelectorAll('[data-dictionary-item]'));
     var noResults = document.querySelector('[data-dictionary-no-results]');
+    var resultCount = document.querySelector('[data-dictionary-count]');
+    var reset = document.querySelector('[data-dictionary-reset]');
     var locale = document.documentElement.lang || undefined;
 
     function normalize(value) {
@@ -33,9 +35,28 @@
             }
         });
 
+        resultCount.textContent = visibleCount;
         noResults.hidden = visibleCount !== 0;
+        reset.hidden = !query && !selectedCategory;
     }
 
     search.addEventListener('input', filterTerms);
     category.addEventListener('change', filterTerms);
+    category.addEventListener('input', filterTerms);
+
+    reset.addEventListener('click', function () {
+        search.value = '';
+        category.value = '';
+        filterTerms();
+        search.focus();
+    });
+
+    search.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && search.value) {
+            search.value = '';
+            filterTerms();
+        }
+    });
+
+    filterTerms();
 }());
