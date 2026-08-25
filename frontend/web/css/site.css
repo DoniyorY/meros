@@ -3851,3 +3851,215 @@ footer#page-footer #footer-content .footer-logo-column .logo {
         display: none;
     }
 }
+
+/* Medical dictionary */
+.meros-dictionary-page .meros-dictionary-hero-card {
+    padding: clamp(28px, 4vw, 52px);
+}
+
+.meros-dictionary-page .meros-dictionary-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.meros-dictionary-page .meros-dictionary-stat {
+    background: rgba(255, 255, 255, .82);
+    border: 1px solid var(--meros-border);
+    border-radius: 18px;
+    min-width: 140px;
+    padding: 16px 20px;
+}
+
+.meros-dictionary-page .meros-dictionary-stat strong {
+    color: var(--meros-primary-dark);
+    display: block;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.meros-dictionary-page .meros-dictionary-stat span {
+    color: var(--meros-muted);
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.meros-dictionary-page .meros-dictionary-visual {
+    align-items: center;
+    background: linear-gradient(135deg, var(--meros-primary-dark), var(--meros-primary));
+    border-radius: 30px;
+    box-shadow: var(--meros-shadow);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    min-height: 360px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meros-dictionary-page .meros-dictionary-visual::before,
+.meros-dictionary-page .meros-dictionary-visual::after {
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 50%;
+    content: '';
+    position: absolute;
+}
+
+.meros-dictionary-page .meros-dictionary-visual::before {
+    height: 290px;
+    right: -80px;
+    top: -90px;
+    width: 290px;
+}
+
+.meros-dictionary-page .meros-dictionary-visual::after {
+    bottom: -75px;
+    height: 220px;
+    left: -65px;
+    width: 220px;
+}
+
+.meros-dictionary-page .meros-dictionary-symbol {
+    font-size: clamp(90px, 13vw, 150px);
+    font-weight: 900;
+    line-height: 1;
+    opacity: .95;
+    position: relative;
+    text-shadow: 0 14px 30px rgba(0, 0, 0, .16);
+    z-index: 1;
+}
+
+.meros-dictionary-page .meros-dictionary-heading {
+    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.meros-dictionary-page .meros-dictionary-heading p {
+    margin: 8px 0 0;
+    max-width: 680px;
+}
+
+.meros-dictionary-page .meros-dictionary-list {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    padding: clamp(16px, 3vw, 30px);
+}
+
+.meros-dictionary-page .meros-term-item {
+    border: 1px solid var(--meros-border);
+    border-radius: 18px !important;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.meros-dictionary-page .meros-term-item:last-child {
+    margin-bottom: 0;
+}
+
+.meros-dictionary-page .meros-term-heading {
+    align-items: stretch;
+    display: flex;
+}
+
+.meros-dictionary-page .meros-term-toggle {
+    min-width: 0;
+    padding: 20px 18px;
+}
+
+.meros-dictionary-page .meros-term-title {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.meros-dictionary-page .meros-term-meta {
+    color: var(--meros-muted);
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.meros-dictionary-page .meros-term-link {
+    align-items: center;
+    align-self: center;
+    border-left: 1px solid var(--meros-border);
+    color: var(--meros-primary-dark);
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 13px;
+    font-weight: 800;
+    gap: 7px;
+    margin: 10px 0;
+    padding: 12px 18px;
+    white-space: nowrap;
+}
+
+.meros-dictionary-page .meros-term-link:hover {
+    color: var(--meros-primary);
+}
+
+.meros-dictionary-page .meros-term-item .accordion-body {
+    border-top: 1px solid var(--meros-border);
+    color: var(--meros-muted);
+    padding: 20px;
+}
+
+.meros-dictionary-page .meros-dictionary-empty {
+    color: var(--meros-muted);
+    padding: 36px;
+    text-align: center;
+}
+
+.meros-dictionary-page .meros-term-article {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    padding: clamp(26px, 5vw, 54px);
+}
+
+.meros-dictionary-page .meros-term-article-meta {
+    color: var(--meros-muted);
+    font-weight: 700;
+    margin: 12px 0 28px;
+}
+
+.meros-dictionary-page .meros-term-content {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.meros-dictionary-page .meros-back-link {
+    display: inline-flex;
+    font-weight: 800;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 575.98px) {
+    .meros-dictionary-page .meros-dictionary-visual {
+        min-height: 230px;
+    }
+
+    .meros-dictionary-page .meros-term-heading {
+        flex-wrap: wrap;
+    }
+
+    .meros-dictionary-page .meros-term-link {
+        border-left: 0;
+        border-top: 1px solid var(--meros-border);
+        justify-content: space-between;
+        margin: 0;
+        width: 100%;
+    }
+}

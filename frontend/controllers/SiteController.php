@@ -110,11 +110,30 @@ class SiteController extends BaseController
       
    }
    
-   public function actionMedicalDictionary()
+   public function actionMedicalDictionary(?string $slug = null)
    {
-      $model = MedicalDictionary::findAll(['status'=>1]);
+      $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+      $slugAttribute = "slug_{$language}";
+      $selectedTerm = null;
+
+      if ($slug !== null) {
+         $selectedTerm = MedicalDictionary::find()
+            ->where(['status' => 1, $slugAttribute => $slug])
+            ->one();
+
+         if ($selectedTerm === null) {
+            throw new NotFoundHttpException('The requested medical term does not exist.');
+         }
+      }
+
+      $model = MedicalDictionary::find()
+         ->where(['status' => 1])
+         ->orderBy(["name_{$language}" => SORT_ASC])
+         ->all();
+
       return $this->render('medical-dictionary',[
-         'model'=>$model,
+         'model' => $model,
+         'selectedTerm' => $selectedTerm,
       ]);
    }
    
