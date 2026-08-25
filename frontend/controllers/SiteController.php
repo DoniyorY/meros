@@ -110,21 +110,9 @@ class SiteController extends BaseController
       
    }
    
-   public function actionMedicalDictionary(?string $slug = null)
+   public function actionMedicalDictionary()
    {
       $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
-      $slugAttribute = "slug_{$language}";
-      $selectedTerm = null;
-
-      if ($slug !== null) {
-         $selectedTerm = MedicalDictionary::find()
-            ->where(['status' => 1, $slugAttribute => $slug])
-            ->one();
-
-         if ($selectedTerm === null) {
-            throw new NotFoundHttpException('The requested medical term does not exist.');
-         }
-      }
 
       $model = MedicalDictionary::find()
          ->where(['status' => 1])
@@ -133,8 +121,23 @@ class SiteController extends BaseController
 
       return $this->render('medical-dictionary',[
          'model' => $model,
-         'selectedTerm' => $selectedTerm,
          'translatorLanguages' => Yii::$app->params['medical_dictionary_languages'],
+      ]);
+   }
+
+   public function actionMedicalDictionaryView(string $slug)
+   {
+      $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+      $term = MedicalDictionary::find()
+         ->where(['status' => 1, "slug_{$language}" => $slug])
+         ->one();
+
+      if ($term === null) {
+         throw new NotFoundHttpException('The requested medical term does not exist.');
+      }
+
+      return $this->render('medical-dictionary-view', [
+         'term' => $term,
       ]);
    }
 

@@ -4290,6 +4290,21 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     padding: clamp(26px, 5vw, 54px);
 }
 
+.meros-dictionary-page .meros-dictionary-breadcrumb {
+    align-items: center;
+    color: var(--meros-muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.meros-dictionary-page .meros-dictionary-breadcrumb a {
+    color: var(--meros-primary-dark);
+}
+
 .meros-dictionary-page .meros-term-article-meta {
     color: var(--meros-muted);
     font-weight: 700;
