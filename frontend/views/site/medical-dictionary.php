@@ -35,7 +35,7 @@ if ($selectedTerm !== null) {
 
 <div id="page-content" class="meros-modern-page meros-content-page meros-dictionary-page">
    <?php if ($selectedTerm === null): ?>
-      <section class="meros-section meros-page-hero reveal-section">
+      <section class="meros-section meros-page-hero">
          <div class="container">
             <div class="row align-items-center g-5">
                <div class="col-lg-7">
@@ -56,7 +56,7 @@ if ($selectedTerm !== null) {
          </div>
       </section>
 
-      <section class="meros-section reveal-section">
+      <section class="meros-section">
          <div class="container">
             <div class="meros-dictionary-heading">
                <div>
@@ -129,7 +129,7 @@ if ($selectedTerm !== null) {
       $content = $selectedTerm->{"content_{$lang}"} ?: $selectedTerm->content_en;
       $meta = array_filter([$categories[$selectedTerm->category_id] ?? null, $types[$selectedTerm->type] ?? null]);
       ?>
-      <section class="meros-section meros-page-hero reveal-section">
+      <section class="meros-section meros-page-hero">
          <div class="container">
             <a class="meros-back-link" href="<?= Url::to(['site/medical-dictionary']) ?>"><span aria-hidden="true">←</span> <?= Html::encode($copy['back']) ?></a>
             <article class="meros-term-article">
