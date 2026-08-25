@@ -141,6 +141,9 @@ $phoneHref = preg_replace('/[^+0-9]/', '', $params['phone'] ?? '');
                                         <li>
                                             <a href="<?= Url::to(['site/faq','page'=>$params['faq_page_id'][2]]) ?>"> <?=$params['faq_org'][$lang]?></a>
                                         </li>
+                                        <li>
+                                            <a href="<?= Url::to(['site/medical-dictionary']) ?>"><?= Html::encode($params['medical_dictionary'][$lang]['title'] ?? $params['medical_dictionary']['en']['title']) ?></a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item mobile-account-navigation d-xxl-none">

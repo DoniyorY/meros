@@ -181,6 +181,8 @@ return [
             'team' => 'site/teams',
             'download/<id>-<file>'=>'courses/download',
             'faq/<page>'=>'site/faq',
+            'medical-dictionary' => 'site/medical-dictionary',
+            'medical-dictionary/<slug:[a-z0-9-]+>' => 'site/medical-dictionary',
             
             'POST telegram/staff-webhook' => 'telegram-staff/webhook',
             'GET telegram/staff-health' => 'telegram-staff/health',
