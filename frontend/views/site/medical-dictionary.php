@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 /** @var common\models\MedicalDictionary[] $model */
 /** @var common\models\MedicalDictionary|null $selectedTerm */
+/** @var array<string, string> $translatorLanguages */
 
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
@@ -55,6 +56,12 @@ if ($selectedTerm !== null) {
             </div>
          </div>
       </section>
+
+      <?= $this->render('_medical-dictionary-translator', [
+         'copy' => $copy,
+         'lang' => $lang,
+         'languages' => $translatorLanguages,
+      ]) ?>
 
       <section class="meros-section">
          <div class="container">

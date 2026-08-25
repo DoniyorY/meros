@@ -182,6 +182,7 @@ return [
             'download/<id>-<file>'=>'courses/download',
             'faq/<page>'=>'site/faq',
             'medical-dictionary' => 'site/medical-dictionary',
+            'GET medical-dictionary/translate' => 'site/medical-dictionary-translate',
             'medical-dictionary/<slug:[a-z0-9-]+>' => 'site/medical-dictionary',
             
             'POST telegram/staff-webhook' => 'telegram-staff/webhook',

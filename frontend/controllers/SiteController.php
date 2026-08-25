@@ -134,7 +134,37 @@ class SiteController extends BaseController
       return $this->render('medical-dictionary',[
          'model' => $model,
          'selectedTerm' => $selectedTerm,
+         'translatorLanguages' => Yii::$app->params['medical_dictionary_languages'],
       ]);
+   }
+
+   public function actionMedicalDictionaryTranslate(string $query = '', string $from = 'en', string $to = 'ru'): array
+   {
+      Yii::$app->response->format = Response::FORMAT_JSON;
+      $languages = ['ru', 'en', 'uz'];
+      $query = trim($query);
+
+      if (!in_array($from, $languages, true) || !in_array($to, $languages, true) || mb_strlen($query) < 2) {
+         return ['results' => []];
+      }
+
+      $terms = MedicalDictionary::find()
+         ->select(['id', "name_{$from}", "name_{$to}", "desc_{$to}", "slug_{$to}"])
+         ->where(['status' => 1])
+         ->andWhere(['like', "name_{$from}", $query])
+         ->orderBy(["name_{$from}" => SORT_ASC])
+         ->limit(8)
+         ->asArray()
+         ->all();
+
+      return [
+         'results' => array_map(static fn(array $term): array => [
+            'source' => $term["name_{$from}"],
+            'translation' => $term["name_{$to}"],
+            'description' => $term["desc_{$to}"],
+            'slug' => $term["slug_{$to}"],
+         ], $terms),
+      ];
    }
    
 

@@ -3853,6 +3853,152 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 /* Medical dictionary */
+.meros-dictionary-page .meros-dictionary-translator-section {
+    padding-bottom: 0;
+}
+
+.meros-dictionary-page .meros-dictionary-translator {
+    background: linear-gradient(135deg, #f4fbfb 0%, #fff 65%);
+    border: 1px solid var(--meros-border);
+    border-radius: 28px;
+    box-shadow: var(--meros-shadow);
+    display: grid;
+    gap: clamp(24px, 4vw, 42px);
+    grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+    padding: clamp(24px, 4vw, 46px);
+}
+
+.meros-dictionary-page .meros-translator-heading p {
+    margin: 10px 0 0;
+}
+
+.meros-dictionary-page .meros-translator-form {
+    align-self: center;
+}
+
+.meros-dictionary-page .meros-translator-languages {
+    align-items: center;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.meros-dictionary-page .meros-translator-languages .form-select,
+.meros-dictionary-page .meros-translator-query .form-control {
+    background-color: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 14px;
+    color: #111;
+    min-height: 52px;
+}
+
+.meros-dictionary-page .meros-translator-languages .form-select:focus,
+.meros-dictionary-page .meros-translator-query .form-control:focus {
+    border-color: var(--meros-primary);
+    box-shadow: 0 0 0 3px rgba(0, 140, 153, .12);
+}
+
+.meros-dictionary-page .meros-translator-swap {
+    align-items: center;
+    background: var(--meros-primary-dark);
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    height: 42px;
+    justify-content: center;
+    transition: transform .2s ease, background-color .2s ease;
+    width: 42px;
+}
+
+.meros-dictionary-page .meros-translator-swap:hover {
+    background: var(--meros-primary);
+    transform: rotate(180deg);
+}
+
+.meros-dictionary-page .meros-translator-query {
+    margin-top: 18px;
+}
+
+.meros-dictionary-page .meros-translator-query > label {
+    color: #111;
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.meros-dictionary-page .meros-translator-input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.meros-dictionary-page .meros-translator-input-row .form-control {
+    min-width: 0;
+}
+
+.meros-dictionary-page .meros-translator-query small {
+    color: var(--meros-muted);
+    display: block;
+    margin-top: 7px;
+}
+
+.meros-dictionary-page .meros-translator-results {
+    display: grid;
+    gap: 14px;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.meros-dictionary-page .meros-translator-results:empty {
+    display: none;
+}
+
+.meros-dictionary-page .meros-translator-result {
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.meros-dictionary-page .meros-translator-source {
+    color: var(--meros-muted);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.meros-dictionary-page .meros-translator-result h3 {
+    font-size: 20px;
+    margin: 6px 0 8px;
+}
+
+.meros-dictionary-page .meros-translator-result p {
+    color: #111;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.meros-dictionary-page .meros-translator-message {
+    background: #fff;
+    border: 1px dashed var(--meros-border);
+    border-radius: 16px;
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.meros-dictionary-page .meros-translator-message.is-error {
+    border-color: #dc3545;
+    color: #b02a37;
+}
+
+.meros-dictionary-page .meros-dictionary-translator.is-loading {
+    cursor: progress;
+}
+
 .meros-dictionary-page .meros-dictionary-hero-card {
     padding: clamp(28px, 4vw, 52px);
 }
@@ -4163,6 +4309,23 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 @media (max-width: 575.98px) {
+    .meros-dictionary-page .meros-dictionary-translator {
+        grid-template-columns: 1fr;
+    }
+
+    .meros-dictionary-page .meros-translator-languages {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .meros-dictionary-page .meros-translator-input-row,
+    .meros-dictionary-page .meros-translator-results {
+        grid-template-columns: 1fr;
+    }
+
+    .meros-dictionary-page .meros-translator-input-row {
+        display: grid;
+    }
+
     .meros-dictionary-page .meros-dictionary-filters {
         grid-template-columns: 1fr;
     }
