@@ -34,6 +34,12 @@ return [
          1 => 'Успешно',
          2 => 'Ошибка',
          3 => 'Отменен'
+      ],
+      'uz'=>[
+         0=>'Jarayonda',
+         1=>'Muvaffaqiyatli',
+         2=>'Xato',
+         3=>'Bekor Qilingan',
       ]
    ],
    'billing_status_class' => [
@@ -64,6 +70,17 @@ return [
          10 => 'Фармакология',
          11 => 'Анатомия',
          12 => 'Неотложная помощь',
+         13 => 'Нефрология и урология',
+         14 => 'Онкология',
+         15 => 'Иммунология и ревматология',
+         16 => 'Акушерство и гинекология',
+         17 => 'Хирургия',
+         18 => 'Генетика',
+         19 => 'Дерматология',
+         20 => 'Офтальмология',
+         21 => 'Оториноларингология (ЛОР)',
+         22 => 'Психиатрия и психическое здоровье',
+         23 => 'Педиатрия',
       ],
       
       'en' => [
@@ -79,6 +96,17 @@ return [
          10 => 'Pharmacology',
          11 => 'Anatomy',
          12 => 'Emergency Medicine',
+         13 => 'Nephrology and Urology',
+         14 => 'Oncology',
+         15 => 'Immunology and Rheumatology',
+         16 => 'Obstetrics and Gynecology',
+         17 => 'Surgery',
+         18 => 'Genetics',
+         19 => 'Dermatology',
+         20 => 'Ophthalmology',
+         21 => 'Otorhinolaryngology (ENT)',
+         22 => 'Psychiatry and Mental Health',
+         23 => 'Pediatrics',
       ],
       
       'uz' => [
@@ -94,6 +122,17 @@ return [
          10 => 'Farmakologiya',
          11 => 'Anatomiya',
          12 => 'Shoshilinch tibbiy yordam',
+         13 => 'Nefrologiya va urologiya',
+         14 => 'Onkologiya',
+         15 => 'Immunologiya va revmatologiya',
+         16 => 'Akusherlik va ginekologiya',
+         17 => 'Jarrohlik',
+         18 => 'Genetika',
+         19 => 'Dermatologiya',
+         20 => 'Oftalmologiya',
+         21 => 'Otorinolaringologiya (LOR)',
+         22 => 'Psixiatriya va ruhiy salomatlik',
+         23 => 'Pediatriya',
       ],
    ],
    
