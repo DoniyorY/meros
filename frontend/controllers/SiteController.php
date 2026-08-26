@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Billing;
 use common\models\Faq;
 use common\models\MedicalDictionary;
+use common\models\search\MedicalDictionarySearch;
 use common\models\User;
 use common\models\UserSubscriptions;
 use common\services\TelegramStaffNotificationService;
@@ -26,7 +27,6 @@ use common\models\Gallery;
 use yii\web\NotFoundHttpException;
 use common\models\Courses;
 use common\models\CourseCategory;
-use yii\data\Pagination;
 use yii\web\Response;
 
 /**
@@ -114,29 +114,29 @@ class SiteController extends BaseController
    public function actionMedicalDictionary()
    {
       $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
-      $query = MedicalDictionary::find()->where(['status' => 1]);
-      $pagination = new Pagination([
-         'totalCount' => $query->count(),
-         'pageSize' => 100,
-         'pageSizeLimit' => [100, 100],
-      ]);
+      $searchModel = new MedicalDictionarySearch();
+      $dataProvider = $searchModel->searchPublic(Yii::$app->request->queryParams, $language);
+      $activeTerms = MedicalDictionary::find()->where(['status' => 1]);
+      $availableCategoryIds = (clone $activeTerms)->select('category_id')->distinct()->column();
+      $availableTypeIds = (clone $activeTerms)->select('type')->andWhere(['not', ['type' => null]])->distinct()->column();
 
-      $model = $query
-         ->orderBy(["name_{$language}" => SORT_ASC])
-         ->offset($pagination->offset)
-         ->limit($pagination->limit)
-         ->all();
+      $viewParams = [
+         'model' => $dataProvider->getModels(),
+         'pagination' => $dataProvider->pagination,
+         'filteredCount' => $dataProvider->totalCount,
+         'searchModel' => $searchModel,
+      ];
 
-      $categoryCount = MedicalDictionary::find()
-         ->select('category_id')
-         ->where(['status' => 1])
-         ->distinct()
-         ->count();
+      if (Yii::$app->request->isAjax) {
+         return $this->renderPartial('_medical-dictionary-results', $viewParams);
+      }
 
       return $this->render('medical-dictionary',[
-         'model' => $model,
-         'pagination' => $pagination,
-         'categoryCount' => $categoryCount,
+         ...$viewParams,
+         'termCount' => (clone $activeTerms)->count(),
+         'categoryCount' => count($availableCategoryIds),
+         'availableCategoryIds' => array_map('intval', $availableCategoryIds),
+         'availableTypeIds' => array_map('intval', $availableTypeIds),
          'translatorLanguages' => Yii::$app->params['medical_dictionary_languages'],
       ]);
    }

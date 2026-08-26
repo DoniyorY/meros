@@ -11,6 +11,9 @@ use common\models\MedicalDictionary;
  */
 class MedicalDictionarySearch extends MedicalDictionary
 {
+    /** @var string Free-text query used by the public dictionary. */
+    public $query;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +21,7 @@ class MedicalDictionarySearch extends MedicalDictionary
     {
         return [
             [['id', 'category_id', 'type', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['name_ru', 'name_en', 'name_uz', 'slug_ru', 'slug_en', 'slug_uz', 'desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz', 'seo_title_ru', 'seo_title_en', 'seo_title_uz', 'seo_desc_ru', 'seo_desc_en', 'seo_desc_uz'], 'safe'],
+            [['query', 'name_ru', 'name_en', 'name_uz', 'slug_ru', 'slug_en', 'slug_uz', 'desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz', 'seo_title_ru', 'seo_title_en', 'seo_title_uz', 'seo_desc_ru', 'seo_desc_en', 'seo_desc_uz'], 'safe'],
         ];
     }
 
@@ -85,6 +88,48 @@ class MedicalDictionarySearch extends MedicalDictionary
             ->andFilterWhere(['like', 'seo_desc_ru', $this->seo_desc_ru])
             ->andFilterWhere(['like', 'seo_desc_en', $this->seo_desc_en])
             ->andFilterWhere(['like', 'seo_desc_uz', $this->seo_desc_uz]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * Builds the filtered provider for the public, localized dictionary.
+     */
+    public function searchPublic(array $params, string $language): ActiveDataProvider
+    {
+        $language = in_array($language, ['ru', 'en', 'uz'], true) ? $language : 'en';
+        $query = MedicalDictionary::find()->where(['status' => 1]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 100,
+                'pageSizeLimit' => [100, 100],
+            ],
+            'sort' => [
+                'defaultOrder' => ["name_{$language}" => SORT_ASC],
+            ],
+        ]);
+
+        $this->load($params);
+        $this->query = trim((string) $this->query);
+
+        if (!$this->validate()) {
+            $query->andWhere('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'category_id' => $this->category_id,
+            'type' => $this->type,
+        ]);
+
+        if ($this->query !== '') {
+            $query->andWhere(['or',
+                ['like', "name_{$language}", $this->query],
+                ['like', "desc_{$language}", $this->query],
+                ['like', "content_{$language}", $this->query],
+            ]);
+        }
 
         return $dataProvider;
     }
