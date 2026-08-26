@@ -26,6 +26,7 @@ use common\models\Gallery;
 use yii\web\NotFoundHttpException;
 use common\models\Courses;
 use common\models\CourseCategory;
+use yii\data\Pagination;
 use yii\web\Response;
 
 /**
@@ -113,14 +114,29 @@ class SiteController extends BaseController
    public function actionMedicalDictionary()
    {
       $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+      $query = MedicalDictionary::find()->where(['status' => 1]);
+      $pagination = new Pagination([
+         'totalCount' => $query->count(),
+         'pageSize' => 100,
+         'pageSizeLimit' => [100, 100],
+      ]);
 
-      $model = MedicalDictionary::find()
-         ->where(['status' => 1])
+      $model = $query
          ->orderBy(["name_{$language}" => SORT_ASC])
+         ->offset($pagination->offset)
+         ->limit($pagination->limit)
          ->all();
+
+      $categoryCount = MedicalDictionary::find()
+         ->select('category_id')
+         ->where(['status' => 1])
+         ->distinct()
+         ->count();
 
       return $this->render('medical-dictionary',[
          'model' => $model,
+         'pagination' => $pagination,
+         'categoryCount' => $categoryCount,
          'translatorLanguages' => Yii::$app->params['medical_dictionary_languages'],
       ]);
    }

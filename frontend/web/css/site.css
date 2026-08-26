@@ -4276,6 +4276,39 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     text-align: center;
 }
 
+.meros-dictionary-page .meros-dictionary-pagination {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 28px 0 0;
+}
+
+.meros-dictionary-page .meros-dictionary-pagination .page-item .page-link {
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--meros-border);
+    border-radius: 10px;
+    color: var(--meros-primary-dark);
+    display: inline-flex;
+    font-weight: 800;
+    justify-content: center;
+    min-height: 42px;
+    min-width: 42px;
+}
+
+.meros-dictionary-page .meros-dictionary-pagination .page-item .page-link:hover,
+.meros-dictionary-page .meros-dictionary-pagination .page-item.active .page-link {
+    background: var(--meros-primary-dark);
+    border-color: var(--meros-primary-dark);
+    color: #fff;
+}
+
+.meros-dictionary-page .meros-dictionary-pagination .page-item.disabled .page-link {
+    background: #f4f7f7;
+    color: var(--meros-muted);
+    opacity: .65;
+}
+
 .meros-dictionary-page .meros-dictionary-empty {
     color: var(--meros-muted);
     padding: 36px;

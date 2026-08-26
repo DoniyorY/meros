@@ -2,8 +2,11 @@
 
 /** @var yii\web\View $this */
 /** @var common\models\MedicalDictionary[] $model */
+/** @var yii\data\Pagination $pagination */
+/** @var int|string $categoryCount */
 /** @var array<string, string> $translatorLanguages */
 
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
@@ -16,8 +19,8 @@ $dictionaryCopy = Yii::$app->params['medical_dictionary'] ?? [];
 $copy = $dictionaryCopy[$lang] ?? $dictionaryCopy['en'];
 
 $usedCategoryIds = array_unique(array_map(static fn($term) => (int) $term->category_id, $model));
-$termCount = count($model);
-$categoryCount = count($usedCategoryIds);
+$termCount = $pagination->totalCount;
+$pageTermCount = count($model);
 
 $this->title = $copy['title'];
 $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::class]);
@@ -83,7 +86,7 @@ $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::c
                      </div>
                   </div>
                   <div class="meros-dictionary-filter-status">
-                     <span aria-live="polite"><strong data-dictionary-count><?= $termCount ?></strong> <?= Html::encode($copy['results']) ?></span>
+                     <span aria-live="polite"><strong data-dictionary-count><?= $pageTermCount ?></strong> <?= Html::encode($copy['results']) ?></span>
                      <button class="meros-dictionary-reset" type="button" data-dictionary-reset hidden>
                         <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> <?= Html::encode($copy['reset_filters']) ?>
                      </button>
@@ -113,6 +116,14 @@ $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::c
                      <?php endforeach; ?>
                   </div>
                   <div class="meros-dictionary-no-results" data-dictionary-no-results hidden><?= Html::encode($copy['no_results']) ?></div>
+                  <?= LinkPager::widget([
+                     'pagination' => $pagination,
+                     'options' => ['class' => 'pagination meros-dictionary-pagination', 'aria-label' => 'Medical dictionary pagination'],
+                     'linkContainerOptions' => ['class' => 'page-item'],
+                     'linkOptions' => ['class' => 'page-link'],
+                     'disabledListItemSubTagOptions' => ['class' => 'page-link'],
+                     'maxButtonCount' => 7,
+                  ]) ?>
                <?php else: ?>
                   <div class="meros-dictionary-empty"><?= Html::encode($copy['empty']) ?></div>
                <?php endif; ?>
