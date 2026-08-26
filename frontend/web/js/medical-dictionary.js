@@ -9,6 +9,7 @@
 
     var search = filters.querySelector('[data-dictionary-search]');
     var category = filters.querySelector('[data-dictionary-category]');
+    var type = filters.querySelector('[data-dictionary-type]');
     var items = Array.prototype.slice.call(document.querySelectorAll('[data-dictionary-item]'));
     var noResults = document.querySelector('[data-dictionary-no-results]');
     var resultCount = document.querySelector('[data-dictionary-count]');
@@ -22,12 +23,14 @@
     function filterTerms() {
         var query = normalize(search.value);
         var selectedCategory = category.value;
+        var selectedType = type.value;
         var visibleCount = 0;
 
         items.forEach(function (item) {
             var matchesSearch = !query || normalize(item.dataset.search).includes(query);
             var matchesCategory = !selectedCategory || item.dataset.category === selectedCategory;
-            var isVisible = matchesSearch && matchesCategory;
+            var matchesType = !selectedType || item.dataset.type === selectedType;
+            var isVisible = matchesSearch && matchesCategory && matchesType;
 
             item.hidden = !isVisible;
             if (isVisible) {
@@ -37,16 +40,19 @@
 
         resultCount.textContent = visibleCount;
         noResults.hidden = visibleCount !== 0;
-        reset.hidden = !query && !selectedCategory;
+        reset.hidden = !query && !selectedCategory && !selectedType;
     }
 
     search.addEventListener('input', filterTerms);
     category.addEventListener('change', filterTerms);
     category.addEventListener('input', filterTerms);
+    type.addEventListener('change', filterTerms);
+    type.addEventListener('input', filterTerms);
 
     reset.addEventListener('click', function () {
         search.value = '';
         category.value = '';
+        type.value = '';
         filterTerms();
         search.focus();
     });

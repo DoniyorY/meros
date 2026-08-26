@@ -4103,7 +4103,7 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 .meros-dictionary-page .meros-dictionary-filters {
     display: grid;
     gap: 14px;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, .35fr);
+    grid-template-columns: minmax(280px, 1fr) repeat(2, minmax(190px, .32fr));
     margin-bottom: 24px;
 }
 
@@ -4111,7 +4111,8 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     position: relative;
 }
 
-.meros-dictionary-page .meros-dictionary-category-filter {
+.meros-dictionary-page .meros-dictionary-category-filter,
+.meros-dictionary-page .meros-dictionary-type-filter {
     position: relative;
 }
 
@@ -4125,7 +4126,8 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     z-index: 1;
 }
 
-.meros-dictionary-page .meros-dictionary-category-filter .bi-grid {
+.meros-dictionary-page .meros-dictionary-category-filter .bi-grid,
+.meros-dictionary-page .meros-dictionary-type-filter .bi-tags {
     color: var(--meros-primary-dark);
     left: 18px;
     pointer-events: none;
@@ -4136,7 +4138,8 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 .meros-dictionary-page .meros-dictionary-search .form-control,
-.meros-dictionary-page .meros-dictionary-category-filter .form-select {
+.meros-dictionary-page .meros-dictionary-category-filter .form-select,
+.meros-dictionary-page .meros-dictionary-type-filter .form-select {
     background-color: #f7fbfb;
     border: 1px solid var(--meros-border);
     border-radius: 14px;
@@ -4150,18 +4153,21 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     padding-left: 48px;
 }
 
-.meros-dictionary-page .meros-dictionary-category-filter .form-select {
+.meros-dictionary-page .meros-dictionary-category-filter .form-select,
+.meros-dictionary-page .meros-dictionary-type-filter .form-select {
     padding-left: 48px;
     padding-right: 44px;
 }
 
-.meros-dictionary-page .meros-dictionary-category-filter .form-select:hover {
+.meros-dictionary-page .meros-dictionary-category-filter .form-select:hover,
+.meros-dictionary-page .meros-dictionary-type-filter .form-select:hover {
     background-color: #eef8f8;
     border-color: var(--meros-primary);
 }
 
 .meros-dictionary-page .meros-dictionary-search .form-control:focus,
-.meros-dictionary-page .meros-dictionary-category-filter .form-select:focus {
+.meros-dictionary-page .meros-dictionary-category-filter .form-select:focus,
+.meros-dictionary-page .meros-dictionary-type-filter .form-select:focus {
     border-color: var(--meros-primary);
     box-shadow: 0 0 0 3px rgba(0, 140, 153, .12);
 }
@@ -4354,6 +4360,16 @@ footer#page-footer #footer-content .footer-logo-column .logo {
     font-weight: 800;
     gap: 8px;
     margin-bottom: 24px;
+}
+
+@media (max-width: 991.98px) {
+    .meros-dictionary-page .meros-dictionary-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .meros-dictionary-page .meros-dictionary-search {
+        grid-column: 1 / -1;
+    }
 }
 
 @media (max-width: 575.98px) {

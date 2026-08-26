@@ -19,6 +19,7 @@ $dictionaryCopy = Yii::$app->params['medical_dictionary'] ?? [];
 $copy = $dictionaryCopy[$lang] ?? $dictionaryCopy['en'];
 
 $usedCategoryIds = array_unique(array_map(static fn($term) => (int) $term->category_id, $model));
+$usedTypeIds = array_unique(array_filter(array_map(static fn($term) => $term->type !== null ? (int) $term->type : null, $model)));
 $termCount = $pagination->totalCount;
 $pageTermCount = count($model);
 
@@ -84,6 +85,18 @@ $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::c
                            <?php endforeach; ?>
                         </select>
                      </div>
+                     <div class="meros-dictionary-type-filter">
+                        <label class="visually-hidden" for="medical-dictionary-type"><?= Html::encode($copy['type_filter']) ?></label>
+                        <i class="bi bi-tags" aria-hidden="true"></i>
+                        <select id="medical-dictionary-type" class="form-select" data-dictionary-type data-no-selectize>
+                           <option value=""><?= Html::encode($copy['all_types']) ?></option>
+                           <?php foreach ($types as $typeId => $typeName): ?>
+                              <?php if (in_array((int) $typeId, $usedTypeIds, true)): ?>
+                                 <option value="<?= (int) $typeId ?>"><?= Html::encode($typeName) ?></option>
+                              <?php endif; ?>
+                           <?php endforeach; ?>
+                        </select>
+                     </div>
                   </div>
                   <div class="meros-dictionary-filter-status">
                      <span aria-live="polite"><strong data-dictionary-count><?= $pageTermCount ?></strong> <?= Html::encode($copy['results']) ?></span>
@@ -100,7 +113,7 @@ $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::c
                         $slug = $term->{"slug_{$lang}"} ?: $term->slug_en;
                         $meta = array_filter([$categories[$term->category_id] ?? null, $types[$term->type] ?? null]);
                         ?>
-                        <div class="accordion-item meros-term-item" data-dictionary-item data-category="<?= (int) $term->category_id ?>" data-search="<?= Html::encode(implode(' ', [$name, $description, ...$meta])) ?>">
+                        <div class="accordion-item meros-term-item" data-dictionary-item data-category="<?= (int) $term->category_id ?>" data-type="<?= $term->type !== null ? (int) $term->type : '' ?>" data-search="<?= Html::encode(implode(' ', [$name, $description, ...$meta])) ?>">
                            <h3 class="accordion-header meros-term-heading" id="<?= $id ?>-heading">
                               <button class="accordion-button collapsed meros-term-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#<?= $id ?>-collapse" aria-expanded="false" aria-controls="<?= $id ?>-collapse">
                                  <span><span class="meros-term-title"><?= Html::encode($name) ?></span><span class="meros-term-meta"><?= Html::encode(implode(' · ', $meta)) ?></span></span>
