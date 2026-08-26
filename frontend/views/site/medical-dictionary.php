@@ -14,12 +14,12 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
-$lang = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
-$categories = Yii::$app->params['medical_dictionary_categories'][$lang] ?? [];
-$types = Yii::$app->params['medical_dictionary_types'][$lang] ?? [];
+$lang = Yii::$app->language;
+$categories = Yii::$app->params['medical_dictionary_categories'][$lang];
+$types = Yii::$app->params['medical_dictionary_types'][$lang];
 
-$dictionaryCopy = Yii::$app->params['medical_dictionary'] ?? [];
-$copy = $dictionaryCopy[$lang] ?? $dictionaryCopy['en'];
+$dictionaryCopy = Yii::$app->params['medical_dictionary'];
+$copy = $dictionaryCopy[$lang];
 
 $this->title = $copy['title'];
 $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::class]);

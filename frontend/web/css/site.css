@@ -3853,8 +3853,12 @@ footer#page-footer #footer-content .footer-logo-column .logo {
 }
 
 /* Medical dictionary */
-.meros-dictionary-page .meros-dictionary-translator-section {
+/*.meros-dictionary-page .meros-dictionary-translator-section {
     padding-bottom: 0;
+}*/
+
+ul.pagination li.page-item{
+    padding: 5px;
 }
 
 .meros-dictionary-page .meros-dictionary-translator {

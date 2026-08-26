@@ -113,7 +113,7 @@ class SiteController extends BaseController
    
    public function actionMedicalDictionary()
    {
-      $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+      $language = Yii::$app->language;
       $searchModel = new MedicalDictionarySearch();
       $dataProvider = $searchModel->searchPublic(Yii::$app->request->queryParams, $language);
       $activeTerms = MedicalDictionary::find()->where(['status' => 1]);
@@ -143,7 +143,7 @@ class SiteController extends BaseController
 
    public function actionMedicalDictionaryView(string $slug)
    {
-      $language = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+      $language = Yii::$app->language;
       $term = MedicalDictionary::find()
          ->where(['status' => 1, "slug_{$language}" => $slug])
          ->one();
@@ -208,6 +208,7 @@ class SiteController extends BaseController
             ];
          }
       }
+      
       foreach (Posts::find()->where(['status' => 1])->all() as $post) {
          $pages[] = ['path' => 'post/' . $post->id, 'lastmod' => $post->updated_at, 'priority' => '0.7'];
       }
