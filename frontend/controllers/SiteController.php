@@ -192,12 +192,19 @@ class SiteController extends BaseController
    {
       Yii::$app->response->format = Response::FORMAT_RAW;
       Yii::$app->response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
-
+      $lang = Yii::$app->language;
       $pages = [];
       foreach (['', 'about', 'contact', 'team', 'post', 'events', 'faq/faq-students', 'faq/faq-organisations'] as $path) {
          $pages[] = ['path' => $path, 'priority' => $path === '' ? '1.0' : '0.7'];
       }
-
+      $dictionary = MedicalDictionary::find()->where(['status' => 1])->indexBy('id')->all();
+      foreach ($dictionary as $term) {
+         $pages[] = [
+            'path' => 'medical-dictionary/' . $term->{"slug_$lang"},
+            'priority' => '0.7',
+            'lastmod' => $term->updated_at,
+         ];
+      }
       $categories = CourseCategory::find()->where(['status' => 1])->indexBy('id')->all();
       foreach (Courses::find()->where(['status' => Courses::STATUS_ACTIVE])->all() as $course) {
          if (isset($categories[$course->category_id])) {
