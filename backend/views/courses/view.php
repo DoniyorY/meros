@@ -4,160 +4,130 @@ use common\models\SubscriptionPlans;
 use common\widgets\Alert;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
-use yii\widgets\DetailView;
-use common\models\CourseLessons;
 
 /** @var yii\web\View $this */
 /** @var common\models\Courses $model */
+/** @var common\models\Faq[] $faq */
+/** @var common\models\ReadMore[] $readMore */
 
-$this->title = $model->name_en;
+$this->title = $model->name_en ?: $model->name_ru;
 $this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-$params = Yii::$app->params;
+
+$pageType = Yii::$app->params['page_type'][$model->page_type] ?? 'Not set';
+$category = $model->category ? $model->category->name_en : 'Not set';
+$mentor = $model->mentor ? $model->mentor->fullname : 'Not assigned';
+$author = $model->user ? $model->user->username : 'Unknown';
+$languages = ['ru' => 'Русский', 'en' => 'English', 'uz' => "O‘zbekcha"];
+$imageUrl = $model->image ? Yii::$app->request->hostInfo . '/uploads/courses/' . $model->image : null;
 ?>
-    <div class="page-content">
-        <div class="container-fluid">
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
+                    <h4 class="mb-sm-0"><?= Html::encode($this->title) ?></h4>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="<?= Yii::$app->homeUrl ?>"><?= Html::encode(Yii::$app->name) ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?= Url::to(['index']) ?>">Courses</a></li>
+                        <li class="breadcrumb-item active"><?= Html::encode($this->title) ?></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
 
-            <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-transparent">
-                        <h4 class="mb-sm-0"><?=Html::encode($this->title)?></h4>
+        <?= Alert::widget() ?>
 
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="<?=Yii::$app->name?>"><?=Yii::$app->name?></a></li>
-                                <li class="breadcrumb-item"><a href="<?=Url::to(['index'])?>"><?="Courses"?></a></li>
-                                <li class="breadcrumb-item active"><?=Html::encode($this->title)?></li>
-                            </ol>
+        <div class="courses-view">
+            <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+                <div class="card-body p-4">
+                    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+                        <div>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-primary-subtle text-primary"><?= Html::encode($category) ?></span>
+                                <span class="badge bg-info-subtle text-info"><?= Html::encode($pageType) ?></span>
+                                <span class="badge <?= $model->status ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary' ?>">
+                                    <i class="ri-checkbox-blank-circle-fill me-1" style="font-size: 8px"></i><?= $model->status ? 'Active' : 'Inactive' ?>
+                                </span>
+                            </div>
+                            <h2 class="mb-2"><?= Html::encode($this->title) ?></h2>
+                            <p class="text-muted mb-0"><?= Html::encode($model->title_en ?: $model->lvl) ?></p>
+                        </div>
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <?= Html::a(
+                                '<i class="ri-toggle-line me-1"></i>' . ($model->status ? 'Deactivate' : 'Activate'),
+                                ['status', 'id' => $model->id, 'status' => $model->status ? 0 : 1],
+                                [
+                                    'class' => $model->status ? 'btn btn-outline-warning' : 'btn btn-outline-success',
+                                    'data' => ['confirm' => 'Are you sure you want to change the course status?', 'method' => 'post'],
+                                ]
+                            ) ?>
+                            <?= Html::a('<i class="ri-edit-line me-1"></i>Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('<i class="ri-delete-bin-line"></i>', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-outline-danger',
+                                'title' => 'Delete course',
+                                'aria-label' => 'Delete course',
+                                'data' => ['confirm' => 'Are you sure you want to delete this course?', 'method' => 'post'],
+                            ]) ?>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end page title -->
-           <?= Alert::widget() ?>
-            <div class="courses-view">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1><?= Html::encode($this->title) ?></h1>
+
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <?php if ($imageUrl): ?>
+                            <?= Html::img($imageUrl, ['class' => 'card-img-top', 'style' => 'max-height: 240px; object-fit: cover', 'alt' => $this->title]) ?>
+                        <?php else: ?>
+                            <div class="bg-light text-muted d-flex flex-column align-items-center justify-content-center" style="height: 220px">
+                                <i class="ri-image-line fs-32"></i><span>No course image</span>
+                            </div>
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Course details</h5>
+                            <div class="vstack gap-3">
+                                <div><div class="text-muted small">Slug</div><code><?= Html::encode($model->slug) ?></code></div>
+                                <div><div class="text-muted small">Recommended level</div><div class="fw-medium"><?= Html::encode($model->lvl ?: 'Not set') ?></div></div>
+                                <div><div class="text-muted small">Mentor</div><div class="fw-medium"><?= Html::encode($mentor) ?></div></div>
+                                <div><div class="text-muted small">Created by</div><div class="fw-medium"><?= Html::encode($author) ?></div></div>
+                                <?php if ($model->preview_video_link): ?>
+                                    <div><?= Html::a('<i class="ri-play-circle-line me-1"></i>Open preview video', $model->preview_video_link, ['class' => 'btn btn-soft-primary w-100', 'target' => '_blank', 'rel' => 'noopener noreferrer']) ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white text-muted small d-flex flex-column gap-1">
+                            <span><i class="ri-calendar-line me-1"></i>Created <?= Yii::$app->formatter->asDatetime($model->created_at) ?></span>
+                            <span><i class="ri-refresh-line me-1"></i>Updated <?= Yii::$app->formatter->asRelativeTime($model->updated_at) ?></span>
+                        </div>
                     </div>
-                    <div class="col-md-4 text-end">
-                       <?php
-                       if ($model->status == 0) {
-                          echo Html::a('Inactive',
-                             ['status', 'id' => $model->id, 'status' => 1],
-                             [
-                                'class' => 'btn btn-warning',
-                                'data' => [
-                                   'confirm' => 'Are you sure you want to inactivate this Course?',
-                                   'method' => 'post'
-                                ]
-                             ]);
-                       } else {
-                          echo Html::a('Active',
-                             ['status', 'id' => $model->id, 'status' => 0],
-                             [
-                                'class' => 'btn btn-success',
-                                'data' => [
-                                   'confirm' => 'Are you sure you want to activate this Course?',
-                                   'method' => 'post'
-                                ]
-                             ]);
-                       }
-                       ?>
-                       <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                       <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                          'class' => 'btn btn-danger',
-                          'data' => [
-                             'confirm' => 'Are you sure you want to delete this item?',
-                             'method' => 'post',
-                          ],
-                       ]) ?>
+
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white"><h5 class="card-title mb-0">Localized description</h5></div>
+                        <div class="card-body">
+                            <ul class="nav nav-pills nav-justified mb-3" role="tablist">
+                                <?php foreach ($languages as $code => $label): ?>
+                                    <li class="nav-item" role="presentation"><button class="nav-link<?= $code === 'en' ? ' active' : '' ?>" data-bs-toggle="tab" data-bs-target="#description-<?= $code ?>" type="button"><?= strtoupper($code) ?></button></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <div class="tab-content">
+                                <?php foreach ($languages as $code => $label): ?>
+                                    <div class="tab-pane fade<?= $code === 'en' ? ' show active' : '' ?>" id="description-<?= $code ?>">
+                                        <h6><?= Html::encode($model->{"name_{$code}"}) ?></h6>
+                                        <?php if ($model->{"title_{$code}"}): ?><p class="text-muted"><?= Html::encode($model->{"title_{$code}"}) ?></p><?php endif; ?>
+                                        <div class="lh-lg"><?= HtmlPurifier::process($model->{"desc_{$code}"}) ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
-                    <div class="col-md-4">
-                       <?= DetailView::widget([
-                          'model' => $model,
-                          'attributes' => [
-                             'id',
-                             [
-                                'attribute' => 'page_type',
-                                'value' => function ($data) {
-                                   return Yii::$app->params['page_type'][$data->page_type];
-                                }
-                             ],
-                             [
-                                'attribute' => 'category_id',
-                                'value' => function ($data) {
-                                   if ($data->category) {
-                                      return $data->category->name_en;
-                                   }
-                                }
-                             ],
-                             'slug',
-                             'name_ru',
-                             'name_en',
-                             'name_uz',
-                             'desc_ru:html',
-                             'desc_en:html',
-                             'desc_uz:html',
-                             [
-                                'attribute' => 'created_at',
-                                'value' => function ($data) {
-                                   return date('d.m.Y H:i:s', $data->created_at);
-                                }
-                             ],
-                             [
-                                'attribute' => 'updated_at',
-                                'value' => function ($data) {
-                                   return date('d.m.Y H:i:s', $data->updated_at);
-                                }
-                             ],
-                             [
-                                'attribute' => 'status',
-                                'value' => function ($data) {
-                                   return $data->status == 1 ? 'Active' : 'Inactive';
-                                }
-                             ],
-                             [
-                                'attribute' => 'user_id',
-                                'value' => function ($data) {
-                                   return $data->user->username;
-                                }
-                             ],
-                             [
-                                'attribute' => 'mentor_id',
-                                'value' => function ($data) {
-                                   if ($data->mentor) {
-                                      return $data->mentor->fullname;
-                                   } else {
-                                      return "Not Set!!!";
-                                   }
-                                }
-                             ],
-                             'preview_video_link',
-                             [
-                                'attribute' => 'image',
-                                'format' => 'raw',
-                                'value' => function ($data) {
-                                   if (!$data->image) {
-                                      return 'Not Set!!!';
-                                   }
-                                   
-                                   return Html::img(Yii::$app->request->hostInfo . '/uploads/courses/' . $data->image, [
-                                      'class' => 'img-thumbnail',
-                                      'style' => 'max-height: 160px;',
-                                      'alt' => $data->name_en,
-                                   ]);
-                                }
-                             ],
-                          ],
-                       ]) ?>
-                    </div>
-                    <div class="col-md-8">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                </div>
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <ul class="nav nav-tabs nav-tabs-custom px-3 pt-3" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="subs-tab" data-bs-toggle="tab"
                                         data-bs-target="#subs-tab-pane" type="button" role="tab"
@@ -205,7 +175,7 @@ $params = Yii::$app->params;
                                             <div class="modal-dialog modal-xl">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="subsModalLabel">New Lesson</h1>
+                                                        <h1 class="modal-title fs-5" id="subsModalLabel">New subscription</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </div>
@@ -241,9 +211,9 @@ $params = Yii::$app->params;
                                             foreach ($model->subs as $item): ?>
                                                 <tr>
                                                     <td><?= $i++ ?></td>
-                                                    <td><?= $item->name_en ?></td>
-                                                    <td><?= $item->name_ru ?></td>
-                                                    <td><?= $item->name_uz ?></td>
+                                                    <td><?= Html::encode($item->name_en) ?></td>
+                                                    <td><?= Html::encode($item->name_ru) ?></td>
+                                                    <td><?= Html::encode($item->name_uz) ?></td>
                                                     <td><?= Yii::$app->formatter->asDecimal($item->price, 0) ?></td>
                                                     <td><?= $item->duration_days ?></td>
                                                     <td><?php
@@ -331,12 +301,12 @@ $params = Yii::$app->params;
                                             foreach ($faq as $item): ?>
                                                 <tr>
                                                     <td><?= $i++ ?></td>
-                                                    <td><?= $item->question_ru ?></td>
-                                                    <td><?= $item->question_en ?></td>
-                                                    <td><?= $item->question_uz ?></td>
-                                                    <td><?= $item->answer_ru ?></td>
-                                                    <td><?= $item->answer_en ?></td>
-                                                    <td><?= $item->answer_uz ?></td>
+                                                    <td><?= Html::encode($item->question_ru) ?></td>
+                                                    <td><?= Html::encode($item->question_en) ?></td>
+                                                    <td><?= Html::encode($item->question_uz) ?></td>
+                                                    <td><?= Html::encode($item->answer_ru) ?></td>
+                                                    <td><?= Html::encode($item->answer_en) ?></td>
+                                                    <td><?= Html::encode($item->answer_uz) ?></td>
                                                     <td><?=date('d.m.Y H:i',$item->created_at)?></td>
                                                     <td>
                                                         <button class="btn btn-primary btn-sm modalUpdateBtn"
@@ -440,7 +410,7 @@ $params = Yii::$app->params;
                                  tabindex="0">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h4>Course Fetures</h4>
+                                        <h4>Course Features</h4>
                                     </div>
                                     <div class="col-md-4">
                                         <!-- Button trigger modal -->
@@ -489,11 +459,11 @@ $params = Yii::$app->params;
                                             foreach ($model->features as $item): ?>
                                                 <tr>
                                                     <td><?= $i++ ?></td>
-                                                    <td><?= $item->name_en ?></td>
-                                                    <td><?= $item->desc_en ?></td>
+                                                    <td><?= Html::encode($item->name_en) ?></td>
+                                                    <td><?= Html::encode($item->desc_en) ?></td>
                                                     <td>
                                                         <button class="btn btn-primary btn-sm modalUpdateBtn"
-                                                                data-url="<?= Url::to(['update-feature-ajax', 'id' => $item->id]) ?>'])?>">
+                                                                data-url="<?= Url::to(['update-feature-ajax', 'id' => $item->id]) ?>">
                                                             <i class="bi bi-pencil"></i>
                                                         </button>
                                                     </td>
@@ -519,6 +489,7 @@ $params = Yii::$app->params;
             </div>
         </div>
         <!-- container-fluid -->
+    </div>
     </div>
     <!-- End Page-content -->
 

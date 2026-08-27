@@ -75,7 +75,12 @@ class Courses extends \yii\db\ActiveRecord
          [['preview_video_link', 'mentor_id', 'image'], 'default', 'value' => null],
          [['status'], 'default', 'value' => 1],
          [['category_id', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'created_at', 'updated_at', 'user_id', 'page_type'], 'required'],
-         [['category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
+         [['category_id', 'page_type', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
+         ['page_type', 'in', 'range' => array_keys(Yii::$app->params['page_type'])],
+         ['status', 'in', 'range' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE]],
+         ['category_id', 'exist', 'targetClass' => CourseCategory::class, 'targetAttribute' => ['category_id' => 'id']],
+         ['mentor_id', 'exist', 'skipOnEmpty' => true, 'targetClass' => Mentors::class, 'targetAttribute' => ['mentor_id' => 'id']],
+         ['preview_video_link', 'url', 'defaultScheme' => 'https', 'skipOnEmpty' => true],
          [['desc_ru', 'desc_en', 'desc_uz'], 'string'],
          [['slug', 'name_ru', 'name_en', 'name_uz', 'preview_video_link', 'image', 'title_ru', 'title_en', 'title_uz','lvl'], 'string', 'max' => 255],
          [['imageFile', 'icon','courseImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, jpeg, png, gif', 'maxSize' => 1024 * 1024 * 5],
@@ -112,9 +117,9 @@ class Courses extends \yii\db\ActiveRecord
          }
          
          $baseName = $this->slug ?: Inflector::slug($this->name_en);
-         $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->imageFile->extension;
+         $fileName = $baseName . '-' . date('d.m.Y_H.i.s') . '.' . $this->courseImage->extension;
          
-         if ($this->imageFile->saveAs($dir . $fileName)) {
+         if ($this->courseImage->saveAs($dir . $fileName)) {
             return $fileName;
          }
       }
@@ -129,22 +134,31 @@ class Courses extends \yii\db\ActiveRecord
    {
       return [
          'id' => 'ID',
-         'category_id' => 'Category ID',
+         'category_id' => 'Category',
+         'page_type' => 'Audience',
          'slug' => 'Slug',
-         'name_ru' => 'Name Ru',
-         'name_en' => 'Name En',
-         'name_uz' => 'Name Uz',
-         'desc_ru' => 'Desc Ru',
-         'desc_en' => 'Desc En',
-         'desc_uz' => 'Desc Uz',
+         'name_ru' => 'Course name',
+         'name_en' => 'Course name',
+         'name_uz' => 'Course name',
+         'title_ru' => 'Headline',
+         'title_en' => 'Headline',
+         'title_uz' => 'Headline',
+         'desc_ru' => 'Description',
+         'desc_en' => 'Description',
+         'desc_uz' => 'Description',
          'created_at' => 'Created At',
          'updated_at' => 'Updated At',
          'status' => 'Status',
          'user_id' => 'User ID',
-         'mentor_id' => 'Mentor ID',
+         'mentor_id' => 'Mentor',
          'preview_video_link' => 'Preview Video Link',
          'image' => 'Image',
-         'imageFile' => 'Image'
+         'imageFile' => 'Listing image',
+         'courseImage' => 'Course cover',
+         'icon' => 'Course icon',
+         'lvl' => 'Recommended level',
+         'syllabus' => 'Syllabus',
+         'flyer' => 'Flyer',
       ];
    }
    
@@ -185,7 +199,7 @@ class Courses extends \yii\db\ActiveRecord
    
    public function getFaq()
    {
-      $this->hasMany(Faq::class, ['course_id' => 'id']);
+      return $this->hasMany(Faq::class, ['course_id' => 'id']);
    }
    
    public function getReads()

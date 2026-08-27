@@ -265,8 +265,8 @@ class CoursesController extends BaseController
             }
             $file = UploadedFile::getInstance($model, 'courseImage');
             if ($file) {
-               $model->imageFile = $file;
-               $uploaded = $model->uploadImage();
+               $model->courseImage = $file;
+               $uploaded = $model->uploadCourseImage();
                
                if ($uploaded === false) {
                   throw new HttpException(500, 'Failed to upload image');
@@ -378,9 +378,9 @@ class CoursesController extends BaseController
             }
          }
          $file = UploadedFile::getInstance($model, 'courseImage');
-         $oldImage = $model->courseImage;
+         $oldImage = $model->course_image;
          if ($file) {
-            $model->imageFile = $file;
+            $model->courseImage = $file;
             $uploaded = $model->uploadCourseImage();
             if ($uploaded === false) {
                throw new HttpException(500, 'Failed to upload image');
@@ -401,9 +401,9 @@ class CoursesController extends BaseController
             $path = Yii::getAlias('@frontend/web/uploads/course_icons/');
             $file->saveAs($path . $name);
             $model->course_icons = $name;
-            if ($oldFile && file_exists($oldFile)) {
-               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
-               unlink($oldFile);
+            $oldPath = Yii::getAlias('@frontend/web/uploads/course_icons/' . $oldFile);
+            if ($oldFile && file_exists($oldPath)) {
+               unlink($oldPath);
             }
          }
          
@@ -415,9 +415,9 @@ class CoursesController extends BaseController
             $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
             $file->saveAs($path . $name);
             $model->syllabus_file = $name;
-            if ($oldFile && file_exists($oldFile)) {
-               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
-               unlink($oldFile);
+            $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
+            if ($oldFile && file_exists($oldPath)) {
+               unlink($oldPath);
             }
          }
          $file = UploadedFile::getInstance($model, 'flyer');
@@ -428,13 +428,13 @@ class CoursesController extends BaseController
             $path = Yii::getAlias('@frontend/web/uploads/course_docs/');
             $file->saveAs($path . $name);
             $model->flyer_file = $name;
-            if ($oldFile && file_exists($oldFile)) {
-               $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
-               unlink($oldFile);
+            $oldPath = Yii::getAlias('@frontend/web/uploads/course_docs/' . $oldFile);
+            if ($oldFile && file_exists($oldPath)) {
+               unlink($oldPath);
             }
          }
          
-         if ($model->save(false)) {
+         if ($model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
          }
       }
