@@ -31,18 +31,11 @@ class SubscriptionPlansController extends BaseController
                     'actions' => [
                         'delete' => ['POST'],
                         'delete-item' => ['POST'],
+                        'status' => ['POST'],
                     ],
                 ],
             ]
         );
-    }
-
-    public function beforeAction($action): bool
-    {
-        if ($action->id == 'delete-item') {
-            $this->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
     }
 
     /**
@@ -90,8 +83,9 @@ class SubscriptionPlansController extends BaseController
                 $model->created_at=time();
                 $model->updated_at=time();
                 $model->status = 0;
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -106,17 +100,19 @@ class SubscriptionPlansController extends BaseController
     {
         $model = new SubscriptionPlanItems();
         $model->plan_id = $plan_id;
-        if ($model->load($this->request->post())) {
-            $model->save();
+        if ($model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Facility was successfully added.');
+        } else {
+            Yii::$app->session->setFlash('error', implode(' ', $model->getFirstErrors()));
         }
-        \Yii::$app->session->setFlash('success','Facility is Successfully Added');
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionStatus($id, $status)
     {
         $model = $this->findModel($id);
         $model->status = $status;
+        $model->updated_at = time();
         $model->save(false);
         \Yii::$app->session->setFlash('success','Status Changed Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -159,8 +155,11 @@ class SubscriptionPlansController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->updated_at = time();
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -180,11 +179,10 @@ class SubscriptionPlansController extends BaseController
     public function actionUpdateFacility($id)
     {
         $item = SubscriptionPlanItems::findOne(['id'=>$id]);
-        if ($item->load($this->request->post())) {
-            $item->save();
-            \Yii::$app->session->setFlash('success','Facility is Successfully Updated');
-        }else{
-            \Yii::$app->session->setFlash('error','Facility Not Updated');
+        if ($item->load($this->request->post()) && $item->save()) {
+            Yii::$app->session->setFlash('success', 'Facility was successfully updated.');
+        } else {
+            Yii::$app->session->setFlash('error', implode(' ', $item->getFirstErrors()));
         }
         return $this->redirect(\Yii::$app->request->referrer);
 
@@ -207,6 +205,9 @@ class SubscriptionPlansController extends BaseController
     public function actionDeleteItem($id)
     {
         $model = SubscriptionPlanItems::findOne($id);
+        if ($model === null) {
+            throw new NotFoundHttpException('The requested facility does not exist.');
+        }
         $model->delete();
         \Yii::$app->session->setFlash('success','Item is Successfully Deleted');
         return $this->redirect(\Yii::$app->request->referrer);

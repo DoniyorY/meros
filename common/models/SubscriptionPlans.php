@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "subscription_plans".
@@ -24,6 +25,11 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
    
    const STATUS_ACTIVE = 1;
    const STATUS_INACTIVE = 0;
+
+   public function behaviors()
+   {
+      return [TimestampBehavior::class];
+   }
    
    /**
     * {@inheritdoc}
@@ -40,9 +46,12 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
    {
       return [
          [['status'], 'default', 'value' => 0],
-         [['name_en', 'price', 'duration_days', 'created_at', 'updated_at'], 'required'],
-         [['price'], 'number'],
+         [['course_id', 'name_en', 'price', 'duration_days'], 'required'],
+         [['price'], 'number', 'min' => 0],
+         [['duration_days'], 'integer', 'min' => 1],
          [['duration_days', 'status', 'created_at', 'updated_at', 'course_id',], 'integer'],
+         ['status', 'in', 'range' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE]],
+         ['course_id', 'exist', 'targetClass' => Courses::class, 'targetAttribute' => ['course_id' => 'id']],
          [['name_ru', 'name_en', 'name_uz'], 'string', 'max' => 255],
          [['name_ru', 'name_uz'], 'default', 'value' => '-']
       ];
@@ -55,11 +64,12 @@ class SubscriptionPlans extends \yii\db\ActiveRecord
    {
       return [
          'id' => 'ID',
-         'name_ru' => 'Name Ru',
-         'name_en' => 'Name En',
-         'name_uz' => 'Name Uz',
+         'course_id' => 'Course',
+         'name_ru' => 'Plan name',
+         'name_en' => 'Plan name',
+         'name_uz' => 'Plan name',
          'price' => 'Price',
-         'duration_days' => 'Duration Days',
+         'duration_days' => 'Access duration (days)',
          'status' => 'Status',
          'created_at' => 'Created At',
          'updated_at' => 'Updated At',

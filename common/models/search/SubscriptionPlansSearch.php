@@ -42,7 +42,7 @@ class SubscriptionPlansSearch extends SubscriptionPlans
      */
     public function search($params, $formName = null)
     {
-        $query = SubscriptionPlans::find();
+        $query = SubscriptionPlans::find()->with('course')->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
