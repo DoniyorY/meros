@@ -41,7 +41,7 @@ class FaqSearch extends Faq
      */
     public function search($params, $formName = null)
     {
-        $query = Faq::find();
+        $query = Faq::find()->with(['course', 'user'])->orderBy(['updated_at' => SORT_DESC]);
 
         // add conditions that should always apply here
 
