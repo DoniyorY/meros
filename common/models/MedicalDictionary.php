@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\Inflector;
 
 /**
  * This is the model class for table "medical_dictionary".
@@ -42,6 +44,13 @@ class MedicalDictionary extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'medical_dictionary';
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
     }
    
    public function beforeValidate()
@@ -86,8 +95,11 @@ class MedicalDictionary extends \yii\db\ActiveRecord
         return [
             [['type', 'seo_title_ru', 'seo_title_en', 'seo_title_uz', 'seo_desc_ru', 'seo_desc_en', 'seo_desc_uz'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['category_id', 'name_ru', 'name_en', 'name_uz', 'slug_ru', 'slug_en', 'slug_uz', 'desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz', 'created_at', 'updated_at'], 'required'],
+            [['category_id', 'type', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'content_ru', 'content_en', 'content_uz'], 'required'],
             [['category_id', 'type', 'created_at', 'updated_at', 'status'], 'integer'],
+            ['category_id', 'in', 'range' => array_keys(Yii::$app->params['medical_dictionary_categories']['en'])],
+            ['type', 'in', 'range' => array_keys(Yii::$app->params['medical_dictionary_types']['en'])],
+            ['status', 'in', 'range' => array_keys(Yii::$app->params['status'])],
             [['content_ru', 'content_en', 'content_uz'], 'string'],
             [['name_ru', 'name_en', 'name_uz', 'slug_ru', 'slug_en', 'slug_uz', 'desc_ru', 'desc_en', 'desc_uz', 'seo_title_ru', 'seo_title_en', 'seo_title_uz', 'seo_desc_ru', 'seo_desc_en', 'seo_desc_uz'], 'string', 'max' => 255],
             [['slug_ru'], 'unique'],
@@ -103,26 +115,26 @@ class MedicalDictionary extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
-            'type' => 'Type',
-            'name_ru' => 'Name Ru',
-            'name_en' => 'Name En',
-            'name_uz' => 'Name Uz',
+            'category_id' => 'Category',
+            'type' => 'Term type',
+            'name_ru' => 'Term',
+            'name_en' => 'Term',
+            'name_uz' => 'Term',
             'slug_ru' => 'Slug Ru',
             'slug_en' => 'Slug En',
             'slug_uz' => 'Slug Uz',
-            'desc_ru' => 'Desc Ru',
-            'desc_en' => 'Desc En',
-            'desc_uz' => 'Desc Uz',
-            'content_ru' => 'Content Ru',
-            'content_en' => 'Content En',
-            'content_uz' => 'Content Uz',
-            'seo_title_ru' => 'Seo Title Ru',
-            'seo_title_en' => 'Seo Title En',
-            'seo_title_uz' => 'Seo Title Uz',
-            'seo_desc_ru' => 'Seo Desc Ru',
-            'seo_desc_en' => 'Seo Desc En',
-            'seo_desc_uz' => 'Seo Desc Uz',
+            'desc_ru' => 'Short description',
+            'desc_en' => 'Short description',
+            'desc_uz' => 'Short description',
+            'content_ru' => 'Article content',
+            'content_en' => 'Article content',
+            'content_uz' => 'Article content',
+            'seo_title_ru' => 'SEO title',
+            'seo_title_en' => 'SEO title',
+            'seo_title_uz' => 'SEO title',
+            'seo_desc_ru' => 'SEO description',
+            'seo_desc_en' => 'SEO description',
+            'seo_desc_uz' => 'SEO description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
