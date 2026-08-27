@@ -17,8 +17,8 @@ class CoursesSearch extends Courses
     public function rules()
     {
         return [
-            [['id', 'category_id', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
-            [['slug', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'preview_video_link'], 'safe'],
+            [['id', 'category_id', 'page_type', 'created_at', 'updated_at', 'status', 'user_id', 'mentor_id'], 'integer'],
+            [['slug', 'name_ru', 'name_en', 'name_uz', 'desc_ru', 'desc_en', 'desc_uz', 'lvl', 'preview_video_link'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CoursesSearch extends Courses
      */
     public function search($params, $formName = null)
     {
-        $query = Courses::find();
+        $query = Courses::find()->with(['category', 'user']);
 
         // add conditions that should always apply here
 
@@ -61,6 +61,7 @@ class CoursesSearch extends Courses
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,
+            'page_type' => $this->page_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => $this->status,
@@ -75,6 +76,7 @@ class CoursesSearch extends Courses
             ->andFilterWhere(['like', 'desc_ru', $this->desc_ru])
             ->andFilterWhere(['like', 'desc_en', $this->desc_en])
             ->andFilterWhere(['like', 'desc_uz', $this->desc_uz])
+            ->andFilterWhere(['like', 'lvl', $this->lvl])
             ->andFilterWhere(['like', 'preview_video_link', $this->preview_video_link]);
 
         return $dataProvider;
