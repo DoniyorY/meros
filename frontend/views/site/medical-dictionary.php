@@ -22,6 +22,30 @@ $dictionaryCopy = Yii::$app->params['medical_dictionary'];
 $copy = $dictionaryCopy[$lang];
 
 $this->title = $copy['title'];
+$siteUrl = rtrim(Yii::$app->seo->siteUrl, '/');
+$page = max(1, (int) Yii::$app->request->get('page', 1));
+$hasFilters = trim((string) $searchModel->query) !== ''
+   || !empty($searchModel->category_id)
+   || !empty($searchModel->type);
+$pageSuffix = $page > 1 ? '?page=' . $page : '';
+
+$this->params['seoDescription'] = $copy['intro'];
+$this->params['schemaPageType'] = 'CollectionPage';
+$this->params['canonical'] = $siteUrl . '/' . $lang . '/medical-dictionary' . $pageSuffix;
+$this->params['seoNoIndex'] = $hasFilters;
+$this->params['seoAlternates'] = [];
+foreach (['ru', 'en', 'uz'] as $alternateLanguage) {
+   $this->params['seoAlternates'][$alternateLanguage] = $siteUrl . '/' . $alternateLanguage
+      . '/medical-dictionary' . $pageSuffix;
+}
+$this->params['seoXDefault'] = $this->params['seoAlternates']['en'];
+$this->params['seoSchema'] = [
+   '@type' => 'DefinedTermSet',
+   '@id' => $this->params['canonical'] . '#dictionary',
+   'name' => $copy['title'],
+   'description' => $copy['intro'],
+   'url' => $this->params['canonical'],
+];
 $this->registerJsFile('@web/js/medical-dictionary.js', ['depends' => AppAsset::class]);
 
 ?>

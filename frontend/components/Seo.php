@@ -354,18 +354,25 @@ final class Seo extends Component
        |
        */
       
-      $noIndex =
-         ($view->params['seoNoIndex'] ?? false)
-         || in_array(
+      $protectedNoIndex = in_array(
             $route,
             $this->noIndexRoutes,
             true
          );
+      $noIndex = ($view->params['seoNoIndex'] ?? false) || $protectedNoIndex;
       
-      if ($noIndex) {
+      if ($protectedNoIndex) {
          
          $robots =
             'noindex, nofollow';
+
+      } elseif ($noIndex) {
+
+         // Filtered/search result pages should not enter the index, but their
+         // links to canonical content must remain available to crawlers.
+         $robots =
+            $view->params['seoRobots']
+            ?? 'noindex, follow';
          
       } else {
          

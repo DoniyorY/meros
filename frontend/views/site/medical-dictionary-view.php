@@ -17,25 +17,51 @@ $name = $term->{"name_{$lang}"} ?: $term->name_en;
 $description = $term->{"desc_{$lang}"} ?: $term->desc_en;
 $content = $term->{"content_{$lang}"} ?: $term->content_en;
 $meta = array_filter([$categories[$term->category_id] ?? null, $types[$term->type] ?? null]);
-$canonicalUrl = Url::canonical();
+$siteUrl = rtrim(Yii::$app->seo->siteUrl, '/');
+$canonicalUrl = $siteUrl . '/' . $lang . '/medical-dictionary/' . rawurlencode($term->{"slug_{$lang}"});
+$termId = $canonicalUrl . '#term';
 
-$this->title = $term->{"seo_title_{$lang}"} ?: $name;
-$this->registerMetaTag(['name' => 'description', 'content' => $term->{"seo_desc_{$lang}"} ?: $description]);
-$this->registerMetaTag(['property' => 'og:title', 'content' => $this->title]);
-$this->registerMetaTag(['property' => 'og:description', 'content' => $description]);
-$this->registerMetaTag(['property' => 'og:type', 'content' => 'article']);
-$this->registerMetaTag(['property' => 'og:url', 'content' => $canonicalUrl]);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => $canonicalUrl]);
+$this->title = $name;
+$this->params['seoTitle'] = $term->{"seo_title_{$lang}"} ?: $name;
+$this->params['seoDescription'] = $term->{"seo_desc_{$lang}"} ?: $description;
+$this->params['canonical'] = $canonicalUrl;
+$this->params['ogType'] = 'article';
+$this->params['seoAlternates'] = [];
+foreach (['ru', 'en', 'uz'] as $alternateLanguage) {
+   $alternateSlug = $term->{"slug_{$alternateLanguage}"};
+   $this->params['seoAlternates'][$alternateLanguage] = $siteUrl . '/' . $alternateLanguage
+      . '/medical-dictionary/' . rawurlencode($alternateSlug);
+}
+$this->params['seoXDefault'] = $this->params['seoAlternates']['en'];
 $this->params['seoSchema'] = [
-   '@context' => 'https://schema.org',
-   '@type' => 'DefinedTerm',
-   'name' => $name,
-   'description' => $description,
-   'url' => $canonicalUrl,
-   'inDefinedTermSet' => [
-      '@type' => 'DefinedTermSet',
-      'name' => $copy['title'],
-      'url' => Url::to(['site/medical-dictionary'], true),
+   [
+      '@type' => 'DefinedTerm',
+      '@id' => $termId,
+      'name' => $name,
+      'description' => $description,
+      'url' => $canonicalUrl,
+      'inDefinedTermSet' => [
+         '@type' => 'DefinedTermSet',
+         'name' => $copy['title'],
+         'url' => $siteUrl . '/' . $lang . '/medical-dictionary',
+      ],
+   ],
+   [
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => [
+         [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => $copy['title'],
+            'item' => $siteUrl . '/' . $lang . '/medical-dictionary',
+         ],
+         [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => $name,
+            'item' => $canonicalUrl,
+         ],
+      ],
    ],
 ];
 ?>

@@ -192,15 +192,18 @@ class SiteController extends BaseController
    {
       Yii::$app->response->format = Response::FORMAT_RAW;
       Yii::$app->response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
-      $lang = Yii::$app->language;
       $pages = [];
-      foreach (['', 'about', 'contact', 'team', 'post', 'events', 'faq/faq-students', 'faq/faq-organisations'] as $path) {
+      foreach (['', 'about', 'contact', 'team', 'post', 'events', 'faq/faq-students', 'faq/faq-organisations', 'medical-dictionary'] as $path) {
          $pages[] = ['path' => $path, 'priority' => $path === '' ? '1.0' : '0.7'];
       }
       $dictionary = MedicalDictionary::find()->where(['status' => 1])->indexBy('id')->all();
       foreach ($dictionary as $term) {
          $pages[] = [
-            'path' => 'medical-dictionary/' . $term->{"slug_$lang"},
+            'paths' => [
+               'ru' => 'medical-dictionary/' . $term->slug_ru,
+               'en' => 'medical-dictionary/' . $term->slug_en,
+               'uz' => 'medical-dictionary/' . $term->slug_uz,
+            ],
             'priority' => '0.7',
             'lastmod' => $term->updated_at,
          ];
@@ -223,20 +226,25 @@ class SiteController extends BaseController
          $pages[] = ['path' => 'events/' . $event->id, 'lastmod' => $event->updated_at, 'priority' => '0.7'];
       }
 
-      $origin = rtrim(Yii::$app->request->hostInfo, '/');
+      $origin = rtrim(Yii::$app->seo->siteUrl, '/');
       $xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'];
       foreach ($pages as $page) {
          foreach (['ru', 'en', 'uz'] as $language) {
-            $location = $origin . '/' . $language . '/' . ltrim($page['path'], '/');
+            $localizedPath = $page['paths'][$language] ?? $page['path'];
+            $location = $origin . '/' . $language . '/' . ltrim($localizedPath, '/');
             $xml[] = '  <url>';
             $xml[] = '    <loc>' . htmlspecialchars($location, ENT_XML1) . '</loc>';
             if (!empty($page['lastmod'])) {
                $xml[] = '    <lastmod>' . gmdate('Y-m-d', (int) $page['lastmod']) . '</lastmod>';
             }
             foreach (['ru', 'en', 'uz'] as $alternate) {
-               $href = $origin . '/' . $alternate . '/' . ltrim($page['path'], '/');
+               $alternatePath = $page['paths'][$alternate] ?? $page['path'];
+               $href = $origin . '/' . $alternate . '/' . ltrim($alternatePath, '/');
                $xml[] = '    <xhtml:link rel="alternate" hreflang="' . $alternate . '" href="' . htmlspecialchars($href, ENT_XML1) . '" />';
             }
+            $defaultPath = $page['paths']['en'] ?? $page['path'];
+            $defaultHref = $origin . '/en/' . ltrim($defaultPath, '/');
+            $xml[] = '    <xhtml:link rel="alternate" hreflang="x-default" href="' . htmlspecialchars($defaultHref, ENT_XML1) . '" />';
             $xml[] = '    <priority>' . $page['priority'] . '</priority>';
             $xml[] = '  </url>';
          }
