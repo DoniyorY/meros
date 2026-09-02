@@ -141,6 +141,47 @@ final class Seo extends Component
       
       return $this;
    }
+
+
+   /**
+    * Returns a normalized language supported by the SEO configuration.
+    */
+   public function getCurrentLanguage(): string
+   {
+      $language = strtolower((string)Yii::$app->language);
+      $language = preg_split('/[-_]/', $language)[0] ?? 'en';
+
+      return in_array($language, $this->languages, true)
+         ? $language
+         : 'en';
+   }
+
+
+   /**
+    * Builds a production URL for a language-specific path.
+    *
+    * Keeping this logic here prevents views and sitemap generators from
+    * assembling canonical URLs differently.
+    */
+   public function localizedUrl(
+      string $path,
+      string $language,
+      array $query = [],
+   ): string {
+      $language = in_array($language, $this->languages, true)
+         ? $language
+         : 'en';
+
+      $url = rtrim($this->siteUrl, '/')
+         . '/' . $language
+         . ($path === '' ? '/' : '/' . ltrim($path, '/'));
+
+      if ($query) {
+         $url .= '?' . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
+      }
+
+      return $url;
+   }
    
    
    /*
@@ -156,7 +197,7 @@ final class Seo extends Component
    {
       $h1 = $this->metaValue(
          'h1',
-         $this->currentLanguage()
+         $this->getCurrentLanguage()
       );
       
       return (string)(
@@ -183,7 +224,7 @@ final class Seo extends Component
       return (string)(
          $this->metaValue(
             'text',
-            $this->currentLanguage()
+            $this->getCurrentLanguage()
          )
          ?? ''
       );
@@ -201,7 +242,7 @@ final class Seo extends Component
       $view = Yii::$app->view;
       $route = Yii::$app->controller->route;
       
-      $language = $this->currentLanguage();
+      $language = $this->getCurrentLanguage();
       
       
       /*
@@ -1100,6 +1141,10 @@ final class Seo extends Component
             PHP_URL_PATH
          )
             ?: '/';
+      $languagePattern = implode(
+         '|',
+         array_map(static fn(string $code): string => preg_quote($code, '#'), $this->languages)
+      );
       
       
       /*
@@ -1113,12 +1158,12 @@ final class Seo extends Component
        */
       if (
          preg_match(
-            '#^/(ru|en|uz)(?=/|$)#',
+            '#^/(' . $languagePattern . ')(?=/|$)#',
             $path
          )
       ) {
          $path = preg_replace(
-            '#^/(ru|en|uz)(?=/|$)#',
+            '#^/(' . $languagePattern . ')(?=/|$)#',
             '/' . $language,
             $path,
             1
@@ -1147,10 +1192,16 @@ final class Seo extends Component
             );
       }
       
-      return rtrim(
+      $localizedUrl = rtrim(
             $this->siteUrl,
             '/'
          ) . $path;
+
+      $query = parse_url($url, PHP_URL_QUERY);
+
+      return $query === null || $query === ''
+         ? $localizedUrl
+         : $localizedUrl . '?' . $query;
    }
    
    
@@ -1201,30 +1252,6 @@ final class Seo extends Component
     |--------------------------------------------------------------------------
     */
    
-   private function currentLanguage(): string
-   {
-      $language =
-         strtolower(
-            (string)Yii::$app->language
-         );
-      
-      $language =
-         preg_split(
-            '/[-_]/',
-            $language
-         )[0]
-         ?? 'en';
-      
-      return in_array(
-         $language,
-         $this->languages,
-         true
-      )
-         ? $language
-         : 'en';
-   }
-   
-   
    /*
     |--------------------------------------------------------------------------
     | HOME PAGE
@@ -1257,7 +1284,7 @@ final class Seo extends Component
    private function defaultDescription(): string
    {
       return match (
-      $this->currentLanguage()
+      $this->getCurrentLanguage()
       ) {
          'ru' =>
          'Meros — международный образовательный институт в Узбекистане: медицинский английский, подготовка к OET и профессиональное обучение.',

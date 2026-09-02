@@ -7,7 +7,8 @@ use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
 
-$lang = in_array(Yii::$app->language, ['ru', 'en', 'uz'], true) ? Yii::$app->language : 'en';
+$seo = Yii::$app->seo;
+$lang = $seo->getCurrentLanguage();
 $copyByLanguage = Yii::$app->params['medical_dictionary'] ?? [];
 $copy = $copyByLanguage[$lang] ?? $copyByLanguage['en'];
 $categories = Yii::$app->params['medical_dictionary_categories'][$lang] ?? [];
@@ -17,8 +18,8 @@ $name = $term->{"name_{$lang}"} ?: $term->name_en;
 $description = $term->{"desc_{$lang}"} ?: $term->desc_en;
 $content = $term->{"content_{$lang}"} ?: $term->content_en;
 $meta = array_filter([$categories[$term->category_id] ?? null, $types[$term->type] ?? null]);
-$siteUrl = rtrim(Yii::$app->seo->siteUrl, '/');
-$canonicalUrl = $siteUrl . '/' . $lang . '/medical-dictionary/' . rawurlencode($term->{"slug_{$lang}"});
+$dictionaryUrl = $seo->localizedUrl('medical-dictionary', $lang);
+$canonicalUrl = $seo->localizedUrl('medical-dictionary/' . $term->{"slug_{$lang}"}, $lang);
 $termId = $canonicalUrl . '#term';
 
 $this->title = $name;
@@ -27,10 +28,12 @@ $this->params['seoDescription'] = $term->{"seo_desc_{$lang}"} ?: $description;
 $this->params['canonical'] = $canonicalUrl;
 $this->params['ogType'] = 'article';
 $this->params['seoAlternates'] = [];
-foreach (['ru', 'en', 'uz'] as $alternateLanguage) {
+foreach ($seo->languages as $alternateLanguage) {
    $alternateSlug = $term->{"slug_{$alternateLanguage}"};
-   $this->params['seoAlternates'][$alternateLanguage] = $siteUrl . '/' . $alternateLanguage
-      . '/medical-dictionary/' . rawurlencode($alternateSlug);
+   $this->params['seoAlternates'][$alternateLanguage] = $seo->localizedUrl(
+      'medical-dictionary/' . $alternateSlug,
+      $alternateLanguage,
+   );
 }
 $this->params['seoXDefault'] = $this->params['seoAlternates']['en'];
 $this->params['seoSchema'] = [
@@ -43,7 +46,7 @@ $this->params['seoSchema'] = [
       'inDefinedTermSet' => [
          '@type' => 'DefinedTermSet',
          'name' => $copy['title'],
-         'url' => $siteUrl . '/' . $lang . '/medical-dictionary',
+         'url' => $dictionaryUrl,
       ],
    ],
    [
@@ -53,7 +56,7 @@ $this->params['seoSchema'] = [
             '@type' => 'ListItem',
             'position' => 1,
             'name' => $copy['title'],
-            'item' => $siteUrl . '/' . $lang . '/medical-dictionary',
+            'item' => $dictionaryUrl,
          ],
          [
             '@type' => 'ListItem',

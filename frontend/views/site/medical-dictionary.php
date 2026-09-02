@@ -14,7 +14,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
-$lang = Yii::$app->language;
+$seo = Yii::$app->seo;
+$lang = $seo->getCurrentLanguage();
 $categories = Yii::$app->params['medical_dictionary_categories'][$lang];
 $types = Yii::$app->params['medical_dictionary_types'][$lang];
 
@@ -22,21 +23,23 @@ $dictionaryCopy = Yii::$app->params['medical_dictionary'];
 $copy = $dictionaryCopy[$lang];
 
 $this->title = $copy['title'];
-$siteUrl = rtrim(Yii::$app->seo->siteUrl, '/');
 $page = max(1, (int) Yii::$app->request->get('page', 1));
 $hasFilters = trim((string) $searchModel->query) !== ''
    || !empty($searchModel->category_id)
    || !empty($searchModel->type);
-$pageSuffix = $page > 1 ? '?page=' . $page : '';
+$canonicalQuery = $page > 1 ? ['page' => $page] : [];
 
 $this->params['seoDescription'] = $copy['intro'];
 $this->params['schemaPageType'] = 'CollectionPage';
-$this->params['canonical'] = $siteUrl . '/' . $lang . '/medical-dictionary' . $pageSuffix;
+$this->params['canonical'] = $seo->localizedUrl('medical-dictionary', $lang, $canonicalQuery);
 $this->params['seoNoIndex'] = $hasFilters;
 $this->params['seoAlternates'] = [];
-foreach (['ru', 'en', 'uz'] as $alternateLanguage) {
-   $this->params['seoAlternates'][$alternateLanguage] = $siteUrl . '/' . $alternateLanguage
-      . '/medical-dictionary' . $pageSuffix;
+foreach ($seo->languages as $alternateLanguage) {
+   $this->params['seoAlternates'][$alternateLanguage] = $seo->localizedUrl(
+      'medical-dictionary',
+      $alternateLanguage,
+      $canonicalQuery,
+   );
 }
 $this->params['seoXDefault'] = $this->params['seoAlternates']['en'];
 $this->params['seoSchema'] = [
