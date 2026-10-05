@@ -77,7 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
                  [
                     'attribute' => 'role',
                     'value' => function ($data) {
-                       return $data->assignment->item_name;
+                       if ($data->assignment) {
+                          return $data->assignment->item_name;
+                       } else {
+                          return "Not Set!!!";
+                       }
                     },
                     'filter' => ArrayHelper::map(\common\models\AuthItem::find()->asArray()->all(), 'name', 'name'),
                  ],

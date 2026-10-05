@@ -62,29 +62,32 @@ $base = Yii::$app->request->baseUrl;
                     </div>
                 </div>
                 <!--end card-->
-               <?php if ($model->assignment->item_name == "admin"): ?>
-                   <div class="card">
-                       <div class="card-body p-2">
-                          <?php if (!$model->staff_telegram_id) {
-                             echo Html::a(
-                                'Подключить служебный Telegram',
-                                ['/telegram-staff-connect/connect'],
-                                ['class' => 'btn btn-primary w-100']
-                             );
-                          } else {
-                             echo Html::a(
-                                'Отключить служебный Telegram',
-                                ['/telegram-staff-connect/disconnect'],
-                                [
-                                   'class' => 'btn btn-outline-danger w-100',
-                                   'data-method' => 'post',
-                                ]
-                             );
-                          }
-                          ?>
+               <?php if ($model->assignment):?>
+                  <?php if ($model->assignment->item_name == "admin"): ?>
+                       <div class="card">
+                           <div class="card-body p-2">
+                              <?php if (!$model->staff_telegram_id) {
+                                 echo Html::a(
+                                    'Подключить служебный Telegram',
+                                    ['/telegram-staff-connect/connect'],
+                                    ['class' => 'btn btn-primary w-100']
+                                 );
+                              } else {
+                                 echo Html::a(
+                                    'Отключить служебный Telegram',
+                                    ['/telegram-staff-connect/disconnect'],
+                                    [
+                                       'class' => 'btn btn-outline-danger w-100',
+                                       'data-method' => 'post',
+                                    ]
+                                 );
+                              }
+                              ?>
+                           </div>
                        </div>
-                   </div>
-               <?php endif; ?>
+                  <?php endif; ?>
+               <?php endif;?>
+               
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">

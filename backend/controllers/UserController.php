@@ -204,18 +204,32 @@ class UserController extends BaseController
    public function actionCreate()
    {
       $model = new User();
+      $transaction= Yii::$app->db->beginTransaction();
       
       if ($this->request->isPost) {
-         if ($model->load($this->request->post())) {
-            $model->created_at = time();
-            $model->updated_at = time();
-            $model->setPassword($model->password);
-            $model->generateAuthKey();
-            $model->status = User::STATUS_ACTIVE;
-            $model->save();
-            Yii::$app->session->setFlash('success', 'New User Successfully Created');
-            return $this->redirect(['view', 'id' => $model->id]);
+         try {
+            if ($model->load($this->request->post())) {
+               $model->created_at = time();
+               $model->updated_at = time();
+               $model->setPassword($model->password);
+               $model->generateAuthKey();
+               $model->status = User::STATUS_ACTIVE;
+               $model->save();
+               $assignment = new AuthAssignment();
+               $assignment->user_id = $model->id;
+               $assignment->item_name = "guest";
+               $assignment->created_at = time();
+               $assignment->save(false);
+               $transaction->commit();
+               Yii::$app->session->setFlash('success', 'New User Successfully Created');
+               return $this->redirect(['view', 'id' => $model->id]);
+            }
+         }catch (\Exception $e){
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(Yii::$app->request->referrer);
          }
+         
       } else {
          $model->loadDefaultValues();
       }
