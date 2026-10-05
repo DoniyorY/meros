@@ -60,15 +60,9 @@ final class PaymentController extends Controller
       $data = Yii::$app->request->post();
       
       $log = new ClickWebhookLog();
-      $log->click_trans_id = isset($data['click_trans_id'])
-         ? (string) $data['click_trans_id']
-         : null;
-      $log->merchant_trans_id = isset($data['merchant_trans_id'])
-         ? (string) $data['merchant_trans_id']
-         : null;
-      $log->action = isset($data['action'])
-         ? (int) $data['action']
-         : null;
+      $log->click_trans_id = isset($data['click_trans_id']) ?? null;
+      $log->merchant_trans_id = isset($data['merchant_trans_id']) ?? null;
+      $log->action = isset($data['action']) ?? null;
       $log->request_payload = Json::encode(
          $data,
          JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
@@ -101,7 +95,7 @@ final class PaymentController extends Controller
       
       if (!$log->isNewRecord) {
          $log->response_error = isset($response['error'])
-            ? (int) $response['error']
+            ? (int)$response['error']
             : -7;
          $log->response_payload = Json::encode(
             $response,
@@ -139,7 +133,7 @@ final class PaymentController extends Controller
       }
       
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_SUCCESS
       ) {
          return $this->redirect([
@@ -150,7 +144,7 @@ final class PaymentController extends Controller
       
       $paymentStatus = $billing->payment_status === null
          ? null
-         : (int) $billing->payment_status;
+         : (int)$billing->payment_status;
       
       if (!in_array($paymentStatus, [
          null,
@@ -163,7 +157,7 @@ final class PaymentController extends Controller
          );
       }
       
-      if ((int) $billing->amount <= 0) {
+      if ((int)$billing->amount <= 0) {
          throw new ForbiddenHttpException(
             'Некорректная сумма оплаты.'
          );
@@ -179,12 +173,12 @@ final class PaymentController extends Controller
          'service_id' => $config['service_id'],
          'merchant_id' => $config['merchant_id'],
          'amount' => number_format(
-            (float) $billing->amount,
+            (float)$billing->amount,
             2,
             '.',
             ''
          ),
-         'transaction_param' => (string) $billing->id,
+         'transaction_param' => (string)$billing->id,
          'return_url' => $returnUrl,
       ], '', '&', PHP_QUERY_RFC3986);
       
@@ -217,16 +211,17 @@ final class PaymentController extends Controller
    }
    
    private function processClickRequest(
-      array $data,
+      array           $data,
       ClickWebhookLog $log
-   ): array {
+   ): array
+   {
       $validationError = $this->validateClickRequest($data);
       
       if ($validationError !== null) {
          return $validationError;
       }
       
-      return (int) $data['action'] === 0
+      return (int)$data['action'] === 0
          ? $this->prepareClickPayment($data, $log)
          : $this->completeClickPayment($data, $log);
    }
@@ -259,7 +254,7 @@ final class PaymentController extends Controller
          }
       }
       
-      $action = (int) $data['action'];
+      $action = (int)$data['action'];
       
       if (!in_array($action, [0, 1], true)) {
          return $this->clickResponse(
@@ -286,8 +281,8 @@ final class PaymentController extends Controller
       $config = $this->clickConfig();
       
       if (
-         (string) $data['service_id']
-         !== (string) $config['service_id']
+         (string)$data['service_id']
+         !== (string)$config['service_id']
       ) {
          return $this->clickResponse(
             $data,
@@ -297,20 +292,20 @@ final class PaymentController extends Controller
       }
       
       $expectedSign = md5(
-         (string) $data['click_trans_id']
-         . (string) $data['service_id']
-         . (string) $config['secret_key']
-         . (string) $data['merchant_trans_id']
+         (string)$data['click_trans_id']
+         . (string)$data['service_id']
+         . (string)$config['secret_key']
+         . (string)$data['merchant_trans_id']
          . ($action === 1
-            ? (string) $data['merchant_prepare_id']
+            ? (string)$data['merchant_prepare_id']
             : '')
-         . (string) $data['amount']
-         . (string) $data['action']
-         . (string) $data['sign_time']
+         . (string)$data['amount']
+         . (string)$data['action']
+         . (string)$data['sign_time']
       );
       
       $providedSign = strtolower(
-         trim((string) $data['sign_string'])
+         trim((string)$data['sign_string'])
       );
       
       if (!hash_equals($expectedSign, $providedSign)) {
@@ -329,11 +324,12 @@ final class PaymentController extends Controller
     * и возвращает ID ClickPayment как merchant_prepare_id.
     */
    private function prepareClickPayment(
-      array $data,
+      array           $data,
       ClickWebhookLog $log
-   ): array {
+   ): array
+   {
       $billing = $this->findBilling(
-         (string) $data['merchant_trans_id']
+         (string)$data['merchant_trans_id']
       );
       
       if ($billing === null) {
@@ -353,7 +349,7 @@ final class PaymentController extends Controller
       }
       
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_SUCCESS
       ) {
          return $this->clickResponse(
@@ -366,11 +362,11 @@ final class PaymentController extends Controller
       $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
-         $this->lockBilling((int) $billing->id);
+         $this->lockBilling((int)$billing->id);
          $billing->refresh();
          
          if (
-            (int) $billing->payment_status
+            (int)$billing->payment_status
             === Billing::STATUS_SUCCESS
          ) {
             $dbTransaction->rollBack();
@@ -382,13 +378,13 @@ final class PaymentController extends Controller
             );
          }
          
-         $clickTransId = (string) $data['click_trans_id'];
+         $clickTransId = (string)$data['click_trans_id'];
          $storedTransactionId = trim(
-            (string) $billing->payment_transaction_id
+            (string)$billing->payment_transaction_id
          );
          
          if (
-            (int) $billing->payment_status
+            (int)$billing->payment_status
             === Billing::STATUS_PENDING
             && $storedTransactionId !== ''
             && !hash_equals(
@@ -412,10 +408,10 @@ final class PaymentController extends Controller
          
          if ($payment !== null) {
             if (
-               (int) $payment->billing_id
-               !== (int) $billing->id
-               || (string) $payment->merchant_trans_id
-               !== (string) $billing->id
+               (int)$payment->billing_id
+               !== (int)$billing->id
+               || (string)$payment->merchant_trans_id
+               !== (string)$billing->id
                || !$this->amountsEqual(
                   $payment->amount,
                   $data['amount']
@@ -431,7 +427,7 @@ final class PaymentController extends Controller
             }
             
             if (
-               (int) $payment->status
+               (int)$payment->status
                === ClickPayment::STATUS_PAID
             ) {
                $dbTransaction->rollBack();
@@ -443,7 +439,7 @@ final class PaymentController extends Controller
                );
             }
             
-            if (in_array((int) $payment->status, [
+            if (in_array((int)$payment->status, [
                ClickPayment::STATUS_CANCELLED,
                ClickPayment::STATUS_FAILED,
             ], true)) {
@@ -457,24 +453,24 @@ final class PaymentController extends Controller
             }
          } else {
             $payment = new ClickPayment();
-            $payment->billing_id = (int) $billing->id;
+            $payment->billing_id = (int)$billing->id;
             $payment->click_trans_id = $clickTransId;
             $payment->click_paydoc_id =
-               (string) $data['click_paydoc_id'];
-            $payment->service_id = (int) $data['service_id'];
+               (string)$data['click_paydoc_id'];
+            $payment->service_id = (int)$data['service_id'];
             $payment->merchant_trans_id =
-               (string) $data['merchant_trans_id'];
+               (string)$data['merchant_trans_id'];
             $payment->amount = number_format(
-               (float) $data['amount'],
+               (float)$data['amount'],
                2,
                '.',
                ''
             );
             $payment->status = ClickPayment::STATUS_PREPARED;
-            $payment->click_error = (int) $data['error'];
+            $payment->click_error = (int)$data['error'];
             $payment->click_error_note =
-               (string) $data['error_note'];
-            $payment->sign_time = (string) $data['sign_time'];
+               (string)$data['error_note'];
+            $payment->sign_time = (string)$data['sign_time'];
             $payment->prepared_at = time();
             $payment->created_at = time();
             $payment->updated_at = time();
@@ -492,7 +488,7 @@ final class PaymentController extends Controller
          $dbTransaction->commit();
          
          return $this->clickResponse($data, 0, 'Success', [
-            'merchant_prepare_id' => (int) $payment->id,
+            'merchant_prepare_id' => (int)$payment->id,
          ]);
       } catch (Throwable $e) {
          if ($dbTransaction->isActive) {
@@ -508,12 +504,13 @@ final class PaymentController extends Controller
     * успешной оплаты создаёт запись истории UserSubscriptions.
     */
    private function completeClickPayment(
-      array $data,
+      array           $data,
       ClickWebhookLog $log
-   ): array {
+   ): array
+   {
       /** @var ClickPayment|null $payment */
       $payment = ClickPayment::findOne(
-         (int) $data['merchant_prepare_id']
+         (int)$data['merchant_prepare_id']
       );
       
       if ($payment === null) {
@@ -525,12 +522,12 @@ final class PaymentController extends Controller
       }
       
       if (
-         (string) $payment->click_trans_id
-         !== (string) $data['click_trans_id']
-         || (string) $payment->merchant_trans_id
-         !== (string) $data['merchant_trans_id']
-         || (string) $payment->service_id
-         !== (string) $data['service_id']
+         (string)$payment->click_trans_id
+         !== (string)$data['click_trans_id']
+         || (string)$payment->merchant_trans_id
+         !== (string)$data['merchant_trans_id']
+         || (string)$payment->service_id
+         !== (string)$data['service_id']
       ) {
          return $this->clickResponse(
             $data,
@@ -548,7 +545,7 @@ final class PaymentController extends Controller
       }
       
       $billing = $this->findBilling(
-         (string) $data['merchant_trans_id']
+         (string)$data['merchant_trans_id']
       );
       
       if ($billing === null) {
@@ -559,7 +556,7 @@ final class PaymentController extends Controller
          );
       }
       
-      if ((int) $payment->billing_id !== (int) $billing->id) {
+      if ((int)$payment->billing_id !== (int)$billing->id) {
          return $this->clickResponse(
             $data,
             -6,
@@ -570,26 +567,26 @@ final class PaymentController extends Controller
       $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
-         $this->lockPayment((int) $payment->id);
-         $this->lockBilling((int) $billing->id);
+         $this->lockPayment((int)$payment->id);
+         $this->lockBilling((int)$billing->id);
          
          $payment->refresh();
          $billing->refresh();
          
          $this->linkWebhookLogToPayment($log, $payment);
          
-         $clickTransId = (string) $data['click_trans_id'];
+         $clickTransId = (string)$data['click_trans_id'];
          
-         if ((int) $data['error'] < 0) {
+         if ((int)$data['error'] < 0) {
             if (
-               (int) $payment->status
+               (int)$payment->status
                !== ClickPayment::STATUS_PAID
             ) {
                $payment->status =
                   ClickPayment::STATUS_CANCELLED;
-               $payment->click_error = (int) $data['error'];
+               $payment->click_error = (int)$data['error'];
                $payment->click_error_note =
-                  (string) $data['error_note'];
+                  (string)$data['error_note'];
                $payment->cancelled_at = time();
                $payment->updated_at = time();
                
@@ -613,15 +610,15 @@ final class PaymentController extends Controller
                'Transaction cancelled',
                [
                   'merchant_confirm_id' =>
-                     (int) $payment->id,
+                     (int)$payment->id,
                ]
             );
          }
          
          if (
-            (int) $payment->status
+            (int)$payment->status
             === ClickPayment::STATUS_PAID
-            || (int) $billing->payment_status
+            || (int)$billing->payment_status
             === Billing::STATUS_SUCCESS
          ) {
             $dbTransaction->rollBack();
@@ -632,13 +629,13 @@ final class PaymentController extends Controller
                'Already paid',
                [
                   'merchant_confirm_id' =>
-                     (int) $payment->id,
+                     (int)$payment->id,
                ]
             );
          }
          
          if (
-            (int) $payment->status
+            (int)$payment->status
             !== ClickPayment::STATUS_PREPARED
          ) {
             $dbTransaction->rollBack();
@@ -651,7 +648,7 @@ final class PaymentController extends Controller
          }
          
          if (!hash_equals(
-            trim((string) $billing->payment_transaction_id),
+            trim((string)$billing->payment_transaction_id),
             $clickTransId
          )) {
             $dbTransaction->rollBack();
@@ -664,9 +661,9 @@ final class PaymentController extends Controller
          }
          
          $payment->status = ClickPayment::STATUS_PAID;
-         $payment->click_error = (int) $data['error'];
+         $payment->click_error = (int)$data['error'];
          $payment->click_error_note =
-            (string) $data['error_note'];
+            (string)$data['error_note'];
          $payment->paid_at = time();
          $payment->updated_at = time();
          
@@ -686,7 +683,7 @@ final class PaymentController extends Controller
          $this->sendPaidWebhookSafely($billing);
          
          return $this->clickResponse($data, 0, 'Success', [
-            'merchant_confirm_id' => (int) $payment->id,
+            'merchant_confirm_id' => (int)$payment->id,
          ]);
       } catch (Throwable $e) {
          if ($dbTransaction->isActive) {
@@ -703,13 +700,14 @@ final class PaymentController extends Controller
          return null;
       }
       
-      return Billing::findOne((int) $merchantTransId);
+      return Billing::findOne((int)$merchantTransId);
    }
    
    private function markBillingPending(
       Billing $billing,
-      string $clickTransId
-   ): void {
+      string  $clickTransId
+   ): void
+   {
       $billing->payment_status = Billing::STATUS_PENDING;
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
@@ -724,28 +722,29 @@ final class PaymentController extends Controller
    
    private function markBillingSuccess(
       Billing $billing,
-      string $clickTransId
-   ): void {
+      string  $clickTransId
+   ): void
+   {
       $billing->payment_status = Billing::STATUS_SUCCESS;
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
       $billing->status = Billing::STATUS_SUCCESS;
       $billing->updated_at = time();
-      $startDate = (int) ($billing->start_date ?: time());
+      $startDate = (int)($billing->start_date ?: time());
       $billing->start_date = $startDate;
       $billing->save(false);
       
       if (empty($billing->expires_date)) {
          $plan = $billing->subscription;
          
-         if ($plan === null || (int) $plan->duration_days <= 0) {
+         if ($plan === null || (int)$plan->duration_days <= 0) {
             throw new RuntimeException(
                'Subscription plan duration_days is invalid.'
             );
          }
          
          $expiresDate = strtotime(
-            '+' . (int) $plan->duration_days . ' days',
+            '+' . (int)$plan->duration_days . ' days',
             $startDate
          );
          
@@ -769,10 +768,11 @@ final class PaymentController extends Controller
    
    private function markBillingCancelled(
       Billing $billing,
-      string $clickTransId
-   ): void {
+      string  $clickTransId
+   ): void
+   {
       $storedTransactionId = trim(
-         (string) $billing->payment_transaction_id
+         (string)$billing->payment_transaction_id
       );
       
       // Не даём запоздалому Complete отменить уже другую попытку оплаты.
@@ -784,7 +784,7 @@ final class PaymentController extends Controller
       }
       
       if (
-         (int) $billing->payment_status
+         (int)$billing->payment_status
          === Billing::STATUS_SUCCESS
       ) {
          return;
@@ -808,8 +808,9 @@ final class PaymentController extends Controller
     */
    private function createOrUpdateUserSubscription(
       Billing $billing,
-      string $clickTransId
-   ): void {
+      string  $clickTransId
+   ): void
+   {
       $provider = $this->clickSubscriptionProvider();
       
       /** @var UserSubscriptions|null $subscription */
@@ -827,14 +828,14 @@ final class PaymentController extends Controller
          $subscription->created_at = time();
       }
       
-      $subscription->plan_id = (int) $billing->subscription_id;
-      $subscription->user_id = (int) $billing->user_id;
+      $subscription->plan_id = (int)$billing->subscription_id;
+      $subscription->user_id = (int)$billing->user_id;
       $subscription->status =
          UserSubscriptions::STATUS_ACTIVE;
-      $subscription->start_date = (int) $billing->start_date;
+      $subscription->start_date = (int)$billing->start_date;
       $subscription->expires_date =
-         (int) $billing->expires_date;
-      $subscription->amount = (int) $billing->amount;
+         (int)$billing->expires_date;
+      $subscription->amount = (int)$billing->amount;
       $subscription->currency_code =
          $this->clickCurrencyCode();
       $subscription->payment_transaction_id = $clickTransId;
@@ -869,13 +870,14 @@ final class PaymentController extends Controller
    
    private function linkWebhookLogToPayment(
       ClickWebhookLog $log,
-      ClickPayment $payment
-   ): void {
+      ClickPayment    $payment
+   ): void
+   {
       if ($log->isNewRecord) {
          return;
       }
       
-      $log->click_payment_id = (int) $payment->id;
+      $log->click_payment_id = (int)$payment->id;
       $log->save(false);
    }
    
@@ -896,7 +898,7 @@ final class PaymentController extends Controller
       } catch (Throwable $e) {
          Yii::error([
             'message' => 'Zapier webhook failed after CLICK payment.',
-            'billing_id' => (int) $billing->id,
+            'billing_id' => (int)$billing->id,
             'exception' => $e,
          ], 'click');
       }
@@ -922,16 +924,17 @@ final class PaymentController extends Controller
    
    private function amountsEqual($left, $right): bool
    {
-      return (int) round((float) $left * 100)
-         === (int) round((float) $right * 100);
+      return (int)round((float)$left * 100)
+         === (int)round((float)$right * 100);
    }
    
    private function clickResponse(
-      array $request,
-      int $error,
+      array  $request,
+      int    $error,
       string $note,
-      array $extra = []
-   ): array {
+      array  $extra = []
+   ): array
+   {
       $response = [
          'error' => $error,
          'error_note' => $note,
@@ -952,17 +955,17 @@ final class PaymentController extends Controller
    
    private function clickProviderCode(): int
    {
-      return (int) ($this->clickConfig()['providerCode'] ?? 1);
+      return (int)($this->clickConfig()['providerCode'] ?? 1);
    }
    
    private function clickCurrencyCode(): int
    {
-      return (int) ($this->clickConfig()['currencyCode'] ?? 860);
+      return (int)($this->clickConfig()['currencyCode'] ?? 860);
    }
    
    private function clickSubscriptionProvider(): string
    {
-      return (string) (
+      return (string)(
          $this->clickConfig()['subscriptionPaymentProvider']
          ?? 'click'
       );
