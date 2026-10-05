@@ -41,7 +41,7 @@ class UserSearch extends User
      */
     public function search($params, $formName = null)
     {
-        $query = User::find()->joinWith('assignment');
+        $query = User::find()->joinWith('assignment')->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

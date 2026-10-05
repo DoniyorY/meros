@@ -239,6 +239,140 @@ class UserController extends BaseController
       ]);
    }
    
+   public function actionAddClients()
+   {
+      
+      $transaction= Yii::$app->db->beginTransaction();
+      try {
+         
+         foreach (Yii::$app->params['new_clients'] as $item){
+            $check = User::find()->where(['email' => $item['email']])->exists();
+            if($check) continue;
+            
+            $user = new User([
+               'username'=> $this->fioToUsername($item['fullname']),
+               'fullname'=>$item['fullname'],
+               'phone'=>$item['phone'],
+               'email'=>$item['email'],
+               'created_at'=>time(),
+               'updated_at'=>time(),
+               'status'=>User::STATUS_ACTIVE,
+            ]);
+            $user->generateAuthKey();
+            $user->setPassword($this->generatePassword($item['fullname'],$item['phone']));
+            $user->save(false);
+            $assignment = new AuthAssignment();
+            $assignment->user_id = $user->id;
+            $assignment->item_name = "guest";
+            $assignment->created_at = time();
+            $assignment->save(false);
+           
+            
+         }
+         $transaction->commit();
+         Yii::$app->session->setFlash('success', 'New User Successfully Created');
+      }catch (\Exception $e){
+         $transaction->rollBack();
+         echo "<pre>";
+         print_r($e);
+         die();
+      }
+      return $this->redirect(Yii::$app->request->referrer);
+   }
+   
+   private function fioToUsername(string $fio): string
+   {
+      $fio = trim(preg_replace('/\s+/u', ' ', $fio));
+      
+      $parts = explode(' ', $fio);
+      
+      // Берём только Фамилию + Имя
+      $name = implode('.', array_slice($parts, 0, 2));
+      
+      $map = [
+         'А' => 'A',  'Б' => 'B',  'В' => 'V',  'Г' => 'G',
+         'Д' => 'D',  'Е' => 'E',  'Ё' => 'Yo', 'Ж' => 'Zh',
+         'З' => 'Z',  'И' => 'I',  'Й' => 'Y',  'К' => 'K',
+         'Л' => 'L',  'М' => 'M',  'Н' => 'N',  'О' => 'O',
+         'П' => 'P',  'Р' => 'R',  'С' => 'S',  'Т' => 'T',
+         'У' => 'U',  'Ф' => 'F',  'Х' => 'Kh', 'Ц' => 'Ts',
+         'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Sch',
+         'Ъ' => '',   'Ы' => 'Y',  'Ь' => '',
+         'Э' => 'E',  'Ю' => 'Yu', 'Я' => 'Ya',
+         
+         'а' => 'a',  'б' => 'b',  'в' => 'v',  'г' => 'g',
+         'д' => 'd',  'е' => 'e',  'ё' => 'yo', 'ж' => 'zh',
+         'з' => 'z',  'и' => 'i',  'й' => 'y',  'к' => 'k',
+         'л' => 'l',  'м' => 'm',  'н' => 'n',  'о' => 'o',
+         'п' => 'p',  'р' => 'r',  'с' => 's',  'т' => 't',
+         'у' => 'u',  'ф' => 'f',  'х' => 'kh', 'ц' => 'ts',
+         'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch',
+         'ъ' => '',   'ы' => 'y',  'ь' => '',
+         'э' => 'e',  'ю' => 'yu', 'я' => 'ya',
+         
+         // Узбекские буквы
+         'Ў' => 'O',  'ў' => 'o',
+         'Қ' => 'Q',  'қ' => 'q',
+         'Ғ' => 'G',  'ғ' => 'g',
+         'Ҳ' => 'H',  'ҳ' => 'h',
+      ];
+      
+      $username = strtr($name, $map);
+      
+      $username = strtolower($username);
+      
+      // На всякий случай убираем всё лишнее
+      $username = preg_replace('/[^a-z0-9.]/', '', $username);
+      
+      return $username;
+   }
+   private function generatePassword(string $fio, string $phone): string
+   {
+      $fio = trim(preg_replace('/\s+/u', ' ', $fio));
+      $parts = explode(' ', $fio);
+      
+      // Формат ФИО: Фамилия Имя Отчество
+      $firstName = $parts[1] ?? $parts[0];
+      
+      $map = [
+         'А' => 'A',  'Б' => 'B',  'В' => 'V',  'Г' => 'G',
+         'Д' => 'D',  'Е' => 'E',  'Ё' => 'Yo', 'Ж' => 'Zh',
+         'З' => 'Z',  'И' => 'I',  'Й' => 'Y',  'К' => 'K',
+         'Л' => 'L',  'М' => 'M',  'Н' => 'N',  'О' => 'O',
+         'П' => 'P',  'Р' => 'R',  'С' => 'S',  'Т' => 'T',
+         'У' => 'U',  'Ф' => 'F',  'Х' => 'Kh', 'Ц' => 'Ts',
+         'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Sch',
+         'Ъ' => '',   'Ы' => 'Y',  'Ь' => '',
+         'Э' => 'E',  'Ю' => 'Yu', 'Я' => 'Ya',
+         
+         'а' => 'a',  'б' => 'b',  'в' => 'v',  'г' => 'g',
+         'д' => 'd',  'е' => 'e',  'ё' => 'yo', 'ж' => 'zh',
+         'з' => 'z',  'и' => 'i',  'й' => 'y',  'к' => 'k',
+         'л' => 'l',  'м' => 'm',  'н' => 'n',  'о' => 'o',
+         'п' => 'p',  'р' => 'r',  'с' => 's',  'т' => 't',
+         'у' => 'u',  'ф' => 'f',  'х' => 'kh', 'ц' => 'ts',
+         'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch',
+         'ъ' => '',   'ы' => 'y',  'ь' => '',
+         'э' => 'e',  'ю' => 'yu', 'я' => 'ya',
+         
+         'Ў' => 'O',  'ў' => 'o',
+         'Қ' => 'Q',  'қ' => 'q',
+         'Ғ' => 'G',  'ғ' => 'g',
+         'Ҳ' => 'H',  'ҳ' => 'h',
+      ];
+      
+      $firstName = strtr($firstName, $map);
+      $firstName = ucfirst(strtolower($firstName));
+      
+      // Оставляем только цифры
+      $phone = preg_replace('/\D/', '', $phone);
+      
+      // Последние 4 цифры
+      $last4 = substr($phone, -4);
+      
+      return $firstName . $last4;
+   }
+   
    /**
     * Updates an existing User model.
     * If update is successful, the browser will be redirected to the 'view' page.
