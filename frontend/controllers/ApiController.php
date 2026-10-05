@@ -15,7 +15,7 @@ class ApiController extends Controller
     public $enableCsrfValidation = false;
 
 
-    public static function sendZapierOrderPaidWebhook(Billing $billing): bool
+    public static function sendZapierOrderPaidWebhook(Billing $billing, $isAdmin = null): bool
     {
         $webhookUrl = (string)Yii::$app->params['zapierOrderPaidWebhookUrl'];
 
@@ -74,7 +74,9 @@ class ApiController extends Controller
             Yii::$app->playmobile->sendSms("$user->phone", $text);
         }
         TelegramNotificationService::sendPurchaseNotification($billing);
-        TelegramStaffNotificationService::sendNewSubscriptionNotification($billing);
+        if (is_null($isAdmin)) {
+           TelegramStaffNotificationService::sendNewSubscriptionNotification($billing);
+        }
         return true;
     }
 

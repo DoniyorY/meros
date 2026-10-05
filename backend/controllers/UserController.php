@@ -120,7 +120,7 @@ class UserController extends BaseController
          Yii::$app->session->setFlash('success','Subscription Gifted Successfully');
          $billing->status = Billing::STATUS_SUCCESS;
          $billing->update(false);
-         ApiController::sendZapierOrderPaidWebhook($billing);
+         ApiController::sendZapierOrderPaidWebhook($billing,$isAdmin = true);
          $transaction->commit();
       }catch (\Exception $e){
          $transaction->rollBack();
