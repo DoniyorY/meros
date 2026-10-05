@@ -14,5 +14,6 @@ return [
          'class' => 'pagination',
          'style' => 'margin-left: 1px;'
       ],
-   ]
+   ],
+   'zapierOrderPaidWebhookUrl' => 'https://hooks.zapier.com/hooks/catch/18066877/43p3esw/',
 ];
