@@ -128,6 +128,15 @@ class UserController extends BaseController
       }
       return $this->redirect(Yii::$app->request->referrer);
    }
+   
+   public function actionRepeatGift()
+   {
+      $billing = Billing::find()->where(['id'=>[5252,5253]])->all();
+      ApiController::sendZapierOrderPaidWebhook($billing,$isAdmin = true);
+      return $this->redirect(Yii::$app->request->referrer);
+      
+   }
+   
    /**
     * Displays a single User model.
     * @param int $id
