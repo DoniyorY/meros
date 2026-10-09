@@ -129,7 +129,7 @@ class UserController extends BaseController
       return $this->redirect(Yii::$app->request->referrer);
    }
    
-   public function actionRepeatGift()
+   /*public function actionRepeatGift()
    {
       $billing = Billing::find()->where(['id'=>[5252,5253]])->all();
       foreach ($billing as $item){
@@ -138,7 +138,7 @@ class UserController extends BaseController
       }
       return $this->redirect(Yii::$app->request->referrer);
       
-   }
+   }*/
    
    /**
     * Displays a single User model.
