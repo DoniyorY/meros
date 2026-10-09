@@ -132,7 +132,10 @@ class UserController extends BaseController
    public function actionRepeatGift()
    {
       $billing = Billing::find()->where(['id'=>[5252,5253]])->all();
-      ApiController::sendZapierOrderPaidWebhook($billing,$isAdmin = true);
+      foreach ($billing as $item){
+         ApiController::sendZapierOrderPaidWebhook($item,$isAdmin = true);
+         sleep(5);
+      }
       return $this->redirect(Yii::$app->request->referrer);
       
    }
