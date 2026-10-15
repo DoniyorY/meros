@@ -132,6 +132,9 @@ $base = Yii::$app->request->baseUrl;
                     <a class="nav-link menu-link" href="<?= Url::to(['billing/index']) ?>">
                         <i class="ri-honour-line"></i> <span>Billing</span>
                     </a>
+                    <a class="nav-link menu-link" href="<?= Url::to(['promocodes/index']) ?>">
+                        <i class="ri-coupon-line"></i> <span>Промокоды</span>
+                    </a>
                     <a class="nav-link menu-link" href="<?= Url::to(['user-subscriptions/index']) ?>">
                         <i class="ri-id-card-line"></i> <span>User Subscriptions</span>
                     </a>

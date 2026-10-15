@@ -210,7 +210,7 @@ $returnURL = "сайт поставщика";
                                    ?>
                                 </strong>
                             </div>
-
+                            
                             <div class="d-flex justify-content-between mb-3">
                                 <span><?= Html::encode($t('price')) ?></span>
                                 <strong>
