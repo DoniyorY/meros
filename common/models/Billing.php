@@ -11,6 +11,7 @@ use Yii;
  * @property string $billing_token
  * @property int $user_id
  * @property int $subscription_id
+ * @property int $promocode_id
  * @property int|null $start_date
  * @property int|null $expires_date
  * @property int $created_at
@@ -18,6 +19,7 @@ use Yii;
  * @property string|null $payment_transaction_id
  * @property int|null $payment_provider
  * @property int|null $payment_status
+ * @property int|null $no_discount_amount
  * @property int|null $amount
  * @property int $status
  * @property string $ga_client_id
@@ -55,7 +57,7 @@ class Billing extends \yii\db\ActiveRecord
          [['start_date', 'expires_date', 'payment_transaction_id', 'payment_provider', 'payment_status', 'amount'], 'default', 'value' => null],
          [['status'], 'default', 'value' => 0],
          [['billing_token', 'user_id', 'subscription_id', 'created_at', 'updated_at'], 'required'],
-         [['user_id', 'subscription_id', 'start_date', 'expires_date', 'created_at', 'updated_at', 'payment_provider', 'payment_status', 'amount', 'status'], 'integer'],
+         [['user_id', 'subscription_id', 'start_date', 'expires_date', 'created_at', 'updated_at', 'payment_provider', 'payment_status', 'amount', 'status', 'promocode_id', 'no_discount_amount'], 'integer'],
          [['billing_token', 'payment_transaction_id'], 'string', 'max' => 255],
       ];
    }
@@ -82,6 +84,11 @@ class Billing extends \yii\db\ActiveRecord
       ];
    }
    
+   public function getPromocode()
+   {
+      return $this->hasOne(Promocodes::class, ['id' => 'promocode_id']);
+   }
+
    public function getSubscription()
    {
       return $this->hasOne(SubscriptionPlans::class, ['id' => 'subscription_id']);

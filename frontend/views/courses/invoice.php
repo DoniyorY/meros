@@ -32,13 +32,16 @@ if ($courseName) {
 }
 $this->params['breadcrumbs'][] = $this->title;
 
-$merchantID = 20;
-$merchantUserID = 4;
-$serviceID = 31;
-$transID = "user23151";
-$transAmount = number_format(1000, 2, '.', '');
-$cardType = "uzcard";
-$returnURL = "сайт поставщика";
+$canApplyPromocode = !Yii::$app->user->isGuest
+   && (int) $billing->status !== Billing::STATUS_SUCCESS
+   && (int) $billing->payment_status !== Billing::STATUS_SUCCESS
+   && trim((string) $billing->payment_transaction_id) === '';
+$promoLabels = [
+   'ru' => ['Промокод', 'Применить', 'Убрать', 'Не удалось проверить промокод. Попробуйте ещё раз.'],
+   'en' => ['Promo code', 'Apply', 'Remove', 'Unable to check the promo code. Please try again.'],
+   'uz' => ['Promokod', 'Qo‘llash', 'Olib tashlash', 'Promokodni tekshirib bo‘lmadi. Qayta urinib ko‘ring.'],
+];
+$promoText = $promoLabels[$lang] ?? $promoLabels['en'];
 
 ?>
 
@@ -213,22 +216,40 @@ $returnURL = "сайт поставщика";
                             
                             <div class="d-flex justify-content-between mb-3">
                                 <span><?= Html::encode($t('price')) ?></span>
-                                <strong>
-                                   <?= Yii::$app->formatter->asDecimal($model->price) ?>
-                                    UZS
+                                <strong id="invoice-original-amount">
+                                   <?= Yii::$app->formatter->asDecimal($billing->no_discount_amount ?? $billing->amount) ?> UZS
                                 </strong>
                             </div>
                             <hr>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="h5 mb-0"><?= Html::encode($t('total')) ?></span>
-                                <span class="h4 text-primary mb-0">
-                                    <?= Yii::$app->formatter->asDecimal($model->price) ?>
+                                <span id="invoice-total-amount" class="h4 text-primary mb-0">
+                                    <?= Yii::$app->formatter->asDecimal($billing->amount) ?>
                                     UZS
                                 </span>
                             </div>
+                           <?php if ($canApplyPromocode): ?>
+                               <?= Html::beginForm(['courses/apply-promocode', 'id' => $billing->id], 'post', ['id' => 'promocode-form', 'class' => 'meros-promocode-form mt-4']) ?>
+                                   <label for="invoice-promocode" class="form-label"><?= Html::encode($promoText[0]) ?></label>
+                                   <div class="meros-promocode-controls">
+                                       <?= Html::textInput('code', $billing->promocode ? $billing->promocode->code : '', [
+                                          'id' => 'invoice-promocode', 'class' => 'form-control',
+                                          'maxlength' => 50, 'autocomplete' => 'off',
+                                          'aria-describedby' => 'promocode-message',
+                                       ]) ?>
+                                       <div class="meros-promocode-actions">
+                                           <button type="submit" class="btn btn-primary meros-primary-btn"><?= Html::encode($promoText[1]) ?></button>
+                                           <button type="button" id="remove-promocode" class="btn meros-secondary-btn"><?= Html::encode($promoText[2]) ?></button>
+                                       </div>
+                                   </div>
+                                   <div id="promocode-message" class="small mt-2" role="status" aria-live="polite"></div>
+                               <?= Html::endForm() ?>
+                           <?php elseif ($billing->promocode): ?>
+                               <p class="mt-3"><?= Html::encode($promoText[0] . ': ' . $billing->promocode->code) ?></p>
+                           <?php endif; ?>
                            <?php if (!Yii::$app->user->isGuest): ?>
-                              <?php if ($billing->status === Billing::STATUS_PENDING): ?>
+                              <?php if ((int) $billing->status === Billing::STATUS_PENDING): ?>
 
                                    <button
                                            id="btn-confirm"
@@ -352,3 +373,70 @@ $returnURL = "сайт поставщика";
         </div>
     </section>
 </div>
+
+<?php
+$promoError = \yii\helpers\Json::htmlEncode($promoText[3]);
+$this->registerJs(<<<JS
+(function () {
+    const form = document.getElementById('promocode-form');
+    if (!form) return;
+    const input = document.getElementById('invoice-promocode');
+    const message = document.getElementById('promocode-message');
+    let busy = false;
+    let timer;
+    async function applyCode() {
+        if (busy) return;
+        clearTimeout(timer);
+        timer = null;
+        busy = true;
+        const controls = Array.from(document.querySelectorAll('#promocode-form button, #click_form button, #payme-form button'));
+        controls.forEach(button => button.disabled = true);
+        input.readOnly = true;
+        message.textContent = '';
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST', body: new FormData(form), credentials: 'same-origin',
+                headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json'}
+            });
+            if (!response.ok) throw new Error();
+            const result = await response.json();
+            message.textContent = result.message;
+            message.className = 'small mt-2 ' + (result.success ? 'text-success' : 'text-danger');
+            if (result.success) {
+                document.getElementById('invoice-total-amount').textContent = result.amountFormatted;
+                document.getElementById('invoice-original-amount').textContent = result.originalFormatted;
+                const amount = document.querySelector('#click_form input[name="amount"]');
+                if (amount) amount.value = result.amount;
+                input.value = result.code;
+            }
+        } catch (error) {
+            message.textContent = $promoError;
+            message.className = 'small mt-2 text-danger';
+        } finally {
+            busy = false;
+            input.readOnly = false;
+            controls.forEach(button => button.disabled = false);
+        }
+    }
+    form.addEventListener('submit', event => { event.preventDefault(); applyCode(); });
+    input.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(applyCode, 600);
+    });
+    document.getElementById('remove-promocode').addEventListener('click', () => {
+        input.value = '';
+        applyCode();
+    });
+    // Never launch checkout before an outstanding discount request finishes.
+    ['click_form', 'payme-form'].forEach(id => {
+        const paymentForm = document.getElementById(id);
+        if (paymentForm) paymentForm.addEventListener('submit', event => {
+            if (busy || timer) {
+                event.preventDefault();
+                if (!busy) applyCode();
+            }
+        });
+    });
+})();
+JS);
+?>

@@ -995,7 +995,8 @@ body p,
 }
 
 .meros-auth-panel .form-control,
-.meros-invoice-panel .form-control {
+.meros-invoice-panel .form-control,
+.meros-promocode-form .form-control {
     border: 1px solid var(--meros-border);
     border-radius: 16px;
     box-shadow: none;
@@ -1003,7 +1004,8 @@ body p,
 }
 
 .meros-auth-panel label,
-.meros-invoice-panel label {
+.meros-invoice-panel label,
+.meros-promocode-form label {
     color: var(--meros-primary-dark);
     font-weight: 800;
 }
@@ -1030,6 +1032,61 @@ body p,
 
 .meros-order-summary {
     background: linear-gradient(180deg, #ffffff 0%, var(--meros-primary-soft) 100%);
+}
+
+.meros-promocode-controls {
+    display: grid;
+    gap: 12px;
+}
+
+.meros-promocode-form .form-control {
+    background: #fff;
+    color: var(--meros-primary-dark);
+    min-width: 0;
+    padding: 12px 16px;
+    width: 100%;
+}
+
+.meros-promocode-form .form-control:focus {
+    border-color: var(--meros-primary);
+    box-shadow: 0 0 0 3px rgba(7, 113, 123, 0.12);
+}
+
+.meros-promocode-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.meros-promocode-actions .btn {
+    flex: 1 1 auto;
+    min-height: 44px;
+    padding: 10px 18px;
+}
+
+.meros-promocode-actions .meros-primary-btn {
+    box-shadow: 0 8px 20px rgba(7, 113, 123, 0.15);
+    color: #fff;
+}
+
+.meros-promocode-actions .meros-secondary-btn {
+    background: transparent;
+    border: 1px solid var(--meros-primary);
+}
+
+.meros-promocode-actions .meros-secondary-btn:hover {
+    background: var(--meros-primary);
+}
+
+.meros-promocode-actions .btn:focus-visible {
+    outline: 3px solid var(--meros-accent);
+    outline-offset: 3px;
+}
+
+.meros-promocode-actions .btn:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
 }
 
 .meros-invoice-alert {

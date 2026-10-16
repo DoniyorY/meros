@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace frontend\controllers;
 
 use common\models\Billing;
+use common\services\PromocodeService;
 use common\models\ClickPayment;
 use common\models\ClickWebhookLog;
 use common\models\SubscriptionPlans;
@@ -33,6 +34,7 @@ final class PaymentController extends Controller
          'actions' => [
             'click-webhook' => ['POST'],
             'click-pay' => ['POST'],
+            'payme' => ['POST'],
          ],
       ];
       
@@ -364,6 +366,11 @@ final class PaymentController extends Controller
       try {
          $this->lockBilling((int)$billing->id);
          $billing->refresh();
+         if (!$this->amountsEqual($billing->amount, $data['amount'])) {
+            $dbTransaction->rollBack();
+            return $this->clickResponse($data, -2, 'Incorrect parameter amount');
+         }
+
          
          if (
             (int)$billing->payment_status
@@ -725,6 +732,7 @@ final class PaymentController extends Controller
       string  $clickTransId
    ): void
    {
+      PromocodeService::consume($billing);
       $billing->payment_status = Billing::STATUS_SUCCESS;
       $billing->payment_transaction_id = $clickTransId;
       $billing->payment_provider = $this->clickProviderCode();
@@ -894,7 +902,9 @@ final class PaymentController extends Controller
          Yii::error(['billing_id' => $billing->id, 'error' => $e->getMessage()], 'analytics');
       }
       try {
-         ApiController::sendZapierOrderPaidWebhook($billing);
+         if (YII_ENV_PROD){
+            ApiController::sendZapierOrderPaidWebhook($billing);
+         }
       } catch (Throwable $e) {
          Yii::error([
             'message' => 'Zapier webhook failed after CLICK payment.',

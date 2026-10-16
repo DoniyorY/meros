@@ -59,7 +59,7 @@ class Promocodes extends \yii\db\ActiveRecord
             [['user_id'], 'default', 'value' => null],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             [['code', 'discount', 'status'], 'required'],
-            ['discount', 'integer', 'min' => 1, 'max' => 100],
+            ['discount', 'integer', 'min' => 1, 'max' => 99],
             ['status', 'in', 'range' => array_keys(self::statuses())],
             [['created_at', 'updated_at', 'status', 'user_id', 'discount'], 'integer'],
             [['code'], 'string', 'max' => 50],

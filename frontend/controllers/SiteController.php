@@ -509,7 +509,7 @@ class SiteController extends BaseController
          }
          $text = $this->buildSmsText('registration', $user);
          Yii::$app->playmobile->sendSms("$user->phone", $text);
-         Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+         //Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
          return $this->goHome();
       }
       

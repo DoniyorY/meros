@@ -116,10 +116,10 @@ class SignupForm extends Model
                 return false;
             }
 
-            if (!$this->sendEmail($user)) {
+            /*if (!$this->sendEmail($user)) {
                 $transaction->rollBack();
                 return false;
-            }
+            }*/
            
             $transaction->commit();
             return true;

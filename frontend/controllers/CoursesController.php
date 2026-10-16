@@ -9,6 +9,7 @@ use common\models\Courses;
 use common\models\Faq;
 use common\models\SubscriptionPlans;
 use common\models\User;
+use common\services\PromocodeService;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
@@ -17,6 +18,41 @@ use yii\web\NotFoundHttpException;
 class CoursesController extends BaseController
 {
    
+   public function behaviors()
+   {
+      $behaviors = parent::behaviors();
+      $behaviors['verbs'] = [
+         'class' => \yii\filters\VerbFilter::class,
+         'actions' => ['apply-promocode' => ['POST']],
+      ];
+      return $behaviors;
+   }
+
+   public function actionApplyPromocode(int $id)
+   {
+      Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+      if (Yii::$app->user->isGuest) {
+         throw new \yii\web\ForbiddenHttpException('Для применения промокода войдите в аккаунт.');
+      }
+      $code = Yii::$app->request->post('code', '');
+      if (!is_string($code) || strlen($code) > 50) {
+         return ['success' => false, 'message' => 'Некорректный промокод.'];
+      }
+      try {
+         $billing = PromocodeService::apply($id, (int) Yii::$app->user->id, $code);
+         return [
+            'success' => true,
+            'amount' => (int) $billing->amount,
+            'amountFormatted' => Yii::$app->formatter->asDecimal($billing->amount) . ' UZS',
+            'originalFormatted' => Yii::$app->formatter->asDecimal($billing->no_discount_amount ?? $billing->amount) . ' UZS',
+            'code' => $billing->promocode ? $billing->promocode->code : '',
+            'message' => $billing->promocode_id ? 'Промокод применён.' : 'Промокод удалён.',
+         ];
+      } catch (\DomainException $exception) {
+         return ['success' => false, 'message' => $exception->getMessage()];
+      }
+   }
+
    public function actionCategory(string $category)
    {
       $categoryModel = CourseCategory::find()
@@ -137,6 +173,10 @@ class CoursesController extends BaseController
             ])
             ->one();
          
+         if ($billing && $billing->user_id !== null
+            && (Yii::$app->user->isGuest || (int) $billing->user_id !== (int) Yii::$app->user->id)) {
+            $billing = null;
+         }
          if ($billing) {
             $changed = false;
             

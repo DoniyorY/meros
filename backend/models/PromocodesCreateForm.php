@@ -18,7 +18,7 @@ class PromocodesCreateForm extends Model
       return [
          [['quantity', 'discount'], 'required'],
          ['quantity', 'integer', 'min' => 1, 'max' => self::MAX_QUANTITY],
-         ['discount', 'integer', 'min' => 1, 'max' => 100],
+         ['discount', 'integer', 'min' => 1, 'max' => 99],
       ];
    }
    

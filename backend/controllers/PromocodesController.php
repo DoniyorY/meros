@@ -69,7 +69,18 @@ class PromocodesController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        Promocodes::getDb()->transaction(function () use ($id) {
+            Promocodes::getDb()->createCommand(
+                'SELECT [[id]] FROM {{%promocodes}} WHERE [[id]] = :id FOR UPDATE',
+                [':id' => $id]
+            )->queryScalar();
+            $model = $this->findModel($id);
+            if (\common\models\Billing::find()->where(['promocode_id' => $model->id])->exists()) {
+                Yii::$app->session->setFlash('error', 'Нельзя удалить промокод, связанный со счётом.');
+                return;
+            }
+            $model->delete();
+        });
 
         return $this->redirect(['index']);
     }

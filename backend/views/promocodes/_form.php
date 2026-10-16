@@ -17,7 +17,7 @@ use yii\bootstrap5\ActiveForm;
     ])->hint('От 1 до ' . $model::MAX_QUANTITY . ' промокодов за один раз.') ?>
 
     <?= $form->field($model, 'discount')->input('number', [
-        'min' => 1, 'max' => 100, 'step' => 1,
+        'min' => 1, 'max' => 99, 'step' => 1,
     ]) ?>
 
     <div class="form-group">

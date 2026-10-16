@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace frontend\controllers;
 
 use common\models\Billing;
+use common\services\PromocodeService;
 use common\models\PaymeLog;
 use common\models\PaymeTransaction;
 use common\models\SubscriptionPlans;
@@ -222,6 +223,7 @@ final class PaymeController extends Controller
       $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
+         PromocodeService::lockBilling($billingId);
          $existing = PaymeTransaction::findByPaymeId($paymeId);
          
          if ($existing !== null) {
@@ -321,9 +323,13 @@ final class PaymeController extends Controller
    private function performTransaction(array $params): array
    {
       $paymeId = $this->requiredPaymeId($params, 'id');
+      $payment = PaymeTransaction::findByPaymeId($paymeId);
       $dbTransaction = Yii::$app->db->beginTransaction();
       
       try {
+         if ($payment !== null) {
+            PromocodeService::lockBilling((int) $payment->billing_id);
+         }
          $transaction = $this->findOrRecoverTransaction($paymeId);
          
          if (
@@ -389,7 +395,9 @@ final class PaymeController extends Controller
          $billing->save(false);
          if ($billing !== null) {
             try {
-               ApiController::sendZapierOrderPaidWebhook($billing);
+               if (YII_ENV_PROD) {
+                  ApiController::sendZapierOrderPaidWebhook($billing);
+               }
             } catch (Throwable $e) {
                Yii::error([
                   'message' => 'Zapier webhook failed after Payme payment.',
@@ -953,6 +961,7 @@ final class PaymeController extends Controller
       string  $paymeId
    ): void
    {
+      PromocodeService::consume($billing);
       $billing->payment_status = Billing::STATUS_SUCCESS;
       $billing->payment_transaction_id = $paymeId;
       $billing->payment_provider = (int)$this->config(
